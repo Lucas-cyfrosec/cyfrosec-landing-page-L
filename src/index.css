@@ -1,0 +1,187 @@
+@import 'tailwindcss';
+@import './theme-cyfrosec.css';
+
+/* ── Extra breakpoints for large monitors & TVs ──────── */
+@custom-variant 3xl (@media (width >= 1920px));
+@custom-variant 4xl (@media (width >= 2560px));
+
+@theme {
+  --color-primary-50: var(--color-primary-50);
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-primary-400: var(--color-primary-400);
+  --color-primary-500: var(--color-primary-500);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-700: var(--color-primary-700);
+  --color-primary-800: var(--color-primary-800);
+  --color-primary-900: var(--color-primary-900);
+  --color-primary-950: var(--color-primary-950);
+
+  --color-surface-50: var(--color-surface-50);
+  --color-surface-100: var(--color-surface-100);
+  --color-surface-200: var(--color-surface-200);
+  --color-surface-300: var(--color-surface-300);
+  --color-surface-400: var(--color-surface-400);
+  --color-surface-500: var(--color-surface-500);
+  --color-surface-600: var(--color-surface-600);
+  --color-surface-700: var(--color-surface-700);
+  --color-surface-800: var(--color-surface-800);
+  --color-surface-900: var(--color-surface-900);
+  --color-surface-950: var(--color-surface-950);
+
+  --color-accent: #fe904d;
+  --color-accent-strong: #fe701a;
+  --color-accent-soft: #feb080;
+
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-warning: #fe904d;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: var(--color-primary-200);
+  color: var(--color-primary-900);
+}
+
+.dark ::selection {
+  background-color: var(--color-primary-800);
+  color: var(--color-primary-100);
+}
+
+/* ── Brand Utilities ─────────────────────────────────── */
+.text-gradient {
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Semantic Background Utilities ───────────────────── */
+.cy-bg-canvas { background-color: var(--bg-canvas); }
+.cy-bg-elevated { background-color: var(--bg-elevated); }
+.cy-bg-muted { background-color: var(--bg-muted); }
+.cy-bg-panel { background-color: var(--bg-panel); }
+.cy-bg-panel-muted { background-color: var(--bg-panel-muted); }
+.cy-bg-panel-strong { background-color: var(--bg-panel-strong); }
+.cy-bg-overlay { background-color: var(--bg-overlay); }
+.cy-bg-sidebar { background-color: var(--bg-sidebar); }
+.cy-bg-sidebar-hover { background-color: var(--bg-sidebar-hover); }
+
+/* ── Semantic Text Utilities ─────────────────────────── */
+.cy-text-primary { color: var(--text-primary); }
+.cy-text-secondary { color: var(--text-secondary); }
+.cy-text-muted { color: var(--text-muted); }
+.cy-text-inverse { color: var(--text-inverse); }
+.cy-text-brand { color: var(--text-brand); }
+.cy-text-accent { color: var(--text-accent); }
+.cy-text-sidebar { color: var(--text-sidebar); }
+.cy-text-sidebar-muted { color: var(--text-sidebar-muted); }
+.cy-text-sidebar-strong { color: var(--text-sidebar-strong); }
+
+/* ── Semantic Border Utilities ───────────────────────── */
+.cy-border { border-color: var(--border-default); }
+.cy-border-strong { border-color: var(--border-strong); }
+.cy-border-sidebar { border-color: var(--border-sidebar); }
+
+/* ── Component Utilities ─────────────────────────────── */
+.cy-btn-primary {
+  background-color: var(--brand-primary);
+  color: white;
+  transition: background-color var(--shell-duration) var(--shell-easing);
+}
+.cy-btn-primary:hover {
+  background-color: var(--brand-primary-hover);
+}
+
+.cy-input {
+  background-color: var(--bg-input);
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+
+.glass-panel {
+  background: color-mix(in srgb, var(--bg-panel) 80%, transparent);
+  backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in srgb, var(--border-default) 50%, transparent);
+}
+
+.card-enterprise {
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border-default);
+  border-radius: 1rem;
+  transition: border-color var(--shell-duration) var(--shell-easing),
+    box-shadow var(--shell-duration) var(--shell-easing);
+}
+.card-enterprise:hover {
+  border-color: var(--color-primary-400);
+  box-shadow: 0 4px 24px color-mix(in srgb, var(--brand-primary) 10%, transparent);
+}
+
+/* ── Accent Soft Utility ─────────────────────────────── */
+.cy-accent-soft {
+  background-color: color-mix(in srgb, var(--brand-accent-orange) 10%, transparent);
+  color: var(--brand-accent-strong);
+}
+
+/* ── Navbar Animations ───────────────────────────────── */
+@keyframes dropdown {
+  from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-dropdown { animation: dropdown 0.15s ease-out; }
+.animate-slideDown { animation: slideDown 0.2s ease-out; }
+
+/* ── Hero Animated Title ─────────────────────────────── */
+.animated-title {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  opacity: 0;
+  transform: translateY(150px);
+}
+.animated-title.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.animated-title.above {
+  opacity: 0;
+  transform: translateY(-150px);
+}
+.animated-title.below {
+  opacity: 0;
+  transform: translateY(150px);
+}
+
+/* ── FAQ Accordion ───────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn { animation: fadeIn 0.2s ease-out; }
+
+/* ── Price Fade ──────────────────────────────────────── */
+@keyframes priceFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-priceFade { animation: priceFade 0.18s ease-out; }
