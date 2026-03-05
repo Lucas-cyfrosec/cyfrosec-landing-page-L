@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowRight, Zap, Link2 } from 'lucide-react';
+import { ArrowRight, Link2 } from 'lucide-react';
 
 export default function RadialOrbitalTimeline({ items = [] }) {
   const [expandedId, setExpandedId] = useState(null);
@@ -8,12 +8,16 @@ export default function RadialOrbitalTimeline({ items = [] }) {
   const [pulsingIds, setPulsingIds] = useState(new Set());
   const [orbitRadius, setOrbitRadius] = useState(200);
   const [containerHeight, setContainerHeight] = useState(540);
+  const [detailView, setDetailView] = useState('benefits');
+  const [detailAnimKey, setDetailAnimKey] = useState(0);
 
   const containerRef = useRef(null);
   const autoRotateRef = useRef(true);
   const rotationRef = useRef(0);
   const animFrameRef = useRef(null);
   const lastTimeRef = useRef(0);
+  const targetRotationRef = useRef(null);
+  const swapTimerRef = useRef(null);
 
   const updateSize = useCallback(() => {
     if (!containerRef.current) return;
@@ -39,7 +43,20 @@ export default function RadialOrbitalTimeline({ items = [] }) {
     function tick(time) {
       if (autoRotateRef.current) {
         const delta = lastTimeRef.current ? (time - lastTimeRef.current) / 1000 : 0;
-        rotationRef.current = (rotationRef.current + delta * 18) % 360;
+        rotationRef.current = (rotationRef.current + delta * 6) % 360;
+        setRotationAngle(rotationRef.current);
+      } else if (targetRotationRef.current !== null) {
+        // Smoothly interpolate toward target along the arc (no straight-line CSS jump)
+        const target = targetRotationRef.current;
+        const current = rotationRef.current;
+        let diff = ((target - current) % 360 + 360) % 360;
+        if (diff > 180) diff -= 360; // take shortest arc direction
+        if (Math.abs(diff) < 0.3) {
+          rotationRef.current = target;
+          targetRotationRef.current = null;
+        } else {
+          rotationRef.current = (current + diff * 0.08 + 360) % 360;
+        }
         setRotationAngle(rotationRef.current);
       }
       lastTimeRef.current = time;
@@ -63,6 +80,7 @@ export default function RadialOrbitalTimeline({ items = [] }) {
       setAutoRotate(true);
       autoRotateRef.current = true;
       setPulsingIds(new Set());
+      setDetailView('benefits');
     } else {
       setExpandedId(id);
       setAutoRotate(false);
@@ -70,8 +88,9 @@ export default function RadialOrbitalTimeline({ items = [] }) {
       setPulsingIds(new Set(getRelatedIds(id)));
       const idx = items.findIndex((i) => i.id === id);
       const targetAngle = (idx / items.length) * 360;
-      rotationRef.current = 270 - targetAngle;
-      setRotationAngle(270 - targetAngle);
+      targetRotationRef.current = ((270 - targetAngle) % 360 + 360) % 360;
+      setDetailView('benefits');
+      setDetailAnimKey((prev) => prev + 1);
     }
   }
 
@@ -81,8 +100,31 @@ export default function RadialOrbitalTimeline({ items = [] }) {
       setAutoRotate(true);
       autoRotateRef.current = true;
       setPulsingIds(new Set());
+      setDetailView('benefits');
     }
   }
+
+  useEffect(() => {
+    clearInterval(swapTimerRef.current);
+    if (!expandedId) return;
+
+    const expandedItem = items.find((i) => i.id === expandedId);
+    const hasBenefits = Boolean(expandedItem?.keyBenefits?.length);
+    const hasCapabilities = Boolean(expandedItem?.capabilities?.length);
+
+    if (hasBenefits && hasCapabilities) {
+      swapTimerRef.current = setInterval(() => {
+        setDetailView((prev) => (prev === 'benefits' ? 'capabilities' : 'benefits'));
+        setDetailAnimKey((prev) => prev + 1);
+      }, 4200);
+    } else if (hasCapabilities) {
+      setDetailView('capabilities');
+    } else {
+      setDetailView('benefits');
+    }
+
+    return () => clearInterval(swapTimerRef.current);
+  }, [expandedId, items]);
 
   function nodePosition(index) {
     const angle = ((index / items.length) * 360 + rotationAngle) % 360;
@@ -147,7 +189,7 @@ export default function RadialOrbitalTimeline({ items = [] }) {
           return (
             <div
               key={item.id}
-              className="absolute transition-all duration-700 cursor-pointer"
+              className="absolute cursor-pointer"
               style={{
                 /* Anchor node center at orbit position: 50%+offset from orbit div's top-left */
                 left: `calc(50% + ${pos.x}px)`,
@@ -211,22 +253,50 @@ export default function RadialOrbitalTimeline({ items = [] }) {
                   <div className="px-3 lg:px-4 pb-3 lg:pb-4 text-xs text-surface-600 dark:text-white/80">
                     <p>{item.content}</p>
 
-                    {/* Energy bar */}
-                    <div className="mt-3 pt-3 border-t border-surface-100 dark:border-white/10">
-                      <div className="flex justify-between items-center text-[10px] mb-1">
-                        <span className="flex items-center gap-1">
-                          <Zap size={10} />
-                          Capability Level
-                        </span>
-                        <span className="font-mono">{item.energy}%</span>
+                    {(item.keyBenefits?.length > 0 || item.capabilities?.length > 0) && (
+                      <div className="mt-3 pt-3 border-t border-surface-100 dark:border-white/10">
+                        <div key={`${item.id}-${detailView}-${detailAnimKey}`} className="animate-priceFade">
+                          {detailView === 'capabilities' && item.capabilities?.length > 0 ? (
+                            <div>
+                              <div className="mb-2 text-[10px] text-primary-500 uppercase tracking-[0.16em] font-semibold">
+                                Capabilities
+                              </div>
+                              <p className="text-[11px] text-surface-600 dark:text-white/70 mb-2.5">
+                                What {item.title} does
+                              </p>
+                              <ul className="space-y-2">
+                                {item.capabilities.map((capability) => (
+                                  <li
+                                    key={capability}
+                                    className="rounded-lg border border-surface-200 dark:border-white/10 bg-surface-50 dark:bg-[#0c1a2d]/80 p-2.5"
+                                  >
+                                    <p className="text-xs text-surface-700 dark:text-white/80 leading-relaxed">{capability}</p>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ) : item.keyBenefits?.length > 0 ? (
+                            <div>
+                              <div className="mb-2 text-[10px] text-primary-500 uppercase tracking-[0.16em] font-semibold">
+                                Key Benefits
+                              </div>
+                              <div className="space-y-2">
+                                {item.keyBenefits.map((benefit) => (
+                                  <div
+                                    key={benefit.title}
+                                    className="rounded-lg border border-surface-200 dark:border-white/10 bg-surface-50 dark:bg-[#0c1a2d]/80 p-2.5"
+                                  >
+                                    <p className="text-xs font-semibold text-surface-900 dark:text-white">{benefit.title}</p>
+                                    <p className="text-[11px] text-surface-600 dark:text-white/75 mt-1 leading-relaxed">{benefit.description}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          ) : null}
+                        </div>
                       </div>
-                      <div className="w-full h-1 bg-surface-200 dark:bg-white/10 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-primary-500 to-[#fe904d] rounded-full"
-                          style={{ width: `${item.energy}%` }}
-                        ></div>
-                      </div>
-                    </div>
+                    )}
+
 
                     {/* Related nodes */}
                     {item.relatedIds.length > 0 && (

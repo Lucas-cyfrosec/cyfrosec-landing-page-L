@@ -7,6 +7,26 @@ const timelineItems = [
     title: 'CyfroAgent',
     date: 'Core',
     content: 'Lightweight agent scanning for endpoints, servers, and containers. Minimal resource usage with maximum visibility.',
+    capabilities: [
+      'Endpoint and server vulnerability scanning',
+      'Container and cloud workload coverage',
+      'Configuration and secrets detection',
+      'Near real-time data collection with minimal footprint'
+    ],
+    keyBenefits: [
+      {
+        title: 'Zero disruption',
+        description: 'Deploy without impacting live workloads or performance SLAs.'
+      },
+      {
+        title: 'Universal coverage',
+        description: 'Supports Linux, Windows, macOS, and major container runtimes.'
+      },
+      {
+        title: 'Continuous data',
+        description: 'Streams findings to the Cyfro AI Engine as they are detected.'
+      }
+    ],
     category: 'Agent',
     icon: Scan,
     relatedIds: [3, 6],
@@ -18,6 +38,26 @@ const timelineItems = [
     title: 'Cyfro AI Insights',
     date: 'AI Engine',
     content: 'AI-driven vulnerability analysis that explains the risk, recommends what to fix first, and generates remediation plans.',
+    capabilities: [
+      'AI-ranked vulnerability prioritization',
+      'Business-impact-aware risk scoring',
+      'Secrets and misconfiguration triage',
+      'Trend dashboards and executive reports'
+    ],
+    keyBenefits: [
+      {
+        title: 'No more backlogs',
+        description: 'Know exactly what to fix next, every time your team opens the dashboard.'
+      },
+      {
+        title: 'Context, not just data',
+        description: 'Every finding includes an explanation of why it matters and what to do.'
+      },
+      {
+        title: 'Measurable outcomes',
+        description: 'Track noise reduction, MTTR, and remediation velocity over time.'
+      }
+    ],
     category: 'AI',
     icon: Bot,
     relatedIds: [4, 6],
@@ -29,6 +69,26 @@ const timelineItems = [
     title: 'Asset Discovery',
     date: 'Discovery',
     content: 'Automatically discover and classify every asset across your environment. Cloud, on-prem, and hybrid — nothing goes unseen.',
+    capabilities: [
+      'Cloud provider asset enumeration (AWS, Azure, GCP)',
+      'Endpoint and server inventory',
+      'SaaS and API surface mapping',
+      'Change detection and alerting'
+    ],
+    keyBenefits: [
+      {
+        title: '100% visibility',
+        description: 'Every asset in your environment is tracked and classified automatically.'
+      },
+      {
+        title: 'Real-time changes',
+        description: 'New assets are detected within minutes of provisioning.'
+      },
+      {
+        title: 'Risk-tagged inventory',
+        description: 'Each asset is tagged with its current exposure and business context.'
+      }
+    ],
     category: 'Discovery',
     icon: Radar,
     relatedIds: [1, 5],
@@ -40,6 +100,26 @@ const timelineItems = [
     title: 'CyfroAssistant',
     date: 'AI',
     content: 'Conversational AI that answers security questions, generates reports, and walks you through remediation steps.',
+    capabilities: [
+      'Natural language security Q&A',
+      'Finding explanations for non-specialists',
+      'Step-by-step remediation generation',
+      'MCP-powered tool integrations'
+    ],
+    keyBenefits: [
+      {
+        title: 'Team-wide access',
+        description: 'Engineers, managers, and operators all get answers suited to their role.'
+      },
+      {
+        title: 'Always available',
+        description: 'No waiting for analyst availability — guidance is instant and accurate.'
+      },
+      {
+        title: 'Powered by MCP',
+        description: 'Integrates directly with your toolchain via Model Context Protocol.'
+      }
+    ],
     category: 'AI',
     icon: MessageSquare,
     relatedIds: [2, 6],
@@ -51,6 +131,26 @@ const timelineItems = [
     title: 'Network Discovery',
     date: 'Network',
     content: 'Map your network topology, identify exposed services, and detect misconfigurations across subnets and zones.',
+    capabilities: [
+      'Internal network topology mapping',
+      'Open port and service enumeration',
+      'Lateral movement path analysis',
+      'Credential-free host fingerprinting'
+    ],
+    keyBenefits: [
+      {
+        title: 'No agents required',
+        description: 'Works agentlessly across flat and segmented networks.'
+      },
+      {
+        title: 'Lateral path awareness',
+        description: 'Visualize how an attacker could move through your environment.'
+      },
+      {
+        title: 'Always current',
+        description: 'Continuous scans catch new services and topology changes automatically.'
+      }
+    ],
     category: 'Network',
     icon: Network,
     relatedIds: [3, 1],
@@ -62,6 +162,26 @@ const timelineItems = [
     title: 'Vuln & Misconfig',
     date: 'Assessment',
     content: 'Comprehensive scanning for vulnerabilities, hardcoded secrets, and infrastructure misconfigurations across your stack.',
+    capabilities: [
+      'Vulnerability scanning across endpoints, servers, and workloads',
+      'Hardcoded secret detection in code and configuration files',
+      'Infrastructure misconfiguration checks across cloud and network layers',
+      'Unified exposure correlation for faster risk triage and remediation'
+    ],
+    keyBenefits: [
+      {
+        title: 'Unified exposure coverage',
+        description: 'Scan vulnerabilities, hardcoded secrets, and infrastructure misconfigurations in one workflow.'
+      },
+      {
+        title: 'Noise-to-priority reduction',
+        description: 'Correlate findings so teams focus on exploitable, business-impacting risks first.'
+      },
+      {
+        title: 'Remediation-ready output',
+        description: 'Turn findings into clear fix actions and patch guidance your team can execute fast.'
+      }
+    ],
     category: 'Assessment',
     icon: ShieldCheck,
     relatedIds: [1, 2],
@@ -103,6 +223,19 @@ export default function SolutionOverview() {
                 </div>
                 <h3 className="text-sm font-bold text-surface-900 dark:text-surface-50 mb-1">{item.title}</h3>
                 <p className="text-xs text-surface-600 dark:text-surface-400 leading-relaxed">{item.content}</p>
+                {item.keyBenefits?.length > 0 && (
+                  <div className="mt-3 space-y-2">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-primary-500">
+                      Key Benefits
+                    </p>
+                    {item.keyBenefits.map((benefit) => (
+                      <div key={benefit.title} className="rounded-lg border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-2.5">
+                        <p className="text-xs font-semibold text-surface-900 dark:text-surface-50">{benefit.title}</p>
+                        <p className="text-[11px] text-surface-600 dark:text-surface-400 mt-1 leading-relaxed">{benefit.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             );
           })}

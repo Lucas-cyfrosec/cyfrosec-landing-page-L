@@ -1,4 +1,8 @@
+import { useState, useEffect } from 'react';
 import Navbar from './layout/Navbar';
+import AIChatbot from './components/AIChatbot';
+import DocsPage from './pages/DocsPage';
+import GetStartedPage from './pages/GetStartedPage';
 import {
   Hero,
   Learning,
@@ -9,7 +13,6 @@ import {
   Personas,
   Outcomes,
   Highlights,
-  HowItWorks,
   FeatureComparison,
   Security,
   Pricing,
@@ -18,10 +21,63 @@ import {
   MegaFooter
 } from './sections';
 
+const BASE = '/cyfrosec-landing-page-L';
+
+function getInitialPage() {
+  if (window.location.pathname === `${BASE}/docs`) return 'docs';
+  if (window.location.pathname === `${BASE}/get-started`) return 'get-started';
+  return 'home';
+}
+
 export default function App() {
+  const [page, setPage] = useState(getInitialPage);
+
+  function navigate(target) {
+    if (target === 'docs') {
+      window.history.pushState({}, '', `${BASE}/docs`);
+      window.scrollTo(0, 0);
+    } else if (target === 'get-started') {
+      window.history.pushState({}, '', `${BASE}/get-started`);
+      window.scrollTo(0, 0);
+    } else {
+      window.history.pushState({}, '', `${BASE}/`);
+      window.scrollTo(0, 0);
+    }
+    setPage(target);
+  }
+
+  useEffect(() => {
+    function onPopState() {
+      setPage(getInitialPage());
+    }
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
+  if (page === 'docs') {
+    return (
+      <>
+        <Navbar navigate={navigate} />
+        <div className="h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
+        <DocsPage navigate={navigate} />
+        <AIChatbot />
+      </>
+    );
+  }
+
+  if (page === 'get-started') {
+    return (
+      <>
+        <Navbar navigate={navigate} />
+        <div className="h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
+        <GetStartedPage navigate={navigate} />
+      </>
+    );
+  }
+
   return (
     <>
-      <Navbar />
+      <Navbar navigate={navigate} />
       {/* Spacer matching navbar height */}
       <div className="h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
       <main>
@@ -34,7 +90,6 @@ export default function App() {
         <Personas />
         <Outcomes />
         <Highlights />
-        <HowItWorks />
         <FeatureComparison />
         <Security />
         <Pricing />
@@ -44,6 +99,7 @@ export default function App() {
           <MegaFooter />
         </div>
       </main>
+      <AIChatbot />
     </>
   );
 }

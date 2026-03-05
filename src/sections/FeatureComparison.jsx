@@ -48,17 +48,18 @@ export default function FeatureComparison() {
           </p>
         </div>
 
-        <div className="max-w-3xl 3xl:max-w-4xl mx-auto overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-          <table className="w-full min-w-[480px]">
+        <div className="max-w-2xl 3xl:max-w-3xl mx-auto">
+          <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+          <table className="w-full min-w-[480px] table-fixed">
             <thead>
               <tr className="border-b-2 border-surface-200 dark:border-surface-700">
-                <th className="text-left py-3 sm:py-4 pr-3 sm:pr-4 text-xs sm:text-sm font-semibold text-surface-900 dark:text-surface-50">Feature</th>
-                <th className="py-4 px-4 text-center">
+                <th className="text-left py-3 sm:py-4 pr-3 sm:pr-4 text-xs sm:text-sm font-semibold text-surface-900 dark:text-surface-50 w-1/2">Feature</th>
+                <th className="py-4 px-4 text-center w-1/4">
                   <div className="inline-flex flex-col items-center gap-1">
                     <span className="px-3 py-1 bg-primary-500 text-white text-sm font-bold rounded-full">CyfroSec</span>
                   </div>
                 </th>
-                <th className="py-4 pl-4 text-center">
+                <th className="py-4 pl-4 text-center w-1/4">
                   <div className="inline-flex flex-col items-center gap-1">
                     <span className="px-3 py-1 bg-surface-200 dark:bg-surface-700 text-surface-600 dark:text-surface-400 text-sm font-medium rounded-full">Traditional</span>
                   </div>
@@ -79,6 +80,7 @@ export default function FeatureComparison() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </section>

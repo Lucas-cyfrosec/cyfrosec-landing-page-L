@@ -9,17 +9,18 @@ export default function InteractiveGlobe({
 }) {
   const canvasRef = useRef(null);
 
+  // icon types matching reference: person, cloud, building, globe, home, monitor, cloud-box
   const markers = [
-    { lat: 37.78, lng: -122.42, label: 'San Francisco' },
-    { lat: 51.51, lng: -0.13, label: 'London' },
-    { lat: 35.68, lng: 139.69, label: 'Tokyo' },
-    { lat: -33.87, lng: 151.21, label: 'Sydney' },
-    { lat: 1.35, lng: 103.82, label: 'Singapore' },
-    { lat: 55.76, lng: 37.62, label: 'Moscow' },
-    { lat: -23.55, lng: -46.63, label: 'São Paulo' },
-    { lat: 19.43, lng: -99.13, label: 'Mexico City' },
-    { lat: 28.61, lng: 77.21, label: 'Delhi' },
-    { lat: 36.19, lng: 44.01, label: 'Erbil' }
+    { lat: 37.78, lng: -122.42, icon: 'building' },
+    { lat: 51.51, lng: -0.13,   icon: 'globe' },
+    { lat: 35.68, lng: 139.69,  icon: 'monitor' },
+    { lat: -33.87, lng: 151.21, icon: 'cloud' },
+    { lat: 1.35, lng: 103.82,   icon: 'cloud-box' },
+    { lat: 55.76, lng: 37.62,   icon: 'person' },
+    { lat: -23.55, lng: -46.63, icon: 'home' },
+    { lat: 19.43, lng: -99.13,  icon: 'cloud' },
+    { lat: 28.61, lng: 77.21,   icon: 'person' },
+    { lat: 36.19, lng: 44.01,   icon: 'monitor' }
   ];
 
   const connections = [
@@ -33,6 +34,189 @@ export default function InteractiveGlobe({
     { from: [28.61, 77.21], to: [36.19, 44.01] },
     { from: [51.51, -0.13], to: [36.19, 44.01] }
   ];
+
+  function drawMarkerIcon(ctx, type, x, y, s, color) {
+    ctx.save();
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = 1.8;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    // center helper
+    const cx = x + s * 0.5, cy = y + s * 0.5;
+    switch (type) {
+
+      case 'person':
+        // outer circle ring
+        ctx.beginPath();
+        ctx.arc(cx, cy, s * 0.5, 0, Math.PI * 2);
+        ctx.stroke();
+        // head
+        ctx.beginPath();
+        ctx.arc(cx, cy - s * 0.14, s * 0.14, 0, Math.PI * 2);
+        ctx.stroke();
+        // shoulders arc
+        ctx.beginPath();
+        ctx.arc(cx, cy + s * 0.42, s * 0.26, Math.PI * 1.12, Math.PI * 1.88);
+        ctx.stroke();
+        break;
+
+      case 'cloud': {
+        // smooth bezier cloud shape
+        const drawCloud = (ccx, ccy, w, h) => {
+          ctx.beginPath();
+          ctx.moveTo(ccx - w * 0.42, ccy + h * 0.25);
+          // left wall down to close
+          ctx.bezierCurveTo(ccx - w * 0.52, ccy + h * 0.25, ccx - w * 0.52, ccy - h * 0.02, ccx - w * 0.36, ccy - h * 0.02);
+          // left bump
+          ctx.bezierCurveTo(ccx - w * 0.4,  ccy - h * 0.48, ccx - w * 0.08, ccy - h * 0.52, ccx - w * 0.04, ccy - h * 0.16);
+          // center bump (tallest)
+          ctx.bezierCurveTo(ccx - w * 0.06, ccy - h * 0.62, ccx + w * 0.24, ccy - h * 0.62, ccx + w * 0.2,  ccy - h * 0.18);
+          // right bump
+          ctx.bezierCurveTo(ccx + w * 0.26, ccy - h * 0.54, ccx + w * 0.52, ccy - h * 0.28, ccx + w * 0.42, ccy - h * 0.02);
+          // right wall
+          ctx.bezierCurveTo(ccx + w * 0.54, ccy - h * 0.02, ccx + w * 0.52, ccy + h * 0.25, ccx + w * 0.42, ccy + h * 0.25);
+          ctx.closePath();
+          ctx.stroke();
+        };
+        // back cloud (offset up-right, faded)
+        ctx.globalAlpha = 0.4;
+        drawCloud(cx + s * 0.14, cy - s * 0.12, s * 0.82, s * 0.6);
+        ctx.globalAlpha = 1;
+        // front cloud
+        drawCloud(cx - s * 0.04, cy + s * 0.08, s * 0.9, s * 0.62);
+        break;
+      }
+
+      case 'building': {
+        const bw = s * 0.72, bh = s * 0.9;
+        const bx = cx - bw / 2, by = cy - bh / 2;
+        // main body
+        ctx.beginPath();
+        ctx.rect(bx, by, bw, bh);
+        ctx.stroke();
+        // windows — 2 cols × 4 rows
+        const ww = bw * 0.26, wh = bh * 0.13;
+        const gx = (bw - 2 * ww) / 3, gy = (bh * 0.78 - 4 * wh) / 5;
+        ctx.lineWidth = 1;
+        for (let r = 0; r < 4; r++) {
+          for (let c = 0; c < 2; c++) {
+            ctx.beginPath();
+            ctx.rect(bx + gx + c * (ww + gx), by + bh * 0.06 + gy + r * (wh + gy), ww, wh);
+            ctx.stroke();
+          }
+        }
+        break;
+      }
+
+      case 'globe':
+        // outer circle
+        ctx.beginPath();
+        ctx.arc(cx, cy, s * 0.48, 0, Math.PI * 2);
+        ctx.stroke();
+        // vertical meridian ellipse
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, s * 0.22, s * 0.48, 0, 0, Math.PI * 2);
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+        // horizontal parallels
+        ctx.lineWidth = 1;
+        [-0.26, 0, 0.26].forEach(dy => {
+          const hw = Math.sqrt(0.48 * 0.48 - dy * dy) * s;
+          ctx.beginPath();
+          ctx.moveTo(cx - hw, cy + dy * s);
+          ctx.lineTo(cx + hw, cy + dy * s);
+          ctx.stroke();
+        });
+        break;
+
+      case 'home':
+        // outer circle ring
+        ctx.beginPath();
+        ctx.arc(cx, cy, s * 0.5, 0, Math.PI * 2);
+        ctx.stroke();
+        // roof
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy - s * 0.32);
+        ctx.lineTo(cx - s * 0.3, cy - s * 0.04);
+        ctx.lineTo(cx + s * 0.3, cy - s * 0.04);
+        ctx.closePath();
+        ctx.stroke();
+        // walls
+        ctx.beginPath();
+        ctx.rect(cx - s * 0.22, cy - s * 0.04, s * 0.44, s * 0.35);
+        ctx.stroke();
+        // door
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.rect(cx - s * 0.09, cy + s * 0.1, s * 0.18, s * 0.21);
+        ctx.stroke();
+        break;
+
+      case 'monitor': {
+        const mw = s * 0.9, mh = s * 0.54;
+        const mx = cx - mw / 2, my = cy - s * 0.42;
+        // screen
+        ctx.beginPath();
+        ctx.rect(mx, my, mw, mh);
+        ctx.stroke();
+        // stand
+        ctx.beginPath();
+        ctx.moveTo(cx, my + mh);
+        ctx.lineTo(cx, my + mh + s * 0.1);
+        ctx.moveTo(cx - s * 0.2, my + mh + s * 0.1);
+        ctx.lineTo(cx + s * 0.2, my + mh + s * 0.1);
+        ctx.stroke();
+        // package box below
+        const bw2 = s * 0.46, bh2 = s * 0.34;
+        const bx2 = cx - bw2 / 2, by2 = my + mh + s * 0.18;
+        ctx.beginPath();
+        ctx.rect(bx2, by2, bw2, bh2);
+        ctx.stroke();
+        // box cross lines
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(bx2 + bw2 * 0.15, by2 + bh2 * 0.15);
+        ctx.lineTo(bx2 + bw2 * 0.85, by2 + bh2 * 0.85);
+        ctx.moveTo(bx2 + bw2 * 0.85, by2 + bh2 * 0.15);
+        ctx.lineTo(bx2 + bw2 * 0.15, by2 + bh2 * 0.85);
+        ctx.stroke();
+        break;
+      }
+
+      case 'cloud-box': {
+        // small cloud on top half using bezier
+        const mcx = cx, mcy = cy - s * 0.22;
+        const mw = s * 0.78, mh = s * 0.48;
+        ctx.beginPath();
+        ctx.moveTo(mcx - mw * 0.42, mcy + mh * 0.25);
+        ctx.bezierCurveTo(mcx - mw * 0.52, mcy + mh * 0.25, mcx - mw * 0.52, mcy - mh * 0.02, mcx - mw * 0.36, mcy - mh * 0.02);
+        ctx.bezierCurveTo(mcx - mw * 0.4,  mcy - mh * 0.48, mcx - mw * 0.08, mcy - mh * 0.52, mcx - mw * 0.04, mcy - mh * 0.16);
+        ctx.bezierCurveTo(mcx - mw * 0.06, mcy - mh * 0.62, mcx + mw * 0.24, mcy - mh * 0.62, mcx + mw * 0.2,  mcy - mh * 0.18);
+        ctx.bezierCurveTo(mcx + mw * 0.26, mcy - mh * 0.54, mcx + mw * 0.52, mcy - mh * 0.28, mcx + mw * 0.42, mcy - mh * 0.02);
+        ctx.bezierCurveTo(mcx + mw * 0.54, mcy - mh * 0.02, mcx + mw * 0.52, mcy + mh * 0.25, mcx + mw * 0.42, mcy + mh * 0.25);
+        ctx.closePath();
+        ctx.stroke();
+        // box on bottom half
+        const bx3 = cx - s * 0.28, by3 = y + s * 0.52;
+        const bw3 = s * 0.56, bh3 = s * 0.42;
+        ctx.beginPath();
+        ctx.rect(bx3, by3, bw3, bh3);
+        ctx.stroke();
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(cx, by3); ctx.lineTo(cx, by3 + bh3);
+        ctx.moveTo(bx3, by3 + bh3 * 0.5); ctx.lineTo(bx3 + bw3, by3 + bh3 * 0.5);
+        ctx.stroke();
+        break;
+      }
+
+      default:
+        break;
+    }
+    ctx.restore();
+  }
 
   function latLngToXYZ(lat, lng, r) {
     const phi = ((90 - lat) * Math.PI) / 180;
@@ -149,12 +333,12 @@ export default function InteractiveGlobe({
         ctx.lineWidth = 1.2;
         ctx.stroke();
 
-        // Traveling dot
+        // Traveling dot along arc
         const t = (Math.sin(time * 1.2 + conn.from[0] * 0.1) + 1) / 2;
         const tx = (1 - t) * (1 - t) * sx1 + 2 * (1 - t) * t * scx + t * t * sx2;
         const ty = (1 - t) * (1 - t) * sy1 + 2 * (1 - t) * t * scy + t * t * sy2;
         ctx.beginPath();
-        ctx.arc(tx, ty, 2, 0, Math.PI * 2);
+        ctx.arc(tx, ty, 2.5, 0, Math.PI * 2);
         ctx.fillStyle = markerColor;
         ctx.fill();
       }
@@ -167,24 +351,30 @@ export default function InteractiveGlobe({
         if (z > radius * 0.1) continue;
         const [sx, sy] = proj(x, y, z, cx, cy, fov);
 
-        // Pulse ring
+        // Diamond node
+        const ds = 5;
+        ctx.save();
+        ctx.translate(sx, sy);
+        ctx.rotate(Math.PI / 4);
+        // Outer ring (fading pulse)
         const pulse = Math.sin(time * 2 + m.lat) * 0.5 + 0.5;
+        const pr = ds + pulse * 5;
         ctx.beginPath();
-        ctx.arc(sx, sy, 4 + pulse * 4, 0, Math.PI * 2);
-        ctx.strokeStyle = markerColor.replace('1)', `${(0.2 + pulse * 0.15).toFixed(2)})`);
+        ctx.rect(-pr, -pr, pr * 2, pr * 2);
+        ctx.strokeStyle = markerColor.replace('1)', `${(0.12 + pulse * 0.18).toFixed(2)})`);
         ctx.lineWidth = 1;
         ctx.stroke();
-
+        // Inner filled diamond
         ctx.beginPath();
-        ctx.arc(sx, sy, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = markerColor;
+        ctx.rect(-ds, -ds, ds * 2, ds * 2);
+        ctx.fillStyle = markerColor.replace('1)', '0.15)');
         ctx.fill();
+        ctx.strokeStyle = markerColor;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.restore();
 
-        if (m.label) {
-          ctx.font = '10px system-ui, sans-serif';
-          ctx.fillStyle = markerColor.replace('1)', '0.6)');
-          ctx.fillText(m.label, sx + 8, sy + 3);
-        }
+        drawMarkerIcon(ctx, m.icon, sx + 10, sy - 16, 32, markerColor);
       }
 
       animId = requestAnimationFrame(draw);

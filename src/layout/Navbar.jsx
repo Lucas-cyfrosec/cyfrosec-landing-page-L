@@ -1,53 +1,79 @@
 import { useState, useEffect } from 'react';
-import { ChevronDown, Menu, X, ArrowRight } from 'lucide-react';
+import { ChevronDown, Menu, X, ArrowRight, Shield, Bot, Layers, Code2, Cloud, Lock, FileText, Newspaper, LifeBuoy, DollarSign, Info } from 'lucide-react';
+import ThemeToggle from '../components/ThemeToggle';
+import { DropdownNavigation } from '../components/ui/dorpdown-navigation';
 import logo from '../assets/logo.png';
 
 const navItems = [
   {
+    id: 1,
     label: 'Product',
-    href: '#',
-    dropdown: [
-      { label: 'Features', href: '#solutions', description: 'Discover, assess, prioritize, remediate' },
-      { label: 'AI Engine', href: '#ai-engine', description: 'AI-powered detection & remediation' },
-      { label: 'Architecture', href: '#architecture', description: 'Platform overview' },
-      { label: 'API', href: '#', description: 'REST API & webhooks' }
+    link: '#',
+    subMenus: [
+      {
+        title: 'Product',
+        items: [
+          { label: 'Features', href: '#solutions', description: 'Discover, assess, prioritize, remediate', icon: Shield },
+          { label: 'AI Engine', href: '#ai-engine', description: 'AI-powered detection & remediation', icon: Bot },
+          { label: 'Architecture', href: '#architecture', description: 'Platform overview', icon: Layers },
+          { label: 'API', href: '#', description: 'REST API & webhooks', icon: Code2 }
+        ]
+      }
     ]
   },
   {
+    id: 2,
     label: 'Platform',
-    href: '#',
-    dropdown: [
-      { label: 'SaaS', href: 'https://app.cyfrosec.com', description: 'Cloud-hosted solution' },
-      { label: 'On-Premises', href: '#pricing', description: 'Self-hosted deployment' },
-      { label: 'Security', href: '#security', description: 'SOC 2, encryption, RBAC' },
-      { label: 'Compliance', href: '#security', description: 'Meet regulatory requirements' }
+    link: '#',
+    subMenus: [
+      {
+        title: 'Platform',
+        items: [
+          { label: 'SaaS', href: 'https://app.cyfrosec.com', description: 'Cloud-hosted solution', icon: Cloud },
+          { label: 'On-Premises', href: '#pricing', description: 'Self-hosted deployment', icon: Layers },
+          { label: 'Security', href: '#security', description: 'SOC 2, encryption, RBAC', icon: Lock },
+          { label: 'Compliance', href: '#security', description: 'Meet regulatory requirements', icon: Shield }
+        ]
+      }
     ]
   },
   {
+    id: 3,
     label: 'Solutions',
-    href: '#',
-    dropdown: [
-      { label: 'Vulnerability Management', href: '#solutions', description: 'Find and fix exposures' },
-      { label: 'Attack Surface Management', href: '#solutions', description: 'Complete visibility' },
-      { label: 'Cloud & AI Server Security', href: '#solutions', description: 'Secure cloud & AI infrastructure' },
-      { label: 'DevSecOps', href: '#solutions', description: 'Shift left security' }
+    link: '#',
+    subMenus: [
+      {
+        title: 'Solutions',
+        items: [
+          { label: 'Vulnerability Management', href: '#solutions', description: 'Find and fix exposures', icon: Shield },
+          { label: 'Attack Surface Management', href: '#solutions', description: 'Complete visibility', icon: Layers },
+          { label: 'Cloud & AI Server Security', href: '#solutions', description: 'Secure cloud & AI infrastructure', icon: Cloud },
+          { label: 'DevSecOps', href: '#solutions', description: 'Shift left security', icon: Bot }
+        ]
+      }
     ]
   },
   {
+    id: 4,
     label: 'Resources',
-    href: '#',
-    dropdown: [
-      { label: 'Documentation', href: '#', description: 'Guides and references' },
-      { label: 'Blog', href: '#', description: 'Security insights' },
-      { label: 'Case Studies', href: '#', description: 'Customer stories' },
-      { label: 'Support', href: 'mailto:support@cyfrosec.com', description: 'Get help' }
+    link: '#',
+    subMenus: [
+      {
+        title: 'Resources',
+        items: [
+          { label: 'Documentation', href: '/cyfrosec-landing-page-L/docs', description: 'Guides and references', isNav: true, icon: FileText },
+          { label: 'Blog', href: '#', description: 'Security insights', icon: Newspaper },
+          { label: 'Case Studies', href: '#', description: 'Customer stories', icon: FileText },
+          { label: 'Support', href: 'mailto:support@cyfrosec.com', description: 'Get help', icon: LifeBuoy }
+        ]
+      }
     ]
   },
-  { label: 'Pricing', href: '#pricing', dropdown: null },
-  { label: 'About', href: '#', dropdown: null }
+  { id: 5, label: 'Pricing', link: '#pricing', icon: DollarSign },
+  { id: 6, label: 'About', link: '#', icon: Info }
 ];
 
-export default function Navbar() {
+export default function Navbar({ navigate }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
 
@@ -61,16 +87,25 @@ export default function Navbar() {
     setActiveDropdown((prev) => (prev === label ? null : label));
   }
 
-  function closeDropdowns() {
-    setActiveDropdown(null);
-  }
-
-  function handleNavClick(href) {
+  function handleNavClick(href, isNav, event) {
     setMobileMenuOpen(false);
     setActiveDropdown(null);
-    if (href.startsWith('#')) {
-      const el = document.querySelector(href);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (isNav && navigate) {
+      event?.preventDefault();
+      navigate('docs');
+    } else if (href.startsWith('#')) {
+      event?.preventDefault();
+      const onDocsPage = window.location.pathname.includes('/docs');
+      if (onDocsPage && navigate) {
+        navigate('home');
+        setTimeout(() => {
+          const el = document.querySelector(href);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      } else {
+        const el = document.querySelector(href);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }
 
@@ -78,81 +113,39 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 cy-bg-sidebar shadow-lg border-b cy-border-sidebar">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl 3xl:max-w-screen-2xl">
         <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
-          <a href="/" className="flex items-center gap-2.5">
+          <a href="/" onClick={(e) => { e.preventDefault(); navigate?.('home'); }} className="flex items-center gap-2.5">
             <img src={logo} alt="CyfroSec" className="h-8 sm:h-9 lg:h-10 w-auto" />
           </a>
 
           {/* Desktop nav */}
           <div className="hidden lg:flex items-center">
             <div className="flex items-center gap-1 rounded-full px-2 py-1 bg-[var(--bg-sidebar-hover)]/60 backdrop-blur border border-[var(--border-sidebar)]/50">
-              {navItems.map((item) => (
-                item.dropdown ? (
-                  <div key={item.label} className="relative">
-                    <button
-                      className="flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium cy-text-sidebar hover:cy-text-sidebar-strong hover:bg-[var(--bg-sidebar-hover)] transition-all"
-                      onClick={() => handleDropdownToggle(item.label)}
-                      onMouseEnter={() => setActiveDropdown(item.label)}
-                      aria-expanded={activeDropdown === item.label}
-                      aria-haspopup="true"
-                    >
-                      {item.label}
-                      <ChevronDown className={`w-3.5 h-3.5 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} />
-                    </button>
-                    {activeDropdown === item.label && (
-                      <div
-                        className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-72 rounded-xl shadow-xl overflow-hidden animate-dropdown cy-bg-sidebar border cy-border-sidebar"
-                        onMouseLeave={closeDropdowns}
-                        role="menu"
-                        tabIndex="-1"
-                      >
-                        <div className="p-2">
-                          {item.dropdown.map((subItem) => (
-                            <a
-                              key={subItem.label}
-                              href={subItem.href}
-                              className="block p-3 rounded-lg hover:bg-[var(--bg-sidebar-hover)] transition-colors group"
-                              onClick={() => handleNavClick(subItem.href)}
-                              role="menuitem"
-                            >
-                              <div className="font-medium text-sm cy-text-sidebar-strong group-hover:text-primary-400 transition-colors">{subItem.label}</div>
-                              <div className="text-xs cy-text-sidebar-muted mt-0.5">{subItem.description}</div>
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className="px-4 py-2 rounded-full text-sm font-medium cy-text-sidebar hover:cy-text-sidebar-strong hover:bg-[var(--bg-sidebar-hover)] transition-all"
-                    onClick={() => handleNavClick(item.href)}
-                  >
-                    {item.label}
-                  </a>
-                )
-              ))}
+              <DropdownNavigation
+                navItems={navItems}
+                onNavigate={(href, isNav, event) => handleNavClick(href, isNav, event)}
+              />
             </div>
           </div>
 
           {/* Desktop CTAs */}
           <div className="hidden lg:flex items-center gap-3">
+            <ThemeToggle />
             <a href="mailto:sales@cyfrosec.com" className="text-sm font-medium cy-text-sidebar hover:cy-text-sidebar-strong transition-colors">
               Contact Sales
             </a>
             <a
               href="#cta"
               className="px-4 py-2 text-sm font-medium text-primary-400 hover:text-primary-300 border border-primary-500/50 hover:border-primary-400 rounded-full transition-all"
-              onClick={() => handleNavClick('#cta')}
+              onClick={(e) => handleNavClick('#cta', false, e)}
             >
-              Book a Demo
+              Sign In
             </a>
             <a
-              href="https://app.cyfrosec.com"
+              href="/cyfrosec-landing-page-L/get-started"
               className="px-5 py-2.5 bg-primary-500 hover:bg-primary-600 text-white text-sm font-semibold rounded-full transition-all shadow-sm hover:shadow-md flex items-center gap-1.5"
+              onClick={(e) => { e.preventDefault(); navigate?.('get-started'); }}
             >
-              Go to Portal
+              Get Started
               <ArrowRight className="w-4 h-4" />
             </a>
           </div>
@@ -175,7 +168,7 @@ export default function Navbar() {
           <div className="container mx-auto px-4 py-4 max-h-[calc(100vh-4rem)] overflow-y-auto">
             <div className="space-y-1">
               {navItems.map((item) => (
-                item.dropdown ? (
+                item.subMenus ? (
                   <div key={item.label}>
                     <button
                       className="w-full flex items-center justify-between px-4 py-3 text-surface-700 dark:text-surface-300 font-medium rounded-lg hover:bg-surface-50 dark:hover:bg-surface-800 transition-colors"
@@ -187,25 +180,27 @@ export default function Navbar() {
                     </button>
                     {activeDropdown === item.label && (
                       <div className="ml-4 mt-1 space-y-1 border-l-2 border-surface-200 dark:border-surface-700 pl-4">
-                        {item.dropdown.map((subItem) => (
-                          <a
-                            key={subItem.label}
-                            href={subItem.href}
-                            className="block py-2 text-surface-600 dark:text-surface-400 hover:text-primary-500 transition-colors"
-                            onClick={() => handleNavClick(subItem.href)}
-                          >
-                            {subItem.label}
-                          </a>
-                        ))}
+                        {item.subMenus.flatMap((group) =>
+                          group.items.map((subItem) => (
+                            <a
+                              key={subItem.label}
+                              href={subItem.href}
+                              className="block py-2 text-surface-600 dark:text-surface-400 hover:text-primary-500 transition-colors"
+                              onClick={(e) => handleNavClick(subItem.href, subItem.isNav, e)}
+                            >
+                              {subItem.label}
+                            </a>
+                          ))
+                        )}
                       </div>
                     )}
                   </div>
                 ) : (
                   <a
                     key={item.label}
-                    href={item.href}
+                    href={item.link}
                     className="block px-4 py-3 text-surface-700 dark:text-surface-300 font-medium rounded-lg hover:bg-surface-50 dark:hover:bg-surface-800 transition-colors"
-                    onClick={() => handleNavClick(item.href)}
+                    onClick={(e) => handleNavClick(item.link, item.isNav, e)}
                   >
                     {item.label}
                   </a>
@@ -213,6 +208,10 @@ export default function Navbar() {
               ))}
             </div>
             <div className="mt-6 pt-6 border-t border-surface-200 dark:border-surface-700 space-y-3">
+              <div className="flex items-center justify-between px-1">
+                <span className="text-sm text-surface-500 dark:text-surface-400">Theme</span>
+                <ThemeToggle />
+              </div>
               <a
                 href="mailto:sales@cyfrosec.com"
                 className="flex items-center justify-center gap-2 w-full px-4 py-3 text-surface-700 dark:text-surface-300 font-medium rounded-full hover:bg-surface-50 dark:hover:bg-surface-800 transition-colors"
@@ -223,16 +222,16 @@ export default function Navbar() {
               <a
                 href="#cta"
                 className="flex items-center justify-center gap-2 w-full px-4 py-3 text-primary-600 dark:text-primary-400 font-medium border border-primary-500/50 rounded-full hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
-                onClick={() => { setMobileMenuOpen(false); handleNavClick('#cta'); }}
+                onClick={(e) => { setMobileMenuOpen(false); handleNavClick('#cta', false, e); }}
               >
-                Book a Demo
+                Sign In
               </a>
               <a
-                href="https://app.cyfrosec.com"
+                href="/cyfrosec-landing-page-L/get-started"
                 className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-full transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); navigate?.('get-started'); }}
               >
-                Go to Portal <ArrowRight className="w-4 h-4" />
+                Get Started <ArrowRight className="w-4 h-4" />
               </a>
             </div>
           </div>

@@ -1,6 +1,48 @@
 @import 'tailwindcss';
 @import './theme-cyfrosec.css';
 
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-slideUp { animation: slideUp 0.25s ease-out; }
+
+/* ── Data packet traveling along connector lines ─────── */
+@keyframes packetLtr {
+  0%   { left: -4px; opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { left: calc(100% + 4px); opacity: 0; }
+}
+.anim-packet-ltr {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: packetLtr 2s ease-in-out infinite;
+}
+
+/* ── Platform Architecture slide transitions ─────────── */
+@keyframes slideOutLeft {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-60px); }
+}
+@keyframes slideOutRight {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(60px); }
+}
+@keyframes slideInFromRight {
+  from { opacity: 0; transform: translateX(60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInFromLeft {
+  from { opacity: 0; transform: translateX(-60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.anim-slide-out-left  { animation: slideOutLeft    0.22s ease-in  forwards; }
+.anim-slide-out-right { animation: slideOutRight   0.22s ease-in  forwards; }
+.anim-slide-in-right  { animation: slideInFromRight 0.28s ease-out forwards; }
+.anim-slide-in-left   { animation: slideInFromLeft  0.28s ease-out forwards; }
+
 /* ── Extra breakpoints for large monitors & TVs ──────── */
 @custom-variant 3xl (@media (width >= 1920px));
 @custom-variant 4xl (@media (width >= 2560px));

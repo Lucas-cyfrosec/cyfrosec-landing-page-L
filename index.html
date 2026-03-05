@@ -1,12 +1,20 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+      (function () {
+        var stored = localStorage.getItem('cyfrosec.theme');
+        if (stored !== 'light') {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>CyfroSec - Attack Surface Management</title>
-    <meta name="description" content="Continuous visibility and risk-based prioritization across your entire attack surface." />
+    <title>CyfroSec | Enterprise Security Platform</title>
+    <meta name="description" content="CyfroSec — Enterprise-grade security operations, vulnerability management, and compliance monitoring." />
     <meta name="theme-color" content="#039be0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
   </head>
   <body>
     <div id="root"></div>
