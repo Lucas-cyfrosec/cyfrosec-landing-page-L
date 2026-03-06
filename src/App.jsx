@@ -1,25 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import Navbar from './layout/Navbar';
 import AIChatbot from './components/AIChatbot';
 import DocsPage from './pages/DocsPage';
 import GetStartedPage from './pages/GetStartedPage';
-import {
-  Hero,
-  Learning,
-  ProblemStatement,
-  SolutionOverview,
-  PlatformArchitecture,
-  CyfroAIEngine,
-  Personas,
-  Outcomes,
-  Highlights,
-  FeatureComparison,
-  Security,
-  Pricing,
-  FAQ,
-  FinalCTA,
-  MegaFooter
-} from './sections';
+import { Hero, Learning, ProblemStatement, SolutionOverview } from './sections';
+
+// Lazy-load heavy below-fold sections so they don't block initial render
+const PlatformArchitecture = lazy(() => import('./sections/PlatformArchitecture'));
+const CyfroAIEngine = lazy(() => import('./sections/CyfroAIEngine'));
+const Personas = lazy(() => import('./sections/Personas'));
+const Outcomes = lazy(() => import('./sections/Outcomes'));
+const Highlights = lazy(() => import('./sections/Highlights'));
+const FeatureComparison = lazy(() => import('./sections/FeatureComparison'));
+const Security = lazy(() => import('./sections/Security'));
+const Pricing = lazy(() => import('./sections/Pricing'));
+const FAQ = lazy(() => import('./sections/FAQ'));
+const FinalCTA = lazy(() => import('./sections/FinalCTA'));
+const MegaFooter = lazy(() => import('./sections/MegaFooter'));
 
 const BASE = '/cyfrosec-landing-page-L';
 
@@ -85,19 +82,21 @@ export default function App() {
         <Learning />
         <ProblemStatement />
         <SolutionOverview />
-        <PlatformArchitecture />
-        <CyfroAIEngine />
-        <Personas />
-        <Outcomes />
-        <Highlights />
-        <FeatureComparison />
-        <Security />
-        <Pricing />
-        <FAQ />
-        <div className="min-h-screen flex flex-col">
-          <FinalCTA />
-          <MegaFooter />
-        </div>
+        <Suspense fallback={null}>
+          <PlatformArchitecture />
+          <CyfroAIEngine />
+          <Personas />
+          <Outcomes />
+          <Highlights />
+          <FeatureComparison />
+          <Security />
+          <Pricing />
+          <FAQ />
+          <div className="min-h-screen flex flex-col">
+            <FinalCTA />
+            <MegaFooter />
+          </div>
+        </Suspense>
       </main>
       <AIChatbot />
     </>

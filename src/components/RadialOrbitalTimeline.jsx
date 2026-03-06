@@ -35,29 +35,46 @@ export default function RadialOrbitalTimeline({ items = [] }) {
     }
   }, []);
 
+  const pausedRef = useRef(false);
+
   useEffect(() => {
     updateSize();
     const observer = new ResizeObserver(updateSize);
     if (containerRef.current) observer.observe(containerRef.current);
 
+    // Pause when tab is hidden
+    function onVisibilityChange() {
+      pausedRef.current = document.hidden;
+    }
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    let lastRenderTime = 0;
     function tick(time) {
-      if (autoRotateRef.current) {
-        const delta = lastTimeRef.current ? (time - lastTimeRef.current) / 1000 : 0;
-        rotationRef.current = (rotationRef.current + delta * 6) % 360;
-        setRotationAngle(rotationRef.current);
-      } else if (targetRotationRef.current !== null) {
-        // Smoothly interpolate toward target along the arc (no straight-line CSS jump)
-        const target = targetRotationRef.current;
-        const current = rotationRef.current;
-        let diff = ((target - current) % 360 + 360) % 360;
-        if (diff > 180) diff -= 360; // take shortest arc direction
-        if (Math.abs(diff) < 0.3) {
-          rotationRef.current = target;
-          targetRotationRef.current = null;
-        } else {
-          rotationRef.current = (current + diff * 0.08 + 360) % 360;
+      if (!pausedRef.current) {
+        if (autoRotateRef.current) {
+          const delta = lastTimeRef.current ? (time - lastTimeRef.current) / 1000 : 0;
+          // Always advance the ref so rotation accumulates at any frame rate
+          rotationRef.current = (rotationRef.current + delta * 6) % 360;
+          // Only trigger React re-render at ~30fps to reduce React work
+          if (time - lastRenderTime >= 33) {
+            lastRenderTime = time;
+            setRotationAngle(rotationRef.current);
+          }
+        } else if (targetRotationRef.current !== null) {
+          const target = targetRotationRef.current;
+          const current = rotationRef.current;
+          let diff = ((target - current) % 360 + 360) % 360;
+          if (diff > 180) diff -= 360;
+          if (Math.abs(diff) < 0.3) {
+            rotationRef.current = target;
+            targetRotationRef.current = null;
+            setRotationAngle(target);
+          } else {
+            const next = (current + diff * 0.08 + 360) % 360;
+            rotationRef.current = next;
+            setRotationAngle(next);
+          }
         }
-        setRotationAngle(rotationRef.current);
       }
       lastTimeRef.current = time;
       animFrameRef.current = requestAnimationFrame(tick);
@@ -66,6 +83,7 @@ export default function RadialOrbitalTimeline({ items = [] }) {
 
     return () => {
       cancelAnimationFrame(animFrameRef.current);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       observer.disconnect();
     };
   }, [updateSize]);

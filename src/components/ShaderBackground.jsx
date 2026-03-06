@@ -147,29 +147,47 @@ export default function ShaderBackground({ className = '' }) {
     const uRes = gl.getUniformLocation(program, 'iResolution');
     const uTime = gl.getUniformLocation(program, 'iTime');
 
+    let paused = false;
+
     function resize() {
       canvas.width = canvas.clientWidth * (window.devicePixelRatio || 1);
       canvas.height = canvas.clientHeight * (window.devicePixelRatio || 1);
       gl.viewport(0, 0, canvas.width, canvas.height);
     }
 
-    window.addEventListener('resize', resize);
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(canvas);
     resize();
+
+    // Pause when tab is hidden
+    function onVisibilityChange() {
+      paused = document.hidden;
+    }
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    // Pause when scrolled out of view
+    const intersectionObserver = new IntersectionObserver(
+      ([entry]) => { paused = !entry.isIntersecting || document.hidden; },
+      { threshold: 0.01 }
+    );
+    intersectionObserver.observe(canvas);
 
     const startTime = Date.now();
     let animId;
 
     function render() {
-      const t = (Date.now() - startTime) / 1000;
-      gl.clearColor(0, 0, 0, 1);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.useProgram(program);
-      gl.uniform2f(uRes, canvas.width, canvas.height);
-      gl.uniform1f(uTime, t);
-      gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
-      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-      gl.enableVertexAttribArray(aPos);
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      if (!paused) {
+        const t = (Date.now() - startTime) / 1000;
+        gl.clearColor(0, 0, 0, 1);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.useProgram(program);
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+        gl.uniform1f(uTime, t);
+        gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+        gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+        gl.enableVertexAttribArray(aPos);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      }
       animId = requestAnimationFrame(render);
     }
 
@@ -177,7 +195,9 @@ export default function ShaderBackground({ className = '' }) {
 
     return () => {
       cancelAnimationFrame(animId);
-      window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      resizeObserver.disconnect();
+      intersectionObserver.disconnect();
     };
   }, []);
 

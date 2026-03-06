@@ -10,5 +10,16 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     }
   },
-  base: '/cyfrosec-landing-page-L/'
+  base: '/cyfrosec-landing-page-L/',
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'motion': ['framer-motion', 'motion'],
+          'icons': ['lucide-react'],
+        }
+      }
+    }
+  }
 });

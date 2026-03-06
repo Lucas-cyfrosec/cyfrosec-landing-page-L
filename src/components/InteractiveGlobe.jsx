@@ -9,7 +9,6 @@ export default function InteractiveGlobe({
 }) {
   const canvasRef = useRef(null);
 
-  // icon types matching reference: person, cloud, building, globe, home, monitor, cloud-box
   const markers = [
     { lat: 37.78, lng: -122.42, icon: 'building' },
     { lat: 51.51, lng: -0.13,   icon: 'globe' },
@@ -42,48 +41,36 @@ export default function InteractiveGlobe({
     ctx.lineWidth = 1.8;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
-    // center helper
     const cx = x + s * 0.5, cy = y + s * 0.5;
     switch (type) {
 
       case 'person':
-        // outer circle ring
         ctx.beginPath();
         ctx.arc(cx, cy, s * 0.5, 0, Math.PI * 2);
         ctx.stroke();
-        // head
         ctx.beginPath();
         ctx.arc(cx, cy - s * 0.14, s * 0.14, 0, Math.PI * 2);
         ctx.stroke();
-        // shoulders arc
         ctx.beginPath();
         ctx.arc(cx, cy + s * 0.42, s * 0.26, Math.PI * 1.12, Math.PI * 1.88);
         ctx.stroke();
         break;
 
       case 'cloud': {
-        // smooth bezier cloud shape
         const drawCloud = (ccx, ccy, w, h) => {
           ctx.beginPath();
           ctx.moveTo(ccx - w * 0.42, ccy + h * 0.25);
-          // left wall down to close
           ctx.bezierCurveTo(ccx - w * 0.52, ccy + h * 0.25, ccx - w * 0.52, ccy - h * 0.02, ccx - w * 0.36, ccy - h * 0.02);
-          // left bump
           ctx.bezierCurveTo(ccx - w * 0.4,  ccy - h * 0.48, ccx - w * 0.08, ccy - h * 0.52, ccx - w * 0.04, ccy - h * 0.16);
-          // center bump (tallest)
           ctx.bezierCurveTo(ccx - w * 0.06, ccy - h * 0.62, ccx + w * 0.24, ccy - h * 0.62, ccx + w * 0.2,  ccy - h * 0.18);
-          // right bump
           ctx.bezierCurveTo(ccx + w * 0.26, ccy - h * 0.54, ccx + w * 0.52, ccy - h * 0.28, ccx + w * 0.42, ccy - h * 0.02);
-          // right wall
           ctx.bezierCurveTo(ccx + w * 0.54, ccy - h * 0.02, ccx + w * 0.52, ccy + h * 0.25, ccx + w * 0.42, ccy + h * 0.25);
           ctx.closePath();
           ctx.stroke();
         };
-        // back cloud (offset up-right, faded)
         ctx.globalAlpha = 0.4;
         drawCloud(cx + s * 0.14, cy - s * 0.12, s * 0.82, s * 0.6);
         ctx.globalAlpha = 1;
-        // front cloud
         drawCloud(cx - s * 0.04, cy + s * 0.08, s * 0.9, s * 0.62);
         break;
       }
@@ -91,11 +78,9 @@ export default function InteractiveGlobe({
       case 'building': {
         const bw = s * 0.72, bh = s * 0.9;
         const bx = cx - bw / 2, by = cy - bh / 2;
-        // main body
         ctx.beginPath();
         ctx.rect(bx, by, bw, bh);
         ctx.stroke();
-        // windows — 2 cols × 4 rows
         const ww = bw * 0.26, wh = bh * 0.13;
         const gx = (bw - 2 * ww) / 3, gy = (bh * 0.78 - 4 * wh) / 5;
         ctx.lineWidth = 1;
@@ -110,16 +95,13 @@ export default function InteractiveGlobe({
       }
 
       case 'globe':
-        // outer circle
         ctx.beginPath();
         ctx.arc(cx, cy, s * 0.48, 0, Math.PI * 2);
         ctx.stroke();
-        // vertical meridian ellipse
         ctx.beginPath();
         ctx.ellipse(cx, cy, s * 0.22, s * 0.48, 0, 0, Math.PI * 2);
         ctx.lineWidth = 1.2;
         ctx.stroke();
-        // horizontal parallels
         ctx.lineWidth = 1;
         [-0.26, 0, 0.26].forEach(dy => {
           const hw = Math.sqrt(0.48 * 0.48 - dy * dy) * s;
@@ -131,11 +113,9 @@ export default function InteractiveGlobe({
         break;
 
       case 'home':
-        // outer circle ring
         ctx.beginPath();
         ctx.arc(cx, cy, s * 0.5, 0, Math.PI * 2);
         ctx.stroke();
-        // roof
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.moveTo(cx, cy - s * 0.32);
@@ -143,11 +123,9 @@ export default function InteractiveGlobe({
         ctx.lineTo(cx + s * 0.3, cy - s * 0.04);
         ctx.closePath();
         ctx.stroke();
-        // walls
         ctx.beginPath();
         ctx.rect(cx - s * 0.22, cy - s * 0.04, s * 0.44, s * 0.35);
         ctx.stroke();
-        // door
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.rect(cx - s * 0.09, cy + s * 0.1, s * 0.18, s * 0.21);
@@ -157,24 +135,20 @@ export default function InteractiveGlobe({
       case 'monitor': {
         const mw = s * 0.9, mh = s * 0.54;
         const mx = cx - mw / 2, my = cy - s * 0.42;
-        // screen
         ctx.beginPath();
         ctx.rect(mx, my, mw, mh);
         ctx.stroke();
-        // stand
         ctx.beginPath();
         ctx.moveTo(cx, my + mh);
         ctx.lineTo(cx, my + mh + s * 0.1);
         ctx.moveTo(cx - s * 0.2, my + mh + s * 0.1);
         ctx.lineTo(cx + s * 0.2, my + mh + s * 0.1);
         ctx.stroke();
-        // package box below
         const bw2 = s * 0.46, bh2 = s * 0.34;
         const bx2 = cx - bw2 / 2, by2 = my + mh + s * 0.18;
         ctx.beginPath();
         ctx.rect(bx2, by2, bw2, bh2);
         ctx.stroke();
-        // box cross lines
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(bx2 + bw2 * 0.15, by2 + bh2 * 0.15);
@@ -186,7 +160,6 @@ export default function InteractiveGlobe({
       }
 
       case 'cloud-box': {
-        // small cloud on top half using bezier
         const mcx = cx, mcy = cy - s * 0.22;
         const mw = s * 0.78, mh = s * 0.48;
         ctx.beginPath();
@@ -198,7 +171,6 @@ export default function InteractiveGlobe({
         ctx.bezierCurveTo(mcx + mw * 0.54, mcy - mh * 0.02, mcx + mw * 0.52, mcy + mh * 0.25, mcx + mw * 0.42, mcy + mh * 0.25);
         ctx.closePath();
         ctx.stroke();
-        // box on bottom half
         const bx3 = cx - s * 0.28, by3 = y + s * 0.52;
         const bw3 = s * 0.56, bh3 = s * 0.42;
         ctx.beginPath();
@@ -245,7 +217,6 @@ export default function InteractiveGlobe({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Generate fibonacci sphere dots
     const dots = [];
     const numDots = 1200;
     const golden = (1 + Math.sqrt(5)) / 2;
@@ -261,14 +232,34 @@ export default function InteractiveGlobe({
     let dragging = false;
     let dragStartX = 0, dragStartY = 0, dragStartRY = 0, dragStartRX = 0;
     let animId;
+    // Store canvas dimensions to avoid resizing every frame
+    let canvasW = 0, canvasH = 0, canvasDpr = 1;
+    let paused = false;
 
-    function draw() {
+    function resizeCanvas() {
       const dpr = window.devicePixelRatio || 1;
       const w = canvas.clientWidth;
       const h = canvas.clientHeight;
+      if (w === canvasW && h === canvasH && dpr === canvasDpr) return;
+      canvasW = w;
+      canvasH = h;
+      canvasDpr = dpr;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
-      ctx.scale(dpr, dpr);
+    }
+
+    function draw() {
+      if (paused) {
+        animId = requestAnimationFrame(draw);
+        return;
+      }
+
+      // Use stored dimensions — no resize here
+      const dpr = canvasDpr;
+      const w = canvasW;
+      const h = canvasH;
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       const cx = w / 2;
       const cy = h / 2;
@@ -280,21 +271,18 @@ export default function InteractiveGlobe({
 
       ctx.clearRect(0, 0, w, h);
 
-      // Outer glow
       const glow = ctx.createRadialGradient(cx, cy, radius * 0.8, cx, cy, radius * 1.5);
       glow.addColorStop(0, 'rgba(3, 155, 224, 0.04)');
       glow.addColorStop(1, 'rgba(3, 155, 224, 0)');
       ctx.fillStyle = glow;
       ctx.fillRect(0, 0, w, h);
 
-      // Globe outline
       ctx.beginPath();
       ctx.arc(cx, cy, radius, 0, Math.PI * 2);
       ctx.strokeStyle = 'rgba(3, 155, 224, 0.08)';
       ctx.lineWidth = 1;
       ctx.stroke();
 
-      // Dots
       for (const d of dots) {
         let [x, y, z] = [d[0] * radius, d[1] * radius, d[2] * radius];
         [x, y, z] = rotX(x, y, z, rx);
@@ -308,7 +296,6 @@ export default function InteractiveGlobe({
         ctx.fill();
       }
 
-      // Arcs
       for (const conn of connections) {
         let [x1, y1, z1] = latLngToXYZ(conn.from[0], conn.from[1], radius);
         let [x2, y2, z2] = latLngToXYZ(conn.to[0], conn.to[1], radius);
@@ -333,7 +320,6 @@ export default function InteractiveGlobe({
         ctx.lineWidth = 1.2;
         ctx.stroke();
 
-        // Traveling dot along arc
         const t = (Math.sin(time * 1.2 + conn.from[0] * 0.1) + 1) / 2;
         const tx = (1 - t) * (1 - t) * sx1 + 2 * (1 - t) * t * scx + t * t * sx2;
         const ty = (1 - t) * (1 - t) * sy1 + 2 * (1 - t) * t * scy + t * t * sy2;
@@ -343,7 +329,6 @@ export default function InteractiveGlobe({
         ctx.fill();
       }
 
-      // Markers
       for (const m of markers) {
         let [x, y, z] = latLngToXYZ(m.lat, m.lng, radius);
         [x, y, z] = rotX(x, y, z, rx);
@@ -351,12 +336,10 @@ export default function InteractiveGlobe({
         if (z > radius * 0.1) continue;
         const [sx, sy] = proj(x, y, z, cx, cy, fov);
 
-        // Diamond node
         const ds = 5;
         ctx.save();
         ctx.translate(sx, sy);
         ctx.rotate(Math.PI / 4);
-        // Outer ring (fading pulse)
         const pulse = Math.sin(time * 2 + m.lat) * 0.5 + 0.5;
         const pr = ds + pulse * 5;
         ctx.beginPath();
@@ -364,7 +347,6 @@ export default function InteractiveGlobe({
         ctx.strokeStyle = markerColor.replace('1)', `${(0.12 + pulse * 0.18).toFixed(2)})`);
         ctx.lineWidth = 1;
         ctx.stroke();
-        // Inner filled diamond
         ctx.beginPath();
         ctx.rect(-ds, -ds, ds * 2, ds * 2);
         ctx.fillStyle = markerColor.replace('1)', '0.15)');
@@ -395,9 +377,26 @@ export default function InteractiveGlobe({
     }
     function onUp() { dragging = false; }
 
+    // Pause when tab is hidden
+    function onVisibilityChange() {
+      paused = document.hidden;
+    }
+
+    // Pause when scrolled out of view
+    const observer = new IntersectionObserver(
+      ([entry]) => { paused = !entry.isIntersecting || document.hidden; },
+      { threshold: 0.01 }
+    );
+    observer.observe(canvas);
+
+    const resizeObserver = new ResizeObserver(resizeCanvas);
+    resizeObserver.observe(canvas);
+    resizeCanvas();
+
     canvas.addEventListener('pointerdown', onDown);
     canvas.addEventListener('pointermove', onMove);
     canvas.addEventListener('pointerup', onUp);
+    document.addEventListener('visibilitychange', onVisibilityChange);
 
     animId = requestAnimationFrame(draw);
 
@@ -406,6 +405,9 @@ export default function InteractiveGlobe({
       canvas.removeEventListener('pointerdown', onDown);
       canvas.removeEventListener('pointermove', onMove);
       canvas.removeEventListener('pointerup', onUp);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      observer.disconnect();
+      resizeObserver.disconnect();
     };
   }, []);
 
