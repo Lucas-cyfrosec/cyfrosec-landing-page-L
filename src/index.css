@@ -143,6 +143,120 @@ body {
 .cy-border-strong { border-color: var(--border-strong); }
 .cy-border-sidebar { border-color: var(--border-sidebar); }
 
+:root:not(.dark) .cy-navbar-root,
+:root:not(.dark) .cy-navbar-shell,
+:root:not(.dark) .cy-navbar-offset {
+  background-color: var(--hero-bg, var(--color-surface-950)) !important;
+}
+
+:root:not(.dark) .cy-navbar-shell.cy-navbar-shell-scrolled {
+  background-color: color-mix(
+    in srgb,
+    var(--hero-bg, var(--color-surface-950)) 88%,
+    transparent
+  ) !important;
+}
+
+:root:not(.dark) .cy-navbar-root,
+:root:not(.dark) .cy-navbar-shell {
+  color: var(--text-sidebar-strong);
+}
+
+:root:not(.dark) .cy-navbar-nav .cy-navbar-link,
+:root:not(.dark) .cy-navbar-actions .cy-navbar-strong,
+:root:not(.dark) .cy-navbar-mobile-toggle .cy-navbar-ghost {
+  color: var(--text-sidebar-strong) !important;
+}
+
+:root:not(.dark) .cy-navbar-actions .cy-navbar-muted {
+  color: var(--text-sidebar) !important;
+}
+
+:root:not(.dark) .cy-navbar-nav .cy-navbar-link:hover,
+:root:not(.dark) .cy-navbar-actions .cy-navbar-ghost:hover,
+:root:not(.dark) .cy-navbar-mobile-toggle .cy-navbar-ghost:hover {
+  color: var(--text-inverse) !important;
+}
+
+:root:not(.dark) .cy-navbar-actions > button,
+:root:not(.dark) .cy-navbar-mobile-toggle > button {
+  color: var(--text-sidebar-strong) !important;
+}
+
+:root:not(.dark) .cy-navbar-actions > button svg,
+:root:not(.dark) .cy-navbar-mobile-toggle > button svg,
+:root:not(.dark) .cy-navbar-nav svg {
+  color: currentColor;
+  stroke: currentColor;
+}
+
+:root:not(.dark) .cy-navbar-divider {
+  background-color: rgb(255 255 255 / 0.18) !important;
+}
+
+:root:not(.dark) .cy-navbar-actions > button {
+  border-color: rgb(255 255 255 / 0.18) !important;
+  background-color: rgb(255 255 255 / 0.06) !important;
+}
+
+:root:not(.dark) .cy-navbar-mobile-toggle > button:first-child {
+  border-color: rgb(255 255 255 / 0.18) !important;
+  background-color: rgb(255 255 255 / 0.06) !important;
+}
+
+:root:not(.dark) .cy-navbar-nav .cy-navbar-hover-bg {
+  background-color: rgb(255 255 255 / 0.08) !important;
+}
+
+:root:not(.dark) .cy-navbar-dropdown {
+  background-color: var(--hero-bg, var(--color-surface-950)) !important;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  box-shadow: 0 20px 50px rgb(0 0 0 / 0.35);
+}
+
+:root:not(.dark) .cy-navbar-dropdown-label {
+  color: rgb(255 255 255 / 0.62) !important;
+}
+
+:root:not(.dark) .cy-navbar-dropdown-title {
+  color: rgb(255 255 255 / 0.94) !important;
+}
+
+:root:not(.dark) .cy-navbar-dropdown-desc {
+  color: rgb(255 255 255 / 0.68) !important;
+}
+
+:root:not(.dark) .cy-navbar-dropdown-icon {
+  background-color: rgb(255 255 255 / 0.04) !important;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  color: rgb(255 255 255 / 0.9) !important;
+}
+
+:root:not(.dark) .cy-navbar-dropdown-item {
+  background-color: transparent;
+}
+
+:root:not(.dark) .cy-navbar-dropdown-item:hover,
+:root:not(.dark) .cy-navbar-dropdown-item:focus-visible,
+:root:not(.dark) .cy-navbar-dropdown-item[data-active="true"] {
+  background-color: rgb(255 255 255 / 0.06) !important;
+}
+
+:root:not(.dark) .cy-navbar-dropdown-item:hover .cy-navbar-dropdown-title,
+:root:not(.dark) .cy-navbar-dropdown-item:focus-visible .cy-navbar-dropdown-title {
+  color: var(--text-inverse) !important;
+}
+
+:root:not(.dark) .cy-navbar-dropdown-item:hover .cy-navbar-dropdown-desc,
+:root:not(.dark) .cy-navbar-dropdown-item:focus-visible .cy-navbar-dropdown-desc {
+  color: rgb(255 255 255 / 0.78) !important;
+}
+
+:root:not(.dark) .cy-navbar-dropdown svg {
+  color: currentColor;
+  stroke: currentColor;
+}
+
 /* ── Component Utilities ─────────────────────────────── */
 .cy-btn-primary {
   background-color: var(--brand-primary);

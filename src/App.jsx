@@ -55,7 +55,7 @@ export default function App() {
     return (
       <>
         <Navbar navigate={navigate} />
-        <div className="h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
+        <div className="cy-navbar-offset h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
         <DocsPage navigate={navigate} />
         <AIChatbot />
       </>
@@ -66,7 +66,7 @@ export default function App() {
     return (
       <>
         <Navbar navigate={navigate} />
-        <div className="h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
+        <div className="cy-navbar-offset h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
         <GetStartedPage navigate={navigate} />
       </>
     );
@@ -76,7 +76,10 @@ export default function App() {
     <>
       <Navbar navigate={navigate} />
       {/* Spacer matching navbar height */}
-      <div className="h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
+      <div
+        className="cy-navbar-offset h-14 sm:h-16 lg:h-20"
+        aria-hidden="true"
+      ></div>
       <main>
         <Hero />
         <Learning />

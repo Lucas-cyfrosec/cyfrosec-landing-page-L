@@ -21,7 +21,7 @@ export function DropdownNavigation({ navItems, onNavigate }) {
         >
           <a
             href={navItem.link ?? '#'}
-            className="text-sm py-2 px-4 flex cursor-pointer group transition-colors duration-300 items-center justify-center gap-1 cy-text-sidebar hover:cy-text-sidebar-strong relative rounded-full"
+            className="cy-navbar-link text-[13px] py-2 px-4 flex cursor-pointer group transition-colors duration-300 items-center justify-center gap-1 cy-text-secondary hover:cy-text-primary relative rounded-full"
             onMouseEnter={() => setIsHover(navItem.id)}
             onMouseLeave={() => setIsHover(null)}
             onClick={(event) => onNavigate?.(navItem.link ?? '#', navItem.isNav, event)}
@@ -31,7 +31,7 @@ export function DropdownNavigation({ navItems, onNavigate }) {
             <span>{navItem.label}</span>
             {navItem.subMenus && (
               <ChevronDown
-                className={`h-4 w-4 group-hover:rotate-180 duration-300 transition-transform ${
+                className={`h-3.5 w-3.5 group-hover:rotate-180 duration-300 transition-transform ${
                   openMenu === navItem.label ? 'rotate-180' : ''
                 }`}
               />
@@ -39,7 +39,7 @@ export function DropdownNavigation({ navItems, onNavigate }) {
             {(isHover === navItem.id || openMenu === navItem.label) && (
               <motion.div
                 layoutId="hover-bg"
-                className="absolute inset-0 size-full bg-[var(--bg-sidebar-hover)]"
+                className="cy-navbar-hover-bg absolute inset-0 size-full bg-[color-mix(in_srgb,var(--text-primary)_6%,transparent)]"
                 style={{ borderRadius: 99 }}
               />
             )}
@@ -49,14 +49,14 @@ export function DropdownNavigation({ navItems, onNavigate }) {
             {openMenu === navItem.label && navItem.subMenus && (
               <div className="w-auto absolute left-0 top-full pt-2 z-50">
                 <motion.div
-                  className="cy-bg-sidebar border cy-border-sidebar p-4 w-max shadow-xl"
+                  className="cy-navbar-dropdown cy-bg-elevated border cy-border p-4 w-max shadow-2xl"
                   style={{ borderRadius: 16 }}
                   layoutId="menu"
                 >
                   <div className="w-fit shrink-0 flex space-x-9 overflow-hidden">
                     {navItem.subMenus.map((sub) => (
                       <motion.div layout className="w-full" key={sub.title}>
-                        <h3 className="mb-4 text-sm font-medium capitalize cy-text-sidebar-muted">
+                        <h3 className="cy-navbar-dropdown-label mb-4 text-[10px] font-bold uppercase tracking-[0.18em] cy-text-muted">
                           {sub.title}
                         </h3>
                         <ul className="space-y-4">
@@ -66,17 +66,17 @@ export function DropdownNavigation({ navItems, onNavigate }) {
                               <li key={item.label}>
                                 <a
                                   href={item.href ?? '#'}
-                                  className="flex items-start space-x-3 group"
+                                  className="cy-navbar-dropdown-item flex items-start space-x-3 group rounded-xl p-2 -mx-2 -my-1 transition-colors duration-300"
                                   onClick={(event) => onNavigate?.(item.href ?? '#', item.isNav, event)}
                                 >
-                                  <div className="border cy-border-sidebar cy-text-sidebar-strong rounded-md flex items-center justify-center size-9 shrink-0 group-hover:bg-[var(--bg-sidebar-hover)] transition-colors duration-300">
+                                  <div className="cy-navbar-dropdown-icon border cy-border cy-text-primary rounded-md flex items-center justify-center size-9 shrink-0 group-hover:bg-[color-mix(in_srgb,var(--text-primary)_4%,transparent)] transition-colors duration-300">
                                     <Icon className="h-5 w-5 flex-none" />
                                   </div>
                                   <div className="leading-5 w-max">
-                                    <p className="text-sm font-medium cy-text-sidebar-strong shrink-0">
+                                    <p className="cy-navbar-dropdown-title text-[13px] font-semibold cy-text-primary shrink-0">
                                       {item.label}
                                     </p>
-                                    <p className="text-xs cy-text-sidebar-muted shrink-0 group-hover:cy-text-sidebar-strong transition-colors duration-300">
+                                    <p className="cy-navbar-dropdown-desc text-xs cy-text-muted shrink-0 group-hover:cy-text-secondary transition-colors duration-300">
                                       {item.description}
                                     </p>
                                   </div>

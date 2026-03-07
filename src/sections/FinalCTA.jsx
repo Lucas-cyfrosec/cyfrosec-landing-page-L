@@ -3,7 +3,7 @@ import { ArrowRight, Mail } from 'lucide-react';
 export default function FinalCTA() {
   return (
     <section id="cta" className="relative overflow-hidden flex-1 flex flex-col justify-center border-t cy-border-strong">
-      <div className="relative py-12 sm:py-16 lg:py-24 3xl:py-32 bg-[#020610]">
+      <div className="relative py-12 sm:py-16 lg:py-24 3xl:py-32 bg-[var(--bg-overlay)] dark:bg-[#020610]">
         {/* Full-width bottom glow to mirror the immersive CTA style */}
         <div
           aria-hidden

@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ChevronDown, Menu, X, ArrowRight, Shield, Bot, Layers, Code2, Cloud, Lock, FileText, Newspaper, LifeBuoy, DollarSign, Info } from 'lucide-react';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import ThemeToggle from '../components/ThemeToggle';
 import { DropdownNavigation } from '../components/ui/dorpdown-navigation';
 import logo from '../assets/logo.png';
@@ -76,12 +77,12 @@ const navItems = [
 export default function Navbar({ navigate }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {};
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    setIsScrolled(latest > 20);
+  });
 
   function handleDropdownToggle(label) {
     setActiveDropdown((prev) => (prev === label ? null : label));
@@ -110,68 +111,101 @@ export default function Navbar({ navigate }) {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 cy-bg-sidebar shadow-lg border-b cy-border-sidebar">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl 3xl:max-w-screen-2xl">
-        <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
-          <a href="/" onClick={(e) => { e.preventDefault(); navigate?.('home'); }} className="flex items-center gap-2.5">
-            <img src={logo} alt="CyfroSec" className="h-8 sm:h-9 lg:h-10 w-auto" />
+    <motion.header
+      className="cy-navbar-root fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <div className={`transition-all duration-300 ${isScrolled ? 'px-4 pt-3' : ''}`}>
+        <motion.div
+          className={`cy-navbar-shell relative flex items-center justify-between transition-all duration-300 ${
+            isScrolled
+              ? 'cy-navbar-shell-scrolled h-14 max-w-7xl mx-auto px-4 lg:px-6 rounded-2xl bg-[color-mix(in_srgb,var(--bg-elevated)_80%,transparent)] backdrop-blur-xl border cy-border shadow-lg shadow-black/10'
+              : 'h-16 w-full px-6 lg:px-12 bg-[var(--bg-canvas)] border-b border-[color-mix(in_srgb,var(--border-default)_25%,transparent)]'
+          }`}
+        >
+          {/* Glow effect when scrolled */}
+          {isScrolled && (
+            <div className="absolute inset-x-0 -bottom-px mx-auto h-[1px] w-3/4 bg-gradient-to-r from-transparent via-primary-500/30 to-transparent pointer-events-none" />
+          )}
+
+        {/* Logo */}
+        <a
+          href="/"
+          onClick={(e) => { e.preventDefault(); navigate?.('home'); }}
+          className="flex items-center gap-2.5 shrink-0 z-10"
+        >
+          <img src={logo} alt="CyfroSec" className="h-8 sm:h-9 lg:h-10 w-auto" />
+        </a>
+
+        {/* Desktop nav - centered */}
+        <div className="cy-navbar-nav hidden lg:flex flex-1 justify-center">
+          <DropdownNavigation
+            navItems={navItems}
+            onNavigate={(href, isNav, event) => handleNavClick(href, isNav, event)}
+          />
+        </div>
+
+        {/* Desktop CTAs */}
+        <div className="cy-navbar-actions hidden lg:flex items-center gap-3 z-10">
+          <ThemeToggle />
+          <a href="mailto:sales@cyfrosec.com" className="cy-navbar-muted cy-navbar-ghost text-[13px] font-semibold cy-text-secondary hover:cy-text-primary transition-colors px-2">
+            Contact Sales
           </a>
-
-          {/* Desktop nav */}
-          <div className="hidden lg:flex items-center">
-            <div className="flex items-center gap-1 rounded-full px-2 py-1 bg-[var(--bg-sidebar-hover)]/60 backdrop-blur border border-[var(--border-sidebar)]/50">
-              <DropdownNavigation
-                navItems={navItems}
-                onNavigate={(href, isNav, event) => handleNavClick(href, isNav, event)}
-              />
-            </div>
-          </div>
-
-          {/* Desktop CTAs */}
-          <div className="hidden lg:flex items-center gap-3">
-            <ThemeToggle />
-            <a href="mailto:sales@cyfrosec.com" className="text-sm font-medium cy-text-sidebar hover:cy-text-sidebar-strong transition-colors">
-              Contact Sales
-            </a>
-            <a
-              href="#cta"
-              className="px-4 py-2 text-sm font-medium text-primary-400 hover:text-primary-300 border border-primary-500/50 hover:border-primary-400 rounded-full transition-all"
-              onClick={(e) => handleNavClick('#cta', false, e)}
-            >
-              Sign In
-            </a>
-            <a
-              href="/cyfrosec-landing-page-L/get-started"
-              className="px-5 py-2.5 bg-primary-500 hover:bg-primary-600 text-white text-sm font-semibold rounded-full transition-all shadow-sm hover:shadow-md flex items-center gap-1.5"
-              onClick={(e) => { e.preventDefault(); navigate?.('get-started'); }}
-            >
-              Get Started
-              <ArrowRight className="w-4 h-4" />
-            </a>
-          </div>
-
-          {/* Mobile menu button */}
-          <button
-            className="lg:hidden p-2 rounded-lg cy-text-sidebar hover:bg-[var(--bg-sidebar-hover)] transition-colors"
-            onClick={() => setMobileMenuOpen((o) => !o)}
-            aria-label="Toggle menu"
-            aria-expanded={mobileMenuOpen}
+          <div className="cy-navbar-divider h-4 w-px bg-[color-mix(in_srgb,var(--text-primary)_10%,transparent)] mx-1" />
+          <a
+            href="#cta"
+            className="cy-navbar-strong cy-navbar-ghost text-[13px] font-semibold cy-text-primary hover:text-primary-500 transition-colors px-2"
+            onClick={(e) => handleNavClick('#cta', false, e)}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            Sign In
+          </a>
+          <a
+            href="/cyfrosec-landing-page-L/get-started"
+            className="px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white text-[13px] font-semibold rounded-full transition-all shadow-[0_4px_14px_rgba(3,155,224,0.3)] hover:shadow-[0_6px_20px_rgba(3,155,224,0.4)] flex items-center gap-1.5"
+            onClick={(e) => { e.preventDefault(); navigate?.('get-started'); }}
+          >
+            Get Started
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+
+        {/* Mobile toggle */}
+        <div className="cy-navbar-mobile-toggle flex items-center gap-3 lg:hidden z-10">
+          <ThemeToggle />
+          <button
+            className="cy-navbar-ghost rounded-full p-2 cy-text-secondary transition-all hover:bg-[color-mix(in_srgb,var(--text-primary)_6%,transparent)]"
+            aria-label="Toggle menu"
+            onClick={() => setMobileMenuOpen((v) => !v)}
+          >
+            <motion.div
+              initial={false}
+              animate={{ rotate: mobileMenuOpen ? 90 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </motion.div>
           </button>
         </div>
-      </div>
+      </motion.div>
 
       {/* Mobile menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-white dark:bg-surface-900 border-t border-surface-200 dark:border-surface-700 animate-slideDown">
-          <div className="container mx-auto px-4 py-4 max-h-[calc(100vh-4rem)] overflow-y-auto">
-            <div className="space-y-1">
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="absolute top-full left-4 right-4 mt-2 overflow-hidden rounded-2xl border cy-border cy-bg-elevated shadow-2xl lg:hidden backdrop-blur-xl z-50"
+            initial={{ height: 0, opacity: 0, y: -10 }}
+            animate={{ height: 'auto', opacity: 1, y: 0 }}
+            exit={{ height: 0, opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="flex flex-col gap-1 px-4 py-5 max-h-[85vh] overflow-y-auto">
               {navItems.map((item) => (
                 item.subMenus ? (
                   <div key={item.label}>
                     <button
-                      className="w-full flex items-center justify-between px-4 py-3 text-surface-700 dark:text-surface-300 font-medium rounded-lg hover:bg-surface-50 dark:hover:bg-surface-800 transition-colors"
+                      className="w-full flex items-center justify-between rounded-xl px-3 py-3 text-sm font-medium cy-text-primary transition-colors hover:bg-[color-mix(in_srgb,var(--text-primary)_6%,transparent)]"
                       onClick={() => handleDropdownToggle(item.label)}
                       aria-expanded={activeDropdown === item.label}
                     >
@@ -179,13 +213,13 @@ export default function Navbar({ navigate }) {
                       <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} />
                     </button>
                     {activeDropdown === item.label && (
-                      <div className="ml-4 mt-1 space-y-1 border-l-2 border-surface-200 dark:border-surface-700 pl-4">
+                      <div className="ml-4 mt-1 space-y-1 border-l-2 cy-border pl-4">
                         {item.subMenus.flatMap((group) =>
                           group.items.map((subItem) => (
                             <a
                               key={subItem.label}
                               href={subItem.href}
-                              className="block py-2 text-surface-600 dark:text-surface-400 hover:text-primary-500 transition-colors"
+                              className="block py-2 text-sm cy-text-secondary hover:cy-text-primary transition-colors"
                               onClick={(e) => handleNavClick(subItem.href, subItem.isNav, e)}
                             >
                               {subItem.label}
@@ -199,44 +233,49 @@ export default function Navbar({ navigate }) {
                   <a
                     key={item.label}
                     href={item.link}
-                    className="block px-4 py-3 text-surface-700 dark:text-surface-300 font-medium rounded-lg hover:bg-surface-50 dark:hover:bg-surface-800 transition-colors"
+                    className="rounded-xl px-3 py-3 text-sm font-medium cy-text-primary transition-colors hover:bg-[color-mix(in_srgb,var(--text-primary)_6%,transparent)]"
                     onClick={(e) => handleNavClick(item.link, item.isNav, e)}
                   >
                     {item.label}
                   </a>
                 )
               ))}
-            </div>
-            <div className="mt-6 pt-6 border-t border-surface-200 dark:border-surface-700 space-y-3">
-              <div className="flex items-center justify-between px-1">
-                <span className="text-sm text-surface-500 dark:text-surface-400">Theme</span>
-                <ThemeToggle />
+
+              <div className="my-3 border-t cy-border mx-2" />
+
+              <div className="flex flex-col gap-3 px-2">
+                <a
+                  href="/cyfrosec-landing-page-L/get-started"
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-xl transition-colors"
+                  onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); navigate?.('get-started'); }}
+                >
+                  Get Started Free <ArrowRight className="w-4 h-4" />
+                </a>
+                <a
+                  href="mailto:sales@cyfrosec.com"
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 cy-text-primary font-medium rounded-xl hover:bg-[color-mix(in_srgb,var(--text-primary)_6%,transparent)] transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Contact Sales
+                </a>
+                <div className="relative flex items-center py-2">
+                  <div className="flex-grow border-t cy-border" />
+                  <span className="shrink-0 px-3 text-[10px] uppercase tracking-wider cy-text-muted">or</span>
+                  <div className="flex-grow border-t cy-border" />
+                </div>
+                <a
+                  href="#cta"
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 cy-text-secondary font-medium rounded-xl hover:bg-[color-mix(in_srgb,var(--text-primary)_6%,transparent)] transition-colors"
+                  onClick={(e) => { setMobileMenuOpen(false); handleNavClick('#cta', false, e); }}
+                >
+                  Sign In
+                </a>
               </div>
-              <a
-                href="mailto:sales@cyfrosec.com"
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 text-surface-700 dark:text-surface-300 font-medium rounded-full hover:bg-surface-50 dark:hover:bg-surface-800 transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Contact Sales
-              </a>
-              <a
-                href="#cta"
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 text-primary-600 dark:text-primary-400 font-medium border border-primary-500/50 rounded-full hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
-                onClick={(e) => { setMobileMenuOpen(false); handleNavClick('#cta', false, e); }}
-              >
-                Sign In
-              </a>
-              <a
-                href="/cyfrosec-landing-page-L/get-started"
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-full transition-colors"
-                onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); navigate?.('get-started'); }}
-              >
-                Get Started <ArrowRight className="w-4 h-4" />
-              </a>
             </div>
-          </div>
-        </div>
-      )}
-    </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      </div>
+    </motion.header>
   );
 }
