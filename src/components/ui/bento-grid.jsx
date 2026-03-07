@@ -5,7 +5,7 @@ function cn(...classes) {
 }
 
 export const BentoGrid = ({ children, className }) => (
-  <div className={cn('grid w-full auto-rows-[17rem] grid-cols-3 gap-4', className)}>
+  <div className={cn('grid w-full auto-rows-[18rem] grid-cols-3 gap-5', className)}>
     {children}
   </div>
 );
@@ -23,112 +23,119 @@ export const BentoCard = ({
   impact,
   accent = '3 155 224',
 }) => {
-  const accentTint = `rgb(${accent} / 0.14)`;
-  const accentSoft = `rgb(${accent} / 0.08)`;
-  const accentBorder = `rgb(${accent} / 0.16)`;
-  const accentStrong = `rgb(${accent} / 0.92)`;
+  const accentRgb = accent;
+  const accentColor  = `rgb(${accentRgb})`;
+  const accentTint   = `rgb(${accentRgb} / 0.12)`;
+  const accentGlow   = `rgb(${accentRgb} / 0.18)`;
+  const accentBorder = `rgb(${accentRgb} / 0.28)`;
+  const accentStrong = `rgb(${accentRgb} / 0.95)`;
 
   return (
     <article
       className={cn(
-        'group relative col-span-3 overflow-hidden rounded-[24px] border border-surface-200/80 bg-white/95',
-        'shadow-[0_18px_50px_-34px_rgba(15,31,47,0.25)] transition-all duration-300',
-        'hover:-translate-y-0.5 hover:shadow-[0_26px_70px_-38px_rgba(15,31,47,0.38)]',
-        'dark:border-surface-700/80 dark:bg-surface-900/92',
+        'group relative col-span-3 flex flex-col overflow-hidden rounded-2xl',
+        'border border-surface-200 bg-white dark:border-surface-700 dark:bg-surface-800',
+        'transition-all duration-300 ease-out',
+        'hover:-translate-y-1',
         className,
       )}
+      style={{
+        borderColor: accentBorder,
+        boxShadow: `0 0 0 0 transparent, 0 4px 32px -8px rgba(0,0,0,0.55)`,
+        transition: 'transform 300ms ease-out, box-shadow 300ms ease-out, border-color 300ms ease-out',
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.boxShadow = `0 0 28px -4px ${accentGlow}, 0 8px 40px -8px rgba(0,0,0,0.65)`;
+        e.currentTarget.style.borderColor = `rgb(${accentRgb} / 0.55)`;
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.boxShadow = `0 0 0 0 transparent, 0 4px 32px -8px rgba(0,0,0,0.55)`;
+        e.currentTarget.style.borderColor = accentBorder;
+      }}
     >
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(145deg,rgba(255,255,255,0.86),rgba(255,255,255,0.28)_42%,transparent_82%)] dark:bg-[linear-gradient(145deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01)_42%,transparent_82%)]" />
-        <div
-          className="absolute -right-16 -top-12 h-52 w-52 rounded-full blur-3xl transition-transform duration-500 group-hover:scale-110"
-          style={{ backgroundColor: accentTint }}
-        />
-        <div
-          className="absolute bottom-0 left-10 h-28 w-28 rounded-full blur-2xl"
-          style={{ backgroundColor: accentSoft }}
-        />
-        <div className="absolute inset-0 opacity-[0.06] dark:opacity-[0.07]">
-          <div
-            className="h-full w-full"
-            style={{
-              backgroundImage:
-                'linear-gradient(rgba(15,23,42,0.14) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.14) 1px, transparent 1px)',
-              backgroundSize: '34px 34px',
-            }}
-          />
-        </div>
-        <div
-          className="absolute inset-x-6 bottom-0 h-px"
-          style={{ background: `linear-gradient(90deg, transparent, rgb(${accent} / 0.55), transparent)` }}
-        />
-        <div
-          className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-          style={{ background: `radial-gradient(circle at 82% 2%, rgb(${accent} / 0.12), transparent 34%)` }}
-        />
-      </div>
+      {/* Top accent bar */}
+      <div
+        className="absolute inset-x-0 top-0 h-[2px] z-20"
+        style={{ background: `linear-gradient(90deg, transparent 0%, ${accentColor} 35%, ${accentColor} 65%, transparent 100%)` }}
+      />
 
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/85 to-transparent dark:via-white/20" />
+      {/* Radial background glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at 80% 0%, ${accentTint} 0%, transparent 60%)`,
+        }}
+      />
 
+      {/* Content */}
       <div className="relative z-10 flex h-full flex-col p-5 sm:p-6">
-        <div className="flex items-start justify-between gap-4">
-          <span
-            className="inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em]"
+
+        {/* Header row: icon left, eyebrow right */}
+        <div className="flex items-start justify-between gap-3">
+          <div
+            className="flex size-11 shrink-0 items-center justify-center rounded-xl border"
             style={{
               borderColor: accentBorder,
-              backgroundColor: accentSoft,
+              background: `linear-gradient(145deg, ${accentTint}, transparent)`,
+              boxShadow: `0 0 18px -4px ${accentGlow}`,
+              color: accentColor,
+            }}
+          >
+            <Icon className="size-5" strokeWidth={1.75} />
+          </div>
+
+          <span
+            className="inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em]"
+            style={{
+              borderColor: accentBorder,
+              backgroundColor: accentTint,
               color: accentStrong,
             }}
           >
             {eyebrow}
           </span>
-
-          <div
-            className="flex size-10 items-center justify-center rounded-xl border backdrop-blur-sm transition-transform duration-300 group-hover:-translate-y-0.5"
-            style={{
-              borderColor: accentBorder,
-              background: `linear-gradient(180deg, rgb(${accent} / 0.16), rgb(${accent} / 0.06))`,
-              color: accentStrong,
-            }}
-          >
-            <Icon className="size-4.5" />
-          </div>
         </div>
 
-        <div className="mt-5">
-          <h3 className="max-w-[18ch] text-[1.45rem] font-semibold leading-tight text-surface-900 dark:text-surface-50">
+        {/* Body */}
+        <div className="mt-4 flex-1 min-h-0">
+          <h3 className="text-[1.2rem] font-bold leading-snug text-surface-900 dark:text-surface-50">
             {name}
           </h3>
-          <p className="mt-2.5 max-w-[56ch] text-sm leading-6 text-surface-600 dark:text-surface-400">
+          <p className="mt-2 text-[0.825rem] leading-relaxed text-surface-600 dark:text-surface-400">
             {description}
           </p>
-          <p className="mt-3 border-l-2 pl-3 text-sm leading-6 text-surface-700 dark:text-surface-300" style={{ borderColor: accentBorder }}>
+          <p
+            className="mt-3 border-l-[2px] pl-3 text-[0.825rem] leading-relaxed text-surface-700 dark:text-surface-300"
+            style={{ borderColor: `rgb(${accentRgb} / 0.40)` }}
+          >
             {impact}
           </p>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-surface-200/80 pt-4 dark:border-surface-700/80">
+        {/* Footer */}
+        <div
+          className="mt-4 flex items-center justify-between gap-3 border-t pt-3"
+          style={{ borderColor: `rgb(${accentRgb} / 0.14)` }}
+        >
           <div
-            className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm"
+            className="inline-flex items-center gap-2 rounded-lg border px-3 py-1.5"
             style={{
               borderColor: accentBorder,
-              background: `linear-gradient(180deg, rgb(${accent} / 0.12), rgb(${accent} / 0.04))`,
+              background: accentTint,
             }}
           >
-            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-surface-500 dark:text-surface-400">
+            <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-surface-400">
               {metricLabel}
             </span>
-            <span className="font-semibold text-surface-900 dark:text-surface-50">
-              {metricValue}
-            </span>
+            <span className="text-sm font-bold text-surface-900 dark:text-white">{metricValue}</span>
           </div>
 
           <a
             href={href}
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-surface-900 transition-colors hover:text-primary-500 dark:text-surface-50"
+            className="inline-flex items-center gap-1.5 text-[0.8rem] font-semibold text-surface-500 transition-colors duration-200 hover:text-primary-500 dark:text-surface-400 dark:hover:text-white dark:group-hover:text-surface-200"
           >
             {cta}
-            <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+            <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
           </a>
         </div>
       </div>

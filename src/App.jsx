@@ -18,6 +18,8 @@ const FAQ = lazy(() => import('./sections/FAQ'));
 const FinalCTA = lazy(() => import('./sections/FinalCTA'));
 const MegaFooter = lazy(() => import('./sections/MegaFooter'));
 const PlatformPage = lazy(() => import('./pages/PlatformPage'));
+const VulnerabilityManagementPage = lazy(() => import('./pages/VulnerabilityManagementPage'));
+const AttackSurfaceManagementPage = lazy(() => import('./pages/AttackSurfaceManagementPage'));
 
 const BASE = '/cyfrosec-landing-page-L';
 
@@ -31,6 +33,8 @@ function getInitialPage() {
   if (pathname === `${BASE}/docs`) return 'docs';
   if (pathname === `${BASE}/get-started`) return 'get-started';
   if (pathname === `${BASE}/platform`) return 'platform';
+  if (pathname === `${BASE}/solutions/vulnerability-management`) return 'vulnerability-management';
+  if (pathname === `${BASE}/solutions/attack-surface-management`) return 'attack-surface-management';
   return 'home';
 }
 
@@ -46,6 +50,12 @@ export default function App() {
       window.scrollTo(0, 0);
     } else if (target === 'platform') {
       window.history.pushState({}, '', `${BASE}/platform`);
+      window.scrollTo(0, 0);
+    } else if (target === 'vulnerability-management') {
+      window.history.pushState({}, '', `${BASE}/solutions/vulnerability-management`);
+      window.scrollTo(0, 0);
+    } else if (target === 'attack-surface-management') {
+      window.history.pushState({}, '', `${BASE}/solutions/attack-surface-management`);
       window.scrollTo(0, 0);
     } else {
       window.history.pushState({}, '', `${BASE}/`);
@@ -90,7 +100,33 @@ export default function App() {
         <div className="cy-navbar-offset h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
         <Suspense fallback={null}>
           <PlatformPage navigate={navigate} />
-          <MegaFooter />
+          <MegaFooter navigate={navigate} />
+        </Suspense>
+      </>
+    );
+  }
+
+  if (page === 'vulnerability-management') {
+    return (
+      <>
+        <Navbar navigate={navigate} />
+        <div className="cy-navbar-offset h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
+        <Suspense fallback={null}>
+          <VulnerabilityManagementPage navigate={navigate} />
+          <MegaFooter navigate={navigate} />
+        </Suspense>
+      </>
+    );
+  }
+
+  if (page === 'attack-surface-management') {
+    return (
+      <>
+        <Navbar navigate={navigate} />
+        <div className="cy-navbar-offset h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
+        <Suspense fallback={null}>
+          <AttackSurfaceManagementPage navigate={navigate} />
+          <MegaFooter navigate={navigate} />
         </Suspense>
       </>
     );
@@ -121,7 +157,7 @@ export default function App() {
           <FAQ />
           <div className="min-h-screen flex flex-col">
             <FinalCTA />
-            <MegaFooter />
+            <MegaFooter navigate={navigate} />
           </div>
         </Suspense>
       </main>

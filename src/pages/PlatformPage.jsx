@@ -410,35 +410,54 @@ export default function PlatformPage({ navigate }) {
         </div>
       </section>
 
-      <section className="py-16 sm:py-20 lg:py-24">
-        <div className="container mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="relative overflow-hidden rounded-[32px] bg-surface-950 px-6 py-10 text-white sm:px-8 sm:py-12 lg:px-12">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(3,155,224,0.22),transparent_28%),radial-gradient(circle_at_88%_18%,rgba(254,144,77,0.18),transparent_24%)]" />
-            <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-              <div className="max-w-2xl">
-                <SectionHeading
-                  eyebrow="Next Step"
-                  title="Ready to see it in action?"
-                  body="Book a demo or start your free evaluation. The platform is designed to get you from visibility to action without adding another fragmented tool."
-                  light
-                />
-              </div>
+      <section className="relative overflow-hidden border-t cy-border-strong">
+        <div className="relative bg-[var(--bg-overlay)] py-16 dark:bg-[#020610] sm:py-20 lg:py-24">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute bottom-0 left-1/2 h-[80%] w-[120%] -translate-x-1/2 bg-[radial-gradient(ellipse_at_bottom,rgba(3,155,224,0.23),transparent_62%)]"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute bottom-0 left-1/2 h-[42%] w-[62%] -translate-x-1/2 bg-[radial-gradient(ellipse_at_bottom,rgba(3,155,224,0.34),transparent_60%)] mix-blend-screen"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-[0.055]"
+            style={{
+              backgroundImage:
+                'linear-gradient(rgba(255,255,255,0.78) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.78) 1px, transparent 1px)',
+              backgroundSize: '40px 40px'
+            }}
+          />
 
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href="mailto:sales@cyfrosec.com"
-                  className="inline-flex items-center gap-2 rounded-xl bg-primary-500 px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-primary-600 hover:-translate-y-0.5"
-                >
-                  Talk to sales
-                  <ArrowRight className="size-4" />
-                </a>
-                <button
-                  onClick={() => navigate?.('get-started')}
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-white/[0.1]"
-                >
-                  Get started free
-                </button>
-              </div>
+          <div className="relative container mx-auto max-w-screen-xl px-4 text-center sm:px-6 lg:px-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary-300">
+              Next Step
+            </p>
+            <h2
+              className="mt-3 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl"
+              style={{ fontFamily: HEADING_FONT }}
+            >
+              Ready to see it in action?
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-200 sm:text-lg lg:text-xl">
+              Book a demo or start your free evaluation. The platform is designed to get you from visibility to action without adding another fragmented tool.
+            </p>
+
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+              <a
+                href="mailto:sales@cyfrosec.com"
+                className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-primary-700 transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary-50 hover:shadow-[0_0_38px_rgba(3,155,224,0.3)] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
+              >
+                Talk to sales
+                <ArrowRight className="size-5 transition-transform group-hover:translate-x-0.5" />
+              </a>
+              <button
+                onClick={() => navigate?.('get-started')}
+                className="inline-flex w-full items-center justify-center rounded-xl border border-white/35 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-white/60 hover:bg-white/8 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
+              >
+                Get started free
+              </button>
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Send } from 'lucide-react';
 
 const currentYear = new Date().getFullYear();
+const BASE = '/cyfrosec-landing-page-L';
 
 const footerLinks = {
   product: [
@@ -12,14 +13,14 @@ const footerLinks = {
     { label: 'Roadmap', href: '#' }
   ],
   solutions: [
-    { label: 'Vulnerability Management', href: '#' },
-    { label: 'Attack Surface Management', href: '#' },
+    { label: 'Vulnerability Management', href: `${BASE}/solutions/vulnerability-management`, isNav: true },
+    { label: 'Attack Surface Management', href: `${BASE}/solutions/attack-surface-management`, isNav: true },
     { label: 'Cloud Security', href: '#' },
     { label: 'Compliance', href: '#' },
     { label: 'DevSecOps', href: '#' }
   ],
   resources: [
-    { label: 'Documentation', href: '#' },
+    { label: 'Documentation', href: `${BASE}/docs`, isNav: true },
     { label: 'API Reference', href: '#' },
     { label: 'Blog', href: '#' },
     { label: 'Case Studies', href: '#' },
@@ -60,8 +61,26 @@ const socials = [
   }
 ];
 
-export default function MegaFooter() {
+function normalizePath(path) {
+  return path.replace(/\/+$/, '') || '/';
+}
+
+export default function MegaFooter({ navigate }) {
   const [email, setEmail] = useState('');
+
+  function handleLinkClick(link, event) {
+    if (!link.isNav || !navigate) return;
+
+    event.preventDefault();
+    const normalizedHref = normalizePath(link.href);
+    if (normalizedHref === `${BASE}/docs`) {
+      navigate('docs');
+    } else if (normalizedHref === `${BASE}/solutions/vulnerability-management`) {
+      navigate('vulnerability-management');
+    } else if (normalizedHref === `${BASE}/solutions/attack-surface-management`) {
+      navigate('attack-surface-management');
+    }
+  }
 
   return (
     <footer className="cy-bg-sidebar cy-text-sidebar">
@@ -134,7 +153,13 @@ export default function MegaFooter() {
             <ul className="space-y-2.5">
               {footerLinks.resources.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-sm cy-text-sidebar-muted hover:cy-text-sidebar-strong transition-colors">{link.label}</a>
+                  <a
+                    href={link.href}
+                    className="text-sm cy-text-sidebar-muted hover:cy-text-sidebar-strong transition-colors"
+                    onClick={(event) => handleLinkClick(link, event)}
+                  >
+                    {link.label}
+                  </a>
                 </li>
               ))}
             </ul>

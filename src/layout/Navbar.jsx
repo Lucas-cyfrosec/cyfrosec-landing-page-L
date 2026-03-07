@@ -46,8 +46,8 @@ const navItems = [
       {
         title: 'Solutions',
         items: [
-          { label: 'Vulnerability Management', href: '#solutions', description: 'Find and fix exposures', icon: Shield },
-          { label: 'Attack Surface Management', href: '#solutions', description: 'Complete visibility', icon: Layers },
+          { label: 'Vulnerability Management', href: '/cyfrosec-landing-page-L/solutions/vulnerability-management', description: 'Find and fix exposures', isNav: true, icon: Shield },
+          { label: 'Attack Surface Management', href: '/cyfrosec-landing-page-L/solutions/attack-surface-management', description: 'Complete visibility', isNav: true, icon: Layers },
           { label: 'Cloud & AI Server Security', href: '#solutions', description: 'Secure cloud & AI infrastructure', icon: Cloud },
           { label: 'DevSecOps', href: '#solutions', description: 'Shift left security', icon: Bot }
         ]
@@ -119,6 +119,10 @@ export default function Navbar({ navigate }) {
         navigate('get-started');
       } else if (normalizedHref === `${BASE}/platform`) {
         navigate('platform');
+      } else if (normalizedHref === `${BASE}/solutions/vulnerability-management`) {
+        navigate('vulnerability-management');
+      } else if (normalizedHref === `${BASE}/solutions/attack-surface-management`) {
+        navigate('attack-surface-management');
       } else {
         navigate('home');
       }
