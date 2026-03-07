@@ -30,10 +30,10 @@ const navItems = [
       {
         title: 'Platform',
         items: [
+          { label: 'Overview', href: '/cyfrosec-landing-page-L/platform', description: 'Platform overview and architecture', isNav: true, icon: Info },
           { label: 'SaaS', href: 'https://app.cyfrosec.com', description: 'Cloud-hosted solution', icon: Cloud },
           { label: 'On-Premises', href: '#pricing', description: 'Self-hosted deployment', icon: Layers },
-          { label: 'Security', href: '#security', description: 'SOC 2, encryption, RBAC', icon: Lock },
-          { label: 'Compliance', href: '#security', description: 'Meet regulatory requirements', icon: Shield }
+          { label: 'Security', href: '#security', description: 'SOC 2, encryption, RBAC', icon: Lock }
         ]
       }
     ]
@@ -74,6 +74,24 @@ const navItems = [
   { id: 6, label: 'About', link: '#', icon: Info }
 ];
 
+const BASE = '/cyfrosec-landing-page-L';
+
+function normalizePath(path) {
+  return path.replace(/\/+$/, '') || '/';
+}
+
+function scrollToHash(selector, attempts = 20) {
+  const el = document.querySelector(selector);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+
+  if (attempts > 0) {
+    setTimeout(() => scrollToHash(selector, attempts - 1), 120);
+  }
+}
+
 export default function Navbar({ navigate }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -93,19 +111,27 @@ export default function Navbar({ navigate }) {
     setActiveDropdown(null);
     if (isNav && navigate) {
       event?.preventDefault();
-      navigate('docs');
+      const normalizedHref = normalizePath(href);
+
+      if (normalizedHref === `${BASE}/docs`) {
+        navigate('docs');
+      } else if (normalizedHref === `${BASE}/get-started`) {
+        navigate('get-started');
+      } else if (normalizedHref === `${BASE}/platform`) {
+        navigate('platform');
+      } else {
+        navigate('home');
+      }
     } else if (href.startsWith('#')) {
       event?.preventDefault();
-      const onDocsPage = window.location.pathname.includes('/docs');
-      if (onDocsPage && navigate) {
+      const currentPath = normalizePath(window.location.pathname);
+      const onHomePage = currentPath === BASE || currentPath === '/';
+
+      if (!onHomePage && navigate) {
         navigate('home');
-        setTimeout(() => {
-          const el = document.querySelector(href);
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+        setTimeout(() => scrollToHash(href), 120);
       } else {
-        const el = document.querySelector(href);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        scrollToHash(href);
       }
     }
   }

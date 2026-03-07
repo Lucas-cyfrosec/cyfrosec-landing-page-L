@@ -17,12 +17,20 @@ const Pricing = lazy(() => import('./sections/Pricing'));
 const FAQ = lazy(() => import('./sections/FAQ'));
 const FinalCTA = lazy(() => import('./sections/FinalCTA'));
 const MegaFooter = lazy(() => import('./sections/MegaFooter'));
+const PlatformPage = lazy(() => import('./pages/PlatformPage'));
 
 const BASE = '/cyfrosec-landing-page-L';
 
+function normalizePath(pathname) {
+  return pathname.replace(/\/+$/, '') || '/';
+}
+
 function getInitialPage() {
-  if (window.location.pathname === `${BASE}/docs`) return 'docs';
-  if (window.location.pathname === `${BASE}/get-started`) return 'get-started';
+  const pathname = normalizePath(window.location.pathname);
+
+  if (pathname === `${BASE}/docs`) return 'docs';
+  if (pathname === `${BASE}/get-started`) return 'get-started';
+  if (pathname === `${BASE}/platform`) return 'platform';
   return 'home';
 }
 
@@ -35,6 +43,9 @@ export default function App() {
       window.scrollTo(0, 0);
     } else if (target === 'get-started') {
       window.history.pushState({}, '', `${BASE}/get-started`);
+      window.scrollTo(0, 0);
+    } else if (target === 'platform') {
+      window.history.pushState({}, '', `${BASE}/platform`);
       window.scrollTo(0, 0);
     } else {
       window.history.pushState({}, '', `${BASE}/`);
@@ -68,6 +79,19 @@ export default function App() {
         <Navbar navigate={navigate} />
         <div className="cy-navbar-offset h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
         <GetStartedPage navigate={navigate} />
+      </>
+    );
+  }
+
+  if (page === 'platform') {
+    return (
+      <>
+        <Navbar navigate={navigate} />
+        <div className="cy-navbar-offset h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
+        <Suspense fallback={null}>
+          <PlatformPage navigate={navigate} />
+          <MegaFooter />
+        </Suspense>
       </>
     );
   }
