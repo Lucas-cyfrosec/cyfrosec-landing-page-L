@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronDown, Menu, X, ArrowRight, Shield, Bot, Layers, Code2, Cloud, Lock, FileText, Newspaper, LifeBuoy, DollarSign, Info } from 'lucide-react';
+import { ChevronDown, Menu, X, ArrowRight, Shield, Bot, Layers, ShieldCheck, Cloud, Lock, FileText, Newspaper, LifeBuoy, DollarSign, Info } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import ThemeToggle from '../components/ThemeToggle';
 import { DropdownNavigation } from '../components/ui/dorpdown-navigation';
@@ -17,7 +17,7 @@ const navItems = [
           { label: 'Features', href: '#solutions', description: 'Discover, assess, prioritize, remediate', icon: Shield },
           { label: 'AI Engine', href: '#ai-engine', description: 'AI-powered detection & remediation', icon: Bot },
           { label: 'Architecture', href: '#architecture', description: 'Platform overview', icon: Layers },
-          { label: 'API', href: '#', description: 'REST API & webhooks', icon: Code2 }
+          { label: 'Compliance & Security', href: '#security', description: 'SOC 2, GDPR, ISO 27001 ready', icon: ShieldCheck }
         ]
       }
     ]

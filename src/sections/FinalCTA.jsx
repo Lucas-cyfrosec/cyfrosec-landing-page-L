@@ -1,4 +1,4 @@
-import { ArrowRight, Mail } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 export default function FinalCTA() {
   return (
@@ -33,17 +33,10 @@ export default function FinalCTA() {
             See CyfroSec in action with a live demo, or talk to our team about your specific needs.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-6">
-            <a
-              href="mailto:demo@cyfrosec.com"
-              className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white hover:bg-primary-50 text-primary-700 text-sm sm:text-base font-semibold rounded-xl transition-all duration-200 shadow-[0_0_30px_rgba(3,155,224,0.22)] hover:shadow-[0_0_38px_rgba(3,155,224,0.3)] hover:-translate-y-0.5"
-            >
-              Request Demo
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
-            </a>
+          <div className="flex justify-center mb-6">
             <a
               href="mailto:sales@cyfrosec.com"
-              className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-transparent hover:bg-white/8 text-white text-sm sm:text-base font-semibold rounded-xl transition-all duration-200 hover:-translate-y-0.5 border border-white/35 hover:border-white/60"
+              className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white hover:bg-primary-50 text-primary-700 text-sm sm:text-base font-semibold rounded-xl transition-all duration-200 shadow-[0_0_30px_rgba(3,155,224,0.22)] hover:shadow-[0_0_38px_rgba(3,155,224,0.3)] hover:-translate-y-0.5"
             >
               <Mail className="w-5 h-5" />
               Contact Sales

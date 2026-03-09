@@ -78,7 +78,7 @@ export default function AIChatbot() {
   return (
     <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 lg:bottom-8 lg:right-8 z-50">
       {chatOpen && (
-        <div className="absolute bottom-14 sm:bottom-16 right-0 w-[calc(100vw-2rem)] max-w-[20rem] sm:w-80 lg:w-96 bg-white dark:bg-surface-800 rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden border border-surface-200 dark:border-surface-700 animate-slideUp">
+        <div className="absolute bottom-0 right-0 w-[calc(100vw-2rem)] max-w-[20rem] sm:w-80 lg:w-96 bg-white dark:bg-surface-800 rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden border border-surface-200 dark:border-surface-700 animate-slideUp">
           {/* Header */}
           <div className="bg-gradient-to-r from-primary-600 to-primary-700 px-3 py-2.5 sm:px-4 sm:py-3">
             <div className="flex items-center justify-between">
@@ -185,11 +185,11 @@ export default function AIChatbot() {
         </div>
       )}
 
-      {/* Toggle Button */}
+      {/* Toggle Button — hidden when chat is open */}
       <button
         onClick={() => setChatOpen(v => !v)}
-        className="w-12 h-12 sm:w-14 sm:h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center group relative"
-        aria-label={chatOpen ? 'Close chat' : 'Open chat'}
+        className={`w-12 h-12 sm:w-14 sm:h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center group relative ${chatOpen ? 'hidden' : ''}`}
+        aria-label="Open chat"
       >
         {chatOpen ? (
           <X className="w-5 h-5 sm:w-6 sm:h-6" />
