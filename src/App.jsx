@@ -3,6 +3,7 @@ import Navbar from './layout/Navbar';
 import AIChatbot from './components/AIChatbot';
 import DocsPage from './pages/DocsPage';
 import GetStartedPage from './pages/GetStartedPage';
+import ContactSalesPage from './pages/ContactSalesPage';
 import { Hero, Learning, ProblemStatement, SolutionOverview } from './sections';
 
 // Lazy-load heavy below-fold sections so they don't block initial render
@@ -14,7 +15,6 @@ const Highlights = lazy(() => import('./sections/Highlights'));
 const FeatureComparison = lazy(() => import('./sections/FeatureComparison'));
 const Security = lazy(() => import('./sections/Security'));
 const Pricing = lazy(() => import('./sections/Pricing'));
-const FAQ = lazy(() => import('./sections/FAQ'));
 const FinalCTA = lazy(() => import('./sections/FinalCTA'));
 const MegaFooter = lazy(() => import('./sections/MegaFooter'));
 const PlatformPage = lazy(() => import('./pages/PlatformPage'));
@@ -32,6 +32,7 @@ function getInitialPage() {
 
   if (pathname === `${BASE}/docs`) return 'docs';
   if (pathname === `${BASE}/get-started`) return 'get-started';
+  if (pathname === `${BASE}/contact-sales`) return 'contact-sales';
   if (pathname === `${BASE}/platform`) return 'platform';
   if (pathname === `${BASE}/solutions/vulnerability-management`) return 'vulnerability-management';
   if (pathname === `${BASE}/solutions/attack-surface-management`) return 'attack-surface-management';
@@ -40,6 +41,7 @@ function getInitialPage() {
 
 export default function App() {
   const [page, setPage] = useState(getInitialPage);
+  const [chatbotReady, setChatbotReady] = useState(false);
 
   function navigate(target) {
     if (target === 'docs') {
@@ -47,6 +49,9 @@ export default function App() {
       window.scrollTo(0, 0);
     } else if (target === 'get-started') {
       window.history.pushState({}, '', `${BASE}/get-started`);
+      window.scrollTo(0, 0);
+    } else if (target === 'contact-sales') {
+      window.history.pushState({}, '', `${BASE}/contact-sales`);
       window.scrollTo(0, 0);
     } else if (target === 'platform') {
       window.history.pushState({}, '', `${BASE}/platform`);
@@ -72,13 +77,23 @@ export default function App() {
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
+  useEffect(() => {
+    const id = typeof requestIdleCallback !== 'undefined'
+      ? requestIdleCallback(() => setChatbotReady(true), { timeout: 3000 })
+      : setTimeout(() => setChatbotReady(true), 1000);
+    return () => {
+      if (typeof cancelIdleCallback !== 'undefined') cancelIdleCallback(id);
+      else clearTimeout(id);
+    };
+  }, []);
+
   if (page === 'docs') {
     return (
       <>
         <Navbar navigate={navigate} />
         <div className="cy-navbar-offset h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
         <DocsPage navigate={navigate} />
-        <AIChatbot />
+        {chatbotReady && <AIChatbot />}
       </>
     );
   }
@@ -89,6 +104,16 @@ export default function App() {
         <Navbar navigate={navigate} />
         <div className="cy-navbar-offset h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
         <GetStartedPage navigate={navigate} />
+      </>
+    );
+  }
+
+  if (page === 'contact-sales') {
+    return (
+      <>
+        <Navbar navigate={navigate} />
+        <div className="cy-navbar-offset h-14 sm:h-16 lg:h-20" aria-hidden="true"></div>
+        <ContactSalesPage navigate={navigate} />
       </>
     );
   }
@@ -141,7 +166,7 @@ export default function App() {
         aria-hidden="true"
       ></div>
       <main>
-        <Hero />
+        <Hero navigate={navigate} />
         <Learning />
         <ProblemStatement />
         <SolutionOverview />
@@ -153,15 +178,14 @@ export default function App() {
           <Highlights />
           <FeatureComparison />
           <Security />
-          <Pricing />
-          <FAQ />
+          <Pricing navigate={navigate} />
           <div className="min-h-screen flex flex-col">
-            <FinalCTA />
+            <FinalCTA navigate={navigate} />
             <MegaFooter navigate={navigate} />
           </div>
         </Suspense>
       </main>
-      <AIChatbot />
+      {chatbotReady && <AIChatbot />}
     </>
   );
 }

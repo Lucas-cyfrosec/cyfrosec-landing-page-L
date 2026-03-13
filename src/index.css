@@ -43,6 +43,21 @@
 .anim-slide-in-right  { animation: slideInFromRight 0.28s ease-out forwards; }
 .anim-slide-in-left   { animation: slideInFromLeft  0.28s ease-out forwards; }
 
+/* ── Respect prefers-reduced-motion for all CSS animations ── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-ping,
+  .animate-pulse,
+  .anim-packet-ltr,
+  .anim-slide-out-left,
+  .anim-slide-out-right,
+  .anim-slide-in-right,
+  .anim-slide-in-left,
+  .animate-slideUp {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
 /* ── Extra breakpoints for large monitors & TVs ──────── */
 @custom-variant 3xl (@media (width >= 1920px));
 @custom-variant 4xl (@media (width >= 2560px));

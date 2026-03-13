@@ -4,10 +4,11 @@ import InteractiveGlobe from '../components/InteractiveGlobe';
 
 const titles = ['Detects Threats', 'Explains Risks', 'Takes Action', 'Secures Infrastructure'];
 
-export default function Hero() {
+export default function Hero({ navigate }) {
   const [titleNumber, setTitleNumber] = useState(0);
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const interval = setInterval(() => {
       setTitleNumber((n) => (n + 1) % titles.length);
     }, 2500);
@@ -16,14 +17,16 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative overflow-hidden bg-surface-50 dark:bg-surface-950 min-h-screen flex flex-col justify-center">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-transparent to-[#fe904d]/10 dark:from-primary-950/30 dark:via-transparent dark:to-[#fe904d]/5"></div>
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none bg-gradient-to-br from-primary-50/50 via-transparent to-[#fe904d]/10 dark:from-primary-950/30 dark:via-transparent dark:to-[#fe904d]/5"></div>
+      {/* Opacity baked into SVG fill-opacity to avoid creating a CSS stacking context */}
       <div
-        className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
-        style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23000%22 fill-opacity=%221%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')" }}
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23000%22 fill-opacity=%220.04%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')" }}
       ></div>
 
       {/* Ambient glow behind globe */}
-      <div className="absolute top-1/4 right-0 w-[300px] sm:w-[400px] lg:w-[500px] h-[300px] sm:h-[400px] lg:h-[500px] rounded-full bg-primary-500/5 blur-3xl pointer-events-none"></div>
+      <div aria-hidden="true" className="absolute top-1/4 right-0 w-[300px] sm:w-[400px] lg:w-[500px] h-[300px] sm:h-[400px] lg:h-[500px] rounded-full bg-primary-500/5 blur-3xl pointer-events-none"></div>
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl 3xl:max-w-screen-2xl 4xl:max-w-[2200px]">
         <div className="flex flex-col lg:flex-row min-h-[auto] sm:min-h-[600px] lg:min-h-[700px] 3xl:min-h-[800px] items-center gap-8 lg:gap-12 3xl:gap-16 py-12 sm:py-16 lg:py-28 3xl:py-36">
@@ -71,13 +74,13 @@ export default function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-8 sm:mb-10">
-              <a
-                href="mailto:sales@cyfrosec.com"
+              <button
+                onClick={() => navigate?.('contact-sales')}
                 className="group inline-flex items-center justify-center gap-3 sm:gap-4 px-6 sm:px-8 py-3 sm:py-4 rounded-xl border border-primary-300 dark:border-primary-700 hover:border-primary-500 text-surface-900 dark:text-surface-50 text-sm sm:text-base font-semibold transition-all duration-200 hover:-translate-y-0.5"
               >
                 Contact Sales
                 <Mail className="w-4 h-4" />
-              </a>
+              </button>
               <a
                 href="#cta"
                 className="group inline-flex items-center justify-center gap-3 sm:gap-4 px-6 sm:px-8 py-3 sm:py-4 rounded-xl bg-primary-500 hover:bg-primary-600 text-white text-sm sm:text-base font-semibold transition-all duration-200 shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/30 hover:-translate-y-0.5"

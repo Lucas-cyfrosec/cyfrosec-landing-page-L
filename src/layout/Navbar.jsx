@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { ChevronDown, Menu, X, ArrowRight, Shield, Bot, Layers, ShieldCheck, Cloud, Lock, FileText, Newspaper, LifeBuoy, DollarSign, Info } from 'lucide-react';
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent, useReducedMotion } from 'framer-motion';
 import ThemeToggle from '../components/ThemeToggle';
 import { DropdownNavigation } from '../components/ui/dorpdown-navigation';
 import logo from '../assets/logo.png';
@@ -76,6 +76,13 @@ const navItems = [
 
 const BASE = '/cyfrosec-landing-page-L';
 
+// Prefetch map: hover over a nav link triggers the lazy chunk load before the click
+const PREFETCH_MAP = {
+  [`${BASE}/platform`]: () => import('../pages/PlatformPage'),
+  [`${BASE}/solutions/vulnerability-management`]: () => import('../pages/VulnerabilityManagementPage'),
+  [`${BASE}/solutions/attack-surface-management`]: () => import('../pages/AttackSurfaceManagementPage'),
+};
+
 function normalizePath(path) {
   return path.replace(/\/+$/, '') || '/';
 }
@@ -97,6 +104,7 @@ export default function Navbar({ navigate }) {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  const shouldReduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, 'change', (latest) => {
     setIsScrolled(latest > 20);
@@ -106,7 +114,12 @@ export default function Navbar({ navigate }) {
     setActiveDropdown((prev) => (prev === label ? null : label));
   }
 
-  function handleNavClick(href, isNav, event) {
+  const handlePrefetch = useCallback(function handlePrefetch(href) {
+    const prefetch = PREFETCH_MAP[normalizePath(href)];
+    if (prefetch) prefetch();
+  }, []);
+
+  const handleNavClick = useCallback(function handleNavClick(href, isNav, event) {
     setMobileMenuOpen(false);
     setActiveDropdown(null);
     if (isNav && navigate) {
@@ -138,12 +151,12 @@ export default function Navbar({ navigate }) {
         scrollToHash(href);
       }
     }
-  }
+  }, [navigate]);
 
   return (
     <motion.header
       className="cy-navbar-root fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-      initial={{ y: -100 }}
+      initial={shouldReduceMotion ? false : { y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
@@ -173,16 +186,17 @@ export default function Navbar({ navigate }) {
         <div className="cy-navbar-nav hidden lg:flex flex-1 justify-center">
           <DropdownNavigation
             navItems={navItems}
-            onNavigate={(href, isNav, event) => handleNavClick(href, isNav, event)}
+            onNavigate={handleNavClick}
+            onPrefetch={handlePrefetch}
           />
         </div>
 
         {/* Desktop CTAs */}
         <div className="cy-navbar-actions hidden lg:flex items-center gap-3 z-10">
           <ThemeToggle />
-          <a href="mailto:sales@cyfrosec.com" className="cy-navbar-muted cy-navbar-ghost text-[13px] font-semibold cy-text-secondary hover:cy-text-primary transition-colors px-2">
+          <button onClick={() => navigate?.('contact-sales')} className="cy-navbar-muted cy-navbar-ghost text-[13px] font-semibold cy-text-secondary hover:cy-text-primary transition-colors px-2">
             Contact Sales
-          </a>
+          </button>
           <div className="cy-navbar-divider h-4 w-px bg-[color-mix(in_srgb,var(--text-primary)_10%,transparent)] mx-1" />
           <a
             href="#cta"
@@ -281,13 +295,12 @@ export default function Navbar({ navigate }) {
                 >
                   Get Started Free <ArrowRight className="w-4 h-4" />
                 </a>
-                <a
-                  href="mailto:sales@cyfrosec.com"
+                <button
                   className="flex items-center justify-center gap-2 w-full px-4 py-3 cy-text-primary font-medium rounded-xl hover:bg-[color-mix(in_srgb,var(--text-primary)_6%,transparent)] transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={() => { setMobileMenuOpen(false); navigate?.('contact-sales'); }}
                 >
                   Contact Sales
-                </a>
+                </button>
                 <div className="relative flex items-center py-2">
                   <div className="flex-grow border-t cy-border" />
                   <span className="shrink-0 px-3 text-[10px] uppercase tracking-wider cy-text-muted">or</span>

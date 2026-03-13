@@ -14,72 +14,76 @@ function yearlySavings(monthly) {
 const plans = [
   {
     index: 0,
-    name: 'SaaS — Starter',
+    name: 'Base',
     badge: null,
-    description: 'For small teams getting started with vulnerability management.',
-    monthlyPrice: null,
-    staticLabel: 'Free',
-    priceSuffix: 'up to 25 assets',
+    description: 'Essential security monitoring for small teams. Perfect for startups and small businesses.',
+    monthlyPrice: 29,
+    staticLabel: null,
+    priceSuffix: '/mo',
     highlight: false,
     features: [
-      'Up to 25 assets',
-      'Weekly scheduled scans',
-      'Basic vulnerability reports',
-      'Email notifications',
+      'Up to 5 users',
+      'Up to 3 agents',
+      '100 active tests',
+      'Vulnerability scanning',
+      'Email reports',
       'Community support'
     ],
-    cta: 'Start Free',
+    cta: 'Try Cyfrosec',
     ctaLink: 'https://app.cyfrosec.com'
   },
   {
     index: 1,
-    name: 'SaaS — Professional',
+    name: 'Pro',
     badge: 'Most Popular',
-    description: 'For growing teams that need AI prioritization, integrations, and continuous scanning.',
-    monthlyPrice: 29,
+    description: 'Advanced security features for growing teams. Includes AI-powered insights and automation.',
+    monthlyPrice: 99,
     staticLabel: null,
-    priceSuffix: '/asset/month',
+    priceSuffix: '/mo',
     highlight: true,
     features: [
-      'Unlimited assets',
-      'Continuous scanning',
-      'Cyfro AI Engine & CyfroAssistant',
-      'Jira & ServiceNow integration',
-      'SSO & RBAC',
-      'Full API access',
+      'Up to 25 users',
+      'Up to 10 agents',
+      '500 active tests',
+      'AI-powered insights',
+      'AI chat assistant',
       'Priority support',
-      'Dashboards & compliance reports'
+      'API access',
+      'Custom reports',
+      'Webhooks',
+      '14-day free trial'
     ],
-    cta: 'Book a Demo',
+    cta: 'Try Cyfrosec',
     ctaLink: '#cta'
   },
   {
     index: 2,
-    name: 'On-Premises',
+    name: 'Ultra',
     badge: null,
-    description: 'Self-hosted deployment. Pricing based on your network size and infrastructure requirements.',
-    monthlyPrice: null,
-    staticLabel: 'Contact Sales',
-    priceSuffix: '',
+    description: 'Enterprise-grade security platform with unlimited resources. Includes dedicated support and compliance tools.',
+    monthlyPrice: 299,
+    staticLabel: null,
+    priceSuffix: '/mo',
     highlight: false,
     features: [
-      'Unlimited assets',
-      'Full on-premises deployment',
-      'Air-gapped environment support',
-      'Custom integrations & API',
-      'Dedicated success manager',
-      'SLA guarantees',
-      '24/7 phone support',
-      'Compliance & audit reporting'
+      'Unlimited users',
+      'Up to 50 agents',
+      'Unlimited tests',
+      'Advanced AI models',
+      'SSO / SAML',
+      'Compliance reports',
+      'Dedicated support',
+      '99.9% SLA',
+      '30-day free trial'
     ],
-    cta: 'Contact Sales',
-    ctaLink: 'mailto:sales@cyfrosec.com'
+    cta: 'Try Cyfrosec',
+    ctaLink: '#pricing'
   }
 ];
 
 const footerNotes = ['Cancel anytime', 'Volume discounts available', 'Non-profit pricing'];
 
-export default function Pricing() {
+export default function Pricing({ navigate }) {
   const [isYearly, setIsYearly] = useState(false);
   const fireworksRef = useRef(null);
 
@@ -165,7 +169,7 @@ export default function Pricing() {
         </div>
 
         {/* Cards */}
-        <div className="flex flex-col items-stretch gap-4 sm:gap-6 lg:flex-row lg:items-center lg:gap-5 lg:justify-center max-w-6xl 3xl:max-w-7xl mx-auto">
+        <div className="flex flex-col items-stretch gap-4 sm:gap-6 lg:flex-row lg:items-stretch lg:gap-5 lg:justify-center max-w-6xl 3xl:max-w-7xl mx-auto">
           {plans.map((plan) => (
             <div
               key={plan.index}
@@ -216,7 +220,7 @@ export default function Pricing() {
                     <p key={`note-${isYearly}`} className="text-xs mt-1.5 font-medium animate-priceFade">
                       {isYearly ? (
                         <span className="text-emerald-600 dark:text-emerald-400">
-                          Billed annually · Save ${yearlySavings(plan.monthlyPrice)}/asset/yr
+                          Billed annually · Save ${yearlySavings(plan.monthlyPrice)}/yr
                         </span>
                       ) : (
                         <span className="text-surface-400 dark:text-surface-500">Billed monthly</span>
@@ -238,17 +242,27 @@ export default function Pricing() {
                 </ul>
 
                 {/* CTA button */}
-                <a
-                  href={plan.ctaLink}
-                  className={`group w-full inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-xl transition-all duration-200 ${
-                    plan.highlight
-                      ? 'bg-primary-500 hover:bg-primary-600 text-white shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 hover:-translate-y-0.5'
-                      : 'bg-surface-100 dark:bg-surface-700 hover:bg-surface-200 dark:hover:bg-surface-600 text-surface-900 dark:text-surface-50 hover:-translate-y-0.5'
-                  }`}
-                >
-                  {plan.cta}
-                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-                </a>
+                {plan.ctaLink === 'mailto:sales@cyfrosec.com' ? (
+                  <button
+                    onClick={() => navigate?.('contact-sales')}
+                    className={`group w-full inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-xl transition-all duration-200 bg-surface-100 dark:bg-surface-700 hover:bg-surface-200 dark:hover:bg-surface-600 text-surface-900 dark:text-surface-50 hover:-translate-y-0.5`}
+                  >
+                    {plan.cta}
+                    <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                  </button>
+                ) : (
+                  <a
+                    href={plan.ctaLink}
+                    className={`group w-full inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-xl transition-all duration-200 ${
+                      plan.highlight
+                        ? 'bg-primary-500 hover:bg-primary-600 text-white shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 hover:-translate-y-0.5'
+                        : 'bg-surface-100 dark:bg-surface-700 hover:bg-surface-200 dark:hover:bg-surface-600 text-surface-900 dark:text-surface-50 hover:-translate-y-0.5'
+                    }`}
+                  >
+                    {plan.cta}
+                    <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                  </a>
+                )}
               </div>
             </div>
           ))}
@@ -257,7 +271,7 @@ export default function Pricing() {
         {/* Footer notes */}
         <div className="mt-12 sm:mt-16 lg:mt-20 text-center">
           <p className="text-surface-600 dark:text-surface-400 mb-4 text-sm sm:text-base">
-            All plans include a 14-day free trial with full access. No credit card required.
+            Trial length varies by plan. No credit card required for eligible tiers.
           </p>
           <div className="flex flex-wrap justify-center gap-4 sm:gap-8 text-sm text-surface-500">
             {footerNotes.map((note) => (

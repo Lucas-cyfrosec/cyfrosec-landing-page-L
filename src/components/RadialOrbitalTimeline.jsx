@@ -38,6 +38,12 @@ export default function RadialOrbitalTimeline({ items = [] }) {
   const pausedRef = useRef(false);
 
   useEffect(() => {
+    // Disable auto-rotation for users who prefer reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      autoRotateRef.current = false;
+      setAutoRotate(false);
+    }
+
     updateSize();
     const observer = new ResizeObserver(updateSize);
     if (containerRef.current) observer.observe(containerRef.current);

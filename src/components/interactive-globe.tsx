@@ -784,6 +784,9 @@ export default function InteractiveGlobe({
       return undefined;
     }
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const effectiveRotateSpeed = prefersReducedMotion ? 0 : autoRotateSpeed;
+
     let rotationY = 0.45;
     let rotationX = 0.28;
     let time = 0;
@@ -832,9 +835,9 @@ export default function InteractiveGlobe({
       ctx.clearRect(0, 0, width, height);
 
       if (!dragging) {
-        rotationY += autoRotateSpeed;
+        rotationY += effectiveRotateSpeed;
       }
-      time += 0.014;
+      time += prefersReducedMotion ? 0 : 0.014;
 
       const glow = ctx.createRadialGradient(cx, cy, radius * 0.28, cx, cy, radius * 1.55);
       glow.addColorStop(0, 'rgba(10, 40, 78, 0.38)');
@@ -945,7 +948,7 @@ export default function InteractiveGlobe({
         ctx.stroke();
         ctx.shadowBlur = 0;
 
-        if (link.averageZ <= 0.1 * radius) {
+        if (!prefersReducedMotion && link.averageZ <= 0.1 * radius) {
           const particleT =
             (Math.sin(time * (link.tier === 'backbone' ? 0.8 : 1.05) + link.phase) + 1) / 2;
           const px =
@@ -1001,7 +1004,7 @@ export default function InteractiveGlobe({
           sizeScale *
           node.emphasis;
         const pulse =
-          depth < 0.52
+          !prefersReducedMotion && depth < 0.52
             ? (Math.sin(time * (node.role === 'hub' ? 2.2 : 1.55) + node.phase) * 0.5 + 0.5) *
               (node.role === 'hub' ? 1 : 0.55)
             : 0;

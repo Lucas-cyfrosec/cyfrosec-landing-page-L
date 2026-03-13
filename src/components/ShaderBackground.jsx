@@ -108,96 +108,110 @@ export default function ShaderBackground({ className = '' }) {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const gl = canvas.getContext('webgl');
-    if (!gl) return;
 
-    function loadShader(type, source) {
-      const shader = gl.createShader(type);
-      if (!shader) return null;
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error('Shader compile error:', gl.getShaderInfoLog(shader));
-        gl.deleteShader(shader);
-        return null;
-      }
-      return shader;
-    }
+    // Skip animation for users who prefer reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const vs = loadShader(gl.VERTEX_SHADER, vsSource);
-    const fs = loadShader(gl.FRAGMENT_SHADER, fsSource);
-    if (!vs || !fs) return;
-
-    const program = gl.createProgram();
-    if (!program) return;
-    gl.attachShader(program, vs);
-    gl.attachShader(program, fs);
-    gl.linkProgram(program);
-
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.error('Shader link error:', gl.getProgramInfoLog(program));
-      return;
-    }
-
-    const posBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
-
-    const aPos = gl.getAttribLocation(program, 'aVertexPosition');
-    const uRes = gl.getUniformLocation(program, 'iResolution');
-    const uTime = gl.getUniformLocation(program, 'iTime');
-
+    let animId;
     let paused = false;
+    let resizeObserver;
+    let intersectionObserver;
 
-    function resize() {
-      canvas.width = canvas.clientWidth * (window.devicePixelRatio || 1);
-      canvas.height = canvas.clientHeight * (window.devicePixelRatio || 1);
-      gl.viewport(0, 0, canvas.width, canvas.height);
-    }
-
-    const resizeObserver = new ResizeObserver(resize);
-    resizeObserver.observe(canvas);
-    resize();
-
-    // Pause when tab is hidden
     function onVisibilityChange() {
       paused = document.hidden;
     }
-    document.addEventListener('visibilitychange', onVisibilityChange);
 
-    // Pause when scrolled out of view
-    const intersectionObserver = new IntersectionObserver(
-      ([entry]) => { paused = !entry.isIntersecting || document.hidden; },
-      { threshold: 0.01 }
-    );
-    intersectionObserver.observe(canvas);
+    function init() {
+      const gl = canvas.getContext('webgl');
+      if (!gl) return;
 
-    const startTime = Date.now();
-    let animId;
-
-    function render() {
-      if (!paused) {
-        const t = (Date.now() - startTime) / 1000;
-        gl.clearColor(0, 0, 0, 1);
-        gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.useProgram(program);
-        gl.uniform2f(uRes, canvas.width, canvas.height);
-        gl.uniform1f(uTime, t);
-        gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
-        gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-        gl.enableVertexAttribArray(aPos);
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      function loadShader(type, source) {
+        const shader = gl.createShader(type);
+        if (!shader) return null;
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          console.error('Shader compile error:', gl.getShaderInfoLog(shader));
+          gl.deleteShader(shader);
+          return null;
+        }
+        return shader;
       }
+
+      const vs = loadShader(gl.VERTEX_SHADER, vsSource);
+      const fs = loadShader(gl.FRAGMENT_SHADER, fsSource);
+      if (!vs || !fs) return;
+
+      const program = gl.createProgram();
+      if (!program) return;
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error('Shader link error:', gl.getProgramInfoLog(program));
+        return;
+      }
+
+      const posBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+
+      const aPos = gl.getAttribLocation(program, 'aVertexPosition');
+      const uRes = gl.getUniformLocation(program, 'iResolution');
+      const uTime = gl.getUniformLocation(program, 'iTime');
+
+      function resize() {
+        canvas.width = canvas.clientWidth * (window.devicePixelRatio || 1);
+        canvas.height = canvas.clientHeight * (window.devicePixelRatio || 1);
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      }
+
+      resizeObserver = new ResizeObserver(resize);
+      resizeObserver.observe(canvas);
+      resize();
+
+      document.addEventListener('visibilitychange', onVisibilityChange);
+
+      intersectionObserver = new IntersectionObserver(
+        ([entry]) => { paused = !entry.isIntersecting || document.hidden; },
+        { threshold: 0.01 }
+      );
+      intersectionObserver.observe(canvas);
+
+      const startTime = Date.now();
+
+      function render() {
+        if (!paused) {
+          const t = (Date.now() - startTime) / 1000;
+          gl.clearColor(0, 0, 0, 1);
+          gl.clear(gl.COLOR_BUFFER_BIT);
+          gl.useProgram(program);
+          gl.uniform2f(uRes, canvas.width, canvas.height);
+          gl.uniform1f(uTime, t);
+          gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+          gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+          gl.enableVertexAttribArray(aPos);
+          gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        }
+        animId = requestAnimationFrame(render);
+      }
+
       animId = requestAnimationFrame(render);
     }
 
-    animId = requestAnimationFrame(render);
+    // Defer WebGL init until the browser is idle (after first paint)
+    const idleId = typeof requestIdleCallback !== 'undefined'
+      ? requestIdleCallback(init, { timeout: 2000 })
+      : setTimeout(init, 200);
 
     return () => {
+      if (typeof cancelIdleCallback !== 'undefined') cancelIdleCallback(idleId);
+      else clearTimeout(idleId);
       cancelAnimationFrame(animId);
       document.removeEventListener('visibilitychange', onVisibilityChange);
-      resizeObserver.disconnect();
-      intersectionObserver.disconnect();
+      resizeObserver?.disconnect();
+      intersectionObserver?.disconnect();
     };
   }, []);
 

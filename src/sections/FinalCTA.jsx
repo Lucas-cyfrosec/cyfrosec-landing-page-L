@@ -1,6 +1,6 @@
 import { Mail } from 'lucide-react';
 
-export default function FinalCTA() {
+export default function FinalCTA({ navigate }) {
   return (
     <section id="cta" className="relative overflow-hidden flex-1 flex flex-col justify-center border-t cy-border-strong">
       <div className="relative py-12 sm:py-16 lg:py-24 3xl:py-32 bg-[var(--bg-overlay)] dark:bg-[#020610]">
@@ -34,13 +34,13 @@ export default function FinalCTA() {
           </p>
 
           <div className="flex justify-center mb-6">
-            <a
-              href="mailto:sales@cyfrosec.com"
+            <button
+              onClick={() => navigate?.('contact-sales')}
               className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white hover:bg-primary-50 text-primary-700 text-sm sm:text-base font-semibold rounded-xl transition-all duration-200 shadow-[0_0_30px_rgba(3,155,224,0.22)] hover:shadow-[0_0_38px_rgba(3,155,224,0.3)] hover:-translate-y-0.5"
             >
               <Mail className="w-5 h-5" />
               Contact Sales
-            </a>
+            </button>
           </div>
 
           <p className="text-primary-200/95 text-xs sm:text-sm">

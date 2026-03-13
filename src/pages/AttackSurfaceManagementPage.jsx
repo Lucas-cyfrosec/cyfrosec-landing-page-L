@@ -169,12 +169,12 @@ export default function AttackSurfaceManagementPage({ navigate }) {
                   Get started free
                   <ArrowRight className="size-4" />
                 </button>
-                <a
-                  href="mailto:sales@cyfrosec.com"
+                <button
+                  onClick={() => navigate?.('contact-sales')}
                   className="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-white/[0.08]"
                 >
                   Talk to sales
-                </a>
+                </button>
               </div>
             </div>
 
@@ -366,12 +366,12 @@ export default function AttackSurfaceManagementPage({ navigate }) {
                 Get started free
                 <ArrowRight className="size-5 transition-transform group-hover:translate-x-0.5" />
               </button>
-              <a
-                href="mailto:sales@cyfrosec.com"
+              <button
+                onClick={() => navigate?.('contact-sales')}
                 className="inline-flex w-full items-center justify-center rounded-xl border border-white/35 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-white/60 hover:bg-white/8 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
                 Talk to sales
-              </a>
+              </button>
             </div>
           </div>
         </div>

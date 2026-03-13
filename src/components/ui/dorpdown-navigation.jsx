@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
-export function DropdownNavigation({ navItems, onNavigate }) {
+export const DropdownNavigation = React.memo(function DropdownNavigation({ navItems, onNavigate, onPrefetch }) {
   const [openMenu, setOpenMenu] = React.useState(null);
   const [isHover, setIsHover] = React.useState(null);
 
@@ -67,6 +67,7 @@ export function DropdownNavigation({ navItems, onNavigate }) {
                                 <a
                                   href={item.href ?? '#'}
                                   className="cy-navbar-dropdown-item flex items-start space-x-3 group rounded-xl p-2 -mx-2 -my-1 transition-colors duration-300"
+                                  onMouseEnter={() => item.isNav && onPrefetch?.(item.href)}
                                   onClick={(event) => onNavigate?.(item.href ?? '#', item.isNav, event)}
                                 >
                                   <div className="cy-navbar-dropdown-icon border cy-border cy-text-primary rounded-md flex items-center justify-center size-9 shrink-0 group-hover:bg-[color-mix(in_srgb,var(--text-primary)_4%,transparent)] transition-colors duration-300">
@@ -96,4 +97,4 @@ export function DropdownNavigation({ navItems, onNavigate }) {
       ))}
     </ul>
   );
-}
+});
