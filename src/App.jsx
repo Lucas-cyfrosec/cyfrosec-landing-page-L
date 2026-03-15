@@ -15,6 +15,7 @@ const Highlights = lazy(() => import('./sections/Highlights'));
 const FeatureComparison = lazy(() => import('./sections/FeatureComparison'));
 const Security = lazy(() => import('./sections/Security'));
 const Pricing = lazy(() => import('./sections/Pricing'));
+const PlatformArchitectureDetail = lazy(() => import('./sections/PlatformArchitectureDetail'));
 const FinalCTA = lazy(() => import('./sections/FinalCTA'));
 const MegaFooter = lazy(() => import('./sections/MegaFooter'));
 const PlatformPage = lazy(() => import('./pages/PlatformPage'));
@@ -175,6 +176,7 @@ export default function App() {
           <CyfroAIEngine />
           <Personas />
           <Outcomes />
+          <PlatformArchitectureDetail />
           <Highlights />
           <FeatureComparison />
           <Security />

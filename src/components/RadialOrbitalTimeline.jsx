@@ -17,7 +17,6 @@ export default function RadialOrbitalTimeline({ items = [] }) {
   const animFrameRef = useRef(null);
   const lastTimeRef = useRef(0);
   const targetRotationRef = useRef(null);
-  const swapTimerRef = useRef(null);
 
   const updateSize = useCallback(() => {
     if (!containerRef.current) return;
@@ -129,25 +128,12 @@ export default function RadialOrbitalTimeline({ items = [] }) {
   }
 
   useEffect(() => {
-    clearInterval(swapTimerRef.current);
     if (!expandedId) return;
-
     const expandedItem = items.find((i) => i.id === expandedId);
     const hasBenefits = Boolean(expandedItem?.keyBenefits?.length);
     const hasCapabilities = Boolean(expandedItem?.capabilities?.length);
-
-    if (hasBenefits && hasCapabilities) {
-      swapTimerRef.current = setInterval(() => {
-        setDetailView((prev) => (prev === 'benefits' ? 'capabilities' : 'benefits'));
-        setDetailAnimKey((prev) => prev + 1);
-      }, 4200);
-    } else if (hasCapabilities) {
-      setDetailView('capabilities');
-    } else {
-      setDetailView('benefits');
-    }
-
-    return () => clearInterval(swapTimerRef.current);
+    if (hasCapabilities && !hasBenefits) setDetailView('capabilities');
+    else setDetailView('benefits');
   }, [expandedId, items]);
 
   function nodePosition(index) {
@@ -279,12 +265,22 @@ export default function RadialOrbitalTimeline({ items = [] }) {
 
                     {(item.keyBenefits?.length > 0 || item.capabilities?.length > 0) && (
                       <div className="mt-3 pt-3 border-t border-surface-100 dark:border-white/10">
+                        <div className="flex items-center justify-between mb-2.5">
+                          <span className="text-[10px] text-primary-500 uppercase tracking-[0.16em] font-semibold">
+                            {detailView === 'capabilities' ? 'Capabilities' : 'Key Benefits'}
+                          </span>
+                          {item.keyBenefits?.length > 0 && item.capabilities?.length > 0 && (
+                            <button
+                              onClick={(e) => { e.stopPropagation(); setDetailView(v => v === 'benefits' ? 'capabilities' : 'benefits'); setDetailAnimKey((k) => k + 1); }}
+                              className="flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium text-white/50 hover:text-white/80 transition-colors"
+                            >
+                              {detailView === 'benefits' ? <>Capabilities <ArrowRight size={10} /></> : <><ArrowRight size={10} className="rotate-180" /> Benefits</>}
+                            </button>
+                          )}
+                        </div>
                         <div key={`${item.id}-${detailView}-${detailAnimKey}`} className="animate-priceFade">
                           {detailView === 'capabilities' && item.capabilities?.length > 0 ? (
                             <div>
-                              <div className="mb-2 text-[10px] text-primary-500 uppercase tracking-[0.16em] font-semibold">
-                                Capabilities
-                              </div>
                               <p className="text-[11px] text-surface-600 dark:text-white/70 mb-2.5">
                                 What {item.title} does
                               </p>
@@ -300,21 +296,16 @@ export default function RadialOrbitalTimeline({ items = [] }) {
                               </ul>
                             </div>
                           ) : item.keyBenefits?.length > 0 ? (
-                            <div>
-                              <div className="mb-2 text-[10px] text-primary-500 uppercase tracking-[0.16em] font-semibold">
-                                Key Benefits
-                              </div>
-                              <div className="space-y-2">
-                                {item.keyBenefits.map((benefit) => (
-                                  <div
-                                    key={benefit.title}
-                                    className="rounded-lg border border-surface-200 dark:border-white/10 bg-surface-50 dark:bg-[#0c1a2d]/80 p-2.5"
-                                  >
-                                    <p className="text-xs font-semibold text-surface-900 dark:text-white">{benefit.title}</p>
-                                    <p className="text-[11px] text-surface-600 dark:text-white/75 mt-1 leading-relaxed">{benefit.description}</p>
-                                  </div>
-                                ))}
-                              </div>
+                            <div className="space-y-2">
+                              {item.keyBenefits.map((benefit) => (
+                                <div
+                                  key={benefit.title}
+                                  className="rounded-lg border border-surface-200 dark:border-white/10 bg-surface-50 dark:bg-[#0c1a2d]/80 p-2.5"
+                                >
+                                  <p className="text-xs font-semibold text-surface-900 dark:text-white">{benefit.title}</p>
+                                  <p className="text-[11px] text-surface-600 dark:text-white/75 mt-1 leading-relaxed">{benefit.description}</p>
+                                </div>
+                              ))}
                             </div>
                           ) : null}
                         </div>

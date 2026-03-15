@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
 import { ChevronDown, Menu, X, ArrowRight, Shield, Bot, Layers, ShieldCheck, Cloud, Lock, FileText, Newspaper, LifeBuoy, DollarSign, Info } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent, useReducedMotion } from 'framer-motion';
-import ThemeToggle from '../components/ThemeToggle';
 import { DropdownNavigation } from '../components/ui/dorpdown-navigation';
 import logo from '../assets/logo.png';
 
@@ -164,7 +163,7 @@ export default function Navbar({ navigate }) {
         <motion.div
           className={`cy-navbar-shell relative flex items-center justify-between transition-all duration-300 ${
             isScrolled
-              ? 'cy-navbar-shell-scrolled h-14 max-w-7xl mx-auto px-4 lg:px-6 rounded-2xl bg-[color-mix(in_srgb,var(--bg-elevated)_80%,transparent)] backdrop-blur-xl border cy-border shadow-lg shadow-black/10'
+              ? 'cy-navbar-shell-scrolled h-14 max-w-7xl mx-auto px-4 lg:px-6 rounded-2xl bg-transparent backdrop-blur-xl border cy-border shadow-lg shadow-black/10'
               : 'h-16 w-full px-6 lg:px-12 bg-[var(--bg-canvas)] border-b border-[color-mix(in_srgb,var(--border-default)_25%,transparent)]'
           }`}
         >
@@ -193,7 +192,6 @@ export default function Navbar({ navigate }) {
 
         {/* Desktop CTAs */}
         <div className="cy-navbar-actions hidden lg:flex items-center gap-3 z-10">
-          <ThemeToggle />
           <button onClick={() => navigate?.('contact-sales')} className="cy-navbar-muted cy-navbar-ghost text-[13px] font-semibold cy-text-secondary hover:cy-text-primary transition-colors px-2">
             Contact Sales
           </button>
@@ -217,7 +215,6 @@ export default function Navbar({ navigate }) {
 
         {/* Mobile toggle */}
         <div className="cy-navbar-mobile-toggle flex items-center gap-3 lg:hidden z-10">
-          <ThemeToggle />
           <button
             className="cy-navbar-ghost rounded-full p-2 cy-text-secondary transition-all hover:bg-[color-mix(in_srgb,var(--text-primary)_6%,transparent)]"
             aria-label="Toggle menu"

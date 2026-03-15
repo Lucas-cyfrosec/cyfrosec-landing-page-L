@@ -29,11 +29,11 @@ export default function FinalCTA({ navigate }) {
             <span className="block text-primary-400">Defeat every threat.</span>
           </h2>
 
-          <p className="text-base sm:text-lg lg:text-xl 3xl:text-2xl text-slate-200 max-w-2xl mx-auto mb-8 sm:mb-10">
+          <p className="text-base sm:text-lg lg:text-xl 3xl:text-2xl text-white/90 max-w-2xl mx-auto mb-8 sm:mb-10">
             See CyfroSec in action with a live demo, or talk to our team about your specific needs.
           </p>
 
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center">
             <button
               onClick={() => navigate?.('contact-sales')}
               className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white hover:bg-primary-50 text-primary-700 text-sm sm:text-base font-semibold rounded-xl transition-all duration-200 shadow-[0_0_30px_rgba(3,155,224,0.22)] hover:shadow-[0_0_38px_rgba(3,155,224,0.3)] hover:-translate-y-0.5"
@@ -42,10 +42,6 @@ export default function FinalCTA({ navigate }) {
               Contact Sales
             </button>
           </div>
-
-          <p className="text-primary-200/95 text-xs sm:text-sm">
-            Free trial available. No credit card required for SaaS Starter plan.
-          </p>
         </div>
       </div>
     </section>

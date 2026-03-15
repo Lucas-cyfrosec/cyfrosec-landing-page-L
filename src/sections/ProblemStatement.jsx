@@ -15,7 +15,7 @@ const problems = [
     accent: '3 155 224',
     href: '#solutions',
     cta: 'See how we fix this',
-    className: 'lg:col-start-1 lg:col-end-3 lg:row-start-1 lg:row-end-2',
+    className: 'lg:col-start-3 lg:col-end-4 lg:row-start-1 lg:row-end-2',
   },
   {
     Icon: ShieldAlert,
@@ -30,7 +30,7 @@ const problems = [
     accent: '254 144 77',
     href: '#solutions',
     cta: 'See how we fix this',
-    className: 'lg:col-start-3 lg:col-end-4 lg:row-start-1 lg:row-end-2',
+    className: 'lg:col-start-1 lg:col-end-3 lg:row-start-1 lg:row-end-2',
   },
   {
     Icon: DollarSign,

@@ -159,7 +159,7 @@ const timelineItems = [
   },
   {
     id: 6,
-    title: 'Vuln & Misconfig',
+    title: 'Vulnerability & Misconfiguration',
     date: 'Assessment',
     content: 'Comprehensive scanning for vulnerabilities, hardcoded secrets, and infrastructure misconfigurations across your stack.',
     capabilities: [

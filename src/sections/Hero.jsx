@@ -2,7 +2,12 @@ import { useState, useEffect } from 'react';
 import { ArrowRight, Mail } from 'lucide-react';
 import InteractiveGlobe from '../components/InteractiveGlobe';
 
-const titles = ['Detects Threats', 'Explains Risks', 'Takes Action', 'Secures Infrastructure'];
+const titles = [
+  'Finds Vulnerabilities.',
+  'Stops Threats.',
+  'Fixes Vulnerabilities.',
+  'Explains Risks.',
+];
 
 export default function Hero({ navigate }) {
   const [titleNumber, setTitleNumber] = useState(0);
@@ -50,7 +55,7 @@ export default function Hero({ navigate }) {
             {/* Headline with Animated Text */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 3xl:text-8xl font-bold tracking-tighter leading-[1.1] mb-4 sm:mb-6">
               <span className="text-surface-900 dark:text-surface-50">AI That</span>
-              <span className="relative flex w-full justify-center lg:justify-start overflow-hidden md:pb-4 md:pt-1">
+              <span className="relative flex w-full lg:w-[150%] justify-center lg:justify-start overflow-hidden md:pb-4 md:pt-1">
                 &nbsp;
                 {titles.map((title, index) => (
                   <span
@@ -85,8 +90,7 @@ export default function Hero({ navigate }) {
                 href="#cta"
                 className="group inline-flex items-center justify-center gap-3 sm:gap-4 px-6 sm:px-8 py-3 sm:py-4 rounded-xl bg-primary-500 hover:bg-primary-600 text-white text-sm sm:text-base font-semibold transition-all duration-200 shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/30 hover:-translate-y-0.5"
               >
-                Request Demo
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                Book Demo
               </a>
             </div>
 
