@@ -1,0 +1,43 @@
+import { Mail } from 'lucide-react';
+import Link from 'next/link';
+
+export default function FinalCTA() {
+  return (
+    <section id="cta" className="relative overflow-hidden flex-1 flex flex-col justify-center border-t cy-border-strong">
+      <div className="relative py-12 sm:py-16 lg:py-24 3xl:py-32 bg-surface-50 dark:bg-[#020610]">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-[120%] h-[80%] bg-[radial-gradient(ellipse_at_bottom,rgba(3,155,224,0.16),transparent_62%)] dark:bg-[radial-gradient(ellipse_at_bottom,rgba(3,155,224,0.23),transparent_62%)]"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-[62%] h-[42%] bg-[radial-gradient(ellipse_at_bottom,rgba(3,155,224,0.24),transparent_60%)] dark:bg-[radial-gradient(ellipse_at_bottom,rgba(3,155,224,0.34),transparent_60%)] mix-blend-multiply dark:mix-blend-screen"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(15,31,47,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(15,31,47,0.08)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.78)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.78)_1px,transparent_1px)] bg-[size:40px_40px] opacity-[0.45] dark:opacity-[0.055]"
+        />
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl 3xl:max-w-screen-2xl text-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold leading-tight mb-4 sm:mb-6">
+            <span className="block text-surface-900 dark:text-white">Ready to secure.</span>
+            <span className="block text-primary-500 dark:text-primary-400">Defeat every exposure.</span>
+          </h2>
+
+          <p className="text-base sm:text-lg lg:text-xl 3xl:text-2xl text-surface-600 dark:text-white/90 max-w-2xl mx-auto mb-8 sm:mb-10">
+            See CyfroSec in action with a live demo, or talk to our team about your specific needs.
+          </p>
+
+          <div className="flex justify-center">
+            <Link
+              href="/contact"
+              className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white hover:bg-primary-50 text-primary-700 text-sm sm:text-base font-semibold rounded-xl transition-all duration-200 shadow-[0_0_30px_rgba(3,155,224,0.22)] hover:shadow-[0_0_38px_rgba(3,155,224,0.3)] hover:-translate-y-0.5"
+            >
+              <Mail className="w-5 h-5" />
+              Contact Sales
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

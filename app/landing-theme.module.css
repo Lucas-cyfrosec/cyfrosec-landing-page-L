@@ -1,0 +1,213 @@
+/*
+ * Landing page token scope.
+ * Keep the CyfroSec landing palette local to the marketing page so the
+ * product app theme remains untouched.
+ */
+
+.wrapper {
+  /* Brand */
+  --brand-primary: #039be0;
+  --brand-primary-hover: #33afdf;
+  --brand-accent-orange: #fe904d;
+  --brand-accent-strong: #fe701a;
+  --brand-accent-soft: #feb080;
+  --brand-accent-rgb: 254 144 77;
+  --brand-white: #ffffff;
+
+  /* Primary scale */
+  --color-primary-50: #e6f5fb;
+  --color-primary-100: #ccebf7;
+  --color-primary-200: #99d7ef;
+  --color-primary-300: #66c3e7;
+  --color-primary-400: #33afdf;
+  --color-primary-500: #039be0;
+  --color-primary-600: #0278ae;
+  --color-primary-700: #026493;
+  --color-primary-800: #02527a;
+  --color-primary-900: #013f5d;
+  --color-primary-950: #012c41;
+
+  /* Surface scale - light */
+  --color-surface-50: #f7fafc;
+  --color-surface-100: #edf3f8;
+  --color-surface-200: #dbe6ef;
+  --color-surface-300: #c1d2df;
+  --color-surface-400: #8ea4b7;
+  --color-surface-500: #627990;
+  --color-surface-600: #4b6074;
+  --color-surface-700: #34475a;
+  --color-surface-800: #243648;
+  --color-surface-900: #172737;
+  --color-surface-950: #0d1b29;
+
+  /* Status */
+  --color-success-500: #10b981;
+  --color-success-600: #059669;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+  --color-warning-500: #fe904d;
+
+  /* Semantic backgrounds - light */
+  --bg-canvas: #f2f6fb;
+  --bg-elevated: #ffffff;
+  --bg-muted: #eaf1f7;
+  --bg-panel: #ffffff;
+  --bg-panel-muted: #f7fbff;
+  --bg-panel-strong: #eef4fb;
+  --bg-overlay: #0c1c2a;
+  --bg-input: #ffffff;
+  --bg-sidebar: color-mix(in srgb, var(--bg-elevated) 94%, var(--bg-muted) 6%);
+  --bg-sidebar-hover: color-mix(in srgb, var(--bg-elevated) 68%, var(--bg-muted) 32%);
+
+  /* Semantic text - light */
+  --text-primary: #0f1f2f;
+  --text-secondary: #22384d;
+  --text-muted: #5d7388;
+  --text-inverse: #ffffff;
+  --text-brand: #039be0;
+  --text-accent: #fe701a;
+  --text-sidebar: var(--text-secondary);
+  --text-sidebar-muted: var(--text-muted);
+  --text-sidebar-strong: var(--text-primary);
+
+  /* Borders - light */
+  --border-default: #cfdce8;
+  --border-strong: #b9ccdc;
+  --border-sidebar: color-mix(in srgb, var(--border-default) 82%, transparent);
+
+  --focus-ring: color-mix(in srgb, var(--brand-primary-hover) 45%, transparent);
+  --shell-duration: 260ms;
+  --shell-easing: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Landing shell surfaces */
+  --hero-bg: var(--bg-sidebar);
+  --landing-navbar-divider: color-mix(in srgb, var(--border-default) 88%, transparent);
+  --landing-navbar-button-bg: color-mix(in srgb, var(--bg-elevated) 92%, transparent);
+  --landing-navbar-button-border: color-mix(in srgb, var(--border-default) 84%, transparent);
+  --landing-navbar-hover-bg: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --landing-navbar-dropdown-bg: color-mix(in srgb, var(--bg-elevated) 96%, transparent);
+  --landing-navbar-dropdown-border: color-mix(in srgb, var(--border-default) 84%, transparent);
+  --landing-navbar-dropdown-shadow: 0 20px 50px rgb(15 23 42 / 0.12);
+  --landing-navbar-dropdown-label: var(--text-muted);
+  --landing-navbar-dropdown-title: var(--text-primary);
+  --landing-navbar-dropdown-desc: var(--text-secondary);
+  --landing-navbar-dropdown-desc-hover: var(--text-secondary);
+  --landing-navbar-dropdown-icon-bg: color-mix(in srgb, var(--bg-muted) 62%, var(--bg-elevated) 38%);
+  --landing-navbar-dropdown-icon-border: color-mix(in srgb, var(--border-default) 78%, transparent);
+  --landing-navbar-dropdown-icon-text: var(--text-primary);
+  --landing-navbar-dropdown-item-hover-bg: color-mix(in srgb, var(--text-primary) 4%, transparent);
+}
+
+
+/*
+ * Dark overrides — applied when the wrapper also carries the `dark` class.
+ * Keeps public pages (contact, docs, etc.) styled consistently with the landing page.
+ */
+:global(.dark) .wrapper,
+:global(.dark).wrapper {
+  /* Semantic backgrounds */
+  --bg-canvas:        #172737;
+  --bg-elevated:      #1d3548;
+  --bg-muted:         #1d3548;
+  --bg-panel:         #1d3548;
+  --bg-panel-muted:   #172737;
+  --bg-panel-strong:  #243648;
+  --bg-input:         #243648;
+
+  /* Semantic text */
+  --text-primary:     #e9f1f8;
+  --text-secondary:   #c4d4e2;
+  --text-muted:       #7f95ab;
+  --text-sidebar:     #c4d4e2;
+  --text-sidebar-muted: #7f95ab;
+  --text-sidebar-strong: #e9f1f8;
+
+  /* Borders */
+  --border-default:   #27445b;
+  --border-strong:    #375d77;
+  --border-sidebar:   #27445b;
+
+  /* Landing shell surfaces */
+  --bg-sidebar:       #0f2436;
+  --bg-sidebar-hover: #1d3548;
+  --hero-bg:          #0f2436;
+  --landing-navbar-divider: rgb(255 255 255 / 0.18);
+  --landing-navbar-button-bg: rgb(255 255 255 / 0.06);
+  --landing-navbar-button-border: rgb(255 255 255 / 0.18);
+  --landing-navbar-hover-bg: rgb(255 255 255 / 0.08);
+  --landing-navbar-dropdown-bg: var(--hero-bg);
+  --landing-navbar-dropdown-border: rgb(255 255 255 / 0.12);
+  --landing-navbar-dropdown-shadow: 0 20px 50px rgb(0 0 0 / 0.35);
+  --landing-navbar-dropdown-label: rgb(255 255 255 / 0.62);
+  --landing-navbar-dropdown-title: rgb(255 255 255 / 0.94);
+  --landing-navbar-dropdown-desc: rgb(255 255 255 / 0.68);
+  --landing-navbar-dropdown-desc-hover: rgb(255 255 255 / 0.78);
+  --landing-navbar-dropdown-icon-bg: rgb(255 255 255 / 0.04);
+  --landing-navbar-dropdown-icon-border: rgb(255 255 255 / 0.12);
+  --landing-navbar-dropdown-icon-text: rgb(255 255 255 / 0.9);
+  --landing-navbar-dropdown-item-hover-bg: rgb(255 255 255 / 0.06);
+}
+
+.wrapper :global(.cy-navbar-divider) {
+  background-color: var(--landing-navbar-divider) !important;
+}
+
+.wrapper :global(.cy-navbar-actions > button),
+.wrapper :global(.cy-navbar-mobile-toggle > button:first-child) {
+  border-color: var(--landing-navbar-button-border) !important;
+  background-color: var(--landing-navbar-button-bg) !important;
+}
+
+.wrapper :global(.cy-navbar-nav .cy-navbar-hover-bg) {
+  background-color: var(--landing-navbar-hover-bg) !important;
+}
+
+.wrapper :global(.cy-navbar-dropdown) {
+  background-color: var(--landing-navbar-dropdown-bg) !important;
+  border-color: var(--landing-navbar-dropdown-border) !important;
+  box-shadow: var(--landing-navbar-dropdown-shadow) !important;
+}
+
+.wrapper :global(.cy-navbar-dropdown-label) {
+  color: var(--landing-navbar-dropdown-label) !important;
+}
+
+.wrapper :global(.cy-navbar-dropdown-title) {
+  color: var(--landing-navbar-dropdown-title) !important;
+}
+
+.wrapper :global(.cy-navbar-dropdown-desc) {
+  color: var(--landing-navbar-dropdown-desc) !important;
+}
+
+.wrapper :global(.cy-navbar-dropdown-icon) {
+  background-color: var(--landing-navbar-dropdown-icon-bg) !important;
+  border-color: var(--landing-navbar-dropdown-icon-border) !important;
+  color: var(--landing-navbar-dropdown-icon-text) !important;
+}
+
+.wrapper :global(.cy-navbar-dropdown-item:hover),
+.wrapper :global(.cy-navbar-dropdown-item:focus-visible),
+.wrapper :global(.cy-navbar-dropdown-item[data-active="true"]) {
+  background-color: var(--landing-navbar-dropdown-item-hover-bg) !important;
+}
+
+.wrapper :global(.cy-navbar-dropdown-item:hover .cy-navbar-dropdown-title),
+.wrapper :global(.cy-navbar-dropdown-item:focus-visible .cy-navbar-dropdown-title) {
+  color: var(--landing-navbar-dropdown-title) !important;
+}
+
+.wrapper :global(.cy-navbar-dropdown-item:hover .cy-navbar-dropdown-desc),
+.wrapper :global(.cy-navbar-dropdown-item:focus-visible .cy-navbar-dropdown-desc) {
+  color: var(--landing-navbar-dropdown-desc-hover) !important;
+}
+
+/*
+ * Sidebar utility classes — missing from the app's global CSS.
+ */
+:global(.cy-bg-sidebar)          { background-color: var(--bg-sidebar); }
+:global(.cy-bg-sidebar-hover)    { background-color: var(--bg-sidebar-hover); }
+:global(.cy-text-sidebar)        { color: var(--text-sidebar); }
+:global(.cy-text-sidebar-muted)  { color: var(--text-sidebar-muted); }
+:global(.cy-text-sidebar-strong) { color: var(--text-sidebar-strong); }
+:global(.cy-border-sidebar)      { border-color: var(--border-sidebar); }

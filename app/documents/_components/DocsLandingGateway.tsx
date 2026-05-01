@@ -1,0 +1,528 @@
+'use client'
+
+import { useMemo, useRef, useState, useEffect } from 'react'
+import Link from 'next/link'
+import Fuse from 'fuse.js'
+import {
+  ArrowRight,
+  BookOpen,
+  Boxes,
+  Brain,
+  ChevronRight,
+  LayoutDashboard,
+  Network,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  TerminalSquare,
+  UsersRound,
+} from 'lucide-react'
+import type { ComponentType } from 'react'
+import { DOCS_ARTICLE_SUMMARIES, DOCS_HEADING_FONT, DOCS_SEARCH_INDEX } from '../docs-data'
+import {
+  DOCS_POPULARITY_EVENT,
+  getDocsPopularityCounts,
+  normalizeDocsHref,
+  recordDocsInteraction,
+} from '../docs-analytics'
+
+type LinkItem = {
+  label: string
+  href: string
+}
+
+type QuickChip = LinkItem
+
+type StartCard = LinkItem & {
+  description: string
+  eyebrow: string
+  Icon: ComponentType<{ className?: string }>
+}
+
+type PopularArticle = LinkItem & {
+  description: string
+}
+
+type CategoryCard = {
+  title: string
+  href: string
+  description: string
+  Icon: ComponentType<{ className?: string }>
+  items: LinkItem[]
+}
+
+const QUICK_CHIPS: QuickChip[] = [
+  { label: 'Quick Start', href: '/documents/full#getting-started' },
+  { label: 'CyfroAgent Install', href: '/documents/deploy-agent' },
+  { label: 'On-Prem Setup', href: '/documents/full#step1' },
+  { label: 'CyfroAI Insights', href: '/documents/ai-insights' },
+  { label: 'CyfroCode', href: '/documents/cyfrocode' },
+]
+
+const START_HERE_CARDS: StartCard[] = [
+  {
+    eyebrow: 'Start here',
+    label: 'Create your organization',
+    href: '/documents/full#step1',
+    description: 'Begin with the existing sign-up and organization creation guide in the core Platform Overview docs.',
+    Icon: Sparkles,
+  },
+  {
+    eyebrow: 'Install',
+    label: 'Register and install CyfroAgent',
+    href: '/documents/deploy-agent',
+    description: 'Go straight to the agent registration, install flow, and deployment guidance for your first monitored host.',
+    Icon: TerminalSquare,
+  },
+  {
+    eyebrow: 'Verify',
+    label: 'Run your first scan',
+    href: '/documents/first-scan',
+    description: 'Launch directly into the first-scan workflow and then branch into Network Discovery, Asset Discovery, or Service Fingerprinting.',
+    Icon: ShieldCheck,
+  },
+]
+
+const DEFAULT_POPULAR_ARTICLE_HREFS = [
+  '/documents/full',
+  '/documents/dashboard',
+  '/documents/ai-insights',
+  '/documents/ai-assistant',
+  '/documents/deploy-agent',
+  '/documents/service-fingerprinting',
+]
+
+const CATEGORY_CARDS: CategoryCard[] = [
+  {
+    title: 'Getting Started',
+    href: '/documents/full',
+    description: 'Core onboarding, platform orientation, RBAC, and the first-run path into the product.',
+    Icon: BookOpen,
+    items: [
+      { label: 'Platform Overview', href: '/documents/full' },
+      { label: 'Role Based Access Control', href: '/documents/rbac' },
+    ],
+  },
+  {
+    title: 'Platform Guide',
+    href: '/documents/dashboard',
+    description: 'Interface docs covering dashboard, notifications, reports, CyfroCode, and topology views.',
+    Icon: LayoutDashboard,
+    items: [
+      { label: 'Dashboard', href: '/documents/dashboard' },
+      { label: 'Notifications', href: '/documents/notifications' },
+      { label: 'Report', href: '/documents/reports' },
+    ],
+  },
+  {
+    title: 'CyfroAgent',
+    href: '/documents/deploy-agent',
+    description: 'Agent registration, installation, and setup guidance for the telemetry and execution layer.',
+    Icon: TerminalSquare,
+    items: [
+      { label: 'CyfroAgent and Setup', href: '/documents/deploy-agent' },
+    ],
+  },
+  {
+    title: 'Scans',
+    href: '/documents/first-scan',
+    description: 'Step through creating tests and understand Network Discovery, Asset Discovery, and Service Fingerprinting.',
+    Icon: Network,
+    items: [
+      { label: 'Creating Tests', href: '/documents/first-scan' },
+      { label: 'Network Discovery Scan', href: '/documents/network-discovery' },
+      { label: 'Service Fingerprinting Scan', href: '/documents/service-fingerprinting' },
+    ],
+  },
+  {
+    title: 'CyfroAI Engine',
+    href: '/documents/ai-insights',
+    description: 'Explore AI-generated insights and conversational assistance grounded in your actual environment.',
+    Icon: Brain,
+    items: [
+      { label: 'CyfroAI Insights', href: '/documents/ai-insights' },
+      { label: 'CyfroAssistant', href: '/documents/ai-assistant' },
+    ],
+  },
+  {
+    title: 'Security & Compliance',
+    href: '/documents/gdpr',
+    description: 'Audit, compliance, and control-oriented guidance for governance and evidence workflows.',
+    Icon: ShieldCheck,
+    items: [
+      { label: 'GDPR Compliance Tool', href: '/documents/gdpr' },
+      { label: 'Audit', href: '/documents/audit' },
+    ],
+  },
+  {
+    title: 'Admin Panel',
+    href: '/documents/admin',
+    description: 'Administrative controls, settings navigation, user governance, and organization management.',
+    Icon: UsersRound,
+    items: [
+      { label: 'Admin Panel', href: '/documents/admin' },
+    ],
+  },
+  {
+    title: 'Deployment',
+    href: '/documents/licensing',
+    description: 'Licensing, provisioning context, and deployment-oriented operational guidance.',
+    Icon: Boxes,
+    items: [
+      { label: 'Licensing', href: '/documents/licensing' },
+    ],
+  },
+]
+
+function SectionHeading({
+  eyebrow,
+  title,
+  description,
+}: {
+  eyebrow: string
+  title: string
+  description: string
+}) {
+  return (
+    <div className="mb-6 sm:mb-8 3xl:mb-10">
+      <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] cy-text-brand 3xl:text-[13px]">{eyebrow}</p>
+      <h2
+        className="text-2xl font-bold tracking-tight cy-text-primary sm:text-3xl lg:text-4xl 3xl:text-[3rem]"
+        style={{ fontFamily: DOCS_HEADING_FONT }}
+      >
+        {title}
+      </h2>
+      <p className="mt-3 max-w-2xl text-sm leading-relaxed cy-text-secondary sm:text-base 3xl:max-w-3xl 3xl:text-[18px] 3xl:leading-8">
+        {description}
+      </p>
+    </div>
+  )
+}
+
+function buildPopularArticle(href: string): PopularArticle | null {
+  const normalizedHref = normalizeDocsHref(href)
+  const docsItem = DOCS_SEARCH_INDEX.find((item) => item.href === normalizedHref)
+
+  if (!docsItem) {
+    return null
+  }
+
+  return {
+    label: docsItem.label,
+    href: docsItem.href,
+    description: DOCS_ARTICLE_SUMMARIES[docsItem.href] ?? `Open the ${docsItem.label} guide in the ${docsItem.section.toLowerCase()} documentation set.`,
+  }
+}
+
+function getDefaultPopularArticles() {
+  return DEFAULT_POPULAR_ARTICLE_HREFS
+    .map((href) => buildPopularArticle(href))
+    .filter((article): article is PopularArticle => article !== null)
+}
+
+function getPopularArticlesFromCounts() {
+  const counts = getDocsPopularityCounts()
+  const rankedArticles = Object.entries(counts)
+    .sort((left, right) => right[1] - left[1])
+    .map(([href]) => buildPopularArticle(href))
+    .filter((article): article is PopularArticle => article !== null)
+
+  const mergedArticles = [...rankedArticles, ...getDefaultPopularArticles()]
+  const seen = new Set<string>()
+
+  return mergedArticles.filter((article) => {
+    if (seen.has(article.href)) {
+      return false
+    }
+
+    seen.add(article.href)
+    return true
+  }).slice(0, 6)
+}
+
+export default function DocsLandingGateway() {
+  const [query, setQuery] = useState('')
+  const [focused, setFocused] = useState(false)
+  const [popularArticles, setPopularArticles] = useState<PopularArticle[]>(() => getDefaultPopularArticles())
+  const inputRef = useRef<HTMLInputElement>(null)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  const fuse = useMemo(
+    () => new Fuse(DOCS_SEARCH_INDEX, { keys: ['label', 'section'], threshold: 0.33 }),
+    [],
+  )
+
+  const searchResults = query.trim() ? fuse.search(query.trim()).slice(0, 6) : []
+  const showResults = focused && query.trim().length > 0
+
+  useEffect(() => {
+    function handleOutsideClick(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        inputRef.current &&
+        !inputRef.current.contains(event.target as Node)
+      ) {
+        setFocused(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleOutsideClick)
+    return () => document.removeEventListener('mousedown', handleOutsideClick)
+  }, [])
+
+  useEffect(() => {
+    function syncPopularArticles() {
+      setPopularArticles(getPopularArticlesFromCounts())
+    }
+
+    syncPopularArticles()
+    window.addEventListener(DOCS_POPULARITY_EVENT, syncPopularArticles as EventListener)
+    window.addEventListener('storage', syncPopularArticles)
+
+    return () => {
+      window.removeEventListener(DOCS_POPULARITY_EVENT, syncPopularArticles as EventListener)
+      window.removeEventListener('storage', syncPopularArticles)
+    }
+  }, [])
+
+  return (
+    <div className="w-full">
+      <section className="relative border-b cy-border-default">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(3,155,224,0.14),transparent_32%),radial-gradient(circle_at_80%_18%,rgba(3,155,224,0.10),transparent_28%),radial-gradient(circle_at_bottom_center,rgba(254,144,77,0.10),transparent_34%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(3,155,224,0.16),transparent_32%),radial-gradient(circle_at_80%_18%,rgba(3,155,224,0.10),transparent_28%),radial-gradient(circle_at_bottom_center,rgba(254,144,77,0.08),transparent_34%)]"
+        />
+        <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14 3xl:max-w-[1700px] 3xl:px-8 3xl:py-16 4xl:max-w-[2000px]">
+          <div className="relative rounded-[2rem] border cy-border-default bg-white/70 px-5 py-8 shadow-[0_20px_60px_rgba(15,23,42,0.07)] backdrop-blur-xl dark:bg-surface-900/70 sm:px-8 sm:py-10 lg:px-10 lg:py-14 3xl:px-12 3xl:py-16">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[linear-gradient(to_bottom_right,rgba(255,255,255,0.55),transparent_42%)] dark:bg-[linear-gradient(to_bottom_right,rgba(255,255,255,0.04),transparent_42%)]"
+            />
+
+            <div className="relative max-w-4xl 3xl:max-w-5xl">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary-500/20 bg-primary-500/8 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary-700 dark:text-primary-300 3xl:px-4 3xl:py-2 3xl:text-[13px]">
+                <BookOpen className="h-3.5 w-3.5 3xl:h-4 3xl:w-4" />
+                Documentation
+              </div>
+
+              <h1
+                className="max-w-3xl text-4xl font-bold tracking-tight cy-text-primary sm:text-5xl lg:text-6xl 3xl:max-w-4xl 3xl:text-[4.15rem] 3xl:leading-[1.02]"
+                style={{ fontFamily: DOCS_HEADING_FONT }}
+              >
+                Learn the platform faster with one clear docs gateway.
+              </h1>
+
+              <p className="mt-4 max-w-2xl text-base leading-relaxed cy-text-secondary sm:text-lg 3xl:max-w-3xl 3xl:text-[19px] 3xl:leading-8">
+                Start with setup, scan workflows, CyfroAI features, and operational guides. This page is a visual launchpad into the full CyfroSec documentation, without replacing the existing docs source of truth.
+              </p>
+
+              <div className="relative mt-7 max-w-2xl 3xl:mt-8 3xl:max-w-3xl">
+                <div className="relative overflow-hidden rounded-2xl border cy-border-default bg-white/90 dark:bg-surface-900/85 shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
+                  <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 cy-text-muted 3xl:left-5 3xl:h-5 3xl:w-5" />
+                  <input
+                    ref={inputRef}
+                    type="search"
+                    value={query}
+                    onChange={(event) => setQuery(event.target.value)}
+                    onFocus={() => setFocused(true)}
+                    placeholder="Search the docs by topic, product area, or workflow"
+                    className="h-14 w-full bg-transparent pl-11 pr-4 text-sm cy-text-primary placeholder:cy-text-muted focus:outline-none 3xl:h-16 3xl:pl-14 3xl:pr-5 3xl:text-[16px]"
+                  />
+                </div>
+
+                {showResults ? (
+                  <div
+                    ref={dropdownRef}
+                    className="absolute inset-x-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border cy-border-default bg-white dark:bg-surface-900 shadow-2xl"
+                  >
+                    {searchResults.length === 0 ? (
+                      <p className="px-4 py-4 text-sm cy-text-muted 3xl:px-5 3xl:py-5 3xl:text-[15px]">No matching docs yet. Try a broader term.</p>
+                    ) : (
+                      <ul className="divide-y divide-[color-mix(in_srgb,var(--border-default)_66%,transparent)]">
+                        {searchResults.map(({ item }) => (
+                          <li key={item.href}>
+                            <Link
+                              href={item.href}
+                              onClick={() => {
+                                recordDocsInteraction(item.href)
+                                setFocused(false)
+                                setQuery('')
+                              }}
+                              className="flex items-center justify-between gap-4 px-4 py-3 transition-colors hover:bg-primary-500/6 3xl:px-5 3xl:py-4"
+                            >
+                              <div>
+                                <p className="text-sm font-semibold cy-text-primary 3xl:text-[15px]">{item.label}</p>
+                                <p className="mt-0.5 text-[11px] uppercase tracking-[0.16em] cy-text-muted 3xl:text-[12px]">
+                                  {item.section}
+                                </p>
+                              </div>
+                              <ChevronRight className="h-4 w-4 cy-text-muted 3xl:h-5 3xl:w-5" />
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="mt-5 flex flex-wrap gap-2.5 3xl:mt-6 3xl:gap-3">
+                {QUICK_CHIPS.map((chip) => (
+                  <Link
+                    key={chip.href}
+                    href={chip.href}
+                    onClick={() => recordDocsInteraction(chip.href)}
+                    className="inline-flex items-center rounded-full border cy-border-default bg-white/75 px-3.5 py-2 text-xs font-medium cy-text-secondary transition-colors hover:border-primary-500/35 hover:bg-primary-500/6 hover:cy-text-primary dark:bg-surface-900/75 3xl:px-4 3xl:py-2.5 3xl:text-[13px]"
+                  >
+                    {chip.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-8 w-full rounded-[1.75rem] border cy-border-default bg-white/85 px-6 py-6 shadow-[0_18px_50px_rgba(15,23,42,0.05)] backdrop-blur-xl dark:bg-surface-900/85 sm:px-8 3xl:mt-10 3xl:px-10 3xl:py-8">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] cy-text-brand 3xl:text-[13px]">Full Documentation</p>
+                  <h3
+                    className="mt-2 text-xl font-bold tracking-tight cy-text-primary 3xl:text-[1.8rem]"
+                    style={{ fontFamily: DOCS_HEADING_FONT }}
+                  >
+                    Need the canonical article-first docs experience?
+                  </h3>
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed cy-text-secondary 3xl:max-w-3xl 3xl:text-[16px] 3xl:leading-7">
+                    Open the existing Platform Overview article and continue through the full sidebar-driven documentation flow.
+                  </p>
+                </div>
+
+                <div className="flex w-full justify-end lg:w-auto lg:shrink-0">
+                  <Link
+                    href="/documents/full"
+                    onClick={() => recordDocsInteraction('/documents/full')}
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary-500 px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-600 sm:w-auto sm:min-w-[220px] 3xl:min-w-[240px] 3xl:px-8 3xl:py-3.5 3xl:text-[15px]"
+                  >
+                    <span>Open full docs</span>
+                    <ArrowRight className="h-4 w-4 3xl:h-[18px] 3xl:w-[18px]" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-surface-50/70 dark:bg-surface-950/40">
+        <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14 3xl:max-w-[1700px] 3xl:px-8 3xl:py-16 4xl:max-w-[2000px]">
+          <SectionHeading
+            eyebrow="Start Here"
+            title="Jump directly into the first path most teams need."
+            description="These are the fastest on-ramps into the current documentation set, mapped directly to the existing onboarding and scan guides."
+          />
+
+          <div className="grid gap-4 lg:grid-cols-3 3xl:gap-5">
+            {START_HERE_CARDS.map(({ eyebrow, label, href, description, Icon }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => recordDocsInteraction(href)}
+                className="group relative overflow-hidden rounded-3xl border border-[color-mix(in_srgb,var(--border-default)_88%,rgba(3,155,224,0.18))] bg-white/98 px-5 py-5 shadow-[0_18px_44px_rgba(15,23,42,0.08)] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary-500/35 hover:shadow-[0_20px_50px_rgba(3,155,224,0.10)] dark:bg-[rgba(31,51,72,0.98)] 3xl:px-6 3xl:py-6"
+              >
+                <div className="mb-4 flex items-center justify-between">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-primary-500/8 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary-700 dark:text-primary-300 3xl:px-3 3xl:py-1.5 3xl:text-[11px]">
+                    {eyebrow}
+                  </div>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-primary-500/18 bg-primary-500/8 text-primary-600 dark:text-primary-300 3xl:h-12 3xl:w-12">
+                    <Icon className="h-5 w-5 3xl:h-6 3xl:w-6" />
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold tracking-tight cy-text-primary 3xl:text-[1.25rem]">{label}</h3>
+                <p className="mt-2 text-sm leading-relaxed cy-text-secondary 3xl:text-[15px] 3xl:leading-7">{description}</p>
+                <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-primary-600 dark:text-primary-300 3xl:text-[15px]">
+                  Open article
+                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 3xl:h-[18px] 3xl:w-[18px]" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-surface-50/70 dark:bg-surface-950/40">
+        <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14 3xl:max-w-[1700px] 3xl:px-8 3xl:py-16 4xl:max-w-[2000px]">
+          <SectionHeading
+            eyebrow="Popular Articles"
+            title="Frequently opened guides from the existing docs set."
+            description="Every card below links into a real documentation page that already exists in the current docs structure."
+          />
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 3xl:gap-5">
+            {popularArticles.map((article) => (
+              <Link
+                key={article.href}
+                href={article.href}
+                onClick={() => recordDocsInteraction(article.href)}
+                className="group rounded-2xl border cy-border-default bg-white px-5 py-5 transition-all duration-200 hover:border-primary-500/30 hover:shadow-[0_18px_40px_rgba(15,23,42,0.06)] dark:bg-surface-900 3xl:px-6 3xl:py-6"
+              >
+                <h3 className="text-base font-semibold cy-text-primary 3xl:text-[18px]">{article.label}</h3>
+                <p className="mt-2 text-sm leading-relaxed cy-text-secondary 3xl:text-[15px] 3xl:leading-7">{article.description}</p>
+                <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary-600 dark:text-primary-300 3xl:text-[15px]">
+                  Read article
+                  <ChevronRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 3xl:h-[18px] 3xl:w-[18px]" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14 3xl:max-w-[1700px] 3xl:px-8 3xl:py-16 4xl:max-w-[2000px]">
+        <SectionHeading
+          eyebrow="Browse By Category"
+          title="Explore the documentation the same way the current docs sidebar is organized."
+          description="This category grid mirrors the existing docs information architecture so the new landing page stays aligned with the real documentation structure."
+        />
+
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 3xl:gap-5">
+          {CATEGORY_CARDS.map((category) => (
+            <div
+              key={category.title}
+              className="group rounded-[1.5rem] border cy-border-default bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary-500/30 hover:shadow-[0_18px_42px_rgba(15,23,42,0.06)] dark:bg-surface-900 3xl:p-6"
+            >
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl border border-primary-500/18 bg-primary-500/8 text-primary-600 dark:text-primary-300 3xl:h-12 3xl:w-12">
+                <category.Icon className="h-5 w-5 3xl:h-6 3xl:w-6" />
+              </div>
+              <Link href={category.href} onClick={() => recordDocsInteraction(category.href)} className="inline-block">
+                <h3 className="text-base font-semibold tracking-tight cy-text-primary transition-colors hover:cy-text-brand 3xl:text-[18px]">{category.title}</h3>
+              </Link>
+              <p className="mt-2 text-sm leading-relaxed cy-text-secondary 3xl:text-[15px] 3xl:leading-7">{category.description}</p>
+              <ul className="mt-4 space-y-2">
+                {category.items.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      onClick={() => recordDocsInteraction(item.href)}
+                      className="inline-flex items-center text-sm cy-text-secondary transition-colors hover:cy-text-brand 3xl:text-[15px]"
+                    >
+                      <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-primary-500" />
+                      <span>{item.label}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href={category.href}
+                onClick={() => recordDocsInteraction(category.href)}
+                className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-300 dark:hover:text-primary-200 3xl:text-[15px]"
+              >
+                Browse section
+                <ChevronRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 3xl:h-[18px] 3xl:w-[18px]" />
+              </Link>
+            </div>
+          ))}
+        </div>
+
+      </section>
+    </div>
+  )
+}

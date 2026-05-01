@@ -1,0 +1,222 @@
+import Link from 'next/link'
+import { ExternalLink } from 'lucide-react'
+
+export const metadata = {
+  title: 'Report | CyfroSec Documentation',
+  description: 'Understanding the CyfroSec Reports page — network discovery, service fingerprinting, and asset discovery reports.',
+  alternates: { canonical: '/documents/reports' },
+}
+
+const HEADING_FONT = '"Sora", "Avenir Next", "Segoe UI", sans-serif'
+
+const TOC = [
+  { id: 'overview',              label: 'Overview' },
+  { id: 'filters-and-sorting',   label: 'Filters and Sorting' },
+  { id: 'advanced-raw-telemetry', label: 'Advanced Raw Telemetry' },
+  { id: 'export-and-audit',      label: 'Export and Audit' },
+  { id: 'network-discovery',     label: 'Network Discovery' },
+  { id: 'service-fingerprinting', label: 'Service Fingerprinting' },
+  { id: 'asset-discovery',       label: 'Asset Discovery' },
+]
+
+export default function ReportsPage() {
+  return (
+    <div className="flex gap-0 w-full max-w-[1600px] mx-auto">
+
+      {/* ── Article ──────────────────────────────────────────────────── */}
+      <article className="flex-1 min-w-0 px-4 sm:px-6 md:px-8 lg:px-12 py-6 sm:py-8 lg:py-10 w-full max-w-5xl mx-auto">
+
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] cy-text-brand mb-4">
+          Platform Guide
+        </p>
+
+        <h1
+          className="text-2xl sm:text-3xl lg:text-4xl font-bold cy-text-primary mb-4 sm:mb-6 leading-tight"
+          style={{ fontFamily: HEADING_FONT }}
+        >
+          Report
+        </h1>
+
+        <p className="cy-text-secondary leading-relaxed mb-4" id="overview">
+          Provides an unified, auditable record of discovery, open ports/services, fingerprints,
+          vulnerabilities, misconfigurations, and secrets found during scans. Each report entry ties to a specific
+          asset and one or more scans.
+        </p>
+        <p className="cy-text-secondary leading-relaxed mb-4">
+          The report workspace supports date ranges, search, agent, severity, state, status, category, and dataset
+          sorting controls. Those controls are applied before pagination so the counts, visible rows, and deep links
+          stay consistent after refreshes and page changes.
+        </p>
+        <p className="cy-text-secondary leading-relaxed mb-4">
+          An Excel workbook can also be downloaded for deeper analysis. The workbook contains separate sheets for the
+          main report datasets and uses the same active row-level filters that are visible in the page at export time.
+        </p>
+
+        <hr className="cy-border-default mb-10" />
+
+        <section id="filters-and-sorting" className="mb-10 scroll-mt-20">
+          <h2
+            className="text-xl font-bold cy-text-primary mb-4"
+            style={{ fontFamily: HEADING_FONT }}
+          >
+            Filters and Sorting
+          </h2>
+          <p className="cy-text-secondary leading-relaxed mb-4">
+            Curated report tabs support search plus tab-specific combinations of severity, state, status, category,
+            and agent filters. Multi-select filters are preserved in the URL so filtered views can be bookmarked or
+            shared.
+          </p>
+          <ul className="space-y-2 cy-text-secondary text-sm">
+            {[
+              'Severity is available for vulnerability, misconfiguration, secret, network discovery, and raw fingerprint data.',
+              'State is available for network discovery and raw port scan data.',
+              'Status is available for vulnerability findings.',
+              'Agent filters match agent display names so the same label can be used across curated and raw tabs.',
+              'Sorting is applied on the server for every visible sortable column in the report tables.',
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section id="advanced-raw-telemetry" className="mb-10 scroll-mt-20">
+          <h2
+            className="text-xl font-bold cy-text-primary mb-4"
+            style={{ fontFamily: HEADING_FONT }}
+          >
+            Advanced Raw Telemetry
+          </h2>
+          <p className="cy-text-secondary leading-relaxed mb-4">
+            The Advanced section exposes raw port scans, raw asset discovery results, and raw fingerprint runs. These
+            views use the same filter bar as the curated tabs, but they show the original scan records instead of
+            flattened report findings.
+          </p>
+          <p className="cy-text-secondary leading-relaxed">
+            Raw fingerprint severity is shown as the highest severity found inside a fingerprint result so severity
+            filters stay deterministic across vulnerabilities, misconfigurations, and secrets captured in the same run.
+          </p>
+        </section>
+
+        <section id="export-and-audit" className="mb-10 scroll-mt-20">
+          <h2
+            className="text-xl font-bold cy-text-primary mb-4"
+            style={{ fontFamily: HEADING_FONT }}
+          >
+            Export and Audit
+          </h2>
+          <p className="cy-text-secondary leading-relaxed mb-4">
+            Excel exports keep the active row-level filters from the report page. Summary cards remain scoped only by
+            the selected account group and date range, while the worksheet rows reflect the additional report filters.
+          </p>
+          <p className="cy-text-secondary leading-relaxed mb-4">
+            The workbook still includes the curated report sheets. If export starts from a curated tab, that tab&apos;s
+            current sort is applied only to its matching worksheet while the remaining worksheets keep their default
+            ordering. Exports started from advanced raw telemetry keep the filtered curated workbook but do not forward
+            raw-tab sorting into the workbook.
+          </p>
+          <p className="cy-text-secondary leading-relaxed">
+            This makes exported data easier to reconcile during investigations, support cases, and audit reviews
+            because the row counts match what operators see in the UI.
+          </p>
+        </section>
+
+        {/* Scans covered */}
+        <section className="mb-10">
+          <h2
+            className="text-xl font-bold cy-text-primary mb-4"
+            style={{ fontFamily: HEADING_FONT }}
+          >
+            Scans covered in reports:
+          </h2>
+
+          {/* Network Discovery */}
+          <section id="network-discovery" className="mb-8 scroll-mt-20">
+            <h3
+              className="text-base font-semibold cy-text-primary mb-3"
+              style={{ fontFamily: HEADING_FONT }}
+            >
+              Network Discovery
+            </h3>
+            <p className="cy-text-secondary leading-relaxed">
+              Identifies open ports and services to drive vulnerability detection and analysis.
+            </p>
+          </section>
+
+          {/* Service Fingerprinting */}
+          <section id="service-fingerprinting" className="mb-8 scroll-mt-20">
+            <h3
+              className="text-base font-semibold cy-text-primary mb-3"
+              style={{ fontFamily: HEADING_FONT }}
+            >
+              Service Fingerprinting
+            </h3>
+            <p className="cy-text-secondary leading-relaxed mb-4">
+              Assesses security posture by identifying known CVEs in installed packages and services, detecting
+              common misconfigurations and scanning for exposed secrets. Results of Service Fingerprinting scan is
+              split into three sheets for easy visibility and analysis:
+            </p>
+            <ul className="space-y-2 cy-text-secondary text-sm">
+              {[
+                'Misconfiguration Findings',
+                'Vulnerability Findings',
+                'Secret Findings',
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* Asset Discovery */}
+          <section id="asset-discovery" className="mb-8 scroll-mt-20">
+            <h3
+              className="text-base font-semibold cy-text-primary mb-3"
+              style={{ fontFamily: HEADING_FONT }}
+            >
+              Asset Discovery
+            </h3>
+            <p className="cy-text-secondary leading-relaxed">
+              Does ARP sweeps, local process enumeration and MAC vendor lookup.
+            </p>
+          </section>
+        </section>
+      </article>
+
+      {/* ── Right TOC ─────────────────────────────────────────────────── */}
+      <aside className="hidden 2xl:block w-56 shrink-0 px-6 pt-10 pb-10">
+        <div className="sticky top-10">
+          <p className="text-[10px] font-bold uppercase tracking-widest cy-text-muted mb-3">
+            On this page
+          </p>
+          <ul className="space-y-2">
+            {TOC.map(({ id, label }) => (
+              <li key={id}>
+                <a
+                  href={`#${id}`}
+                  className="text-sm cy-text-secondary hover:cy-text-brand transition-colors block"
+                >
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-8 pt-6 border-t cy-border-default">
+            <Link
+              href="/contact"
+              className="flex items-center gap-1.5 text-xs cy-text-muted hover:cy-text-brand transition-colors"
+            >
+              <ExternalLink className="h-3.5 w-3.5" />
+              Contact support
+            </Link>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  )
+}

@@ -1,0 +1,44 @@
+{
+  "name": "cyfro-landing-page",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.30.3",
+  "scripts": {
+    "dev": "next dev -p 3002",
+    "build": "rm -rf out && next build",
+    "start": "npx serve out",
+    "lint": "eslint",
+    "preview": "npx serve out"
+  },
+  "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.18.2",
+    "fuse.js": "^7.1.0",
+    "lucide-react": "^0.553.0",
+    "motion": "^12.36.0",
+    "next": "16.0.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-markdown": "^9.0.3",
+    "react-syntax-highlighter": "^15.6.1",
+    "remark-gfm": "^4.0.0",
+    "tailwind-merge": "^2.6.0"
+  },
+  "devDependencies": {
+    "@hey-api/openapi-ts": "^0.87.1",
+    "@skeletonlabs/skeleton": "^4.9.0",
+    "@skeletonlabs/skeleton-react": "^4.9.0",
+    "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5.10",
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/react-syntax-highlighter": "^15.5.13",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
