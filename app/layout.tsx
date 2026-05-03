@@ -24,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" data-theme="themecyfrosec" data-theme-redesign="enabled" suppressHydrationWarning>
+    <html lang="en" className="dark" data-theme="themecyfrosec" data-theme-redesign="enabled" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
       </head>
