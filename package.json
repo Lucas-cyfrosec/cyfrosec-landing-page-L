@@ -5,7 +5,7 @@
   "packageManager": "pnpm@10.30.3",
   "scripts": {
     "dev": "next dev -p 3002",
-    "build": "rm -rf out && next build",
+    "build": "rm -rf out && NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL:-https://app.cyfrosec.com} next build",
     "start": "npx serve out",
     "lint": "eslint",
     "preview": "npx serve out"
