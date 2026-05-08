@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { AlertTriangle, ArrowLeft, ArrowRight, CheckCircle2, Mail } from 'lucide-react'
+import { ThankYouDocLinks } from '@/app/components/landing/ThankYouDocLinks'
 import { motion } from 'framer-motion'
 import { publicSelfSignupApiV1UsersSelfSignupPost } from '@/src/client'
 
@@ -473,6 +474,7 @@ export default function GetStartedPage() {
                       Sign In
                     </Link>
                   </p>
+
                 </>
               ) : (
                 <div className="space-y-5 py-6 text-center 3xl:space-y-6 3xl:py-8">
@@ -504,6 +506,9 @@ export default function GetStartedPage() {
                   <div className="flex flex-wrap items-center justify-center gap-3">
                     <Link href={`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.cyfrosec.com'}/dashboard`} className="inline-flex items-center gap-2 rounded-xl bg-primary-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-600 3xl:px-6 3xl:py-3 3xl:text-[15px]">Go to Dashboard</Link>
                     <Link href="/#contact-sales" className="inline-flex items-center gap-2 rounded-xl border border-surface-700 px-5 py-2.5 text-sm font-semibold text-surface-300 hover:bg-surface-700 3xl:px-6 3xl:py-3 3xl:text-[15px]">Contact Sales</Link>
+                  </div>
+                  <div className="mt-2 text-left">
+                    <ThankYouDocLinks />
                   </div>
                 </div>
               )}

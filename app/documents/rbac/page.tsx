@@ -48,17 +48,19 @@ export default function RbacPage() {
           >
             Structure
           </h2>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Organization: The top-level customer entity (e.g., "FinWiz Corp"). Contains Billing and Settings.',
               'Account Group: A subdivision of organization (e.g., "Marketing Dept", "EU Branch"). Contains Assets and Scans.',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Roles */}
@@ -69,18 +71,20 @@ export default function RbacPage() {
           >
             Roles
           </h2>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-6">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {[
               'Organization Admin: Customer admin who manages their entire organization.',
               'Account Group Admin: Customer admin who manages a specific subdivision.',
               'User: Standard customer user with read-only/execute permissions.',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <div className="overflow-x-auto">
             <table className="w-full text-sm border-collapse">
               <thead>

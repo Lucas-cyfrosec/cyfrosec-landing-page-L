@@ -49,20 +49,22 @@ export default function TopologyPage() {
         <p className="cy-text-secondary leading-relaxed mb-4">
           It combines:
         </p>
-        <ul className="space-y-2 cy-text-secondary text-sm mb-10">
+        <ol className="space-y-4 cy-text-secondary text-sm mb-10">
           {[
             'Discovered topology relationships',
             'Open-port evidence',
             'Fingerprint summaries',
             'CyfroAI insight highlights',
             'Ranked risk context',
-          ].map((item) => (
-            <li key={item} className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-              {item}
+          ].map((text, i) => (
+            <li key={i} className="flex items-start gap-3">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                {i + 1}
+              </span>
+              <span className="mt-0.5">{text}</span>
             </li>
           ))}
-        </ul>
+        </ol>
 
         <hr className="cy-border-default mb-10" />
 
@@ -74,17 +76,6 @@ export default function TopologyPage() {
           >
             Accessing the Topology View
           </h2>
-          <p className="cy-text-secondary leading-relaxed mb-3 text-sm">
-            Route(on-premise):
-          </p>
-          <div className="rounded-xl border cy-border-default overflow-hidden mb-4">
-            <pre
-              className="p-4 text-sm font-mono cy-text-primary overflow-x-auto leading-relaxed"
-              style={{ background: 'var(--bg-canvas)' }}
-            >
-              app.localhost:8080/topology
-            </pre>
-          </div>
           <p className="cy-text-secondary leading-relaxed mb-2">
             The page loads topology data for the currently selected account group.
           </p>
@@ -104,18 +95,20 @@ export default function TopologyPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             On desktop, topology renders as an interactive workspace with:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Toolbar and filters',
               'Interactive graph canvas',
               'Integrated asset detail drawer',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Toolbar */}
@@ -129,7 +122,7 @@ export default function TopologyPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             The top summary row shows current snapshot counts:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
             {[
               'Assets',
               'Subnets',
@@ -137,13 +130,15 @@ export default function TopologyPage() {
               'Fingerprint',
               'CyfroAI Insights',
               'Critical',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm">
             It also shows the snapshot generation timestamp and a <strong className="cy-text-primary">Refresh</strong> action.
           </p>
@@ -160,19 +155,21 @@ export default function TopologyPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             The filter toolbar supports:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Search (IP, hostname, service, CVE, vendor, AI text)',
               'Subnet selector',
               'Risk only toggle',
               'Time window selector (7d, 14d, 30d, 90d)',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Graph Controls */}
@@ -186,19 +183,21 @@ export default function TopologyPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             The canvas includes:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Fit (fit graph to viewport)',
               'Reflow (re-run layout)',
               'Zoom controls',
               'Fullscreen toggle',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Asset Detail Panel */}
@@ -212,7 +211,7 @@ export default function TopologyPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             Selecting an asset opens a detail panel with structured sections:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-6">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {[
               'Asset metadata',
               'Port Evidence',
@@ -220,13 +219,15 @@ export default function TopologyPage() {
               'AI Insights',
               'Top Risks',
               'Correlation Notes',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <h3 id="port-evidence" className="text-base font-semibold cy-text-primary mb-2 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>
             Port Evidence
@@ -234,18 +235,20 @@ export default function TopologyPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Shows correlated service observations such as:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-6">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {[
               'Port/protocol',
               'Service or product hints',
               'State and severity context',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <h3 id="fingerprint-summary" className="text-base font-semibold cy-text-primary mb-2 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>
             Fingerprint Summary
@@ -253,19 +256,21 @@ export default function TopologyPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Shows fingerprint correlation details including:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-6">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {[
               'Target identity',
               'Highest severity',
               'Vulnerability count',
               'Misconfiguration/secret counts',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <h3 id="ai-insights-panel" className="text-base font-semibold cy-text-primary mb-2 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>
             AI Insights
@@ -273,19 +278,21 @@ export default function TopologyPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Shows asset-linked AI summaries with:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
             {[
               'Source type',
               'Timestamp',
               'Highest risk badge',
               'Short summary lines',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm mb-6">
             The panel includes a direct link to the full AI page for deeper review.
           </p>
@@ -296,19 +303,21 @@ export default function TopologyPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Lists prioritized risks with:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Title',
               'Vulnerability/package/target context',
               'Effective risk level',
               'AI-provided reasoning',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Correlation */}
@@ -328,18 +337,20 @@ export default function TopologyPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Examples that commonly require additional context:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Generic or filesystem fingerprint targets',
               'Scan artifacts without host identity metadata',
               'Ambiguous multi-host correlation paths',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
       </article>
 

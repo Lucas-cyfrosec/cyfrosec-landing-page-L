@@ -71,17 +71,19 @@ export default function AuditPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Audit Logs are available to:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
             {[
               'Organization Admin',
               'Account Group Admin',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm">
             Standard users without settings access are redirected to the dashboard.
           </p>
@@ -169,17 +171,19 @@ export default function AuditPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Use the search input to match:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-5">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
             {[
               'User display name (or user ID)',
               'Activity description',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm mb-5">
             Search is debounced to reduce request volume while typing.
           </p>
@@ -238,18 +242,20 @@ export default function AuditPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Results are paginated with:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               '20 rows per page',
               'Previous/Next controls',
               'Footer count: "Showing X of Y logs"',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Empty and Error States */}
@@ -267,17 +273,19 @@ export default function AuditPage() {
           <p className="cy-text-secondary text-sm mb-5">
             You may see No Audit Logs Found when:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-6">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {[
               'There are no events yet',
               'Current filters/search return zero matches',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <h3 className="text-base font-semibold cy-text-primary mb-2" style={{ fontFamily: HEADING_FONT }}>
             Error State
@@ -285,17 +293,19 @@ export default function AuditPage() {
           <p className="cy-text-secondary text-sm mb-3">
             If loading fails, an error card appears with:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Error summary',
               'Retry action',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* FAQ */}

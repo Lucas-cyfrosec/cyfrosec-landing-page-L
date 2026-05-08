@@ -3,6 +3,7 @@
 import { useMemo, useRef, useState } from 'react'
 import { submitBookDemoApiV1SupportBookDemoPost } from '@/src/client'
 import type { DemoDeploymentModel, DemoPrimaryUseCase } from '@/src/client'
+import { ThankYouDocLinks } from '@/app/components/landing/ThankYouDocLinks'
 
 type BookDemoFormState = {
   fullName: string
@@ -126,16 +127,19 @@ export function BookDemoForm() {
 
   if (success) {
     return (
-      <div className="rounded-2xl border border-primary-500/20 bg-primary-500/10 px-6 py-10 text-center">
-        <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary-500/20">
-          <svg className="size-6 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
+      <div>
+        <div className="rounded-2xl border border-primary-500/20 bg-primary-500/10 px-6 py-10 text-center">
+          <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary-500/20">
+            <svg className="size-6 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <p className="text-base font-semibold text-white">Request received!</p>
+          <p className="mt-2 text-sm text-white/70">
+            Thank you for your interest! A CyfroSec security specialist will contact you shortly to schedule your demo.
+          </p>
         </div>
-        <p className="text-base font-semibold text-white">Request received!</p>
-        <p className="mt-2 text-sm text-white/70">
-          Thank you for your interest! A CyfroSec security specialist will contact you shortly to schedule your demo.
-        </p>
+        <ThankYouDocLinks />
       </div>
     )
   }
@@ -256,6 +260,7 @@ export function BookDemoForm() {
       <p className="text-center text-xs cy-text-muted">
         By submitting this form you agree to be contacted by CyfroSec regarding your demo request.
       </p>
+
     </form>
   )
 }

@@ -38,23 +38,25 @@ export default function AiInsightsPage() {
 
         <p className="cy-text-secondary leading-relaxed mb-4" id="overview">
           CyfroAI Insights are generated automatically after a scan interval completes. You do not need to click
-          anything to trigger analysis. As long as scans are running, CyfroAI Insights will appear.
+          anything to trigger analysis. As long as scans are running and vulnerabilities/misconfigurations/secrets are found, CyfroAI Insights will appear.
         </p>
         <p className="cy-text-secondary leading-relaxed mb-4">
-          The AI model receives the raw scan findings (open ports, detected CVEs, misconfigurations, exposed secrets)
+          Our CyfroAI Engine receives the raw scan findings (open ports, detected CVEs, misconfigurations, exposed secrets)
           alongside network topology context (which hosts are reachable from where) and produces:
         </p>
-        <ul className="space-y-2 cy-text-secondary text-sm mb-10">
+        <ol className="space-y-4 cy-text-secondary text-sm mb-10">
           {[
             'An Executive Summary: An easily understandable overview of the most important security findings from that scan run.',
             'A Prioritized Risk List: Vulnerabilities re-ranked using exposure correlation, not just CVSS severity alone.',
-          ].map((item) => (
-            <li key={item} className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-              {item}
+          ].map((text, i) => (
+            <li key={i} className="flex items-start gap-3">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                {i + 1}
+              </span>
+              <span className="mt-0.5">{text}</span>
             </li>
           ))}
-        </ul>
+        </ol>
 
         <hr className="cy-border-default mb-10" />
 
@@ -69,18 +71,20 @@ export default function AiInsightsPage() {
           <p className="cy-text-secondary leading-relaxed mb-4">
             An easily understandable summary of who is affected and what matters the most at a glance. A gradient card (Brain icon header) containing AI-generated paragraphs that describe:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-5">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
             {[
               'The overall security posture from this scan.',
               'The most significant findings in plain language.',
               'Any patterns or correlations across multiple findings.',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm">
             CVE IDs mentioned in the summary are automatically linked to the corresponding entry in the Report page. Click any CVE ID to jump directly to its full detail.
           </p>

@@ -10,12 +10,14 @@ export const metadata = {
 const HEADING_FONT = '"Sora", "Avenir Next", "Segoe UI", sans-serif'
 
 const TOC = [
-  { id: 'overview',          label: 'Overview' },
-  { id: 'connecting-github', label: 'Connecting GitHub' },
-  { id: 'managing-repos',    label: 'Managing Synced Repositories' },
-  { id: 'running-scans',     label: 'Running Scans' },
-  { id: 'reviewing-findings',label: 'Reviewing Findings & AI Explanations' },
-  { id: 'patch-proposals',   label: 'Automated Patch Proposals' },
+  { id: 'overview',           label: 'Overview' },
+  { id: 'languages',          label: 'Supported Languages' },
+  { id: 'infra-surfaces',     label: 'Infrastructure Surfaces' },
+  { id: 'connecting-github',  label: 'Connecting GitHub' },
+  { id: 'managing-repos',     label: 'Managing Synced Repositories' },
+  { id: 'running-scans',      label: 'Running Scans' },
+  { id: 'reviewing-findings', label: 'Reviewing Findings & AI Explanations' },
+  { id: 'patch-proposals',    label: 'Automated Patch Proposals' },
 ]
 
 export default function CyfroCodePage() {
@@ -37,12 +39,79 @@ export default function CyfroCodePage() {
           CyfroCode
         </h1>
 
-        <p className="cy-text-secondary leading-relaxed mb-10">
+        <p className="cy-text-secondary leading-relaxed mb-4">
           CyfroCode provides a comprehensive code security workspace embedded directly within CyfroSec.
           Designed for developers and security teams alike, it allows you to connect your code repositories,
           automatically run security scans, and generate actionable remediation patches, all without leaving
           the platform.
         </p>
+
+        <p className="cy-text-secondary leading-relaxed mb-10">
+          CyfroCode supports 6 programming languages for code security scanning, plus 5 infrastructure/configuration surfaces.
+        </p>
+
+        <hr className="cy-border-default mb-10" />
+
+        {/* Supported Languages */}
+        <section id="languages" className="mb-10 scroll-mt-20">
+          <h2
+            className="text-xl font-bold cy-text-primary mb-4"
+            style={{ fontFamily: HEADING_FONT }}
+          >
+            Programming Languages
+          </h2>
+          <div className="overflow-x-auto mb-6">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="border-b cy-border-default">
+                  <th className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted">Language</th>
+                  <th className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted">Extensions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Python',     '.py'],
+                  ['JavaScript', '.js'],
+                  ['TypeScript', '.ts'],
+                  ['Java',       '.java'],
+                  ['Go',         '.go'],
+                  ['C#',         '.cs'],
+                ].map(([lang, ext]) => (
+                  <tr key={lang} className="border-b cy-border-default">
+                    <td className="py-2.5 pr-4 cy-text-secondary font-semibold">{lang}</td>
+                    <td className="py-2.5 pr-4 cy-text-secondary font-mono text-xs">{ext}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Infrastructure Surfaces */}
+        <section id="infra-surfaces" className="mb-10 scroll-mt-20">
+          <h2
+            className="text-xl font-bold cy-text-primary mb-4"
+            style={{ fontFamily: HEADING_FONT }}
+          >
+            Infrastructure / Configuration Surfaces
+          </h2>
+          <ol className="space-y-4 cy-text-secondary text-sm">
+            {[
+              'Container (Dockerfile)',
+              'Terraform (IaC)',
+              'Kubernetes (manifests)',
+              'YAML (generic config)',
+              'CI (GitHub Actions workflows)',
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
 
         <hr className="cy-border-default mb-10" />
 
@@ -63,7 +132,7 @@ export default function CyfroCodePage() {
               'Navigate to CyfroCode via the main navigation menu.',
               'Click the Connect GitHub App button.',
               'You will be redirected to GitHub to authorize and install the CyfroSec GitHub App.',
-              'Once installed, CyfroSec will automatically sync your repositories and display them in the CyfroCode workspace under the Repositories tab.',
+              'Once installed, CyfroSec will automatically sync your repositories and display them on the CyfroCode dashboard.',
             ].map((text, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
@@ -88,7 +157,7 @@ export default function CyfroCodePage() {
             Managing Synced Repositories
           </h2>
           <p className="cy-text-secondary leading-relaxed mb-5">
-            In the CyfroCode workspace, your synced repositories are listed with helpful metadata:
+            On the CyfroCode dashboard, your synced repositories are listed with helpful metadata:
           </p>
 
           <div className="overflow-x-auto mb-6">
@@ -131,9 +200,8 @@ export default function CyfroCodePage() {
           <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {[
               'Locate the repository in the Synced Repositories list.',
-              'Click Run Scan to open the scan drawer.',
-              'Use the branch picker to run scans against any branch (default branch is pre-selected).',
-              'The scan will be queued and transition through various states (queued, running, completed, or failed).',
+              'Click the Queue Scan button.',
+              'The scan will be queued for the default branch and transition through various states (queued, running, completed, or failed).',
             ].map((text, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
@@ -145,7 +213,7 @@ export default function CyfroCodePage() {
           </ol>
 
           <p className="cy-text-secondary text-sm">
-            You can monitor actively queued and historical scans in the <strong className="cy-text-primary">Scans</strong> tab. Active runs refresh automatically.
+            You can monitor actively queued and historical scans in the <strong className="cy-text-primary">Recent Scans</strong> section on the main CyfroCode dashboard.
           </p>
         </section>
 
@@ -161,18 +229,20 @@ export default function CyfroCodePage() {
             Once a scan concludes, you can click on it to view a detailed breakdown of the findings. The scan detail page offers:
           </p>
 
-          <ul className="space-y-2 cy-text-secondary text-sm mb-6">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {[
               'Metrics Overview: A snapshot of total findings, risk scores, and duration of the scan.',
               'Grouped Issues vs. Raw Matches: Toggle between grouped issues (deduplicated by vulnerability type) or raw matches (every specific line of code affected).',
               'Severity Filters: Quickly filter findings from Critical to Low severity.',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <p className="cy-text-secondary text-sm mb-4">
             Each finding card provides deep context:

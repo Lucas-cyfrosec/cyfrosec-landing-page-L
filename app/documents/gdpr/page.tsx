@@ -64,17 +64,19 @@ export default function GdprPage() {
           >
             Accessing GDPR Compliance
           </h2>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Use the GDPR Compliance widget for a compact summary.',
               'Open the full GDPR Compliance page for category-level findings and catalog details.',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Data Scope */}
@@ -88,18 +90,20 @@ export default function GdprPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             The GDPR report is generated from recent account-group scan submissions, including:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
             {[
               'Network Discovery data',
               'Fingerprint/vulnerability scan data',
               'Asset Discovery data',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm mb-2">
             By default, the page shows account-group aggregate compliance posture.
           </p>
@@ -119,19 +123,21 @@ export default function GdprPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             The full page includes:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-6">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {[
               'Header and Controls',
               'Overall Score',
               'Scan Data and Catalog Metadata',
               'Category Breakdown with Drill-Down Findings',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <h3 id="header-controls" className="text-base font-semibold cy-text-primary mb-2 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>
             Header and Controls
@@ -139,17 +145,19 @@ export default function GdprPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Top actions:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
             {[
               'Refresh: Triggers report recalculation for the selected account group and reloads the page data.',
               'Refresh Catalog: Triggers a catalog refresh and reloads report/catalog status.',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm">
             The header also shows report timestamp and account-group context.
           </p>
@@ -166,7 +174,7 @@ export default function GdprPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             The top panel displays:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-6">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {[
               'Overall score (0-100)',
               'Score label (for example: Excellent, Good, Needs Improvement, Poor, Critical)',
@@ -174,13 +182,15 @@ export default function GdprPage() {
               'Critical, High, and Total finding counts',
               'Evidence coverage percentage',
               'Not-evaluable control count',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <h3 id="scan-data-window" className="text-base font-semibold cy-text-primary mb-2 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>
             Scan Data Window
@@ -188,17 +198,19 @@ export default function GdprPage() {
           <p className="cy-text-secondary text-sm mb-3">
             When available, the page displays the report&apos;s scan data time window:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Window start timestamp',
               'Window end timestamp',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm mt-3">
             This helps confirm the evidence period used for evaluation.
           </p>
@@ -215,20 +227,22 @@ export default function GdprPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             Each category card shows:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-5">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
             {[
               'Category name and GDPR article reference',
               'Category score',
               'Finding count',
               'Severity breakdown chips',
               'Expand/collapse interaction',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm mb-6">
             Categories are sorted by score (lower scores first) on the full page to surface higher-priority gaps.
           </p>
@@ -239,14 +253,16 @@ export default function GdprPage() {
           <p className="cy-text-secondary text-sm mb-3">
             You can filter visible findings by severity:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-5">
-            {['All', 'Critical', 'High', 'Medium', 'Low', 'Info'].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
+            {['All', 'Critical', 'High', 'Medium', 'Low', 'Info'].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm mb-6">
             Selecting a severity auto-expands categories that contain matching findings.
           </p>
@@ -257,20 +273,22 @@ export default function GdprPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Expanded findings include:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Title and affected asset/resource',
               'Severity',
               'GDPR article reference',
               'Description',
               'Remediation guidance',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Catalog Provenance and Health */}
@@ -291,19 +309,21 @@ export default function GdprPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Displays:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-6">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {[
               'Catalog version',
               'Catalog generation timestamp',
               'Source summary cards (display name, authority/type, status)',
               'Optional fallback badge and reason when seed fallback is active',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <h3 id="catalog-health" className="text-base font-semibold cy-text-primary mb-3 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>
             Catalog Health
@@ -311,19 +331,21 @@ export default function GdprPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Displays:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
             {[
               'Control count',
               'Source count',
               'Evaluation mode (Official only or Hybrid)',
               'Sync status',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm">
             This metadata supports auditability and trust in control mapping.
           </p>
@@ -344,20 +366,22 @@ export default function GdprPage() {
           <p className="cy-text-secondary text-sm mb-3">
             The dashboard GDPR card provides a compact snapshot:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-6">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {[
               'Donut score',
               'Trend delta',
               'Critical/High/Total quick counters',
               'Category score mini-bars',
               'Manual refresh button',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <h3 className="text-base font-semibold cy-text-primary mb-2" style={{ fontFamily: HEADING_FONT }}>
             Full GDPR Compliance Page
@@ -365,20 +389,22 @@ export default function GdprPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Use the full page for:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Severity filtering',
               'Category-by-category finding drill-down',
               'Catalog provenance and health',
               'Evidence coverage and not-evaluable controls',
               'Scan data window review',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Empty, Pending, Error States */}

@@ -11,7 +11,7 @@ import Highlights from './components/landing/sections/Highlights';
 import Security from './components/landing/sections/Security';
 import PlatformArchitectureDetail from './components/landing/sections/PlatformArchitectureDetail';
 import FinalCTA from './components/landing/sections/FinalCTA';
-import AIChatbot from './components/landing/AIChatbot';
+import LazyAIChatbot from './components/landing/LazyAIChatbot';
 
 export default function LandingPage() {
   return (
@@ -28,7 +28,7 @@ export default function LandingPage() {
       <Security />
       <PlatformArchitectureDetail />
       <FinalCTA />
-      <AIChatbot />
+      <LazyAIChatbot />
     </PublicPageShell>
   );
 }

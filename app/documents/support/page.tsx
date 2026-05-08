@@ -2,20 +2,20 @@ import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
 
 export const metadata = {
-  title: 'Service Fingerprinting Scan | CyfroSec Documentation',
-  description: 'How the Service Fingerprinting scan assesses security posture by identifying CVEs, misconfigurations, and exposed secrets.',
-  alternates: { canonical: '/documents/service-fingerprinting' },
+  title: 'Support | CyfroSec Documentation',
+  description: 'How to log a support ticket in the CyfroSec portal — what to include and how to reach the support team.',
+  alternates: { canonical: '/documents/support' },
 }
 
 const HEADING_FONT = '"Sora", "Avenir Next", "Segoe UI", sans-serif'
 
 const TOC = [
-  { id: 'overview',          label: 'Overview' },
-  { id: 'what-is-checked',   label: 'What is Checked' },
-  { id: 'detection-process', label: 'Detection Process' },
+  { id: 'overview',        label: 'Overview' },
+  { id: 'what-you-can-send', label: 'What You Can Send' },
+  { id: 'helpful-details', label: 'Helpful Details to Include' },
 ]
 
-export default function ServiceFingerprintingPage() {
+export default function SupportPage() {
   return (
     <div className="flex gap-0 w-full max-w-[1600px] mx-auto">
 
@@ -23,35 +23,43 @@ export default function ServiceFingerprintingPage() {
       <article className="flex-1 min-w-0 px-4 sm:px-6 md:px-8 lg:px-12 py-6 sm:py-8 lg:py-10 w-full max-w-5xl mx-auto">
 
         <p className="text-xs font-semibold uppercase tracking-[0.18em] cy-text-brand mb-4">
-          Scans
+          Getting Started
         </p>
 
         <h1
           className="text-2xl sm:text-3xl lg:text-4xl font-bold cy-text-primary mb-4 sm:mb-6 leading-tight"
           style={{ fontFamily: HEADING_FONT }}
         >
-          Service Fingerprinting Scan
+          Logging Support Tickets
         </h1>
 
-        <p className="cy-text-secondary leading-relaxed mb-10" id="overview">
-          Service Fingerprinting Scan assesses security posture by signature matching of CVEs in installed packages and services, detecting common misconfigurations and scanning for exposed secrets.
+        <p className="cy-text-secondary leading-relaxed mb-6" id="overview">
+          Use the support form in the CyfroSec portal to submit issues, attach logs or screenshots, and receive
+          help from the support team. Tickets are delivered to our support inbox and are not stored in the
+          product database.
         </p>
+
+        <div className="rounded-xl border border-primary-500/20 bg-primary-500/5 p-4 text-sm cy-text-secondary mb-10">
+          Need Help? Contact our Support Team at{' '}
+          <a href="mailto:support@cyfrosec.com" className="cy-text-brand hover:underline">support@cyfrosec.com</a>
+        </div>
 
         <hr className="cy-border-default mb-10" />
 
-        {/* What is checked */}
-        <section id="what-is-checked" className="mb-10 scroll-mt-20">
+        {/* What You Can Send */}
+        <section id="what-you-can-send" className="mb-10 scroll-mt-20">
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
           >
-            What is checked:
+            What You Can Send
           </h2>
           <ol className="space-y-4 cy-text-secondary text-sm">
             {[
-              'Known CVEs mapped to installed package and service versions.',
-              'Common misconfigurations such as weak TLS ciphers, overly permissive storage, and default credentials.',
-              'Secrets in code or configuration (API keys, private keys, tokens).',
+              'Issue type (e.g., CyfroAssistant, Asset Discovery, Dashboard)',
+              'Scan name for scan-related issues',
+              'Description and frequency',
+              'Optional files (logs, screenshots)',
             ].map((text, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
@@ -63,23 +71,20 @@ export default function ServiceFingerprintingPage() {
           </ol>
         </section>
 
-        {/* Detection process */}
-        <section id="detection-process" className="mb-10 scroll-mt-20">
+        {/* Helpful Details */}
+        <section id="helpful-details" className="mb-10 scroll-mt-20">
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
           >
-            Detection process:
+            Helpful Details to Include
           </h2>
-          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
-              'Fingerprinting: Collect package and service version data from hosts and images.',
-              'Vulnerability mapping: Match package/version to vulnerability databases and advisories.',
-              'Misconfiguration checks: Run configuration audits and TLS/certificate checks.',
-              'Secrets scanning: Run targeted detectors and regex checks on code and configuration artifacts.',
-              'Each finding includes a clear description and evidence like file, package details or command output would be provided.',
-              'Actionable remediation steps like upgrades, configuration change or credential rotation.',
-              'Service Fingerprinting findings are fed into CyfroAI Engine for deep assessments with the other scans to enhance data correlation.',
+              'What you expected vs what happened',
+              'When the issue started',
+              'Whether the issue is reproducible',
+              'Links or screenshots, if available',
             ].map((text, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">

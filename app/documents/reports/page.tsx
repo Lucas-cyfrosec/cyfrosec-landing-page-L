@@ -38,18 +38,15 @@ export default function ReportsPage() {
         </h1>
 
         <p className="cy-text-secondary leading-relaxed mb-4" id="overview">
-          Provides an unified, auditable record of discovery, open ports/services, fingerprints,
-          vulnerabilities, misconfigurations, and secrets found during scans. Each report entry ties to a specific
-          asset and one or more scans.
+          The assistant uses your actual scan data, agent status, vulnerability findings, and AI insight records to
+          answer infrastructure-specific questions, and references product documentation for how-to queries. It is
+          designed to help teams fully understand their infrastructure and where possible risks might hide.
         </p>
         <p className="cy-text-secondary leading-relaxed mb-4">
-          The report workspace supports date ranges, search, agent, severity, state, status, category, and dataset
-          sorting controls. Those controls are applied before pagination so the counts, visible rows, and deep links
-          stay consistent after refreshes and page changes.
-        </p>
-        <p className="cy-text-secondary leading-relaxed mb-4">
-          An Excel workbook can also be downloaded for deeper analysis. The workbook contains separate sheets for the
-          main report datasets and uses the same active row-level filters that are visible in the page at export time.
+          The scan results can be filtered using date ranges and the various other data fields available for easy
+          viewing. A structured CSV file can also be downloaded for deeper analysis. The CSV file would contain the
+          results of all the scans in different sheets. It improves audit readiness with exportable compliance ready
+          report of scans.
         </p>
 
         <hr className="cy-border-default mb-10" />
@@ -66,20 +63,22 @@ export default function ReportsPage() {
             and agent filters. Multi-select filters are preserved in the URL so filtered views can be bookmarked or
             shared.
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Severity is available for vulnerability, misconfiguration, secret, network discovery, and raw fingerprint data.',
               'State is available for network discovery and raw port scan data.',
               'Status is available for vulnerability findings.',
               'Agent filters match agent display names so the same label can be used across curated and raw tabs.',
               'Sorting is applied on the server for every visible sortable column in the report tables.',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         <section id="advanced-raw-telemetry" className="mb-10 scroll-mt-20">
@@ -158,18 +157,20 @@ export default function ReportsPage() {
               common misconfigurations and scanning for exposed secrets. Results of Service Fingerprinting scan is
               split into three sheets for easy visibility and analysis:
             </p>
-            <ul className="space-y-2 cy-text-secondary text-sm">
+            <ol className="space-y-4 cy-text-secondary text-sm">
               {[
                 'Misconfiguration Findings',
                 'Vulnerability Findings',
                 'Secret Findings',
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-2">
-                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                  {item}
+              ].map((text, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                    {i + 1}
+                  </span>
+                  <span className="mt-0.5">{text}</span>
                 </li>
               ))}
-            </ul>
+            </ol>
           </section>
 
           {/* Asset Discovery */}

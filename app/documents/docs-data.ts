@@ -18,6 +18,7 @@ export const DOCS_NAV_SECTIONS: DocsNavSection[] = [
     items: [
       { label: 'Platform Overview', href: '/documents/full' },
       { label: 'Role Based Access Control', href: '/documents/rbac' },
+      { label: 'Support', href: '/documents/support' },
     ],
   },
   {
@@ -26,14 +27,22 @@ export const DOCS_NAV_SECTIONS: DocsNavSection[] = [
       { label: 'Dashboard', href: '/documents/dashboard' },
       { label: 'Notifications', href: '/documents/notifications' },
       { label: 'Report', href: '/documents/reports' },
-      { label: 'CyfroCode', href: '/documents/cyfrocode' },
       { label: 'Asset Topology Diagram', href: '/documents/topology' },
+    ],
+  },
+  {
+    title: 'CYFROAI ENGINE',
+    items: [
+      { label: 'CyfroAI Insights', href: '/documents/ai-insights' },
+      { label: 'CyfroAssistant', href: '/documents/ai-assistant' },
+      { label: 'CyfroCode', href: '/documents/cyfrocode' },
     ],
   },
   {
     title: 'CYFROAGENT',
     items: [
       { label: 'CyfroAgent and Setup', href: '/documents/deploy-agent' },
+      { label: 'Multi Docker Scanning', href: '/documents/docker-scanning' },
     ],
   },
   {
@@ -43,13 +52,6 @@ export const DOCS_NAV_SECTIONS: DocsNavSection[] = [
       { label: 'Network Discovery Scan', href: '/documents/network-discovery' },
       { label: 'Asset Discovery Scan', href: '/documents/asset-discovery' },
       { label: 'Service Fingerprinting Scan', href: '/documents/service-fingerprinting' },
-    ],
-  },
-  {
-    title: 'CYFROAI ENGINE',
-    items: [
-      { label: 'CyfroAI Insights', href: '/documents/ai-insights' },
-      { label: 'CyfroAssistant', href: '/documents/ai-assistant' },
     ],
   },
   {
@@ -65,12 +67,6 @@ export const DOCS_NAV_SECTIONS: DocsNavSection[] = [
       { label: 'Admin Panel', href: '/documents/admin' },
     ],
   },
-  {
-    title: 'DEPLOYMENT',
-    items: [
-      { label: 'Licensing', href: '/documents/licensing' },
-    ],
-  },
 ]
 
 export const DOCS_SEARCH_INDEX = DOCS_NAV_SECTIONS.flatMap((section) =>
@@ -78,22 +74,22 @@ export const DOCS_SEARCH_INDEX = DOCS_NAV_SECTIONS.flatMap((section) =>
 )
 
 export const DOCS_ARTICLE_SUMMARIES: Record<string, string> = {
-  '/documents/full': 'The source-of-truth overview for agents, scans, AI insights, onboarding, and dashboard metrics.',
-  '/documents/rbac': 'Learn how role boundaries, access scopes, and permission models are structured across the platform.',
-  '/documents/dashboard': 'Understand the widgets, stats, layout customization, and top-level navigation shortcuts.',
-  '/documents/notifications': 'Review how alerts, notification delivery, and status signals are surfaced across the product.',
-  '/documents/reports': 'See how report generation, outputs, and reporting workflows are organized for teams and stakeholders.',
-  '/documents/cyfrocode': 'Explore how CyfroCode helps teams inspect, understand, and act on code-related findings.',
-  '/documents/topology': 'Understand the asset topology view and how infrastructure relationships are visualized in the platform.',
-  '/documents/deploy-agent': 'Install, register, and validate agents for both cloud and on-prem environments.',
-  '/documents/first-scan': 'Launch directly into the first-scan workflow and understand the initial validation path.',
-  '/documents/network-discovery': 'Follow the network discovery workflow for identifying hosts, paths, and exposed services.',
-  '/documents/asset-discovery': 'Review the asset discovery process for identifying managed and unmanaged infrastructure.',
-  '/documents/service-fingerprinting': 'Review the vulnerability, misconfiguration, and secret-detection scan flow in detail.',
-  '/documents/ai-insights': 'See how executive summaries and prioritized risk lists are generated and interpreted.',
-  '/documents/ai-assistant': 'Learn the AI chat workflow, suggestion cards, streaming responses, and approval flow.',
-  '/documents/gdpr': 'Explore the GDPR compliance workflow, evidence handling, and privacy-oriented operational guidance.',
-  '/documents/audit': 'Understand audit trails, evidence records, and governance workflows for security teams.',
-  '/documents/admin': 'Open the administrative controls for configuration, governance, and organization management.',
-  '/documents/licensing': 'Review licensing, provisioning context, and deployment-oriented operational guidance.',
+  '/documents/full': 'Platform overview covering core capabilities, getting started in five steps, RBAC, and dashboard metric semantics.',
+  '/documents/support': 'Submit support tickets via the CyfroSec portal — issue type, scan name, description, and optional attachments.',
+  '/documents/rbac': 'Three-role hierarchy — Organization Admin, Account Group Admin, and User — with a full permission matrix.',
+  '/documents/dashboard': 'Seven customizable widgets covering vulnerability summary, agent status, GDPR compliance, AI insights, and scan status.',
+  '/documents/notifications': 'Real-time toast notifications, bell indicator priority states, and session-scoped notification history.',
+  '/documents/reports': 'Exportable CSV reports covering Network Discovery, Service Fingerprinting (misconfigs, CVEs, secrets), and Asset Discovery.',
+  '/documents/cyfrocode': 'Connect GitHub, queue scans, review findings by severity, generate AI patches, and export fixes as pull requests.',
+  '/documents/topology': 'Interactive network diagram combining discovered assets, port evidence, fingerprint summaries, and AI risk highlights.',
+  '/documents/deploy-agent': 'Register CyfroAgent with a one-time token, run via Docker, and verify registration — covering single hosts and multi-container environments.',
+  '/documents/first-scan': 'Create a test with scan type, target host or subnet, agent selection, and a recurring interval (hourly to daily).',
+  '/documents/network-discovery': 'Identifies open ports and services using fast scanning to drive vulnerability detection and data correlation.',
+  '/documents/asset-discovery': 'ARP sweeps, local process enumeration, MAC vendor lookup, and SMB/NetBIOS enumeration for full host inventory.',
+  '/documents/service-fingerprinting': 'CVE mapping, misconfiguration detection, TLS checks, and secrets scanning with actionable remediation steps.',
+  '/documents/ai-insights': 'Executive summaries and prioritized risk lists generated automatically after each scan interval completes.',
+  '/documents/ai-assistant': 'Natural language security analyst with human-in-the-loop approvals, workspace panel, and live streaming responses.',
+  '/documents/gdpr': 'Evidence-based GDPR compliance scoring by article category, with trend deltas and catalog provenance.',
+  '/documents/audit': 'Searchable activity trail with action type, resource, endpoint, IP, status code, and date range filters.',
+  '/documents/admin': 'Organization, account group, user, audit, subscription, and usage statistics management — restricted to admin roles.',
 }

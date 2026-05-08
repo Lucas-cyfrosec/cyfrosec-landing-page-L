@@ -77,7 +77,7 @@ export default function FirstScanPage() {
               </thead>
               <tbody>
                 {[
-                  ['Full', 'Performs a comprehensive port scan across all common ports for the target. No protocol selection required. Best for periodic deep assessments.'],
+                  ['Full', 'Performs a comprehensive port scan across all common ports for the target. No protocol selection required. It takes more time since it performs deep assessments. Well suited for periodic assessments.'],
                   ['Quick', 'Performs a faster, targeted scan. Requires selecting a specific protocol (see below). Best for frequent monitoring with lower overhead.'],
                 ].map(([val, desc]) => (
                   <tr key={val} className="border-b cy-border-default">
@@ -114,16 +114,19 @@ export default function FirstScanPage() {
           <p className="cy-text-secondary text-sm mb-3">
             The IP address or CIDR range to scan. Examples:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
-            <li className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-              Single host: <code className="rounded px-1.5 py-0.5 text-xs font-mono bg-primary-500/10 cy-text-brand">192.168.1.50/32</code>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-              Full subnet: <code className="rounded px-1.5 py-0.5 text-xs font-mono bg-primary-500/10 cy-text-brand">10.0.0.0/24</code>
-            </li>
-          </ul>
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
+            {[
+              ['Single host', '192.168.1.50/32'],
+              ['Full subnet', '10.0.0.0/24'],
+            ].map(([label, code], i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{label}: <code className="rounded px-1.5 py-0.5 text-xs font-mono bg-primary-500/10 cy-text-brand">{code}</code></span>
+              </li>
+            ))}
+          </ol>
           <p className="cy-text-secondary text-sm">
             The Agent running the test will direct its scan probes to this target. Ensure the target is reachable from the machines where your Agents are installed.
           </p>
@@ -177,17 +180,19 @@ export default function FirstScanPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Assigning multiple Agents to a single test is useful for:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Scanning the same target from different network segments to detect firewall asymmetry.',
               'Providing redundancy if one Agent goes offline.',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Interval */}
@@ -224,9 +229,12 @@ export default function FirstScanPage() {
               </tbody>
             </table>
           </div>
-          <p className="cy-text-secondary text-sm">
+          <p className="cy-text-secondary text-sm mb-3">
             Tests run on a recurring schedule starting from when they are created. There is no one-time or manual trigger option yet currently to schedule the test and let the platform run it.
           </p>
+          <div className="rounded-xl border border-primary-500/20 bg-primary-500/5 p-4 text-sm cy-text-secondary">
+            <strong className="cy-text-primary">Note:</strong> In instances where the chosen file path/filesystem is large, the scans may take longer than the interval.
+          </div>
         </section>
 
         {/* Editing */}

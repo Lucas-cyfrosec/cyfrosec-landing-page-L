@@ -18,6 +18,8 @@ const DRAG_ROTATION_FACTOR = 0.005;    // radians per dragged pixel
 const INERTIA_DECAY = 0.94;            // inertia decay when pointer stops
 const MAX_ROTATION_VELOCITY = 0.06;    // cap release momentum for very fast drags
 const FRAME_DURATION_MS = 1000 / 60;   // normalize drag velocity to frame-based rotation
+const MAX_CANVAS_DPR = 1.5;            // cap retina work to keep animation inexpensive
+const IDLE_FRAME_INTERVAL_MS = 1000 / 30;
 // ─────────────────────────────────────────────────────────────────────────────
 
 const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
@@ -395,17 +397,24 @@ export default function InteractiveGlobe({
     let rotationY = 0.45, rotationX = 0.28, time = 0, dragging = false;
     let rotationVelocityY = 0, rotationVelocityX = 0;
     let lastPointerX = 0, lastPointerY = 0, lastPointerTime = 0;
-    let animationFrame = 0, canvasWidth = 0, canvasHeight = 0, canvasDpr = 1, paused = false;
+    let animationFrame = 0, canvasWidth = 0, canvasHeight = 0, canvasDpr = 1, paused = false, lastDrawTime = 0;
 
     function resizeCanvas() {
-      const dpr = window.devicePixelRatio || 1, width = canvas!.clientWidth, height = canvas!.clientHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, MAX_CANVAS_DPR), width = canvas!.clientWidth, height = canvas!.clientHeight;
       if (width===canvasWidth&&height===canvasHeight&&dpr===canvasDpr) return;
       canvasWidth=width; canvasHeight=height; canvasDpr=dpr;
       canvas!.width=Math.max(1,width*dpr); canvas!.height=Math.max(1,height*dpr);
     }
 
-    function draw() {
+    function draw(now = 0) {
       if (paused) { animationFrame=requestAnimationFrame(draw); return; }
+      const hasMomentum = Math.abs(rotationVelocityY) > 0.00002 || Math.abs(rotationVelocityX) > 0.00002;
+      const targetFrameInterval = dragging || hasMomentum ? FRAME_DURATION_MS : IDLE_FRAME_INTERVAL_MS;
+      if (now - lastDrawTime < targetFrameInterval) {
+        animationFrame=requestAnimationFrame(draw);
+        return;
+      }
+      lastDrawTime = now;
       const dpr=canvasDpr, width=canvasWidth, height=canvasHeight, cx=width/2, cy=height/2, radius=Math.min(width,height)*0.385, fov=620;
       ctx!.setTransform(dpr,0,0,dpr,0,0); ctx!.clearRect(0,0,width,height);
       if (!dragging) {

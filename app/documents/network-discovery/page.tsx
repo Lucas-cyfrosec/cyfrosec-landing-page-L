@@ -35,20 +35,22 @@ export default function NetworkDiscoveryPage() {
           Network Discovery scan identifies open ports and services to drive vulnerability detection and analysis.
         </p>
 
-        <ul className="space-y-2 cy-text-secondary text-sm mb-10">
+        <ol className="space-y-4 cy-text-secondary text-sm mb-10">
           {[
             'Run during scheduled scanning jobs or on agent request.',
             'Fast scanning for performance and reduced noise.',
             'Helps discover vulnerabilities and exposed ports.',
             'Collect extra metadata (e.g., TLS certificate info).',
-            'Feed discovered insight into the fingerprinting and vulnerability pipelines.',
-          ].map((item) => (
-            <li key={item} className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-              {item}
+            'Enriched findings are passed to the Service Fingerprinting and Asset Discovery pipelines for deeper assessments and data correlation using CyfroAI Engine.',
+          ].map((text, i) => (
+            <li key={i} className="flex items-start gap-3">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                {i + 1}
+              </span>
+              <span className="mt-0.5">{text}</span>
             </li>
           ))}
-        </ul>
+        </ol>
 
       </article>
 

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
+import DocsCodeBlock from '../_components/DocsCodeBlock'
 
 export const metadata = {
   title: 'Admin Panel | CyfroSec Documentation',
@@ -62,29 +63,24 @@ export default function AdminPage() {
           <p className="cy-text-secondary leading-relaxed mb-3 text-sm">
             Route(on-premise):
           </p>
-          <div className="rounded-xl border cy-border-default overflow-hidden mb-5">
-            <pre
-              className="p-4 text-sm font-mono cy-text-primary overflow-x-auto leading-relaxed"
-              style={{ background: 'var(--bg-canvas)' }}
-            >
-              app.localhost:8080/settings
-            </pre>
-          </div>
+          <DocsCodeBlock className="mb-5" code={`app.localhost:8080/settings`} />
           <p className="cy-text-secondary text-sm mb-3">
             The settings shell includes:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'a settings header',
               'searchable tab navigation',
               'section pages for each administration domain',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Access Control */}
@@ -98,17 +94,19 @@ export default function AdminPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             Settings access is restricted to:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
             {[
               'Organization Admin',
               'Account Group Admin',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm">
             Users without access are redirected to the dashboard.
           </p>
@@ -127,46 +125,54 @@ export default function AdminPage() {
           </p>
 
           <p className="cy-text-secondary text-sm mb-2 font-semibold cy-text-primary">Governance:</p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-5">
-            <li className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-              Organization (<code className="rounded px-1.5 py-0.5 text-xs font-mono bg-primary-500/10 cy-text-brand">/settings/organization</code>)
+          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
+            <li className="flex items-start gap-3">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                1
+              </span>
+              <span className="mt-0.5">Organization (<code className="rounded px-1.5 py-0.5 text-xs font-mono bg-primary-500/10 cy-text-brand">/settings/organization</code>)</span>
             </li>
-          </ul>
+          </ol>
 
           <p className="cy-text-secondary text-sm mb-2 font-semibold cy-text-primary">Access:</p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-5">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
             {[
               ['Account Groups', '/settings/account-groups'],
               ['Users', '/settings/users'],
-            ].map(([label, path]) => (
-              <li key={path} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {label} (<code className="rounded px-1.5 py-0.5 text-xs font-mono bg-primary-500/10 cy-text-brand">{path}</code>)
+            ].map(([label, path], i) => (
+              <li key={path} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{label} (<code className="rounded px-1.5 py-0.5 text-xs font-mono bg-primary-500/10 cy-text-brand">{path}</code>)</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <p className="cy-text-secondary text-sm mb-2 font-semibold cy-text-primary">Compliance:</p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-5">
-            <li className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-              Audit Logs (<code className="rounded px-1.5 py-0.5 text-xs font-mono bg-primary-500/10 cy-text-brand">/settings/audit</code>)
+          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
+            <li className="flex items-start gap-3">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                1
+              </span>
+              <span className="mt-0.5">Audit Logs (<code className="rounded px-1.5 py-0.5 text-xs font-mono bg-primary-500/10 cy-text-brand">/settings/audit</code>)</span>
             </li>
-          </ul>
+          </ol>
 
           <p className="cy-text-secondary text-sm mb-2 font-semibold cy-text-primary">Billing:</p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
             {[
               ['Subscription', '/settings/subscription'],
               ['Statistics', '/settings/statistics'],
-            ].map(([label, path]) => (
-              <li key={path} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {label} (<code className="rounded px-1.5 py-0.5 text-xs font-mono bg-primary-500/10 cy-text-brand">{path}</code>)
+            ].map(([label, path], i) => (
+              <li key={path} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{label} (<code className="rounded px-1.5 py-0.5 text-xs font-mono bg-primary-500/10 cy-text-brand">{path}</code>)</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm">
             You can search settings tabs directly from the settings header.
           </p>
@@ -183,18 +189,20 @@ export default function AdminPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             The root settings page (<code className="rounded px-1.5 py-0.5 text-xs font-mono bg-primary-500/10 cy-text-brand">/settings</code>) includes:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'High-level governance and control highlights',
               'Administration area cards',
               'Direct links to each settings section',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Organization */}
@@ -208,19 +216,21 @@ export default function AdminPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             The Organization page provides organization-level records and actions with:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
             {[
               'Search',
               'Pagination',
               'Create/edit/delete modals',
               'Table fields such as country, plan, users, account groups, agents, and created date',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm">
             Use this page to maintain organization metadata and inspect organizational scope metrics.
           </p>
@@ -237,20 +247,22 @@ export default function AdminPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             The Account Groups page provides scoped group administration with:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
             {[
               'Search',
               'Organization filter',
               'Pagination',
               'Create/edit/delete actions',
               'Group-level user/agent counts',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm">
             Use this page to manage group boundaries and operational ownership.
           </p>
@@ -267,20 +279,22 @@ export default function AdminPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             The Users page is account-group scoped and provides:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
             {[
               'Search by name/email',
               'Pagination',
               'Create/edit/delete user workflows',
               'Role-in-group visibility',
               'Create flow includes organization and account-group assignment fields.',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Audit Logs */}
@@ -294,19 +308,21 @@ export default function AdminPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             The Audit Logs page (<code className="rounded px-1.5 py-0.5 text-xs font-mono bg-primary-500/10 cy-text-brand">/settings/audit</code>) provides activity traceability with:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Search',
               'Structured filters (action type, resource type, endpoint, IP, status, dates)',
               'Status badges and duration',
               'Pagination',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Subscription and Statistics */}
@@ -320,17 +336,19 @@ export default function AdminPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             Billing-related settings include:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Subscription (/settings/subscription): Plan status, billing lifecycle actions, plan selection',
               'Statistics (/settings/statistics): Usage limits, utilization, period metrics',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Common UX Patterns */}
@@ -344,20 +362,22 @@ export default function AdminPage() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             Most settings tables share:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
             {[
               'Debounced search inputs',
               'Active filter state chips',
               'Standard loading/empty/error states',
               'Page-based navigation controls',
               'Modal-based CRUD actions where applicable',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm">
             This keeps behavior predictable across administration pages.
           </p>

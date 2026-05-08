@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from 'react'
 import { submitContactSalesApiV1SupportContactSalesPost } from '@/src/client'
+import { ThankYouDocLinks } from '@/app/components/landing/ThankYouDocLinks'
 
 type ContactSalesFormState = {
   fullName: string
@@ -55,7 +56,7 @@ export function ContactSalesForm() {
   const [form, setForm] = useState<ContactSalesFormState>(INITIAL_STATE)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState<string | null>(null)
+  const [success, setSuccess] = useState(false)
   const formStartedAt = useRef(new Date().toISOString())
 
   const isValid = useMemo(() => {
@@ -76,7 +77,7 @@ export function ContactSalesForm() {
 
     setLoading(true)
     setError(null)
-    setSuccess(null)
+    setSuccess(false)
 
     try {
       const response = await submitContactSalesApiV1SupportContactSalesPost({
@@ -102,7 +103,7 @@ export function ContactSalesForm() {
         throw new Error(getErrorMessage(response.data, 'Failed to submit contact request'))
       }
 
-      setSuccess('Thanks, your request has been submitted. Our sales team will contact you shortly.')
+      setSuccess(true)
       setForm(INITIAL_STATE)
       formStartedAt.current = new Date().toISOString()
     } catch (err) {
@@ -113,6 +114,25 @@ export function ContactSalesForm() {
   }
 
   const inputClass = 'w-full rounded-xl border cy-border-default cy-bg-elevated px-3 py-2.5 text-sm cy-text-primary placeholder:cy-text-muted focus:outline-none focus:ring-2 focus:ring-primary-500/30 3xl:px-4 3xl:py-3 3xl:text-[15px]'
+
+  if (success) {
+    return (
+      <div>
+        <div className="rounded-2xl border border-primary-500/20 bg-primary-500/10 px-6 py-10 text-center">
+          <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary-500/20">
+            <svg className="size-6 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <p className="text-base font-semibold text-white">Message received!</p>
+          <p className="mt-2 text-sm text-white/70">
+            Thanks for reaching out. Our sales team will contact you shortly.
+          </p>
+        </div>
+        <ThankYouDocLinks />
+      </div>
+    )
+  }
 
   return (
     <form className="space-y-4 3xl:space-y-5" onSubmit={onSubmit}>
@@ -207,11 +227,11 @@ export function ContactSalesForm() {
       </label>
 
       {error ? <p className="rounded-lg border border-error-500/20 bg-error-500/10 px-3 py-2 text-sm text-error-500 3xl:px-4 3xl:py-3 3xl:text-[15px]">{error}</p> : null}
-      {success ? <p className="rounded-lg border border-success-500/25 bg-success-500/10 px-3 py-2 text-sm text-success-600 3xl:px-4 3xl:py-3 3xl:text-[15px]">{success}</p> : null}
 
       <button className="cy-btn cy-btn-primary 3xl:px-6 3xl:py-3 3xl:text-[15px]" type="submit" disabled={!isValid || loading}>
         {loading ? 'Submitting...' : 'Submit to Sales'}
       </button>
+
     </form>
   )
 }

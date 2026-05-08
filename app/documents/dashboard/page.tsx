@@ -14,7 +14,7 @@ const TOC = [
   { id: 'stats-row',              label: 'The Stats Row' },
   { id: 'widgets',                label: 'Dashboard Widgets' },
   { id: 'default-layout',         label: 'Default Widget Layout' },
-  { id: 'ai-insights-widget',     label: 'AI Insights' },
+  { id: 'ai-insights-widget',     label: 'CyfroAI Insights' },
   { id: 'vulnerability-summary',  label: 'Vulnerability Summary' },
   { id: 'top-vulnerabilities',    label: 'Top Vulnerabilities' },
   { id: 'gdpr-widget',            label: 'GDPR Compliance' },
@@ -123,7 +123,7 @@ export default function DashboardPage() {
               <tbody>
                 {[
                   ['Pinned top row', 'Dashboard Stats (full width)'],
-                  ['Row 1', 'AI Insights (large), Vulnerability Summary (small)'],
+                  ['Row 1', 'CyfroAI Insights (large), Vulnerability Summary (small)'],
                   ['Row 2', 'GDPR Compliance (small), Top Vulnerabilities (large)'],
                   ['Row 3', 'Scan Status (small), Agent Status (small), Asset Discovery (small)'],
                 ].map(([row, cards]) => (
@@ -140,13 +140,13 @@ export default function DashboardPage() {
           </p>
         </section>
 
-        {/* AI Insights Widget */}
+        {/* CyfroAI Insights Widget */}
         <section id="ai-insights-widget" className="mb-10 scroll-mt-20">
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
           >
-            AI Insights
+            CyfroAI Insights
           </h2>
           <p className="cy-text-secondary leading-relaxed mb-3">
             A compact view of the most recent AI-generated scan analyses.
@@ -158,7 +158,7 @@ export default function DashboardPage() {
             A +N more indicator appears when an insight contains additional findings beyond the preview.
           </p>
           <p className="cy-text-secondary text-sm mb-3">
-            Click <strong className="cy-text-primary">View All</strong> to open the full AI Insights page.
+            Click <strong className="cy-text-primary">View All</strong> to open the full CyfroAI Insights page.
           </p>
           <p className="cy-text-secondary text-sm">
             Empty state: &quot;No AI insights yet — Run scans to generate AI analysis.&quot;
@@ -272,18 +272,20 @@ export default function DashboardPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Status normalisation: The status of scans are mapped into common labels:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
-            {['Completed', 'Running', 'Pending', 'Failed'].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
+            {['Completed', 'Running', 'Pending', 'Failed'].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm mb-3">
             Test list: Up to 4 tests, each showing:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
             {[
               'Status indicator (colour coded dot)',
               'Test name and category',
@@ -291,13 +293,15 @@ export default function DashboardPage() {
               'Number of assigned agents',
               'Last run time (relative time)',
               'Inactive label is displayed if the test is currently paused',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm mb-3">
             Click <strong className="cy-text-primary">View All Scans</strong> to go to the Scans Setup page.
           </p>
@@ -323,20 +327,22 @@ export default function DashboardPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Agent list: One row per agent showing:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
             {[
               'Health status dot (green = healthy, amber = warning/degraded, red = offline/unhealthy)',
               'Agent name and location (if set during registration)',
               'Status label pill',
               'Last heartbeat time (relative)',
               'Test counts: running, failed, and total',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm mb-3">
             Click <strong className="cy-text-primary">View All Agents</strong> to go to the CyfroAgent management page.
           </p>
@@ -408,17 +414,19 @@ export default function DashboardPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Each widget has a − and + button in customise mode:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-4">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
             {[
               '− shrinks the widget to a small size (one-third of the page width).',
               '+ expands the widget to a large size (two-thirds of the page width).',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm mb-6">
             The stats row at the top is always full-width and cannot be moved or resized.
           </p>
@@ -466,17 +474,19 @@ export default function DashboardPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Most widgets load their data once when the page opens. To get the latest data:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'For all widgets: Reload the page.',
               'For GDPR Compliance only: Use the ↺ refresh button in the widget header to trigger a new report without reloading the page.',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* Navigation Shortcuts */}
@@ -501,7 +511,7 @@ export default function DashboardPage() {
               </thead>
               <tbody>
                 {[
-                  ['AI Insights', 'View All', 'AI Insights page'],
+                  ['CyfroAI Insights', 'View All', 'CyfroAI Insights page'],
                   ['Top Vulnerabilities', 'View All', 'Report page (vulnerabilities tab)'],
                   ['Scan Status', 'View All Scans', 'Scans Setup page'],
                   ['Agent Status', 'View All Agents', 'CyfroAgent page'],

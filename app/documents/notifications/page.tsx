@@ -100,20 +100,22 @@ export default function NotificationsPage() {
           <p className="cy-text-secondary leading-relaxed mb-4">
             New notifications appear as toast cards in the top-right corner of the screen as they arrive. Up to 3 toasts are shown at once. Each toast shows:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-5">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
             {[
               'Priority badge (Critical / High / Normal / Low)',
               'Notification title and message (up to 3 lines)',
               'Which account group the event came from',
               'A 5-second countdown progress bar before auto-dismiss',
               'An × button to dismiss immediately',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm">
             Toast Notifications are ephemeral — dismissing one does not remove the notification from the history page, and auto-dismissed notifications are not automatically marked as read.
           </p>
@@ -172,7 +174,7 @@ export default function NotificationsPage() {
           <p className="cy-text-secondary text-sm mb-3">
             Clicking a notification row opens a drawer with the full event detail:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-6">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {[
               'Full message text',
               'Status flags: Severity level, whether attention is required',
@@ -182,13 +184,15 @@ export default function NotificationsPage() {
               'Severity summary: Breakdown of finding counts by severity (Critical, High, Medium, Low)',
               'Top findings: Up to 5 vulnerability findings from the event, each showing host, port, protocol, service, severity, CVE ID, and CVSS score',
               'View Full Details button links to the full results detail page if available',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <h3 id="filtering" className="text-base font-semibold cy-text-primary mb-2 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>
             Filtering
@@ -225,18 +229,20 @@ export default function NotificationsPage() {
           <p className="cy-text-secondary text-sm mb-3">
             This means:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Refreshing the page clears the notification list.',
               'Logging out and back in starts with an empty history.',
               'The read/unread state of notifications is also session-scoped and is not persisted to the server.',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
         {/* FAQ */}

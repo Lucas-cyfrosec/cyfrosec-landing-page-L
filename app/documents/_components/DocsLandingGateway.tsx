@@ -6,7 +6,6 @@ import Fuse from 'fuse.js'
 import {
   ArrowRight,
   BookOpen,
-  Boxes,
   Brain,
   ChevronRight,
   LayoutDashboard,
@@ -18,7 +17,7 @@ import {
   UsersRound,
 } from 'lucide-react'
 import type { ComponentType } from 'react'
-import { DOCS_ARTICLE_SUMMARIES, DOCS_HEADING_FONT, DOCS_SEARCH_INDEX } from '../docs-data'
+import { DOCS_ARTICLE_SUMMARIES, DOCS_HEADING_FONT, DOCS_NAV_SECTIONS, DOCS_SEARCH_INDEX } from '../docs-data'
 import {
   DOCS_POPULARITY_EVENT,
   getDocsPopularityCounts,
@@ -52,11 +51,10 @@ type CategoryCard = {
 }
 
 const QUICK_CHIPS: QuickChip[] = [
-  { label: 'Quick Start', href: '/documents/full#getting-started' },
-  { label: 'CyfroAgent Install', href: '/documents/deploy-agent' },
-  { label: 'On-Prem Setup', href: '/documents/full#step1' },
+  { label: 'Getting Started', href: '/documents/full#getting-started' },
+  { label: 'CyfroAgent Setup', href: '/documents/deploy-agent' },
   { label: 'CyfroAI Insights', href: '/documents/ai-insights' },
-  { label: 'CyfroCode', href: '/documents/cyfrocode' },
+  { label: 'CyfroAssistant', href: '/documents/ai-assistant' },
 ]
 
 const START_HERE_CARDS: StartCard[] = [
@@ -64,21 +62,21 @@ const START_HERE_CARDS: StartCard[] = [
     eyebrow: 'Start here',
     label: 'Create your organization',
     href: '/documents/full#step1',
-    description: 'Begin with the existing sign-up and organization creation guide in the core Platform Overview docs.',
+    description: 'Sign up at app.cyfrosec.com, verify your email, and complete your organization setup. The first user in a new organization must be an admin.',
     Icon: Sparkles,
   },
   {
     eyebrow: 'Install',
     label: 'Register and install CyfroAgent',
     href: '/documents/deploy-agent',
-    description: 'Go straight to the agent registration, install flow, and deployment guidance for your first monitored host.',
+    description: 'Generate a registration token and fernet key from the CyfroAgent tab, then run the provided Docker command on your host. Lightweight, outbound-only, and minimal resource usage.',
     Icon: TerminalSquare,
   },
   {
-    eyebrow: 'Verify',
-    label: 'Run your first scan',
+    eyebrow: 'Scan',
+    label: 'Create your first scan',
     href: '/documents/first-scan',
-    description: 'Launch directly into the first-scan workflow and then branch into Network Discovery, Asset Discovery, or Service Fingerprinting.',
+    description: 'Create a Network Discovery, Asset Discovery, or Service Fingerprinting test. Tests run automatically on a recurring schedule — hourly, every 6 hours, 12 hours, or daily.',
     Icon: ShieldCheck,
   },
 ]
@@ -92,87 +90,57 @@ const DEFAULT_POPULAR_ARTICLE_HREFS = [
   '/documents/service-fingerprinting',
 ]
 
-const CATEGORY_CARDS: CategoryCard[] = [
-  {
+type CategoryMeta = {
+  title: string
+  description: string
+  Icon: ComponentType<{ className?: string }>
+}
+
+const CATEGORY_META: Record<string, CategoryMeta> = {
+  'GETTING STARTED': {
     title: 'Getting Started',
-    href: '/documents/full',
-    description: 'Core onboarding, platform orientation, RBAC, and the first-run path into the product.',
+    description: 'Sign up, create your organization and account groups, register your first agent, and understand the three-role permission model.',
     Icon: BookOpen,
-    items: [
-      { label: 'Platform Overview', href: '/documents/full' },
-      { label: 'Role Based Access Control', href: '/documents/rbac' },
-    ],
   },
-  {
+  'PLATFORM GUIDE': {
     title: 'Platform Guide',
-    href: '/documents/dashboard',
-    description: 'Interface docs covering dashboard, notifications, reports, CyfroCode, and topology views.',
+    description: 'Dashboard, notifications, reports, CyfroCode code security workspace, and the interactive asset topology diagram.',
     Icon: LayoutDashboard,
-    items: [
-      { label: 'Dashboard', href: '/documents/dashboard' },
-      { label: 'Notifications', href: '/documents/notifications' },
-      { label: 'Report', href: '/documents/reports' },
-    ],
   },
-  {
+  'CYFROAGENT': {
     title: 'CyfroAgent',
-    href: '/documents/deploy-agent',
-    description: 'Agent registration, installation, and setup guidance for the telemetry and execution layer.',
+    description: 'Lightweight daemon for asset inventory, telemetry, and scan execution. Covers single-host and multi-container Docker deployments.',
     Icon: TerminalSquare,
-    items: [
-      { label: 'CyfroAgent and Setup', href: '/documents/deploy-agent' },
-    ],
   },
-  {
+  'SCANS': {
     title: 'Scans',
-    href: '/documents/first-scan',
-    description: 'Step through creating tests and understand Network Discovery, Asset Discovery, and Service Fingerprinting.',
+    description: 'Create recurring tests targeting a host or subnet. Covers Network Discovery, Asset Discovery, and Service Fingerprinting scan types.',
     Icon: Network,
-    items: [
-      { label: 'Creating Tests', href: '/documents/first-scan' },
-      { label: 'Network Discovery Scan', href: '/documents/network-discovery' },
-      { label: 'Service Fingerprinting Scan', href: '/documents/service-fingerprinting' },
-    ],
   },
-  {
+  'CYFROAI ENGINE': {
     title: 'CyfroAI Engine',
-    href: '/documents/ai-insights',
-    description: 'Explore AI-generated insights and conversational assistance grounded in your actual environment.',
+    description: 'CyfroAI Engine generates executive summaries and prioritized risk lists after each scan. CyfroAssistant lets you query your infrastructure in natural language.',
     Icon: Brain,
-    items: [
-      { label: 'CyfroAI Insights', href: '/documents/ai-insights' },
-      { label: 'CyfroAssistant', href: '/documents/ai-assistant' },
-    ],
   },
-  {
+  'SECURITY & COMPLIANCE': {
     title: 'Security & Compliance',
-    href: '/documents/gdpr',
-    description: 'Audit, compliance, and control-oriented guidance for governance and evidence workflows.',
+    description: 'Automated GDPR compliance scoring by article category with trend tracking, plus a full searchable audit trail for governance.',
     Icon: ShieldCheck,
-    items: [
-      { label: 'GDPR Compliance Tool', href: '/documents/gdpr' },
-      { label: 'Audit', href: '/documents/audit' },
-    ],
   },
-  {
+  'ADMIN PANEL': {
     title: 'Admin Panel',
-    href: '/documents/admin',
-    description: 'Administrative controls, settings navigation, user governance, and organization management.',
+    description: 'Organization records, account groups, user management, subscription status, and usage statistics — restricted to admin roles.',
     Icon: UsersRound,
-    items: [
-      { label: 'Admin Panel', href: '/documents/admin' },
-    ],
   },
-  {
-    title: 'Deployment',
-    href: '/documents/licensing',
-    description: 'Licensing, provisioning context, and deployment-oriented operational guidance.',
-    Icon: Boxes,
-    items: [
-      { label: 'Licensing', href: '/documents/licensing' },
-    ],
-  },
-]
+}
+
+const CATEGORY_CARDS: CategoryCard[] = DOCS_NAV_SECTIONS
+  .filter((section) => section.title in CATEGORY_META)
+  .map((section) => ({
+    ...CATEGORY_META[section.title],
+    href: section.items[0]?.href ?? '',
+    items: section.items,
+  }))
 
 function SectionHeading({
   eyebrow,
@@ -310,11 +278,11 @@ export default function DocsLandingGateway() {
                 className="max-w-3xl text-4xl font-bold tracking-tight cy-text-primary sm:text-5xl lg:text-6xl 3xl:max-w-4xl 3xl:text-[4.15rem] 3xl:leading-[1.02]"
                 style={{ fontFamily: DOCS_HEADING_FONT }}
               >
-                Learn the platform faster with one clear docs gateway.
+                Everything you need to operate CyfroSec with confidence.
               </h1>
 
               <p className="mt-4 max-w-2xl text-base leading-relaxed cy-text-secondary sm:text-lg 3xl:max-w-3xl 3xl:text-[19px] 3xl:leading-8">
-                Start with setup, scan workflows, CyfroAI features, and operational guides. This page is a visual launchpad into the full CyfroSec documentation, without replacing the existing docs source of truth.
+                CyfroSec continuously discovers assets, analyzes vulnerabilities, misconfigurations, secrets and provides AI-driven remediation guidance across your infrastructure. Browse by topic or search below to find the guide you need.
               </p>
 
               <div className="relative mt-7 max-w-2xl 3xl:mt-8 3xl:max-w-3xl">
@@ -389,10 +357,10 @@ export default function DocsLandingGateway() {
                     className="mt-2 text-xl font-bold tracking-tight cy-text-primary 3xl:text-[1.8rem]"
                     style={{ fontFamily: DOCS_HEADING_FONT }}
                   >
-                    Need the canonical article-first docs experience?
+                    Read the complete Platform Overview
                   </h3>
                   <p className="mt-2 max-w-2xl text-sm leading-relaxed cy-text-secondary 3xl:max-w-3xl 3xl:text-[16px] 3xl:leading-7">
-                    Open the existing Platform Overview article and continue through the full sidebar-driven documentation flow.
+                    The Platform Overview article covers core capabilities, getting started in five steps, RBAC, dashboard metric semantics, and the full sidebar-driven documentation flow.
                   </p>
                 </div>
 
@@ -416,8 +384,8 @@ export default function DocsLandingGateway() {
         <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14 3xl:max-w-[1700px] 3xl:px-8 3xl:py-16 4xl:max-w-[2000px]">
           <SectionHeading
             eyebrow="Start Here"
-            title="Jump directly into the first path most teams need."
-            description="These are the fastest on-ramps into the current documentation set, mapped directly to the existing onboarding and scan guides."
+            title="Follow these steps to get up and running in minutes."
+            description="Most teams start with organization setup, deploy CyfroAgent on a host, then create their first scan. This is that path."
           />
 
           <div className="grid gap-4 lg:grid-cols-3 3xl:gap-5">
@@ -452,8 +420,8 @@ export default function DocsLandingGateway() {
         <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14 3xl:max-w-[1700px] 3xl:px-8 3xl:py-16 4xl:max-w-[2000px]">
           <SectionHeading
             eyebrow="Popular Articles"
-            title="Frequently opened guides from the existing docs set."
-            description="Every card below links into a real documentation page that already exists in the current docs structure."
+            title="Frequently referenced guides."
+            description="Reference guides across the platform — from scan workflows and agent setup to AI insights and compliance tooling."
           />
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 3xl:gap-5">
@@ -479,8 +447,8 @@ export default function DocsLandingGateway() {
       <section className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14 3xl:max-w-[1700px] 3xl:px-8 3xl:py-16 4xl:max-w-[2000px]">
         <SectionHeading
           eyebrow="Browse By Category"
-          title="Explore the documentation the same way the current docs sidebar is organized."
-          description="This category grid mirrors the existing docs information architecture so the new landing page stays aligned with the real documentation structure."
+          title="Browse the full documentation by product area."
+          description="Every section maps directly to the sidebar structure. Select a category to explore its guides, or use the search above to find a specific topic."
         />
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 3xl:gap-5">
@@ -522,6 +490,35 @@ export default function DocsLandingGateway() {
           ))}
         </div>
 
+      </section>
+
+      <section className="border-t cy-border-default">
+        <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 3xl:max-w-[1700px] 3xl:px-8 3xl:py-14 4xl:max-w-[2000px]">
+          <div className="rounded-[1.5rem] border cy-border-default bg-white/85 px-6 py-6 dark:bg-surface-900/85 sm:px-8 sm:py-8 3xl:px-10 3xl:py-10">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] cy-text-brand 3xl:text-[13px]">Support</p>
+                <h3
+                  className="mt-2 text-xl font-bold tracking-tight cy-text-primary 3xl:text-[1.6rem]"
+                  style={{ fontFamily: DOCS_HEADING_FONT }}
+                >
+                  Need help? We&rsquo;re here.
+                </h3>
+                <p className="mt-2 max-w-xl text-sm leading-relaxed cy-text-secondary 3xl:max-w-2xl 3xl:text-[16px] 3xl:leading-7">
+                  Use the support form in the CyfroSec portal to submit issues, attach logs or screenshots, and receive help from the support team.
+                </p>
+              </div>
+              <div className="shrink-0">
+                <a
+                  href="mailto:support@cyfrosec.com"
+                  className="inline-flex items-center gap-2 rounded-xl border cy-border-default bg-white px-6 py-2.5 text-sm font-semibold cy-text-primary transition-colors hover:border-primary-500/40 hover:cy-text-brand dark:bg-surface-900 3xl:px-7 3xl:py-3 3xl:text-[15px]"
+                >
+                  Contact support
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   )

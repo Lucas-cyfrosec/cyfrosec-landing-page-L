@@ -19,6 +19,7 @@ const TOC = [
   { id: 'approvals',         label: '2. Human-in-the-Loop Approvals' },
   { id: 'workspace-panel',   label: '3. Workspace Panel' },
   { id: 'what-you-can-ask',  label: 'What You Can Ask' },
+  { id: 'plan-mode',         label: 'Plan Mode' },
 ]
 
 export default function AiAssistantPage() {
@@ -41,8 +42,9 @@ export default function AiAssistantPage() {
 
         <p className="cy-text-secondary leading-relaxed mb-4" id="overview">
           CyfroAssistant is your AI-powered security analyst, available directly inside the CyfroSec Portal.
-          It understands your specific infrastructure - your agents, scan results, vulnerabilities, topology
-          and lets you query it all in natural language, without writing queries or complex terminoloigies.
+          It understands your specific infrastructure — your agents, scan results, vulnerabilities, topology —
+          and lets you query it all in natural language, without writing queries or complex terminologies.
+          It can also take specific actions once permission is provided by the user.
         </p>
 
         <div className="mt-5 rounded-xl border border-primary-500/20 bg-primary-500/5 p-4 text-sm cy-text-secondary mb-10">
@@ -112,22 +114,24 @@ export default function AiAssistantPage() {
             1. Message Streaming
           </h3>
           <p className="cy-text-secondary text-sm mb-3">
-            Responses stream in real time using LangGraph/Deep Agents. The conversation keeps a single coordinator reply visible while the assistant updates plan progress, tools, and subagents underneath it. While the assistant is working, the header shows one of three status badges:
+            Responses stream token-by-token in real time. While the assistant is working, the header shows one of three status badges:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-5">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
             {[
               'Thinking: The assistant is reasoning through your query',
               'Working: The assistant is executing tools or fetching data',
               'Generating: The assistant is writing its response',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm mb-6">
-            When a run is resumable, the header also exposes a <strong className="cy-text-primary">Rejoin</strong> action so you can reconnect to the live stream if the page refreshes or the connection drops.
+            A <strong className="cy-text-primary">Stop</strong> button appears in the input area while streaming. Clicking it cancels the current response immediately.
           </p>
 
           <h3 id="approvals" className="text-base font-semibold cy-text-primary mb-3 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>
@@ -136,19 +140,21 @@ export default function AiAssistantPage() {
           <p className="cy-text-secondary text-sm mb-3">
             For certain actions, particularly those that write data or carry higher risk, the assistant will pause and present an approval card before proceeding. The card shows:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-5">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
             {[
               'What action is being requested',
               'The risk level (Low / Medium / High / Critical)',
               'AI-generated explanation of what will happen',
               'Approve and Deny buttons',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <p className="cy-text-secondary text-sm mb-6">
             You must actively approve or deny before the assistant continues. Approvals are single-use and expire after a set period.
           </p>
@@ -157,7 +163,7 @@ export default function AiAssistantPage() {
             3. Workspace Panel
           </h3>
           <p className="cy-text-secondary text-sm mb-3">
-            A collapsible right panel (click the panel toggle in the chat header) provides deeper inspection into the current Deep Agents run:
+            A collapsible right panel (click the panel toggle in the chat header) provides three tabs for deeper inspection:
           </p>
           <div className="overflow-x-auto mb-6">
             <table className="w-full text-sm border-collapse">
@@ -169,7 +175,7 @@ export default function AiAssistantPage() {
               </thead>
               <tbody>
                 {[
-                  ['Tasks', 'Live todo progress, tool execution, and subagent activity for the current run'],
+                  ['Tasks', 'Checkbox-style progress list of the steps the assistant is executing in real time'],
                   ['Artifacts', 'Any files, data exports, or generated content produced during the conversation'],
                   ['Tool Output', 'Raw arguments and results from each tool call — useful for auditing what data the assistant read or wrote'],
                 ].map(([tab, contents]) => (
@@ -181,9 +187,6 @@ export default function AiAssistantPage() {
               </tbody>
             </table>
           </div>
-          <p className="cy-text-secondary text-sm mb-6">
-            If the agent delegates work, subordinate tasks appear as expandable <strong className="cy-text-primary">Subagent</strong> cards attached to the main assistant turn instead of cluttering the top-level chat.
-          </p>
         </section>
 
         {/* What You Can Ask */}
@@ -201,68 +204,90 @@ export default function AiAssistantPage() {
           <h3 className="text-base font-semibold cy-text-primary mb-3" style={{ fontFamily: HEADING_FONT }}>
             Scan and vulnerability queries:
           </h3>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-6">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {[
               '"Which hosts have Critical CVEs?"',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <h3 className="text-base font-semibold cy-text-primary mb-3" style={{ fontFamily: HEADING_FONT }}>
             Agent and asset queries:
           </h3>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-6">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {[
               '"List all active agents."',
               '"Which agents haven\'t run a scan in the last 24 hours?"',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <h3 className="text-base font-semibold cy-text-primary mb-3" style={{ fontFamily: HEADING_FONT }}>
             Insights and risk queries:
           </h3>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-6">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {[
               '"What are my highest risk findings this week?"',
               '"Are any of my exposed services flagged as reachable?"',
               '"Give me an executive summary of my current security posture."',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <h3 className="text-base font-semibold cy-text-primary mb-3" style={{ fontFamily: HEADING_FONT }}>
             Platform how-to questions:
           </h3>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-5">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
             {[
               '"How do I create a new test?"',
               '"What does an Account Group Admin have access to?"',
               '"How do I register a new agent?"',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <p className="cy-text-secondary text-sm">
-            The assistant uses your actual scan data, agent status, vulnerability findings, and AI insight records to answer infrastructure-specific questions, and references product documentation for how-to queries.
+            The assistant uses your actual scan data, agent status, vulnerability findings, and AI insight records to answer infrastructure-specific questions, and references product documentation for how-to queries. AI can make mistakes, please make sure to verify.
           </p>
         </section>
+
+        {/* Plan Mode */}
+        <section id="plan-mode" className="mb-10 scroll-mt-20">
+          <h2
+            className="text-xl font-bold cy-text-primary mb-4"
+            style={{ fontFamily: HEADING_FONT }}
+          >
+            Plan Mode
+          </h2>
+          <p className="cy-text-secondary leading-relaxed">
+            Plan Mode lists a series of tasks which are to be executed in order for fulfilling the user&apos;s request, ranging from changing configurations or applying fixes. The tasks will be executed based on the user&apos;s approval.
+          </p>
+        </section>
+
       </article>
 
       {/* ── Right TOC ─────────────────────────────────────────────────── */}

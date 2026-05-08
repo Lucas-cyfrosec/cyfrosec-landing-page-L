@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
 import { DOCS_HEADING_FONT } from '../docs-data'
+import DocsCodeBlock from './DocsCodeBlock'
 
 const TOC = [
   { id: 'platform-overview',  label: 'Platform Overview' },
@@ -57,17 +58,19 @@ export default function PlatformOverviewArticle() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             Agents act as your infrastructure&apos;s &quot;eyes and ears&quot;.
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-8">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-8">
             {[
               'Lightweight: Minimal resource usage.',
               'Secure: Outbound-only connections.',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           {/* 2. Scans */}
           <h3 className="text-base font-semibold cy-text-primary mb-2" style={{ fontFamily: DOCS_HEADING_FONT }}>
@@ -76,18 +79,20 @@ export default function PlatformOverviewArticle() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             They are automated security checks performed by Agents.
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-8">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-8">
             {[
-              'Network Discovery: Identifies open ports and services to drive vulnerability detection and analysis.',
-              'Service Fingerprinting: Assesses security posture by identifying known CVEs in installed packages and services, detecting common misconfigurations and scanning for exposed secrets.',
+              'Network Discovery: Identifies open ports and services in your server, network, or infrastructure to drive vulnerability detection and analysis.',
+              'Service Fingerprinting: Assesses security posture by signature matching of CVEs in installed packages and services, detecting common misconfigurations and scanning for exposed secrets.',
               'Asset Discovery: Does ARP sweeps, local process enumeration and MAC vendor lookup.',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           {/* Dashboard Metric Semantics */}
           <h3 id="dashboard-metrics" className="text-base font-semibold cy-text-primary mb-3 scroll-mt-20" style={{ fontFamily: DOCS_HEADING_FONT }}>
@@ -124,12 +129,19 @@ export default function PlatformOverviewArticle() {
           <p className="cy-text-secondary leading-relaxed mb-3">
             Your personal security analyst, available 24/7.
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-6">
-            <li className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-              Natural Language Queries: Ask queries like &quot;Summarise the findings from yesterday&apos;s scan.&quot; effectively querying your entire fleet in seconds.
-            </li>
-          </ul>
+          <ol className="space-y-4 cy-text-secondary text-sm mb-6">
+            {[
+              'Natural Language Queries: Ask queries like "Summarise the findings from yesterday\'s scan." or "List active agents" effectively querying your entire fleet in seconds.',
+              'Accessibility: Helps to explain, understand, analyze and take action on your data, designed for not just Cybersecurity experts but also for non-Cybersecurity teams and Executives.',
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
+              </li>
+            ))}
+          </ol>
         </section>
 
         {/* Getting Started Guide */}
@@ -147,45 +159,24 @@ export default function PlatformOverviewArticle() {
           <h3 className="text-base font-semibold cy-text-primary mb-3" style={{ fontFamily: DOCS_HEADING_FONT }}>
             Prerequisites
           </h3>
-          <ul className="space-y-2 cy-text-secondary text-sm mb-5">
+          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
             {[
               'An active CyfroSec user account.',
               'Admin access to the machine you wish to monitor.',
-              'Docker (for on premise deployments)',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+              'Docker',
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
 
           <div className="mt-5 rounded-xl border border-primary-500/20 bg-primary-500/5 p-4 text-sm cy-text-secondary mb-6">
             Need Help? Contact our Support Team at{' '}
             <a href="mailto:support@cyfrosec.com" className="cy-text-brand hover:underline">support@cyfrosec.com</a>
-          </div>
-
-          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-3">Entry Routes (On Prem)</p>
-          <div className="overflow-x-auto mb-6">
-            <table className="w-full text-sm border-collapse">
-              <thead>
-                <tr className="border-b cy-border-default">
-                  <th className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted">Route</th>
-                  <th className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ['app.localhost:8080/', 'Public landing page'],
-                  ['app.localhost:8080/dashboard', 'Authenticated portal dashboard'],
-                ].map(([route, desc]) => (
-                  <tr key={route} className="border-b cy-border-default">
-                    <td className="py-2.5 pr-4 cy-text-secondary font-mono text-xs">{route}</td>
-                    <td className="py-2.5 pr-4 cy-text-secondary">{desc}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
 
           {/* Step 1 */}
@@ -197,15 +188,22 @@ export default function PlatformOverviewArticle() {
             <strong className="cy-text-primary">SaaS (Cloud-Hosted)</strong>
           </p>
           <ol className="space-y-4 cy-text-secondary text-sm mb-5">
+            <li className="flex items-start gap-3">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                1
+              </span>
+              <span className="mt-0.5">
+                Go to the CyfroSec Portal - <a href="https://www.app.cyfrosec.com" target="_blank" rel="noreferrer" className="cy-text-brand hover:underline">https://www.app.cyfrosec.com</a> sign-up page.
+              </span>
+            </li>
             {[
-              'Go to the CyfroSec Portal sign-up page.',
               'Enter your email and password.',
               'Fill in your Organization Details (Company Name, etc.) when prompted.',
               'Complete the email verification process.',
             ].map((text, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
-                  {i + 1}
+                  {i + 2}
                 </span>
                 <span className="mt-0.5">{text}</span>
               </li>
@@ -216,113 +214,18 @@ export default function PlatformOverviewArticle() {
             <strong className="cy-text-primary">Important:</strong> The first user in a new organization/account group must be an admin (Organization admin or Account group admin). Other users can use non-admin roles.
           </div>
 
-          <p className="cy-text-secondary text-sm mb-3">
-            <strong className="cy-text-primary">On-Premise (Self-Hosted)</strong>
-          </p>
-          <p className="cy-text-secondary text-sm mb-4">
-            Your organization and admin account are automatically created during the first server startup based on your license file and environment configuration. No manual sign-up is needed.
-          </p>
-          <ol className="space-y-4 cy-text-secondary text-sm mb-4">
-            <li className="flex items-start gap-3">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
-                1
-              </span>
-              <span className="mt-0.5">
-                Obtain a license file from your CyfroSec account manager (Contact:{' '}
-                <a href="mailto:sales@cyfrosec.com" className="cy-text-brand hover:underline">sales@cyfrosec.com</a>).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
-                2
-              </span>
-              <span className="mt-0.5">Prepare a small runtime env file using the secure on-prem package under <code className="rounded px-1.5 py-0.5 text-xs font-mono bg-primary-500/10 cy-text-brand">cyfro-backend-core/deploy/on-prem/</code>:</span>
-            </li>
-          </ol>
-
-          <div className="rounded-xl border cy-border-default overflow-hidden mb-4">
-            <div
-              className="flex items-center justify-between px-4 py-2 border-b cy-border-default"
-              style={{ background: 'var(--bg-canvas)' }}
-            >
-              <span className="text-xs font-mono cy-text-muted">env</span>
-            </div>
-            <pre
-              className="p-4 text-sm font-mono cy-text-primary overflow-x-auto leading-relaxed"
-              style={{ background: 'var(--bg-canvas)' }}
-            >
-{`DEPLOYMENT_MODE=on-premise
-CYFRO_LICENSE_FILE=/licenses/cyfro-license.json
-CYFRO_ORG_NAME=Your Company Name
-CYFRO_ADMIN_EMAIL=admin@yourcompany.com
-CYFRO_ADMIN_FIRST_NAME=Admin
-CYFRO_ADMIN_LAST_NAME=User`}
-            </pre>
-          </div>
-
-          <ol className="space-y-4 cy-text-secondary text-sm mb-4" start={3}>
-            <li className="flex items-start gap-3">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
-                3
-              </span>
-              <span className="mt-0.5">Start the secure image by mounting the signed license file and the data volume:</span>
-            </li>
-          </ol>
-
-          <div className="rounded-xl border cy-border-default overflow-hidden mb-5">
-            <div
-              className="flex items-center justify-between px-4 py-2 border-b cy-border-default"
-              style={{ background: 'var(--bg-canvas)' }}
-            >
-              <span className="text-xs font-mono cy-text-muted">Shell</span>
-            </div>
-            <pre
-              className="p-4 text-sm font-mono cy-text-primary overflow-x-auto leading-relaxed"
-              style={{ background: 'var(--bg-canvas)' }}
-            >
-{`docker run -d \\
-  --name cyfrosec-onprem \\
-  --restart unless-stopped \\
-  -p 8080:8080 \\
-  -v cyfrosec-data:/data \\
-  -v /secure/path/license.json:/licenses/cyfro-license.json:ro \\
-  --env-file ./customer.env \\
-  cyfrosec/onprem-customer:latest \\
-  start`}
-            </pre>
-          </div>
-
-          <p className="cy-text-secondary text-sm mb-3">On first boot, the system will:</p>
-          <ol className="space-y-4 cy-text-secondary text-sm mb-8">
-            {[
-              'Verify your license file.',
-              'Create your subscription plan (from the license) in the database.',
-              'Create your Organization, Account Group, and Admin User.',
-              'Assign the subscription plan to your organization.',
-              'Generate internal runtime secrets inside the customer data volume.',
-              'Check your email for a password setup link to complete your admin account.',
-            ].map((text, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
-                  {i + 1}
-                </span>
-                <span className="mt-0.5">{text}</span>
-              </li>
-            ))}
-          </ol>
-
           {/* Step 2 */}
           <h3 id="step2" className="text-base font-semibold cy-text-primary mb-3 scroll-mt-20" style={{ fontFamily: DOCS_HEADING_FONT }}>
             Step 2: Create an Account Group
           </h3>
           <p className="cy-text-secondary leading-relaxed mb-3 text-sm">
-            Agents are organized into Account Groups (e.g., &quot;Marketing&quot;, &quot;Legal&quot;, &quot;Production&quot;, &quot;Staging&quot;). You must have at least one group to register an agent.
+            Agents are organized into Account Groups (e.g., &quot;DevOps&quot;, &quot;AI Datacenter&quot;, &quot;Production&quot;, &quot;Staging&quot;). You must have at least one group to register an agent.
           </p>
           <ol className="space-y-4 cy-text-secondary text-sm mb-8">
             {[
               'Go to Settings > Account Groups.',
               'Click Create Group.',
-              'Name it logically (e.g., "Production Server").',
+              'Name it logically (e.g., "Web App Production Server").',
             ].map((text, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
@@ -361,29 +264,17 @@ CYFRO_ADMIN_LAST_NAME=User`}
             Step 4: Install the Agent
           </h3>
           <p className="cy-text-secondary text-sm mb-3">Run the installation command on your server (Docker required):</p>
-          <div className="rounded-xl border cy-border-default overflow-hidden mb-8">
-            <div
-              className="flex items-center justify-between px-4 py-2 border-b cy-border-default"
-              style={{ background: 'var(--bg-canvas)' }}
-            >
-              <span className="text-xs font-mono cy-text-muted">Shell</span>
-            </div>
-            <pre
-              className="p-4 text-sm font-mono cy-text-primary overflow-x-auto leading-relaxed"
-              style={{ background: 'var(--bg-canvas)' }}
-            >
-{`docker run -d \\
-  --name cyfro-agent \\
+          <DocsCodeBlock
+            label="Shell"
+            className="mb-8"
+            code={`docker run \\
   --network host \\
   -v cyfro-agent-data:/data/agent \\
-  -v /:/host:ro \\
-  cyfrosec/cyfro-agent:latest \\
-  --agentName "MyAgent" \\
-  --token "your-registration-token" \\
-  --fernet-key "your-fernet-key" \\
-  --location "MyLocation"`}
-            </pre>
-          </div>
+  cyfrosec/cyfro-prod:latest \\
+  --agentName "MyFirstAgent" \\
+  --token "<YOUR_TOKEN_HERE>" \\
+  --location "AWS-East-1"`}
+          />
 
           {/* Step 5 */}
           <h3 id="step5" className="text-base font-semibold cy-text-primary mb-3 scroll-mt-20" style={{ fontFamily: DOCS_HEADING_FONT }}>
@@ -413,18 +304,20 @@ CYFRO_ADMIN_LAST_NAME=User`}
           <p className="cy-text-secondary leading-relaxed mb-3">
             When organizations, account groups, or users are created from the main admin backend, provisioning behavior is aligned:
           </p>
-          <ul className="space-y-2 cy-text-secondary text-sm">
+          <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Account group creation bootstraps a default Network Discovery scan.',
               'User creation triggers onboarding notification flows.',
               'Plan quotas are enforced consistently.',
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-                {item}
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
 
       </article>

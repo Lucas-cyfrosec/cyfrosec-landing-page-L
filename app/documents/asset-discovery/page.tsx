@@ -35,7 +35,7 @@ export default function AssetDiscoveryPage() {
           Asset Discovery Scan does ARP sweeps, local process enumeration and MAC vendor lookup. It runs via the managed CyfroAgent with concurrency, retries, rate limits and robust error handling.
         </p>
 
-        <ul className="space-y-2 cy-text-secondary text-sm mb-10">
+        <ol className="space-y-4 cy-text-secondary text-sm mb-6">
           {[
             'Crafted probes for ARP discovery.',
             'Local host inventory: process and service enumeration.',
@@ -43,13 +43,22 @@ export default function AssetDiscoveryPage() {
             'SMB/NetBIOS enumeration for hostnames and share metadata.',
             'Enrichment from DHCP logs and Active Directory / LDAP.',
             'Read local connections, running services, routing tables and ARP caches for low-impact inventory.',
-          ].map((item) => (
-            <li key={item} className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-500 shrink-0" />
-              {item}
+          ].map((text, i) => (
+            <li key={i} className="flex items-start gap-3">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                {i + 1}
+              </span>
+              <span className="mt-0.5">{text}</span>
             </li>
           ))}
-        </ul>
+        </ol>
+
+        <div className="flex items-start gap-3 mt-4 cy-text-secondary text-sm mb-10">
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+            !
+          </span>
+          <span className="mt-0.5">Asset Discovery findings are fed into CyfroAI Engine for deep assessments with the other scans to enhance data correlation.</span>
+        </div>
 
       </article>
 

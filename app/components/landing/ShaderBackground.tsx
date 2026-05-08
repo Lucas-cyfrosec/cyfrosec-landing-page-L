@@ -114,12 +114,16 @@ export default function ShaderBackground({ className = '' }: { className?: strin
 
     let animId: number;
     let paused = false;
+    let initialized = false;
+    let disposed = false;
     let resizeObserver: ResizeObserver | undefined;
-    let intersectionObserver: IntersectionObserver | undefined;
 
     function onVisibilityChange() { paused = document.hidden; }
 
     function init() {
+      if (initialized || disposed) return;
+      initialized = true;
+
       const gl = canvas!.getContext('webgl');
       if (!gl) return;
 
@@ -160,9 +164,6 @@ export default function ShaderBackground({ className = '' }: { className?: strin
       resize();
       document.addEventListener('visibilitychange', onVisibilityChange);
 
-      intersectionObserver = new IntersectionObserver(([entry]) => { paused=!entry.isIntersecting||document.hidden; }, { threshold: 0.01 });
-      intersectionObserver.observe(canvas!);
-
       const startTime = Date.now();
       function render() {
         if (!paused) {
@@ -181,17 +182,24 @@ export default function ShaderBackground({ className = '' }: { className?: strin
       animId = requestAnimationFrame(render);
     }
 
-    const idleId = typeof requestIdleCallback !== 'undefined'
-      ? requestIdleCallback(init, { timeout: 2000 })
-      : setTimeout(init, 200) as unknown as number;
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      paused = !entry.isIntersecting || document.hidden;
+      if (entry.isIntersecting) {
+        if (typeof requestIdleCallback !== 'undefined') {
+          requestIdleCallback(init, { timeout: 1200 });
+        } else {
+          window.setTimeout(init, 120);
+        }
+      }
+    }, { rootMargin: '250px 0px', threshold: 0.01 });
+    intersectionObserver.observe(canvas);
 
     return () => {
-      if (typeof cancelIdleCallback !== 'undefined') cancelIdleCallback(idleId);
-      else clearTimeout(idleId as unknown as number);
-      cancelAnimationFrame(animId);
+      disposed = true;
+      if (animId) cancelAnimationFrame(animId);
       document.removeEventListener('visibilitychange', onVisibilityChange);
       resizeObserver?.disconnect();
-      intersectionObserver?.disconnect();
+      intersectionObserver.disconnect();
     };
   }, []);
 
