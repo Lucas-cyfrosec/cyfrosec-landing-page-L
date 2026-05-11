@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
 import { DOCS_HEADING_FONT } from '../docs-data'
-import DocsCodeBlock from './DocsCodeBlock'
 
 const TOC = [
   { id: 'platform-overview',  label: 'Platform Overview' },
@@ -263,18 +262,13 @@ export default function PlatformOverviewArticle() {
           <h3 id="step4" className="text-base font-semibold cy-text-primary mb-3 scroll-mt-20" style={{ fontFamily: DOCS_HEADING_FONT }}>
             Step 4: Install the Agent
           </h3>
-          <p className="cy-text-secondary text-sm mb-3">Run the installation command on your server (Docker required):</p>
-          <DocsCodeBlock
-            label="Shell"
-            className="mb-8"
-            code={`docker run \\
-  --network host \\
-  -v cyfro-agent-data:/data/agent \\
-  cyfrosec/cyfro-prod:latest \\
-  --agentName "MyFirstAgent" \\
-  --token "<YOUR_TOKEN_HERE>" \\
-  --location "AWS-East-1"`}
-          />
+          <p className="cy-text-secondary text-sm mb-8">
+            Please follow the steps in{' '}
+            <Link href="/documents/deploy-agent" className="cy-text-brand hover:underline">
+              CyfroAgent and Setup
+            </Link>{' '}
+            section.
+          </p>
 
           {/* Step 5 */}
           <h3 id="step5" className="text-base font-semibold cy-text-primary mb-3 scroll-mt-20" style={{ fontFamily: DOCS_HEADING_FONT }}>

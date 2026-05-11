@@ -328,67 +328,6 @@ docker volume rm cyfro-agent-data`}
             Then repeat Step 2 with a new registration token.
           </p>
 
-          <p className="cy-text-secondary leading-relaxed mb-4">
-            After Agent startup:
-          </p>
-          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
-            {[
-              'Return to the CyfroAgent page.',
-              'Check the Registered Agents panel.',
-              'Confirm the agent appears with recent last-seen timestamp.',
-            ].map((text, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
-                  {i + 1}
-                </span>
-                <span className="mt-0.5">{text}</span>
-              </li>
-            ))}
-          </ol>
-
-          <p className="cy-text-secondary text-sm mb-3 font-semibold cy-text-primary">Typical status behavior:</p>
-          <div className="overflow-x-auto mb-6">
-            <table className="w-full text-sm border-collapse">
-              <thead>
-                <tr className="border-b cy-border-default">
-                  <th className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted">Status</th>
-                  <th className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted">Meaning</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ['Online', 'Recent heartbeat'],
-                  ['Idle', 'Stale heartbeat but not fully offline'],
-                  ['Offline', 'No recent heartbeat or disconnected'],
-                ].map(([status, meaning]) => (
-                  <tr key={status} className="border-b cy-border-default">
-                    <td className="py-2.5 pr-4 cy-text-secondary font-semibold">{status}</td>
-                    <td className="py-2.5 pr-4 cy-text-secondary">{meaning}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <p className="cy-text-secondary text-sm mb-3 font-semibold cy-text-primary">If agent does not appear:</p>
-          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
-            {[
-              'Verify token was unused and not expired',
-              'Confirm container started successfully',
-              'Check outbound network reachability',
-              'Generate a new token and redeploy',
-            ].map((text, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
-                  {i + 1}
-                </span>
-                <span className="mt-0.5">{text}</span>
-              </li>
-            ))}
-          </ol>
-          <p className="cy-text-secondary text-sm">
-            If you are still facing issues, please contact us at <a href="mailto:support@cyfrosec.com" className="cy-text-brand hover:underline">support@cyfrosec.com</a>
-          </p>
         </section>
 
         <section id="update-image" className="mb-10 scroll-mt-20">
@@ -476,6 +415,70 @@ Scheduler started with APScheduler`}
               </li>
             ))}
           </ol>
+        </section>
+
+        <section className="mb-10 scroll-mt-20">
+          <p className="cy-text-secondary leading-relaxed mb-4">
+            After Agent startup:
+          </p>
+          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
+            {[
+              'Return to the CyfroAgent page.',
+              'Check the Registered Agents panel.',
+              'Confirm the agent appears with recent last-seen timestamp.',
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
+              </li>
+            ))}
+          </ol>
+
+          <p className="cy-text-secondary text-sm mb-3 font-semibold cy-text-primary">Typical status behavior:</p>
+          <div className="overflow-x-auto mb-6">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="border-b cy-border-default">
+                  <th className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted">Status</th>
+                  <th className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted">Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Online', 'Recent heartbeat'],
+                  ['Idle', 'Stale heartbeat but not fully offline'],
+                  ['Offline', 'No recent heartbeat or disconnected'],
+                ].map(([status, meaning]) => (
+                  <tr key={status} className="border-b cy-border-default">
+                    <td className="py-2.5 pr-4 cy-text-secondary font-semibold">{status}</td>
+                    <td className="py-2.5 pr-4 cy-text-secondary">{meaning}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="cy-text-secondary text-sm mb-3 font-semibold cy-text-primary">If agent does not appear:</p>
+          <ol className="space-y-4 cy-text-secondary text-sm mb-5">
+            {[
+              'Verify token was unused and not expired',
+              'Confirm container started successfully',
+              'Check outbound network reachability',
+              'Generate a new token and redeploy',
+            ].map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
+                  {i + 1}
+                </span>
+                <span className="mt-0.5">{text}</span>
+              </li>
+            ))}
+          </ol>
+          <p className="cy-text-secondary text-sm">
+            If you are still facing issues, please contact us at <a href="mailto:support@cyfrosec.com" className="cy-text-brand hover:underline">support@cyfrosec.com</a>
+          </p>
         </section>
 
         {/* Integration with Scans */}

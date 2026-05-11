@@ -51,7 +51,7 @@ export default function RbacPage() {
           <ol className="space-y-4 cy-text-secondary text-sm">
             {[
               'Organization: The top-level customer entity (e.g., "FinWiz Corp"). Contains Billing and Settings.',
-              'Account Group: A subdivision of organization (e.g., "Marketing Dept", "EU Branch"). Contains Assets and Scans.',
+              'Account Group: A subdivision of organization (e.g., "AI Datacenter", "EU Branch"). Contains Assets and Scans.',
             ].map((text, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">

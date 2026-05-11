@@ -42,7 +42,7 @@ export const DOCS_NAV_SECTIONS: DocsNavSection[] = [
     title: 'CYFROAGENT',
     items: [
       { label: 'CyfroAgent and Setup', href: '/documents/deploy-agent' },
-      { label: 'Multi Docker Scanning', href: '/documents/docker-scanning' },
+      { label: 'Multi Container Scanning (Apps, Services)', href: '/documents/docker-scanning' },
     ],
   },
   {

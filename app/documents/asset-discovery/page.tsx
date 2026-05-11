@@ -55,7 +55,7 @@ export default function AssetDiscoveryPage() {
 
         <div className="flex items-start gap-3 mt-4 cy-text-secondary text-sm mb-10">
           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
-            !
+            7
           </span>
           <span className="mt-0.5">Asset Discovery findings are fed into CyfroAI Engine for deep assessments with the other scans to enhance data correlation.</span>
         </div>
