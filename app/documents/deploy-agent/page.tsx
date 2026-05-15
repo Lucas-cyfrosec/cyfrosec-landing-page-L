@@ -16,9 +16,9 @@ const TOC = [
   { id: 'prerequisites',   label: 'Prerequisites' },
   { id: 'step1',           label: 'Step 1: Select Account Group' },
   { id: 'step2',           label: 'Step 2: Generate Token' },
-  { id: 'fernet-key',      label: 'Generate a Fernet Key' },
-  { id: 'step3',           label: 'Step 3: Run CyfroAgent' },
-  { id: 'step4',           label: 'Step 4: Verify Registration' },
+  { id: 'fernet-key',      label: 'Step 3: Generate a Fernet Key' },
+  { id: 'step3',           label: 'Step 4: Run CyfroAgent' },
+  { id: 'step4',           label: 'Step 5: Verify Registration' },
   { id: 'update-image',    label: 'Updating Image Version' },
   { id: 'integration',     label: 'Integration with Scans' },
   { id: 'troubleshooting', label: 'Verification Checklist' },
@@ -202,7 +202,7 @@ export default function DeployAgentPage() {
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
           >
-            Step: Generate a Fernet Key
+            Step 3: Generate a Fernet Key
           </h2>
           <p className="cy-text-secondary leading-relaxed mb-4">
             From the CyfroAgent page:
@@ -229,7 +229,7 @@ export default function DeployAgentPage() {
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
           >
-            Step 3: Run CyfroAgent (Docker)
+            Step 4: Run CyfroAgent (Docker)
           </h2>
           <p className="cy-text-secondary leading-relaxed mb-4">
             Copy the docker command from the CyfroAgent tab of the CyfroSec portal after entering values for the requested parameters. A sample command has been provided below for which the parameter values have to be replaced:
@@ -239,8 +239,10 @@ export default function DeployAgentPage() {
             code={`docker run -d \\
   --name cyfro-agent \\
   --network host \\
+  --cap-add=NET_RAW \\
+  --cap-add=NET_ADMIN \\
   -v cyfro-agent-data:/data/agent \\
-  -v /path/to/your/code:/scan-target:ro \\
+  -v /:/host:ro \\
   cyfrosec/cyfro-agent:latest \\
   --agentName "MyAgent" \\
   --token "your-registration-token" \\
@@ -259,7 +261,6 @@ export default function DeployAgentPage() {
               </thead>
               <tbody>
                 {[
-                  ['/path/to/your/code', 'Directory on your server you want scanned for vulnerabilities'],
                   ['--fernet-key', 'Encryption key provided by CyfroSec (must remain the same across restarts)'],
                   ['--agentName', 'Display name for your agent in the CyfroSec platform'],
                   ['--token', 'One-time registration token provided by CyfroSec'],
@@ -281,7 +282,7 @@ export default function DeployAgentPage() {
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
           >
-            Step 4: Verify Agent Registration
+            Step 5: Verify Agent Registration
           </h2>
           <DocsCodeBlock label="Shell" code={`docker logs -f cyfro-agent`} />
 
@@ -357,7 +358,7 @@ docker volume rm cyfro-agent-data`}
           <h3 className="text-base font-semibold cy-text-primary mb-3" style={{ fontFamily: HEADING_FONT }}>
             Step 3: Run the agent with the new image
           </h3>
-          <p className="cy-text-secondary text-sm mb-3">
+          <p className="cy-text-secondary text-sm mb-4">
             The agent will detect the existing credentials in the volume and skip registration automatically.
           </p>
           <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2">On a Linux server:</p>
@@ -366,16 +367,19 @@ docker volume rm cyfro-agent-data`}
             code={`docker run -d \\
   --name cyfro-agent \\
   --network host \\
+  --cap-add=NET_RAW \\
+  --cap-add=NET_ADMIN \\
   -v cyfro-agent-data:/data/agent \\
   -v /path/to/your/code:/scan-target:ro \\
   cyfrosec/cyfro-agent:latest`}
           />
-
           <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2">On macOS (local development):</p>
           <DocsCodeBlock
             className="mb-2"
             code={`docker run -d \\
   --name cyfro-agent \\
+  --cap-add=NET_RAW \\
+  --cap-add=NET_ADMIN \\
   -v cyfro-agent-data:/data/agent \\
   -v /path/to/your/code:/scan-target:ro \\
   cyfrosec/cyfro-agent:latest`}

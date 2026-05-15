@@ -9,10 +9,7 @@ At CyfroSec, we take a different approach. We combine network visibility, asset 
 
 We secure modern AI-driven infrastructure from development to deployment and beyond.
 
-Our vision is to build a unified code-to-cloud security platform that protects the entire ecosystem, across everything in between.
-
-Mustafa Sakhai
-Founder & CEO, CyfroSec | AI Researcher in Autonomous Systems`;
+Our vision is to build a unified code-to-cloud security platform that protects the entire ecosystem, across everything in between.`;
 
 export default function Learning() {
   return (
@@ -29,7 +26,7 @@ export default function Learning() {
             <span className="text-primary-400">CyfroSec</span>
           </h2>
           <p className="text-base sm:text-lg 3xl:text-xl text-surface-600 dark:text-surface-300 max-w-2xl mx-auto">
-            A Message from Our CEO: Rethinking Cybersecurity for the AI Era
+            Rethinking Cybersecurity for the AI Era
           </p>
         </div>
 
