@@ -14,14 +14,6 @@ const ANNOUNCEMENT_CONFIG = {
   warningMinutes: 30, // minutes before start to switch to countdown banner
 } as const;
 
-// Daily key scoped to the Warsaw calendar date — resets each day automatically.
-function getDailyStorageKey(): string {
-  const todayWarsaw = new Intl.DateTimeFormat('sv', {
-    timeZone: ANNOUNCEMENT_CONFIG.sourceTimeZone,
-  }).format(new Date()); // Swedish locale reliably returns "YYYY-MM-DD"
-  return `cyfrosec_announcement_maintenance_${todayWarsaw}`;
-}
-
 // ─── Timezone helpers (no external library needed) ────────────────────────────
 
 function zonedTimeToUtc(date: string, time: string, tz: string): Date {
@@ -87,20 +79,23 @@ export function AnnouncementBanner() {
   useEffect(() => {
     if (!ANNOUNCEMENT_CONFIG.enabled) return;
 
-    const storageKey = getDailyStorageKey();
-    try {
-      dismissedRef.current = localStorage.getItem(storageKey) === 'dismissed';
-    } catch { /* localStorage blocked — show banner anyway */ }
-
     const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const { startTime, endTime, sourceTimeZone, warningMinutes } = ANNOUNCEMENT_CONFIG;
 
-    const todaySource = new Intl.DateTimeFormat('sv', {
-      timeZone: sourceTimeZone,
-    }).format(new Date());
+    function getWindowUtc(offsetDays = 0) {
+      const base = new Date(Date.now() + offsetDays * 86_400_000);
+      const dateStr = new Intl.DateTimeFormat('sv', { timeZone: sourceTimeZone }).format(base);
+      return {
+        start: zonedTimeToUtc(dateStr, startTime, sourceTimeZone),
+        end:   zonedTimeToUtc(dateStr, endTime,   sourceTimeZone),
+      };
+    }
 
-    const startUtc = zonedTimeToUtc(todaySource, startTime, sourceTimeZone);
-    const endUtc   = zonedTimeToUtc(todaySource, endTime,   sourceTimeZone);
+    // If today's window already ended, show tomorrow's window as "scheduled".
+    const today = getWindowUtc(0);
+    const { start: startUtc, end: endUtc } =
+      Date.now() >= today.end.getTime() ? getWindowUtc(1) : today;
+
     const startMs  = startUtc.getTime();
     const endMs    = endUtc.getTime();
     const warnMs   = startMs - warningMinutes * 60 * 1000;
@@ -167,7 +162,6 @@ export function AnnouncementBanner() {
 
   // ── Dismiss ────────────────────────────────────────────────────────────────
   function dismiss() {
-    try { localStorage.setItem(getDailyStorageKey(), 'dismissed'); } catch { /* ignore */ }
     dismissedRef.current = true;
     setBannerData(null);
   }
