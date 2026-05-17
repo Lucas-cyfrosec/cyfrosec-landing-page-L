@@ -1,40 +1,34 @@
 'use client';
 
 import { Eye, Target, Zap } from 'lucide-react';
-import { FeatureGrid } from '../ui/modern-feature-grid';
 import type { ComponentType } from 'react';
+import { FeatureGrid } from '../ui/modern-feature-grid';
+import { useTranslation } from '@/src/i18n';
 
-interface OutcomeFeature {
-  Icon: ComponentType<{ className?: string }>;
-  title: string;
-  description: string;
-}
-
-const outcomes: OutcomeFeature[] = [
-  {
-    Icon: Eye,
-    title: 'See Everything',
-    description: 'Get complete visibility across your attack surface. Discover assets, vulnerabilities, misconfigurations, secrets across AI servers network and infrastructure assets.'
-  },
-  {
-    Icon: Target,
-    title: 'Prioritize What Matters',
-    description: 'Focus on the vulnerabilities that actually pose risk. Context-aware prioritization  and correlation based on exploitability and impact (not just CVSS scores).'
-  },
-  {
-    Icon: Zap,
-    title: 'Understand & Remediate Faster',
-    description: 'Accelerate your response with AI-powered remediation guidance, which could be understood from management executives to engineers.'
-  }
-];
+const OUTCOME_ICONS: ComponentType<{ className?: string }>[] = [Eye, Target, Zap];
 
 export default function Outcomes() {
+  const { t, lang } = useTranslation();
+  const isAr = lang === 'ar';
+
+  const features = t.outcomes.items.map((item, i) => ({
+    Icon: OUTCOME_ICONS[i],
+    title: item.title,
+    description: item.description,
+  }));
+
   return (
     <FeatureGrid
       id="outcomes"
-      sectionTitle="Security outcomes that matter"
-      sectionDescription={<>Stop chasing every alert and finding.<br />Start fixing the ones that actually put your business at risk.</>}
-      features={outcomes}
+      sectionTitle={t.outcomes.title}
+      sectionDescription={
+        <span dir={isAr ? 'rtl' : undefined}>
+          {t.outcomes.descriptionLine1}
+          <br />
+          {t.outcomes.descriptionLine2}
+        </span>
+      }
+      features={features}
       className="min-h-screen flex flex-col justify-center bg-white dark:bg-surface-900"
     />
   );

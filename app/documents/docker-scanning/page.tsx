@@ -1,47 +1,140 @@
+'use client'
+
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
+import { useTranslation } from '@/src/i18n'
 import DocsCodeBlock from '../_components/DocsCodeBlock'
-
-export const metadata = {
-  title: 'Multi Container Scanning (Apps, Services) | CyfroSec Documentation',
-  description: 'How to set up CyfroAgent to scan multiple Docker containers, apps, and services.',
-  alternates: { canonical: '/documents/docker-scanning' },
-}
 
 const HEADING_FONT = '"Sora", "Avenir Next", "Segoe UI", sans-serif'
 
-const TOC = [
-  { id: 'overview',       label: 'Overview' },
-  { id: 'prerequisites',  label: 'Prerequisites' },
-  { id: 'architecture',   label: 'Architecture' },
-  { id: 'network-config', label: 'Network Configuration' },
-  { id: 'shared-volume',  label: 'Shared Volume Configuration' },
-  { id: 'deploying',      label: 'Deploying CyfroAgent' },
-  { id: 'verification',   label: 'Verification' },
-  { id: 'scan-targets',   label: 'Determining Scan Targets' },
-]
+const CONTENT = {
+  en: {
+    category: 'CyfroAgent',
+    title: 'Multi Container Scanning (Apps, Services)',
+    overview: 'CyfroAgent can perform scans on containerized webapps and services if they are in the same Docker network and have a shared volume to scan files for fingerprinting.',
+    prereqTitle: 'Prerequisites',
+    prereqItems: [
+      'One or more application containers are already running',
+      'Docker is installed and accessible',
+      'You have a valid CyfroAgent token',
+    ],
+    archTitle: 'Architecture',
+    networkTitle: 'Network Configuration',
+    networkIntro: 'CyfroAgent must run on the same Docker network as the application containers.',
+    networkIdentifyLabel: 'Identify Existing Network',
+    networkExampleLabel: 'Example output:',
+    networkCreateLabel: 'Create Network (if required)',
+    networkCreateIntro: 'If your containers are not already on a shared network:',
+    networkAttachLabel: 'Attach containers:',
+    networkNoteLabel: 'Note:',
+    networkNote: 'The CyfroAgent has to be part of the network that you wish to scan. Please connect it to the network(s) where your desired containers are already present.',
+    volumeTitle: 'Shared Volume Configuration',
+    volumeIntro: 'Filesystem scanning requires a shared volume accessible by both the application container with write access and CyfroAgent with read-only access.',
+    volumeCreateLabel: 'Create Volume',
+    volumePlaceLabel: 'Place the necessary files in the shared volume.',
+    volumeMountLabel: 'Mount Volume in Application Container',
+    volumeRunLabel: 'If using docker run:',
+    volumeComposeLabel: 'If using docker-compose:',
+    deployTitle: 'Deploying CyfroAgent',
+    deployIntro: 'Run CyfroAgent with network access to application containers and read-only access to the shared volume.',
+    verifyTitle: 'Verification',
+    verifyVolumeLabel: 'Verify Volume Mount',
+    verifyCompareLabel: 'Compare with:',
+    verifyNetworkLabel: 'Verify Network Connectivity',
+    verifyThenLabel: 'Then:',
+    targetsTitle: 'Determining Scan Targets',
+    targetsIntro: 'Identify the subnet that can be provided when scans are set up in the Scans Setup page.',
+    targetsExampleLabel: 'Example:',
+    tocTitle: 'On this page',
+    tocItems: [
+      { id: 'overview',       label: 'Overview' },
+      { id: 'prerequisites',  label: 'Prerequisites' },
+      { id: 'architecture',   label: 'Architecture' },
+      { id: 'network-config', label: 'Network Configuration' },
+      { id: 'shared-volume',  label: 'Shared Volume Configuration' },
+      { id: 'deploying',      label: 'Deploying CyfroAgent' },
+      { id: 'verification',   label: 'Verification' },
+      { id: 'scan-targets',   label: 'Determining Scan Targets' },
+    ],
+    contactSupport: 'Contact support',
+  },
+  ar: {
+    category: 'CyfroAgent',
+    title: 'فحص متعدد الحاويات (التطبيقات، الخدمات)',
+    overview: 'يمكن لـ CyfroAgent إجراء فحوصات على تطبيقات الويب والخدمات المحتواة إذا كانت في نفس شبكة Docker ولديها وحدة تخزين مشتركة لفحص الملفات وأخذ البصمات.',
+    prereqTitle: 'المتطلبات الأساسية',
+    prereqItems: [
+      'حاوية تطبيق واحدة أو أكثر تعمل بالفعل',
+      'Docker مثبت ومتاح',
+      'لديك رمز CyfroAgent صالح',
+    ],
+    archTitle: 'البنية المعمارية',
+    networkTitle: 'إعداد الشبكة',
+    networkIntro: 'يجب أن يعمل CyfroAgent على نفس شبكة Docker مع حاويات التطبيق.',
+    networkIdentifyLabel: 'تحديد الشبكة الحالية',
+    networkExampleLabel: 'مثال على المخرجات:',
+    networkCreateLabel: 'إنشاء الشبكة (إذا لزم)',
+    networkCreateIntro: 'إذا لم تكن حاوياتك على شبكة مشتركة بعد:',
+    networkAttachLabel: 'توصيل الحاويات:',
+    networkNoteLabel: 'ملاحظة:',
+    networkNote: 'يجب أن يكون CyfroAgent جزءاً من الشبكة التي تريد فحصها. الرجاء توصيله بالشبكة (الشبكات) التي توجد فيها الحاويات المطلوبة بالفعل.',
+    volumeTitle: 'إعداد وحدة التخزين المشتركة',
+    volumeIntro: 'يتطلب فحص نظام الملفات وحدة تخزين مشتركة يمكن لحاوية التطبيق الوصول إليها بالكتابة ولـ CyfroAgent الوصول إليها للقراءة فقط.',
+    volumeCreateLabel: 'إنشاء وحدة التخزين',
+    volumePlaceLabel: 'ضع الملفات الضرورية في وحدة التخزين المشتركة.',
+    volumeMountLabel: 'تركيب وحدة التخزين في حاوية التطبيق',
+    volumeRunLabel: 'في حالة استخدام docker run:',
+    volumeComposeLabel: 'في حالة استخدام docker-compose:',
+    deployTitle: 'نشر CyfroAgent',
+    deployIntro: 'شغّل CyfroAgent مع صلاحية الوصول إلى شبكة حاويات التطبيق والوصول للقراءة فقط إلى وحدة التخزين المشتركة.',
+    verifyTitle: 'التحقق',
+    verifyVolumeLabel: 'التحقق من تركيب وحدة التخزين',
+    verifyCompareLabel: 'مقارنة مع:',
+    verifyNetworkLabel: 'التحقق من اتصال الشبكة',
+    verifyThenLabel: 'ثم:',
+    targetsTitle: 'تحديد أهداف الفحص',
+    targetsIntro: 'حدد الشبكة الفرعية التي يمكن توفيرها عند إعداد الفحوصات في صفحة إعداد الفحوصات.',
+    targetsExampleLabel: 'مثال:',
+    tocTitle: 'في هذه الصفحة',
+    tocItems: [
+      { id: 'overview',       label: 'نظرة عامة' },
+      { id: 'prerequisites',  label: 'المتطلبات الأساسية' },
+      { id: 'architecture',   label: 'البنية المعمارية' },
+      { id: 'network-config', label: 'إعداد الشبكة' },
+      { id: 'shared-volume',  label: 'إعداد وحدة التخزين المشتركة' },
+      { id: 'deploying',      label: 'نشر CyfroAgent' },
+      { id: 'verification',   label: 'التحقق' },
+      { id: 'scan-targets',   label: 'تحديد أهداف الفحص' },
+    ],
+    contactSupport: 'تواصل مع الدعم',
+  },
+}
 
 export default function DockerScanningPage() {
+  const { lang } = useTranslation()
+  const isAr = lang === 'ar'
+  const c = CONTENT[lang as keyof typeof CONTENT] ?? CONTENT.en
+
   return (
     <div className="flex gap-0 w-full max-w-[1600px] mx-auto">
 
       {/* ── Article ──────────────────────────────────────────────────── */}
       <article className="flex-1 min-w-0 px-4 sm:px-6 md:px-8 lg:px-12 py-6 sm:py-8 lg:py-10 w-full max-w-5xl mx-auto">
 
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] cy-text-brand mb-4">
-          CyfroAgent
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] cy-text-brand mb-4" lang="en">
+          {c.category}
         </p>
 
         <h1
           className="text-2xl sm:text-3xl lg:text-4xl font-bold cy-text-primary mb-4 sm:mb-6 leading-tight"
           style={{ fontFamily: HEADING_FONT }}
+          dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
         >
-          Multi Container Scanning (Apps, Services)
+          {c.title}
         </h1>
 
-        <p className="cy-text-secondary leading-relaxed mb-4" id="overview">
-          CyfroAgent can perform scans on containerized webapps and services if they are in the same Docker
-          network and have a shared volume to scan files for fingerprinting.
+        <p className="cy-text-secondary leading-relaxed mb-4" id="overview" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          {c.overview}
         </p>
 
         <hr className="cy-border-default mb-10" />
@@ -51,20 +144,15 @@ export default function DockerScanningPage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
+            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
           >
-            Prerequisites
+            {c.prereqTitle}
           </h2>
           <ol className="space-y-4 cy-text-secondary text-sm">
-            {[
-              'One or more application containers are already running',
-              'Docker is installed and accessible',
-              'You have a valid CyfroAgent token',
-            ].map((text, i) => (
+            {c.prereqItems.map((text, i) => (
               <li key={i} className="flex items-start gap-3">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
-                  {i + 1}
-                </span>
-                <span className="mt-0.5">{text}</span>
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">{i + 1}</span>
+                <span className="mt-0.5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{text}</span>
               </li>
             ))}
           </ol>
@@ -75,8 +163,9 @@ export default function DockerScanningPage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
+            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
           >
-            Architecture
+            {c.archTitle}
           </h2>
           <DocsCodeBlock
             code={`Docker Network
@@ -99,29 +188,27 @@ export default function DockerScanningPage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
+            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
           >
-            Network Configuration
+            {c.networkTitle}
           </h2>
-          <p className="cy-text-secondary text-sm mb-4">
-            CyfroAgent must run on the same Docker network as the application containers.
-          </p>
+          <p className="cy-text-secondary text-sm mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkIntro}</p>
 
-          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2">Identify Existing Network</p>
+          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkIdentifyLabel}</p>
           <DocsCodeBlock className="mb-4" code={`docker inspect <container_name> --format '{{json .NetworkSettings.Networks}}'`} />
-          <p className="cy-text-secondary text-sm mb-2">Example output:</p>
+          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkExampleLabel}</p>
           <DocsCodeBlock className="mb-6" code={`{
   "sample-webapp_default": {}
 }`} />
 
-          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2">Create Network (if required)</p>
-          <p className="cy-text-secondary text-sm mb-2">
-            If your containers are not already on a shared network:
-          </p>
+          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkCreateLabel}</p>
+          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkCreateIntro}</p>
           <DocsCodeBlock className="mb-4" code={`docker network create cyfro-network`} />
-          <p className="cy-text-secondary text-sm mb-2">Attach containers:</p>
+          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkAttachLabel}</p>
           <DocsCodeBlock className="mb-4" code={`docker network connect cyfro-network <container_name>`} />
           <div className="rounded-xl border border-primary-500/20 bg-primary-500/5 p-4 text-sm cy-text-secondary">
-            <strong className="cy-text-primary">Note:</strong> The CyfroAgent has to be part of the network that you wish to scan. Please connect it to the network(s) where your desired containers are already present.
+            <strong className="cy-text-primary" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkNoteLabel}</strong>{' '}
+            <span dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkNote}</span>
           </div>
         </section>
 
@@ -130,19 +217,18 @@ export default function DockerScanningPage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
+            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
           >
-            Shared Volume Configuration
+            {c.volumeTitle}
           </h2>
-          <p className="cy-text-secondary text-sm mb-4">
-            Filesystem scanning requires a shared volume accessible by both the application container with write access and CyfroAgent with read-only access.
-          </p>
+          <p className="cy-text-secondary text-sm mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.volumeIntro}</p>
 
-          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2">Create Volume</p>
+          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.volumeCreateLabel}</p>
           <DocsCodeBlock className="mb-4" code={`docker volume create webapp_scan_export`} />
-          <p className="cy-text-secondary text-sm mb-5">Place the necessary files in the shared volume.</p>
+          <p className="cy-text-secondary text-sm mb-5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.volumePlaceLabel}</p>
 
-          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2">Mount Volume in Application Container</p>
-          <p className="cy-text-secondary text-sm mb-2">If using docker run:</p>
+          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.volumeMountLabel}</p>
+          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.volumeRunLabel}</p>
           <DocsCodeBlock
             className="mb-4"
             code={`docker run -d \\
@@ -151,7 +237,7 @@ export default function DockerScanningPage() {
   -v webapp_scan_export:/opt/demo-data \\
   <image>`}
           />
-          <p className="cy-text-secondary text-sm mb-2">If using docker-compose:</p>
+          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.volumeComposeLabel}</p>
           <DocsCodeBlock
             code={`services:
   app:
@@ -169,12 +255,11 @@ volumes:
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
+            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
           >
-            Deploying CyfroAgent
+            {c.deployTitle}
           </h2>
-          <p className="cy-text-secondary text-sm mb-4">
-            Run CyfroAgent with network access to application containers and read-only access to the shared volume.
-          </p>
+          <p className="cy-text-secondary text-sm mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.deployIntro}</p>
           <DocsCodeBlock
             code={`docker run -d \\
   --name cyfro-agent \\
@@ -194,18 +279,19 @@ volumes:
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
+            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
           >
-            Verification
+            {c.verifyTitle}
           </h2>
 
-          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2">Verify Volume Mount</p>
+          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.verifyVolumeLabel}</p>
           <DocsCodeBlock className="mb-3" code={`docker exec -it cyfro-agent ls /scan-target`} />
-          <p className="cy-text-secondary text-sm mb-2">Compare with:</p>
+          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.verifyCompareLabel}</p>
           <DocsCodeBlock className="mb-6" code={`docker exec -it <app_container> ls /opt/demo-data`} />
 
-          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2">Verify Network Connectivity</p>
+          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.verifyNetworkLabel}</p>
           <DocsCodeBlock className="mb-3" code={`docker exec -it cyfro-agent sh`} />
-          <p className="cy-text-secondary text-sm mb-2">Then:</p>
+          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.verifyThenLabel}</p>
           <DocsCodeBlock code={`ping <app_container_name>`} />
         </section>
 
@@ -214,14 +300,13 @@ volumes:
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
+            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
           >
-            Determining Scan Targets
+            {c.targetsTitle}
           </h2>
-          <p className="cy-text-secondary text-sm mb-3">
-            Identify the subnet that can be provided when scans are set up in the Scans Setup page.
-          </p>
+          <p className="cy-text-secondary text-sm mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.targetsIntro}</p>
           <DocsCodeBlock className="mb-4" code={`docker network inspect <network_name>`} />
-          <p className="cy-text-secondary text-sm mb-2">Example:</p>
+          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.targetsExampleLabel}</p>
           <DocsCodeBlock code={`"Subnet": "172.22.0.0/16"`} />
         </section>
 
@@ -230,15 +315,16 @@ volumes:
       {/* ── Right TOC ─────────────────────────────────────────────────── */}
       <aside className="hidden 2xl:block w-56 shrink-0 px-6 pt-10 pb-10">
         <div className="sticky top-10">
-          <p className="text-[10px] font-bold uppercase tracking-widest cy-text-muted mb-3">
-            On this page
+          <p className="text-[10px] font-bold uppercase tracking-widest cy-text-muted mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+            {c.tocTitle}
           </p>
           <ul className="space-y-2">
-            {TOC.map(({ id, label }) => (
+            {c.tocItems.map(({ id, label }) => (
               <li key={id}>
                 <a
                   href={`#${id}`}
                   className="text-sm cy-text-secondary hover:cy-text-brand transition-colors block"
+                  dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
                 >
                   {label}
                 </a>
@@ -251,7 +337,7 @@ volumes:
               className="flex items-center gap-1.5 text-xs cy-text-muted hover:cy-text-brand transition-colors"
             >
               <ExternalLink className="h-3.5 w-3.5" />
-              Contact support
+              <span dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.contactSupport}</span>
             </Link>
           </div>
         </div>

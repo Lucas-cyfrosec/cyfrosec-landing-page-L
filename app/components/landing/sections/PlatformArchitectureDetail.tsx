@@ -1,13 +1,8 @@
 'use client';
 
-interface ArchitectureItem {
-  label: string;
-  sub: string;
-}
+import { useTranslation } from '@/src/i18n';
 
-interface ProcessingStep {
-  title: string;
-  subtitle: string;
+interface ProcessingStepStyle {
   desktopCardClassName: string;
   desktopTitleClassName: string;
   desktopSubtitleClassName: string;
@@ -16,36 +11,17 @@ interface ProcessingStep {
   mobileSubtitleClassName: string;
 }
 
-const dataSources: ArchitectureItem[] = [
-  { label: 'AI Infrastructure', sub: 'Servers, Workstations, Containers' },
-  { label: 'Network', sub: 'Assets, Subnets, Services' },
-];
-
-const outputs: ArchitectureItem[] = [
-  { label: 'CyfroAI Insights', sub: 'Explain, Prioritize, Correlate, Remediate' },
-  { label: 'CyfroAssistant', sub: 'Convenient conversational AI bot with function calling' },
-  { label: 'GDPR Compliance', sub: 'Run GDPR compliance on your infrastructure' },
-  { label: 'Dashboards, Topology diagram & Reports', sub: 'Dynamic visualizations & audit ready reporting' },
-];
-
-const processingSteps: ProcessingStep[] = [
+const PROCESSING_STEP_STYLES: ProcessingStepStyle[] = [
   {
-    title: 'CyfroAgent',
-    subtitle: 'Lightweight Robust Agent',
-    desktopCardClassName:
-      'p-5 bg-primary-50 dark:bg-primary-900/30 rounded-xl border-2 border-primary-300 dark:border-primary-700 text-center',
+    desktopCardClassName: 'p-5 bg-primary-50 dark:bg-primary-900/30 rounded-xl border-2 border-primary-300 dark:border-primary-700 text-center',
     desktopTitleClassName: 'font-bold text-primary-700 dark:text-primary-300',
     desktopSubtitleClassName: 'text-xs text-primary-600 dark:text-primary-400 mt-1',
-    mobileCardClassName:
-      'w-full p-4 bg-primary-50 dark:bg-primary-900/40 rounded-xl border-2 border-primary-300 dark:border-primary-600/60 text-center',
+    mobileCardClassName: 'w-full p-4 bg-primary-50 dark:bg-primary-900/40 rounded-xl border-2 border-primary-300 dark:border-primary-600/60 text-center',
     mobileTitleClassName: 'font-bold text-primary-700 dark:text-primary-300 text-sm',
     mobileSubtitleClassName: 'text-[11px] text-primary-600 dark:text-primary-400 mt-1',
   },
   {
-    title: 'Data Ingestion',
-    subtitle: 'Data Normalization & Cleaning',
-    desktopCardClassName:
-      'p-5 bg-white dark:bg-surface-800 rounded-xl border border-surface-200 dark:border-surface-700 text-center',
+    desktopCardClassName: 'p-5 bg-white dark:bg-surface-800 rounded-xl border border-surface-200 dark:border-surface-700 text-center',
     desktopTitleClassName: 'font-semibold text-surface-900 dark:text-surface-50',
     desktopSubtitleClassName: 'text-xs text-surface-500 mt-1',
     mobileCardClassName: 'w-full p-4 bg-white dark:bg-surface-800 rounded-xl border border-surface-200 dark:border-surface-700 text-center',
@@ -53,14 +29,10 @@ const processingSteps: ProcessingStep[] = [
     mobileSubtitleClassName: 'text-[11px] text-surface-500 dark:text-surface-400 mt-1',
   },
   {
-    title: 'CyfroAI Engine',
-    subtitle: 'Analysis Correlation & Prioritization',
-    desktopCardClassName:
-      'p-5 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl text-center shadow-lg shadow-primary-500/20',
+    desktopCardClassName: 'p-5 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl text-center shadow-lg shadow-primary-500/20',
     desktopTitleClassName: 'font-bold text-white',
     desktopSubtitleClassName: 'text-xs text-primary-100 mt-1',
-    mobileCardClassName:
-      'w-full p-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl text-center shadow-lg shadow-primary-500/20',
+    mobileCardClassName: 'w-full p-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl text-center shadow-lg shadow-primary-500/20',
     mobileTitleClassName: 'font-bold text-white text-sm',
     mobileSubtitleClassName: 'text-[11px] text-primary-100 mt-1',
   },
@@ -72,51 +44,6 @@ function DownArrow() {
       <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
       </svg>
-    </div>
-  );
-}
-
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="text-center mb-3">
-      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-surface-500">{children}</span>
-    </div>
-  );
-}
-
-function DesktopInfoCard({ item }: { item: ArchitectureItem }) {
-  return (
-    <div className="p-4 bg-white dark:bg-surface-800 rounded-xl border border-surface-200 dark:border-surface-700 text-center">
-      <div className="font-semibold text-surface-900 dark:text-surface-50 text-sm">{item.label}</div>
-      <div className="text-xs text-surface-500 mt-1">{item.sub}</div>
-    </div>
-  );
-}
-
-function MobileInfoCard({ item }: { item: ArchitectureItem }) {
-  return (
-    <div className="p-3 bg-white dark:bg-surface-800 rounded-xl border border-surface-200 dark:border-surface-700 text-center">
-      <div className="font-semibold text-surface-900 dark:text-surface-50 text-xs leading-tight">{item.label}</div>
-      <div className="text-[11px] text-surface-500 dark:text-surface-400 mt-1 leading-tight">{item.sub}</div>
-    </div>
-  );
-}
-
-function ProcessingStepCard({
-  step,
-  mobile = false,
-}: {
-  step: ProcessingStep;
-  mobile?: boolean;
-}) {
-  const cardClassName = mobile ? step.mobileCardClassName : step.desktopCardClassName;
-  const titleClassName = mobile ? step.mobileTitleClassName : step.desktopTitleClassName;
-  const subtitleClassName = mobile ? step.mobileSubtitleClassName : step.desktopSubtitleClassName;
-
-  return (
-    <div className={cardClassName}>
-      <div className={titleClassName}>{step.title}</div>
-      <div className={subtitleClassName}>{step.subtitle}</div>
     </div>
   );
 }
@@ -133,23 +60,19 @@ function MobileConnector() {
   );
 }
 
-function ProcessingColumn({ mobile = false }: { mobile?: boolean }) {
-  const containerClassName = mobile ? 'flex flex-col items-center gap-0' : 'space-y-4 flex flex-col';
-
-  return (
-    <div className={containerClassName}>
-      <SectionLabel>Processing</SectionLabel>
-      {processingSteps.map((step, index) => (
-        <div key={step.title}>
-          <ProcessingStepCard step={step} mobile={mobile} />
-          {index < processingSteps.length - 1 ? <DownArrow /> : null}
-        </div>
-      ))}
-    </div>
-  );
-}
-
 export default function PlatformArchitectureDetail() {
+  const { t, lang } = useTranslation();
+  const isAr = lang === 'ar';
+  const arch = t.archDetail;
+
+  function SectionLabel({ children }: { children: React.ReactNode }) {
+    return (
+      <div className="text-center mb-3">
+        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-surface-500">{children}</span>
+      </div>
+    );
+  }
+
   return (
     <section
       id="architecture-detail"
@@ -157,11 +80,12 @@ export default function PlatformArchitectureDetail() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl 3xl:max-w-screen-2xl">
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold text-surface-900 dark:text-surface-50 mb-3 sm:mb-4">
-            Platform <span className="text-primary-500">Architecture</span>
+          <h2 dir={isAr ? 'rtl' : undefined} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold text-surface-900 dark:text-surface-50 mb-3 sm:mb-4">
+            {arch.titlePre}{' '}
+            <span className="text-primary-500">{arch.titleHighlight}</span>
           </h2>
-          <p className="text-base sm:text-lg 3xl:text-xl text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
-            A modern, scalable architecture designed for security at every layer.
+          <p dir={isAr ? 'rtl' : undefined} className="text-base sm:text-lg 3xl:text-xl text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
+            {arch.subtitle}
           </p>
         </div>
 
@@ -172,20 +96,40 @@ export default function PlatformArchitectureDetail() {
 
             {/* Column 1: Data Sources */}
             <div className="space-y-4">
-              <SectionLabel>Data Sources</SectionLabel>
-              {dataSources.map((source) => (
-                <DesktopInfoCard key={source.label} item={source} />
+              <SectionLabel>{arch.sourceLabel}</SectionLabel>
+              {arch.dataSources.map((source) => (
+                <div key={source.label} className="p-4 bg-white dark:bg-surface-800 rounded-xl border border-surface-200 dark:border-surface-700 text-center">
+                  <div className="font-semibold text-surface-900 dark:text-surface-50 text-sm">{source.label}</div>
+                  <div className="text-xs text-surface-500 mt-1">{source.sub}</div>
+                </div>
               ))}
             </div>
 
             {/* Column 2: Processing */}
-            <ProcessingColumn />
+            <div className="space-y-4 flex flex-col">
+              <SectionLabel>{arch.processingLabel}</SectionLabel>
+              {arch.processingSteps.map((step, idx) => {
+                const style = PROCESSING_STEP_STYLES[idx];
+                return (
+                  <div key={step.title}>
+                    <div className={style.desktopCardClassName}>
+                      <div className={style.desktopTitleClassName}>{step.title}</div>
+                      <div className={style.desktopSubtitleClassName}>{step.subtitle}</div>
+                    </div>
+                    {idx < arch.processingSteps.length - 1 && <DownArrow />}
+                  </div>
+                );
+              })}
+            </div>
 
             {/* Column 3: Outputs */}
             <div className="space-y-4">
-              <SectionLabel>Outputs</SectionLabel>
-              {outputs.map((output) => (
-                <DesktopInfoCard key={output.label} item={output} />
+              <SectionLabel>{arch.outputLabel}</SectionLabel>
+              {arch.outputs.map((output) => (
+                <div key={output.label} className="p-4 bg-white dark:bg-surface-800 rounded-xl border border-surface-200 dark:border-surface-700 text-center">
+                  <div className="font-semibold text-surface-900 dark:text-surface-50 text-sm">{output.label}</div>
+                  <div className="text-xs text-surface-500 mt-1">{output.sub}</div>
+                </div>
               ))}
             </div>
 
@@ -196,31 +140,49 @@ export default function PlatformArchitectureDetail() {
 
             {/* Stage 1: Data Sources */}
             <div className="rounded-2xl border border-surface-200 dark:border-surface-700/60 bg-white/80 dark:bg-surface-800/40 p-4">
-              <SectionLabel>Data Sources</SectionLabel>
+              <SectionLabel>{arch.sourceLabel}</SectionLabel>
               <div className="grid grid-cols-2 gap-3">
-                {dataSources.map((source) => (
-                  <MobileInfoCard key={source.label} item={source} />
+                {arch.dataSources.map((source) => (
+                  <div key={source.label} className="p-3 bg-white dark:bg-surface-800 rounded-xl border border-surface-200 dark:border-surface-700 text-center">
+                    <div className="font-semibold text-surface-900 dark:text-surface-50 text-xs leading-tight">{source.label}</div>
+                    <div className="text-[11px] text-surface-500 dark:text-surface-400 mt-1 leading-tight">{source.sub}</div>
+                  </div>
                 ))}
               </div>
             </div>
 
-            {/* Connector 1 → 2 */}
             <MobileConnector />
 
             {/* Stage 2: Processing */}
             <div className="rounded-2xl border border-primary-200 dark:border-primary-700/50 bg-primary-50/70 dark:bg-primary-900/20 p-4">
-              <ProcessingColumn mobile />
+              <div className="flex flex-col items-center gap-0">
+                <SectionLabel>{arch.processingLabel}</SectionLabel>
+                {arch.processingSteps.map((step, idx) => {
+                  const style = PROCESSING_STEP_STYLES[idx];
+                  return (
+                    <div key={step.title}>
+                      <div className={style.mobileCardClassName}>
+                        <div className={style.mobileTitleClassName}>{step.title}</div>
+                        <div className={style.mobileSubtitleClassName}>{step.subtitle}</div>
+                      </div>
+                      {idx < arch.processingSteps.length - 1 && <DownArrow />}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Connector 2 → 3 */}
             <MobileConnector />
 
             {/* Stage 3: Outputs */}
             <div className="rounded-2xl border border-surface-200 dark:border-surface-700/60 bg-white/80 dark:bg-surface-800/40 p-4">
-              <SectionLabel>Outputs</SectionLabel>
+              <SectionLabel>{arch.outputLabel}</SectionLabel>
               <div className="grid grid-cols-2 gap-3">
-                {outputs.map((output) => (
-                  <MobileInfoCard key={output.label} item={output} />
+                {arch.outputs.map((output) => (
+                  <div key={output.label} className="p-3 bg-white dark:bg-surface-800 rounded-xl border border-surface-200 dark:border-surface-700 text-center">
+                    <div className="font-semibold text-surface-900 dark:text-surface-50 text-xs leading-tight">{output.label}</div>
+                    <div className="text-[11px] text-surface-500 dark:text-surface-400 mt-1 leading-tight">{output.sub}</div>
+                  </div>
                 ))}
               </div>
             </div>

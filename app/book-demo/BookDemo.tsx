@@ -1,45 +1,98 @@
+'use client'
+
 import { BookDemoForm } from '@/app/components/landing/BookDemoForm'
 import { PublicPageShell } from '@/app/components/landing/PublicPageShell'
 import { MorphingCardStack } from '@/app/components/ui/morphing-card-stack'
 import { ScreenshotShowcase } from '@/app/components/ui/screenshot-showcase'
 import { Eye, Shield, Zap } from 'lucide-react'
+import { useTranslation } from '@/src/i18n'
 
 const HEADING_FONT = '"Sora", "Avenir Next", "Segoe UI", sans-serif'
 
-export const metadata = {
-  title: 'Book Demo | CyfroSec',
-  description:
-    'Discover your attack surface in minutes. Book a live CyfroSec demo tailored to your environment.',
-}
-
-const VALUE_CARDS = [
-  {
-    icon: Eye,
-    title: 'Visibility',
-    points: [
-      'Continuous discovery of assets, vulnerabilities, secrets, and misconfigurations.',
-      'AI-powered asset topology and deep infrastructure insights.',
-    ],
-  },
-  {
-    icon: Shield,
-    title: 'Risk & Compliance',
-    points: [
-      'AI-powered risk prioritization based on exposure and exploitability.',
-      'Compliance-ready reports including GDPR and security frameworks.',
-    ],
-  },
-  {
-    icon: Zap,
-    title: 'AI driven Remediation',
-    points: [
-      'AI-driven remediation prioritization based on exposure and exploitability.',
-      'Plain-language remediation guidance that any engineer can understand.',
-    ],
-  },
-]
-
 export default function BookDemo() {
+  const { lang } = useTranslation()
+  const isAr = lang === 'ar'
+
+  const copy = isAr ? {
+    eyebrow: 'رؤى أمنية للمهندسين. رؤية استراتيجية للقيادات.',
+    heroTitle: 'اكتشف سطح الهجوم لديك',
+    heroAccent: 'خلال دقائق',
+    headerTitle: 'اكتشف بنيتك التحتية وأمّنها باستخدام الذكاء الاصطناعي المتقدم',
+    tagline: 'ذكاء اصطناعي متقدم. أمن سيبراني بسيط.',
+    p1: 'شاهد بنيتك التحتية بالطريقة التي يراها بها المهاجمون.',
+    p2: 'تكتشف CyfroSec الأصول باستمرار، وتحلل الثغرات، وتوفر إرشادات معالجة مدفوعة بالذكاء الاصطناعي عبر بنيتك التحتية.',
+    formTitle: 'جاهز لرؤية سطح الهجوم لديك؟',
+    cards: [
+      {
+        id: 'visibility',
+        icon: <Eye className="size-4 text-primary-400" />,
+        title: 'الرؤية',
+        points: [
+          'اكتشاف مستمر للأصول والثغرات والأسرار وأخطاء الإعداد.',
+          'طوبولوجيا أصول مدعومة بالذكاء الاصطناعي ورؤى عميقة للبنية التحتية.',
+        ],
+      },
+      {
+        id: 'risk',
+        icon: <Shield className="size-4 text-primary-400" />,
+        title: 'المخاطر والامتثال',
+        points: [
+          'تحديد أولويات المخاطر بالذكاء الاصطناعي بناءً على التعرض وقابلية الاستغلال.',
+          'تقارير جاهزة للامتثال تشمل GDPR وأطر الأمان.',
+        ],
+      },
+      {
+        id: 'remediation',
+        icon: <Zap className="size-4 text-primary-400" />,
+        title: 'المعالجة بالذكاء الاصطناعي',
+        points: [
+          'تحديد أولويات المعالجة بالذكاء الاصطناعي وفق التعرض وقابلية الاستغلال.',
+          'إرشادات معالجة بلغة واضحة يمكن لأي مهندس فهمها.',
+        ],
+      },
+    ],
+    screenshotLabel: 'شاهد CyfroSec أثناء العمل',
+  } : {
+    eyebrow: 'Security insights for engineers. Strategic visibility for executives.',
+    heroTitle: 'Discover Your Attack Surface',
+    heroAccent: 'in Minutes',
+    headerTitle: 'Discover and Secure Your Infrastructure with Advanced AI',
+    tagline: 'Advanced AI. Simple Cybersecurity.',
+    p1: 'See your infrastructure the way attackers do.',
+    p2: 'CyfroSec continuously discovers assets, analyzes vulnerabilities, and provides AI-driven remediation guidance across your infrastructure.',
+    formTitle: 'Ready to see your attack surface?',
+    cards: [
+      {
+        id: 'visibility',
+        icon: <Eye className="size-4 text-primary-400" />,
+        title: 'Visibility',
+        points: [
+          'Continuous discovery of assets, vulnerabilities, secrets, and misconfigurations.',
+          'AI-powered asset topology and deep infrastructure insights.',
+        ],
+      },
+      {
+        id: 'risk',
+        icon: <Shield className="size-4 text-primary-400" />,
+        title: 'Risk & Compliance',
+        points: [
+          'AI-powered risk prioritization based on exposure and exploitability.',
+          'Compliance-ready reports including GDPR and security frameworks.',
+        ],
+      },
+      {
+        id: 'remediation',
+        icon: <Zap className="size-4 text-primary-400" />,
+        title: 'AI-Driven Remediation',
+        points: [
+          'AI-driven remediation prioritization based on exposure and exploitability.',
+          'Plain-language remediation guidance that any engineer can understand.',
+        ],
+      },
+    ],
+    screenshotLabel: 'See CyfroSec in Action',
+  }
+
   return (
     <PublicPageShell>
       {/* Page header */}
@@ -48,16 +101,17 @@ export default function BookDemo() {
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(3,155,224,0.18),transparent)]"
         />
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary-400">
-          Security insights for engineers. Strategic visibility for executives.
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary-400" dir={isAr ? 'rtl' : undefined} lang={isAr ? 'ar' : 'en'}>
+          {copy.eyebrow}
         </p>
         <h1
           className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl"
           style={{ fontFamily: HEADING_FONT }}
+          dir={isAr ? 'rtl' : undefined} lang={isAr ? 'ar' : 'en'}
         >
-          Discover Your Attack Surface
+          {copy.heroTitle}
           <br className="hidden sm:block" />
-          <span className="text-primary-400"> in Minutes</span>
+          <span className="text-primary-400"> {copy.heroAccent}</span>
         </h1>
       </section>
 
@@ -70,18 +124,18 @@ export default function BookDemo() {
             <h2
               className="text-2xl font-bold text-white sm:text-3xl lg:text-4xl leading-tight"
               style={{ fontFamily: HEADING_FONT }}
+              dir={isAr ? 'rtl' : undefined} lang={isAr ? 'ar' : 'en'}
             >
-              Discover and Secure Your Infrastructure with Advanced AI
+              {copy.headerTitle}
             </h2>
-            <p className="mt-3 text-sm font-semibold uppercase tracking-widest text-primary-400">
-              Advanced AI. Simple Cybersecurity.
+            <p className="mt-3 text-sm font-semibold uppercase tracking-widest text-primary-400" dir={isAr ? 'rtl' : undefined} lang={isAr ? 'ar' : 'en'}>
+              {copy.tagline}
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-white/60 max-w-2xl">
-              See your infrastructure the way attackers do.
+            <p className="mt-4 text-sm leading-relaxed text-white/60 max-w-2xl" dir={isAr ? 'rtl' : undefined} lang={isAr ? 'ar' : 'en'}>
+              {copy.p1}
             </p>
-            <p className="mt-2 text-sm leading-relaxed text-white/60 max-w-2xl">
-              CyfroSec continuously discovers assets, analyzes vulnerabilities, and provides AI-driven remediation guidance
-              across your infrastructure.
+            <p className="mt-2 text-sm leading-relaxed text-white/60 max-w-2xl" dir={isAr ? 'rtl' : undefined} lang={isAr ? 'ar' : 'en'}>
+              {copy.p2}
             </p>
           </div>
 
@@ -93,8 +147,9 @@ export default function BookDemo() {
                 <h2
                   className="mb-6 text-2xl font-bold text-white"
                   style={{ fontFamily: HEADING_FONT }}
+                  dir={isAr ? 'rtl' : undefined} lang={isAr ? 'ar' : 'en'}
                 >
-                  Ready to see your attack surface?
+                  {copy.formTitle}
                 </h2>
                 <BookDemoForm />
               </div>
@@ -107,32 +162,13 @@ export default function BookDemo() {
               {/* Value cards — MorphingCardStack */}
               <MorphingCardStack
                 defaultLayout="stack"
-                cards={[
-                  {
-                    id: 'visibility',
-                    icon: <Eye className="size-4 text-primary-400" />,
-                    title: 'Visibility',
-                    points: VALUE_CARDS[0].points,
-                  },
-                  {
-                    id: 'risk',
-                    icon: <Shield className="size-4 text-primary-400" />,
-                    title: 'Risk & Compliance',
-                    points: VALUE_CARDS[1].points,
-                  },
-                  {
-                    id: 'remediation',
-                    icon: <Zap className="size-4 text-primary-400" />,
-                    title: 'AI-Driven Remediation',
-                    points: VALUE_CARDS[2].points,
-                  },
-                ]}
+                cards={copy.cards}
               />
 
               {/* Screenshot showcase */}
               <div>
-                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary-400">
-                  See CyfroSec in Action
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary-400" dir={isAr ? 'rtl' : undefined} lang={isAr ? 'ar' : 'en'}>
+                  {copy.screenshotLabel}
                 </p>
                 <ScreenshotShowcase />
               </div>

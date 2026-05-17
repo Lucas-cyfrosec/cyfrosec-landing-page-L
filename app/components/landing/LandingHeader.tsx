@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { ChevronDown, Menu, X, ArrowRight, Moon, Sun } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent, useReducedMotion } from 'framer-motion';
 import { DropdownNavigation } from './ui/dropdown-navigation';
@@ -8,6 +8,9 @@ import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { LANDING_NAV_ITEMS } from './navigation';
 import { useThemeMode } from '@/app/hooks/useThemeMode';
+import { useTranslation, type Lang } from '@/src/i18n';
+import type { NavItem } from './ui/dropdown-navigation';
+import type { Dictionary } from '@/src/i18n/locales/en';
 
 type AuthSegment = 'signIn' | 'getStarted' | null;
 
@@ -22,6 +25,72 @@ function scrollToHash(selector: string, attempts = 20) {
   }
 }
 
+// Build translated nav items by overlaying labels/descriptions from the dict
+function buildTranslatedNavItems(t: Dictionary): NavItem[] {
+  return LANDING_NAV_ITEMS.map((item) => {
+    if (item.id === 0) return { ...item, label: t.nav.home };
+    if (item.id === 1) {
+      return {
+        ...item,
+        label: t.nav.product,
+        subMenus: item.subMenus?.map((menu) => ({
+          ...menu,
+          title: t.nav.product,
+          items: menu.items.map((subItem, i) => ({
+            ...subItem,
+            label: t.nav.productSubmenu[i]?.label ?? subItem.label,
+            description: t.nav.productSubmenu[i]?.description ?? subItem.description,
+          })),
+        })),
+      };
+    }
+    if (item.id === 3) {
+      return {
+        ...item,
+        label: t.nav.solutions,
+        subMenus: item.subMenus?.map((menu) => ({
+          ...menu,
+          title: t.nav.solutions,
+          items: menu.items.map((subItem, i) => ({
+            ...subItem,
+            label: t.nav.solutionsSubmenu[i]?.label ?? subItem.label,
+            description: t.nav.solutionsSubmenu[i]?.description ?? subItem.description,
+          })),
+        })),
+      };
+    }
+    if (item.id === 4) return { ...item, label: t.nav.documentation };
+    if (item.id === 5) return { ...item, label: t.nav.about };
+    return item;
+  });
+}
+
+// Language switcher pill: EN | AR
+function LangSwitcher() {
+  const { lang, setLang } = useTranslation();
+  return (
+    <div className="inline-flex items-center rounded-full border cy-border cy-bg-elevated overflow-hidden text-[11px] font-bold tracking-wide">
+      {(['en', 'ar'] as Lang[]).map((l, idx) => (
+        <button
+          key={l}
+          type="button"
+          onClick={() => setLang(l)}
+          aria-label={l === 'en' ? 'Switch to English' : 'Switch to Arabic'}
+          className={[
+            'px-2.5 py-1 transition-colors duration-150',
+            lang === l
+              ? 'bg-primary-500 text-white'
+              : 'cy-text-secondary hover:cy-text-primary',
+            idx === 0 ? '' : 'border-s cy-border',
+          ].join(' ')}
+        >
+          {l.toUpperCase()}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function AuthSegmentedPill({
   mobile = false,
   onNavigate,
@@ -29,6 +98,7 @@ function AuthSegmentedPill({
   mobile?: boolean;
   onNavigate?: () => void;
 }) {
+  const { t } = useTranslation();
   const [activeSegment, setActiveSegment] = useState<AuthSegment>(null);
 
   const wrapperClassName = mobile ? 'grid w-full grid-cols-2 gap-2' : 'inline-flex items-center gap-1.5';
@@ -70,7 +140,7 @@ function AuthSegmentedPill({
         style={signInWidth ? { width: `${signInWidth}px` } : undefined}
       >
         <span className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.10),transparent_72%)] dark:bg-[radial-gradient(circle_at_top,rgba(125,211,252,0.05),transparent_72%)] opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
-        <span className="relative">Sign In</span>
+        <span className="relative">{t.nav.signIn}</span>
       </Link>
 
       <Link
@@ -88,9 +158,9 @@ function AuthSegmentedPill({
       >
         <span className={`absolute inset-0 rounded-full transition-opacity duration-200 ${activeSegment === 'getStarted' ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.18),transparent_72%)]`} />
         <span className="relative flex items-center whitespace-nowrap">
-          Get Started
+          {t.nav.getStarted}
           <span
-            className={`overflow-hidden transition-all duration-200 ${activeSegment === 'getStarted' ? 'ml-2 w-4 opacity-100' : 'ml-0 w-0 opacity-0'}`}
+            className={`overflow-hidden transition-all duration-200 ${activeSegment === 'getStarted' ? 'ms-2 w-4 opacity-100' : 'ms-0 w-0 opacity-0'}`}
             aria-hidden="true"
           >
             <ArrowRight className="w-4 h-4" />
@@ -105,6 +175,7 @@ export function LandingHeader() {
   const router = useRouter();
   const pathname = usePathname();
   const { theme, toggleTheme } = useThemeMode();
+  const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -115,13 +186,14 @@ export function LandingHeader() {
     setIsScrolled(latest > 20);
   });
 
+  // Rebuild nav items with translated labels/descriptions
+  const translatedNavItems = useMemo(() => buildTranslatedNavItems(t), [t]);
+
   function handleDropdownToggle(label: string) {
     setActiveDropdown((prev) => (prev === label ? null : label));
   }
 
-  const handlePrefetch = useCallback(function handlePrefetch() {
-    // prefetch is handled by Next.js Link components automatically
-  }, []);
+  const handlePrefetch = useCallback(function handlePrefetch() {}, []);
 
   const handleNavClick = useCallback(function handleNavClick(href: string, isNav: boolean | undefined, event: React.MouseEvent | undefined) {
     setMobileMenuOpen(false);
@@ -167,14 +239,15 @@ export function LandingHeader() {
           {/* Desktop nav - centered */}
           <div className="cy-navbar-nav hidden lg:flex flex-1 justify-center">
             <DropdownNavigation
-              navItems={LANDING_NAV_ITEMS}
+              navItems={translatedNavItems}
               onNavigate={handleNavClick}
               onPrefetch={handlePrefetch}
             />
           </div>
 
           {/* Desktop CTAs */}
-          <div className="cy-navbar-actions hidden lg:flex items-center gap-2.5 xl:gap-3.5 3xl:gap-4 z-10">
+          <div className="cy-navbar-actions hidden lg:flex items-center gap-2 xl:gap-3 3xl:gap-3.5 z-10">
+            {/* Theme toggle */}
             <button
               type="button"
               onClick={toggleTheme}
@@ -183,18 +256,22 @@ export function LandingHeader() {
             >
               {theme === 'dark' ? <Sun className="size-4 3xl:size-[18px]" /> : <Moon className="size-4 3xl:size-[18px]" />}
             </button>
+
+            {/* Language switcher */}
+            <LangSwitcher />
+
             <Link
               href="/contact"
               className="group relative inline-flex h-10 items-center justify-center rounded-full px-4 text-[13px] font-semibold transition-[background-color,box-shadow,color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/35 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent border border-transparent bg-transparent text-slate-700 hover:border-slate-200/80 hover:bg-white/80 hover:text-slate-900 dark:text-slate-200 dark:hover:border-white/8 dark:hover:bg-white/[0.04] dark:hover:text-white xl:text-sm 3xl:h-11 3xl:px-5 3xl:text-[15px]"
             >
               <span className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.10),transparent_72%)] dark:bg-[radial-gradient(circle_at_top,rgba(125,211,252,0.05),transparent_72%)] opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
-              <span className="relative">Contact Sales</span>
+              <span className="relative">{t.nav.contactSales}</span>
             </Link>
             <AuthSegmentedPill />
           </div>
 
           {/* Mobile toggle */}
-          <div className="cy-navbar-mobile-toggle flex items-center gap-3 lg:hidden z-10">
+          <div className="cy-navbar-mobile-toggle flex items-center gap-2 lg:hidden z-10">
             <button
               type="button"
               onClick={toggleTheme}
@@ -203,6 +280,7 @@ export function LandingHeader() {
             >
               {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
+            <LangSwitcher />
             <button
               type="button"
               className="cy-navbar-ghost rounded-full p-2 cy-text-secondary transition-all hover:bg-[color-mix(in_srgb,var(--text-primary)_6%,transparent)]"
@@ -231,7 +309,7 @@ export function LandingHeader() {
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="flex flex-col gap-1 px-4 py-5 max-h-[85vh] overflow-y-auto">
-                {LANDING_NAV_ITEMS.map((item) => (
+                {translatedNavItems.map((item) => (
                   item.subMenus ? (
                     <div key={item.label}>
                       <button
@@ -243,7 +321,7 @@ export function LandingHeader() {
                         <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} />
                       </button>
                       {activeDropdown === item.label && (
-                        <div className="ml-4 mt-1 space-y-1 border-l-2 cy-border pl-4">
+                        <div className="ms-4 mt-1 space-y-1 border-s-2 cy-border ps-4">
                           {item.subMenus.flatMap((group) =>
                             group.items.map((subItem) => (
                               subItem.isNav ? (
@@ -292,7 +370,7 @@ export function LandingHeader() {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <span className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.10),transparent_72%)] dark:bg-[radial-gradient(circle_at_top,rgba(125,211,252,0.05),transparent_72%)] opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
-                    <span className="relative">Contact Sales</span>
+                    <span className="relative">{t.nav.contactSales}</span>
                   </Link>
                 </div>
               </div>

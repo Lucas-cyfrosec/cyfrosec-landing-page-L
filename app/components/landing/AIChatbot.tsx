@@ -2,18 +2,15 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { X, Bot, ChevronRight } from 'lucide-react';
-import {
-  CHATBOT_SUGGESTED_QUESTIONS,
-  getChatbotResponse,
-} from './ai-chatbot-content';
+import { useTranslation } from '@/src/i18n';
 
 function formatTime(date: Date) {
   return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
 }
 
-function renderContent(text: string) {
+function renderContent(text: string, isAr: boolean) {
   const html = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  return <p className="text-xs sm:text-sm leading-relaxed whitespace-pre-line" dangerouslySetInnerHTML={{ __html: html }} />;
+  return <p dir={isAr ? 'rtl' : undefined} className={`leading-relaxed whitespace-pre-line ${isAr ? 'text-[10px] sm:text-[11px]' : 'text-xs sm:text-sm'}`} dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
 interface Message {
@@ -24,10 +21,13 @@ interface Message {
 }
 
 export default function AIChatbot() {
+  const { t, lang } = useTranslation();
+  const isAr = lang === 'ar';
+  const cb = t.chatbot;
   const [chatOpen, setChatOpen] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { id: 1, type: 'bot', content: "Welcome! I'm Cyfrosec FAQ Bot, your assistant. Click any question below to learn more about how CyfroSec can help secure your infrastructure.", time: formatTime(new Date()) }
+    { id: 1, type: 'bot', content: cb.welcome, time: formatTime(new Date()) }
   ]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -35,16 +35,13 @@ export default function AIChatbot() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
 
-  async function sendMessage(text: string) {
-    const messageText = text.trim();
-    if (!messageText) return;
-
-    setMessages(prev => [...prev, { id: prev.length + 1, type: 'user', content: messageText, time: formatTime(new Date()) }]);
+  async function sendMessage(question: string, answer: string) {
+    setMessages(prev => [...prev, { id: prev.length + 1, type: 'user', content: question, time: formatTime(new Date()) }]);
     setIsTyping(true);
 
     await new Promise(resolve => setTimeout(resolve, 1200 + Math.random() * 800));
 
-    setMessages(prev => [...prev, { id: prev.length + 1, type: 'bot', content: getChatbotResponse(messageText), time: formatTime(new Date()) }]);
+    setMessages(prev => [...prev, { id: prev.length + 1, type: 'bot', content: answer, time: formatTime(new Date()) }]);
     setIsTyping(false);
   }
 
@@ -60,10 +57,10 @@ export default function AIChatbot() {
                   <img src="/favicon.ico" alt="" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-surface-900 dark:text-white text-sm sm:text-base">Cyfrosec FAQ Bot</h3>
+                  <h3 className="font-semibold text-surface-900 dark:text-white text-sm sm:text-base">{cb.botName}</h3>
                   <div className="flex items-center gap-1">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
-                    <span className="text-primary-600 dark:text-blue-300 text-[10px] sm:text-xs">Online</span>
+                    <span dir={isAr ? 'rtl' : undefined} className={`text-primary-600 dark:text-blue-300 ${isAr ? 'text-[9px] sm:text-[10px]' : 'text-[10px] sm:text-xs'}`}>{cb.online}</span>
                   </div>
                 </div>
               </div>
@@ -83,7 +80,7 @@ export default function AIChatbot() {
                   </div>
                   <div className="max-w-[85%]">
                     <div className="bg-white dark:bg-surface-800 text-surface-800 dark:text-surface-200 rounded-xl sm:rounded-2xl rounded-tl-sm shadow-sm border border-surface-200 dark:border-surface-700 px-2.5 py-2 sm:px-3 sm:py-2.5">
-                      {renderContent(message.content)}
+                      {renderContent(message.content, isAr)}
                     </div>
                     <span className="text-[10px] sm:text-xs text-surface-400 mt-1 ml-1">{message.time}</span>
                   </div>
@@ -92,7 +89,7 @@ export default function AIChatbot() {
                 <div key={message.id} className="flex gap-2 flex-row-reverse">
                   <div className="max-w-[85%]">
                     <div className="bg-primary-600 text-white rounded-xl sm:rounded-2xl rounded-tr-sm px-2.5 py-2 sm:px-3 sm:py-2.5">
-                      <p className="text-xs sm:text-sm leading-relaxed">{message.content}</p>
+                      <p dir={isAr ? 'rtl' : undefined} className={`leading-relaxed ${isAr ? 'text-[10px] sm:text-[11px]' : 'text-xs sm:text-sm'}`}>{message.content}</p>
                     </div>
                     <span className="text-[10px] sm:text-xs text-surface-400 mt-1 mr-1 block text-right">{message.time}</span>
                   </div>
@@ -122,8 +119,8 @@ export default function AIChatbot() {
             <div className="bg-white dark:bg-surface-800 border-t border-surface-200 dark:border-surface-700">
               <div className="px-3 pt-2.5 pb-1 sm:px-4 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary-500"></span>
-                <p className="text-[10px] sm:text-xs font-semibold text-surface-500 dark:text-surface-400 uppercase tracking-wide">
-                  Frequently asked
+                <p dir={isAr ? 'rtl' : undefined} className={`font-semibold text-surface-500 dark:text-surface-400 uppercase tracking-wide ${isAr ? 'text-[9px] sm:text-[10px]' : 'text-[10px] sm:text-xs'}`}>
+                  {cb.frequentlyAsked}
                 </p>
               </div>
 
@@ -132,16 +129,16 @@ export default function AIChatbot() {
                   className="flex flex-col px-2 sm:px-3 gap-0.5 max-h-40 overflow-y-auto pb-12"
                   style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
-                  {CHATBOT_SUGGESTED_QUESTIONS.map(q => (
+                  {cb.questions.map(({ q, a }) => (
                     <button
                       key={q}
-                      onClick={() => sendMessage(q)}
-                      className="flex items-center justify-between gap-2 px-2.5 py-1.5 sm:py-2 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 group transition-colors text-left"
+                      onClick={() => sendMessage(q, a)}
+                      className={`flex items-center gap-2 px-2.5 py-1.5 sm:py-2 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 group transition-colors ${isAr ? 'flex-row-reverse text-right' : 'text-left'}`}
                     >
-                      <span className="text-[10px] sm:text-xs text-surface-600 dark:text-surface-300 group-hover:text-primary-600 dark:group-hover:text-primary-400 leading-snug">
+                      <ChevronRight className={`w-3 h-3 text-surface-300 dark:text-surface-600 group-hover:text-primary-500 flex-shrink-0 transition-colors ${isAr ? 'rotate-180' : ''}`} />
+                      <span dir={isAr ? 'rtl' : undefined} className={`${isAr ? 'text-[10px] sm:text-[11px]' : 'text-[10px] sm:text-xs'} text-surface-600 dark:text-surface-300 group-hover:text-primary-600 dark:group-hover:text-primary-400 leading-snug`}>
                         {q}
                       </span>
-                      <ChevronRight className="w-3 h-3 text-surface-300 dark:text-surface-600 group-hover:text-primary-500 flex-shrink-0 transition-colors" />
                     </button>
                   ))}
                 </div>
@@ -161,7 +158,7 @@ export default function AIChatbot() {
         {!chatOpen && (
           <div className="absolute bottom-full right-0 mb-3 animate-bounce">
             <div className="relative bg-white dark:bg-surface-800 border border-surface-200 dark:border-surface-700 rounded-2xl rounded-br-sm px-4 py-2 shadow-lg">
-              <p className="text-sm font-semibold text-surface-900 dark:text-surface-50 whitespace-nowrap">Hello, I&apos;m here to help</p>
+              <p dir={isAr ? 'rtl' : undefined} className={`font-semibold text-surface-900 dark:text-surface-50 whitespace-nowrap ${isAr ? 'text-xs' : 'text-sm'}`}>{cb.greeting}</p>
               {/* Tail — rotated square clipped to bottom-right */}
               <span className="absolute -bottom-[7px] right-4 w-3 h-3 bg-white dark:bg-surface-800 border-r border-b border-surface-200 dark:border-surface-700 rotate-45" />
             </div>
@@ -170,7 +167,7 @@ export default function AIChatbot() {
         <button
           onClick={() => setChatOpen(v => !v)}
           className={`w-12 h-12 sm:w-14 sm:h-14 bg-white dark:bg-[#0a1628] hover:bg-surface-50 dark:hover:bg-[#0d1f3c] text-surface-900 dark:text-white rounded-full shadow-lg hover:shadow-xl border border-surface-200 dark:border-surface-700 transition-all duration-200 flex items-center justify-center group relative ${chatOpen ? 'hidden' : ''}`}
-          aria-label="Open chat"
+          aria-label={cb.openChat}
         >
           {chatOpen ? (
             <X className="w-5 h-5 sm:w-6 sm:h-6" />

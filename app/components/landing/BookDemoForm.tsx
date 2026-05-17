@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from 'react'
 import { submitBookDemoApiV1SupportBookDemoPost } from '@/src/client'
 import type { DemoDeploymentModel, DemoPrimaryUseCase } from '@/src/client'
 import { ThankYouDocLinks } from '@/app/components/landing/ThankYouDocLinks'
+import { useTranslation } from '@/src/i18n'
 
 type BookDemoFormState = {
   fullName: string
@@ -52,11 +53,89 @@ function getErrorMessage(errorPayload: unknown, fallback: string): string {
 }
 
 export function BookDemoForm() {
+  const { lang } = useTranslation()
+  const isAr = lang === 'ar'
   const [form, setForm] = useState<BookDemoFormState>(INITIAL_STATE)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const formStartedAt = useRef(new Date().toISOString())
+
+  const copy = isAr ? {
+    submitError: 'تعذر إرسال طلب حجز العرض',
+    successTitle: 'تم استلام الطلب!',
+    successBody: 'شكراً لاهتمامك! سيتواصل معك أحد مختصي الأمن في CyfroSec قريباً لتحديد موعد العرض.',
+    fullName: 'الاسم الكامل',
+    workEmail: 'البريد الإلكتروني للعمل',
+    company: 'الشركة',
+    role: 'المسمى الوظيفي',
+    country: 'الدولة / المنطقة',
+    companySize: 'حجم الشركة',
+    selectSize: 'اختر الحجم',
+    sizeOptions: ['1-10 موظفين', '11-50 موظفاً', '51-200 موظف', '201-1,000 موظف', '1,000+ موظف'],
+    deployment: 'نموذج النشر',
+    selectDeployment: 'اختر نموذج النشر',
+    deploymentOptions: ['برمجية كخدمة', 'محلي On-Prem', 'هجين', 'غير متأكد'],
+    useCase: 'حالة الاستخدام الأساسية',
+    selectUseCase: 'اختر حالة الاستخدام الأساسية',
+    useCaseOptions: [
+      'إدارة سطح الهجوم',
+      'إدارة الثغرات',
+      'الفحص المعتمد على الوكيل',
+      'الامتثال والتقارير',
+      'المعالجة الموجّهة بالذكاء الاصطناعي',
+      'نظرة عامة على المنصة',
+      'غير متأكد',
+    ],
+    environment: 'ملخص البيئة',
+    environmentPlaceholder: 'وصف موجز لبيئتك أو للمخاطر التي تريد أن يغطيها العرض (20 حرفاً كحد أدنى)',
+    minChars: 'الحد الأدنى 20 حرفاً — يرجى إضافة مزيد من التفاصيل',
+    contactWindow: 'الوقت المفضل للتواصل (اختياري)',
+    contactWindowPlaceholder: 'مثال: أيام الأسبوع بعد 14:00 بتوقيت السعودية',
+    notes: 'هل هناك أي شيء آخر تود أن نعرفه؟ (اختياري)',
+    submitting: 'جارٍ الإرسال…',
+    submit: 'احجز العرض',
+    footer: 'بإرسال هذا النموذج فإنك توافق على أن تتواصل معك CyfroSec بخصوص طلب العرض الخاص بك.',
+    countryPrefix: 'الدولة/المنطقة',
+    notesPrefix: 'ملاحظات',
+  } : {
+    submitError: 'Failed to submit book demo request',
+    successTitle: 'Request received!',
+    successBody: 'Thank you for your interest! A CyfroSec security specialist will contact you shortly to schedule your demo.',
+    fullName: 'Full name',
+    workEmail: 'Work email',
+    company: 'Company',
+    role: 'Role',
+    country: 'Country / Region',
+    companySize: 'Company size',
+    selectSize: 'Select size',
+    sizeOptions: ['1–10 employees', '11–50 employees', '51–200 employees', '201–1,000 employees', '1,000+ employees'],
+    deployment: 'Deployment model',
+    selectDeployment: 'Select deployment model',
+    deploymentOptions: ['SaaS', 'On-Prem', 'Hybrid', 'Not Sure'],
+    useCase: 'Primary use case',
+    selectUseCase: 'Select primary use case',
+    useCaseOptions: [
+      'Attack Surface Management',
+      'Vulnerability Management',
+      'Agent-Based Scanning',
+      'Compliance & Reporting',
+      'AI-Guided Remediation',
+      'Platform Overview',
+      'Not Sure',
+    ],
+    environment: 'Environment summary',
+    environmentPlaceholder: "Brief description of your environment or the risks you'd like the demo to cover (min 20 characters)",
+    minChars: 'characters minimum — please add a few more details',
+    contactWindow: 'Preferred contact window (optional)',
+    contactWindowPlaceholder: 'e.g. Weekdays after 14:00 CET',
+    notes: "Anything else you'd like us to know? (optional)",
+    submitting: 'Submitting…',
+    submit: 'Book My Demo',
+    footer: 'By submitting this form you agree to be contacted by CyfroSec regarding your demo request.',
+    countryPrefix: 'Country/Region',
+    notesPrefix: 'Notes',
+  }
 
   const isValid = useMemo(
     () =>
@@ -93,8 +172,8 @@ export function BookDemoForm() {
           company_size: form.companySize || undefined,
           preferred_contact_window: form.preferredContactWindow || undefined,
           message: [
-            `Country/Region: ${form.country}.`,
-            form.message ? `Notes: ${form.message}` : null,
+            `${copy.countryPrefix}: ${form.country}.`,
+            form.message ? `${copy.notesPrefix}: ${form.message}` : null,
           ].filter(Boolean).join(' ') || undefined,
           source_url: typeof window !== 'undefined' ? window.location.href : undefined,
           consent_to_contact: true,
@@ -104,17 +183,17 @@ export function BookDemoForm() {
       })
 
       if (response.error) {
-        throw new Error(getErrorMessage(response.error, 'Failed to submit book demo request'))
+        throw new Error(getErrorMessage(response.error, copy.submitError))
       }
       if (!response.data?.success) {
-        throw new Error(getErrorMessage(response.data, 'Failed to submit book demo request'))
+        throw new Error(getErrorMessage(response.data, copy.submitError))
       }
 
       setSuccess(true)
       setForm(INITIAL_STATE)
       formStartedAt.current = new Date().toISOString()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to submit book demo request')
+      setError(err instanceof Error ? err.message : copy.submitError)
     } finally {
       setLoading(false)
     }
@@ -134,9 +213,9 @@ export function BookDemoForm() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <p className="text-base font-semibold text-white">Request received!</p>
-          <p className="mt-2 text-sm text-white/70">
-            Thank you for your interest! A CyfroSec security specialist will contact you shortly to schedule your demo.
+          <p className="text-base font-semibold text-white" dir={isAr ? 'rtl' : undefined}>{copy.successTitle}</p>
+          <p className="mt-2 text-sm text-white/70" dir={isAr ? 'rtl' : undefined}>
+            {copy.successBody}
           </p>
         </div>
         <ThankYouDocLinks />
@@ -148,95 +227,96 @@ export function BookDemoForm() {
     <form className="space-y-4" onSubmit={onSubmit}>
       <div className="grid gap-4 md:grid-cols-2">
         <div>
-          <label htmlFor="fullName" className={labelClass}>Full name</label>
+          <label htmlFor="fullName" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.fullName}</label>
           <input id="fullName" name="fullName" autoComplete="name" className={inputClass} value={form.fullName} onChange={(e) => setForm((prev) => ({ ...prev, fullName: e.target.value }))} required />
         </div>
 
         <div>
-          <label htmlFor="workEmail" className={labelClass}>Work email</label>
+          <label htmlFor="workEmail" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.workEmail}</label>
           <input id="workEmail" name="workEmail" autoComplete="email" className={inputClass} type="email" value={form.workEmail} onChange={(e) => setForm((prev) => ({ ...prev, workEmail: e.target.value }))} required />
         </div>
 
         <div>
-          <label htmlFor="companyName" className={labelClass}>Company</label>
+          <label htmlFor="companyName" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.company}</label>
           <input id="companyName" name="companyName" autoComplete="organization" className={inputClass} value={form.companyName} onChange={(e) => setForm((prev) => ({ ...prev, companyName: e.target.value }))} required />
         </div>
 
         <div>
-          <label htmlFor="roleTitle" className={labelClass}>Role</label>
+          <label htmlFor="roleTitle" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.role}</label>
           <input id="roleTitle" name="roleTitle" autoComplete="organization-title" className={inputClass} value={form.roleTitle} onChange={(e) => setForm((prev) => ({ ...prev, roleTitle: e.target.value }))} required />
         </div>
       </div>
 
       <div>
-        <label htmlFor="country" className={labelClass}>Country / Region</label>
+        <label htmlFor="country" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.country}</label>
         <input id="country" name="country" autoComplete="country-name" className={inputClass} value={form.country} onChange={(e) => setForm((prev) => ({ ...prev, country: e.target.value }))} required />
       </div>
 
       <div>
-        <label htmlFor="companySize" className={labelClass}>Company size</label>
+        <label htmlFor="companySize" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.companySize}</label>
         <select id="companySize" name="companySize" autoComplete="off" className={inputClass} value={form.companySize} onChange={(e) => setForm((prev) => ({ ...prev, companySize: e.target.value }))}>
-          <option value="">Select size</option>
-          <option value="1-10">1–10 employees</option>
-          <option value="11-50">11–50 employees</option>
-          <option value="51-200">51–200 employees</option>
-          <option value="201-1000">201–1,000 employees</option>
-          <option value="1000+">1,000+ employees</option>
+          <option value="">{copy.selectSize}</option>
+          <option value="1-10">{copy.sizeOptions[0]}</option>
+          <option value="11-50">{copy.sizeOptions[1]}</option>
+          <option value="51-200">{copy.sizeOptions[2]}</option>
+          <option value="201-1000">{copy.sizeOptions[3]}</option>
+          <option value="1000+">{copy.sizeOptions[4]}</option>
         </select>
       </div>
 
       <div>
-        <label htmlFor="deploymentModel" className={labelClass}>Deployment model</label>
+        <label htmlFor="deploymentModel" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.deployment}</label>
         <select id="deploymentModel" name="deploymentModel" autoComplete="off" className={inputClass} value={form.deploymentModel} onChange={(e) => setForm((prev) => ({ ...prev, deploymentModel: e.target.value as DemoDeploymentModel | '' }))} required>
-          <option value="">Select deployment model</option>
-          <option value="SaaS">SaaS</option>
-          <option value="On-Prem">On-Prem</option>
-          <option value="Hybrid">Hybrid</option>
-          <option value="Not Sure">Not Sure</option>
+          <option value="">{copy.selectDeployment}</option>
+          <option value="SaaS">{copy.deploymentOptions[0]}</option>
+          <option value="On-Prem">{copy.deploymentOptions[1]}</option>
+          <option value="Hybrid">{copy.deploymentOptions[2]}</option>
+          <option value="Not Sure">{copy.deploymentOptions[3]}</option>
         </select>
       </div>
 
       <div>
-        <label htmlFor="primaryUseCase" className={labelClass}>Primary use case</label>
+        <label htmlFor="primaryUseCase" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.useCase}</label>
         <select id="primaryUseCase" name="primaryUseCase" autoComplete="off" className={inputClass} value={form.primaryUseCase} onChange={(e) => setForm((prev) => ({ ...prev, primaryUseCase: e.target.value as DemoPrimaryUseCase | '' }))} required>
-          <option value="">Select primary use case</option>
-          <option value="Attack Surface Management">Attack Surface Management</option>
-          <option value="Vulnerability Management">Vulnerability Management</option>
-          <option value="Agent-Based Scanning">Agent-Based Scanning</option>
-          <option value="Compliance & Reporting">Compliance &amp; Reporting</option>
-          <option value="AI-Guided Remediation">AI-Guided Remediation</option>
-          <option value="Platform Overview">Platform Overview</option>
-          <option value="Not Sure">Not Sure</option>
+          <option value="">{copy.selectUseCase}</option>
+          <option value="Attack Surface Management">{copy.useCaseOptions[0]}</option>
+          <option value="Vulnerability Management">{copy.useCaseOptions[1]}</option>
+          <option value="Agent-Based Scanning">{copy.useCaseOptions[2]}</option>
+          <option value="Compliance & Reporting">{copy.useCaseOptions[3]}</option>
+          <option value="AI-Guided Remediation">{copy.useCaseOptions[4]}</option>
+          <option value="Platform Overview">{copy.useCaseOptions[5]}</option>
+          <option value="Not Sure">{copy.useCaseOptions[6]}</option>
         </select>
       </div>
 
       <div>
-        <label htmlFor="environmentSummary" className={labelClass}>Environment summary</label>
+        <label htmlFor="environmentSummary" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.environment}</label>
         <textarea
           id="environmentSummary"
           name="environmentSummary"
           autoComplete="off"
           className={`${inputClass} min-h-24 ${form.environmentSummary.length > 0 && form.environmentSummary.trim().length < 20 ? 'border-amber-500/60 focus:ring-amber-500/30' : ''}`}
-          placeholder="Brief description of your environment or the risks you'd like the demo to cover (min 20 characters)"
+          placeholder={copy.environmentPlaceholder}
+          dir={isAr ? 'rtl' : undefined}
           value={form.environmentSummary}
           onChange={(e) => setForm((prev) => ({ ...prev, environmentSummary: e.target.value }))}
           required
         />
         {form.environmentSummary.length > 0 && form.environmentSummary.trim().length < 20 && (
-          <p className="mt-1 text-xs text-amber-400 font-medium">
-            {form.environmentSummary.trim().length}/20 characters minimum — please add a few more details
+          <p className="mt-1 text-xs text-amber-400 font-medium" dir={isAr ? 'rtl' : undefined}>
+            {form.environmentSummary.trim().length}/20 {copy.minChars}
           </p>
         )}
       </div>
 
       <div>
-        <label htmlFor="preferredContactWindow" className={labelClass}>Preferred contact window (optional)</label>
-        <input id="preferredContactWindow" name="preferredContactWindow" autoComplete="off" className={inputClass} placeholder="e.g. Weekdays after 14:00 CET" value={form.preferredContactWindow} onChange={(e) => setForm((prev) => ({ ...prev, preferredContactWindow: e.target.value }))} />
+        <label htmlFor="preferredContactWindow" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.contactWindow}</label>
+        <input id="preferredContactWindow" name="preferredContactWindow" autoComplete="off" className={inputClass} placeholder={copy.contactWindowPlaceholder} dir={isAr ? 'rtl' : undefined} value={form.preferredContactWindow} onChange={(e) => setForm((prev) => ({ ...prev, preferredContactWindow: e.target.value }))} />
       </div>
 
       <div>
-        <label htmlFor="message" className={labelClass}>Anything else you&apos;d like us to know? (optional)</label>
-        <textarea id="message" name="message" autoComplete="off" className={`${inputClass} min-h-24`} value={form.message} onChange={(e) => setForm((prev) => ({ ...prev, message: e.target.value }))} />
+        <label htmlFor="message" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.notes}</label>
+        <textarea id="message" name="message" autoComplete="off" dir={isAr ? 'rtl' : undefined} className={`${inputClass} min-h-24`} value={form.message} onChange={(e) => setForm((prev) => ({ ...prev, message: e.target.value }))} />
       </div>
 
       {/* Honeypot */}
@@ -254,11 +334,11 @@ export function BookDemoForm() {
       {error ? <p className="rounded-lg border border-error-500/20 bg-error-500/10 px-3 py-2 text-sm text-error-500">{error}</p> : null}
 
       <button className="cy-btn cy-btn-primary w-full" type="submit" disabled={!isValid || loading}>
-        {loading ? 'Submitting…' : 'Book My Demo'}
+        {loading ? copy.submitting : copy.submit}
       </button>
 
-      <p className="text-center text-xs cy-text-muted">
-        By submitting this form you agree to be contacted by CyfroSec regarding your demo request.
+      <p className="text-center text-xs cy-text-muted" dir={isAr ? 'rtl' : undefined}>
+        {copy.footer}
       </p>
 
     </form>

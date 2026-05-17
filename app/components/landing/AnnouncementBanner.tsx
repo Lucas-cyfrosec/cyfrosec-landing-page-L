@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { X, Wrench, Clock, AlertTriangle } from 'lucide-react';
+import { useTranslation } from '@/src/i18n';
 
 // ─── Maintenance config ───────────────────────────────────────────────────────
 const ANNOUNCEMENT_CONFIG = {
@@ -71,6 +72,8 @@ interface BannerData {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function AnnouncementBanner() {
+  const { t } = useTranslation();
+  const a = t.announcement;
   const [bannerData, setBannerData] = useState<BannerData | null>(null);
   const bannerRef = useRef<HTMLDivElement>(null);
   const dismissedRef = useRef(false);
@@ -183,51 +186,51 @@ export function AnnouncementBanner() {
       >
         {status === 'scheduled' && (
           <>
-            <span className="font-semibold text-white mr-1">{ANNOUNCEMENT_CONFIG.title}:</span>
+            <span className="font-semibold text-white mr-1">{a.title}:</span>
             {/* Mobile — short */}
             <span className="sm:hidden">
-              Window: <span className="text-sky-300">{timeRange}</span> your local time.
+              {a.mobileShortWindow} <span className="text-sky-300" dir="ltr">{timeRange}</span> {a.yourLocalTime}
             </span>
             {/* Desktop — full */}
             <span className="hidden sm:inline">
-              {ANNOUNCEMENT_CONFIG.message}{' '}
-              Maintenance window:{' '}
-              <span className="font-medium text-sky-300">{timeRange}</span>{' '}
-              your local time.
+              {a.message}{' '}
+              {a.windowLabel}{' '}
+              <span className="font-medium text-sky-300" dir="ltr">{timeRange}</span>{' '}
+              {a.yourLocalTime}
             </span>
           </>
         )}
 
         {status === 'imminent' && (
           <>
-            <span className="font-semibold text-amber-300 mr-1">Maintenance Starting Soon:</span>
+            <span className="font-semibold text-amber-300 mr-1">{a.imminentTitle}</span>
             {/* Mobile */}
             <span className="sm:hidden">
-              Starts in{' '}
-              <span className="font-mono font-bold text-white tabular-nums">{countdown}</span>
+              {a.imminentShort}{' '}
+              <span className="font-mono font-bold text-white tabular-nums" dir="ltr">{countdown}</span>
             </span>
             {/* Desktop */}
             <span className="hidden sm:inline">
-              CyfroSec maintenance begins in{' '}
-              <span className="font-mono font-bold text-white tabular-nums tracking-wider">{countdown}</span>
-              {' '}· Window:{' '}
-              <span className="font-medium text-amber-200">{timeRange}</span>{' '}
-              your local time.
+              {a.imminentLong}{' '}
+              <span className="font-mono font-bold text-white tabular-nums tracking-wider" dir="ltr">{countdown}</span>
+              {' '}{a.imminentWindow}{' '}
+              <span className="font-medium text-amber-200" dir="ltr">{timeRange}</span>{' '}
+              {a.windowSuffix}
             </span>
           </>
         )}
 
         {status === 'in_progress' && (
           <>
-            <span className="font-semibold text-amber-300 mr-1">Maintenance in Progress:</span>
+            <span className="font-semibold text-amber-300 mr-1">{a.inProgressTitle}</span>
             {/* Mobile */}
-            <span className="sm:hidden">Service may be interrupted.</span>
+            <span className="sm:hidden">{a.inProgressShort}</span>
             {/* Desktop */}
             <span className="hidden sm:inline">
-              CyfroSec is currently undergoing maintenance.{' '}
-              Window:{' '}
-              <span className="font-medium text-amber-200">{timeRange}</span>{' '}
-              your local time.
+              {a.inProgressLong}{' '}
+              {a.windowLabel2}{' '}
+              <span className="font-medium text-amber-200" dir="ltr">{timeRange}</span>{' '}
+              {a.windowSuffix}
             </span>
           </>
         )}
@@ -272,7 +275,7 @@ export function AnnouncementBanner() {
           <button
             type="button"
             onClick={dismiss}
-            aria-label="Close announcement"
+            aria-label={a.closeLabel}
             className="shrink-0 rounded-full p-1 text-slate-400 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60"
           >
             <X className="w-4 h-4" aria-hidden="true" />

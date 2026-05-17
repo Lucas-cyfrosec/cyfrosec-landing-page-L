@@ -9,8 +9,17 @@ import { LandingHeader } from '@/app/components/landing/LandingHeader'
 import styles from '@/app/landing-theme.module.css'
 import { DOCS_HEADING_FONT, DOCS_NAV_SECTIONS, DOCS_SEARCH_INDEX, type DocsNavSection } from './docs-data'
 import { recordDocsInteraction } from './docs-analytics'
+import { useTranslation } from '@/src/i18n'
 
-function SidebarSection({ section }: { section: DocsNavSection }) {
+function SidebarSection({
+  section,
+  translatedTitle,
+  linkLabelMap,
+}: {
+  section: DocsNavSection
+  translatedTitle?: string
+  linkLabelMap?: Record<string, string>
+}) {
   const pathname = usePathname()
   const hasActiveItem = section.items.some((item) => pathname === item.href)
   const [manualOpen, setManualOpen] = useState(() => section.defaultOpen ?? false)
@@ -22,7 +31,7 @@ function SidebarSection({ section }: { section: DocsNavSection }) {
         onClick={() => setManualOpen((v) => !v)}
         className="flex w-full items-center justify-between py-1.5 text-[10px] font-bold uppercase tracking-widest cy-text-muted transition-colors hover:cy-text-primary 3xl:py-2 3xl:text-[11px]"
       >
-        {section.title}
+        {translatedTitle ?? section.title}
         <ChevronRight
           className={`h-3.5 w-3.5 transition-transform duration-200 3xl:h-4 3xl:w-4 ${open ? 'rotate-90' : ''}`}
         />
@@ -32,6 +41,7 @@ function SidebarSection({ section }: { section: DocsNavSection }) {
         <ul className="mt-1 space-y-0.5 border-l border-[color-mix(in_srgb,var(--border-default)_60%,transparent)] ml-1 pl-3">
           {section.items.map((item) => {
             const active = pathname === item.href
+            const label = linkLabelMap?.[item.href] ?? item.label
             return (
               <li key={item.href}>
                 <Link
@@ -43,7 +53,7 @@ function SidebarSection({ section }: { section: DocsNavSection }) {
                       : 'cy-text-secondary hover:cy-text-primary'
                   }`}
                 >
-                  {item.label}
+                  {label}
                 </Link>
               </li>
             )
@@ -55,6 +65,10 @@ function SidebarSection({ section }: { section: DocsNavSection }) {
 }
 
 function DocsSidebar() {
+  const { t, lang } = useTranslation()
+  const isAr = lang === 'ar'
+  const sb = t.pages.documentsFull.sidebar
+
   const [query, setQuery] = useState('')
   const [focused, setFocused] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -66,6 +80,38 @@ function DocsSidebar() {
   )
 
   const results = query.trim().length > 0 ? fuse.search(query.trim()).slice(0, 8) : []
+
+  // Map English section titles → translated titles
+  const sectionTitleMap: Record<string, string> = {
+    'GETTING STARTED': sb.sections.gettingStarted,
+    'PLATFORM GUIDE': sb.sections.platformGuide,
+    'CYFROAI ENGINE': sb.sections.cyfroAiEngine,
+    'CYFROAGENT': sb.sections.cyfroAgent,
+    'SCANS': sb.sections.scans,
+    'SECURITY & COMPLIANCE': sb.sections.securityCompliance,
+    'ADMIN PANEL': sb.sections.adminPanel,
+  }
+
+  // Map hrefs → translated link labels
+  const linkLabelMap: Record<string, string> = {
+    '/documents/full': sb.links.platformOverview,
+    '/documents/rbac': sb.links.roleBasedAccessControl,
+    '/documents/support': sb.links.support,
+    '/documents/dashboard': sb.links.dashboard,
+    '/documents/notifications': sb.links.notifications,
+    '/documents/reports': sb.links.report,
+    '/documents/topology': sb.links.topology,
+    '/documents/deploy-agent': sb.links.deployAgent,
+    '/documents/docker-scanning': sb.links.dockerScanning,
+    '/documents/delete-agent': sb.links.deleteAgent,
+    '/documents/first-scan': sb.links.firstScan,
+    '/documents/network-discovery': sb.links.networkDiscovery,
+    '/documents/asset-discovery': sb.links.assetDiscovery,
+    '/documents/service-fingerprinting': sb.links.serviceFingerprinting,
+    '/documents/gdpr': sb.links.gdpr,
+    '/documents/audit': sb.links.audit,
+    '/documents/admin': sb.links.admin,
+  }
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -92,7 +138,7 @@ function DocsSidebar() {
           className="inline-flex items-center gap-1.5 text-xs cy-text-muted transition-colors hover:cy-text-brand 3xl:text-[13px]"
         >
           <ArrowLeft className="h-3.5 w-3.5 3xl:h-4 3xl:w-4" />
-          Back to site
+          <span lang={isAr ? 'ar' : 'en'}>{sb.backToSite}</span>
         </Link>
 
         <Link
@@ -100,7 +146,7 @@ function DocsSidebar() {
           className="block text-sm font-semibold cy-text-primary transition-colors hover:cy-text-brand 3xl:text-[16px]"
           style={{ fontFamily: DOCS_HEADING_FONT }}
         >
-          CyfroSec Documentation
+          <span lang={isAr ? 'ar' : 'en'}>{sb.title}</span>
         </Link>
 
         {/* Search */}
@@ -112,7 +158,8 @@ function DocsSidebar() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setFocused(true)}
-            placeholder="Search docs…"
+            placeholder={sb.searchPlaceholder}
+            dir={isAr ? 'rtl' : 'ltr'}
             className="w-full rounded-lg border cy-border-default cy-bg-canvas pl-8 pr-3 py-2 text-xs cy-text-primary placeholder:cy-text-muted transition focus:outline-none focus:ring-2 focus:ring-primary-500/30 3xl:pl-10 3xl:pr-4 3xl:py-2.5 3xl:text-[13px]"
           />
 
@@ -124,7 +171,9 @@ function DocsSidebar() {
               style={{ background: 'var(--bg-elevated)' }}
             >
               {results.length === 0 ? (
-                <p className="px-3 py-3 text-xs cy-text-muted 3xl:px-4 3xl:py-3.5 3xl:text-[13px]">No results for &ldquo;{query}&rdquo;</p>
+                <p className="px-3 py-3 text-xs cy-text-muted 3xl:px-4 3xl:py-3.5 3xl:text-[13px]">
+                  {sb.noResults} &ldquo;{query}&rdquo;
+                </p>
               ) : (
                 <ul>
                   {results.map(({ item }) => (
@@ -153,7 +202,12 @@ function DocsSidebar() {
       {/* ── Scrollable nav sections ──────────────────────────────────── */}
       <div className="flex-1 space-y-4 overflow-y-auto px-4 py-4 3xl:px-5 3xl:py-5 3xl:space-y-5">
         {!query.trim() && DOCS_NAV_SECTIONS.map((section) => (
-          <SidebarSection key={section.title} section={section} />
+          <SidebarSection
+            key={section.title}
+            section={section}
+            translatedTitle={sectionTitleMap[section.title]}
+            linkLabelMap={linkLabelMap}
+          />
         ))}
       </div>
     </nav>
@@ -171,7 +225,7 @@ export default function DocumentsLayout({ children }: { children: React.ReactNod
       <LandingHeader />
 
       {/* ── Docs body (below navbar) ──────────────────────────────────── */}
-      <div className="flex flex-1 pt-20 xl:pt-22 3xl:pt-24 overflow-hidden">
+      <div className="flex flex-1 pt-20 xl:pt-22 3xl:pt-24 overflow-hidden" dir="ltr">
 
         {/* Mobile sidebar toggle (floating) */}
         {!isDocsGateway ? (

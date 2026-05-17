@@ -24,18 +24,11 @@ import {
   normalizeDocsHref,
   recordDocsInteraction,
 } from '../docs-analytics'
+import { useTranslation } from '@/src/i18n'
 
 type LinkItem = {
   label: string
   href: string
-}
-
-type QuickChip = LinkItem
-
-type StartCard = LinkItem & {
-  description: string
-  eyebrow: string
-  Icon: ComponentType<{ className?: string }>
 }
 
 type PopularArticle = LinkItem & {
@@ -50,36 +43,30 @@ type CategoryCard = {
   items: LinkItem[]
 }
 
-const QUICK_CHIPS: QuickChip[] = [
-  { label: 'Getting Started', href: '/documents/full#getting-started' },
-  { label: 'CyfroAgent Setup', href: '/documents/deploy-agent' },
-  { label: 'CyfroAI Insights', href: '/documents/ai-insights' },
-  { label: 'CyfroAssistant', href: '/documents/ai-assistant' },
+const QUICK_CHIP_HREFS = [
+  '/documents/full#getting-started',
+  '/documents/deploy-agent',
+  '/documents/ai-insights',
+  '/documents/ai-assistant',
 ]
 
-const START_HERE_CARDS: StartCard[] = [
-  {
-    eyebrow: 'Start here',
-    label: 'Create your organization',
-    href: '/documents/full#step1',
-    description: 'Sign up at app.cyfrosec.com, verify your email, and complete your organization setup. The first user in a new organization must be an admin.',
-    Icon: Sparkles,
-  },
-  {
-    eyebrow: 'Install',
-    label: 'Register and install CyfroAgent',
-    href: '/documents/deploy-agent',
-    description: 'Generate a registration token and fernet key from the CyfroAgent tab, then run the provided Docker command on your host. Lightweight, outbound-only, and minimal resource usage.',
-    Icon: TerminalSquare,
-  },
-  {
-    eyebrow: 'Scan',
-    label: 'Create your first scan',
-    href: '/documents/first-scan',
-    description: 'Create a Network Discovery, Asset Discovery, or Service Fingerprinting test. Tests run automatically on a recurring schedule — hourly, every 6 hours, 12 hours, or daily.',
-    Icon: ShieldCheck,
-  },
+const START_CARD_HREFS = [
+  '/documents/full#step1',
+  '/documents/deploy-agent',
+  '/documents/first-scan',
 ]
+
+const START_CARD_ICONS: ComponentType<{ className?: string }>[] = [Sparkles, TerminalSquare, ShieldCheck]
+
+const CATEGORY_ICONS: Record<string, ComponentType<{ className?: string }>> = {
+  'GETTING STARTED': BookOpen,
+  'PLATFORM GUIDE': LayoutDashboard,
+  'CYFROAGENT': TerminalSquare,
+  'SCANS': Network,
+  'CYFROAI ENGINE': Brain,
+  'SECURITY & COMPLIANCE': ShieldCheck,
+  'ADMIN PANEL': UsersRound,
+}
 
 const DEFAULT_POPULAR_ARTICLE_HREFS = [
   '/documents/full',
@@ -90,95 +77,14 @@ const DEFAULT_POPULAR_ARTICLE_HREFS = [
   '/documents/service-fingerprinting',
 ]
 
-type CategoryMeta = {
-  title: string
-  description: string
-  Icon: ComponentType<{ className?: string }>
-}
-
-const CATEGORY_META: Record<string, CategoryMeta> = {
-  'GETTING STARTED': {
-    title: 'Getting Started',
-    description: 'Sign up, create your organization and account groups, register your first agent, and understand the three-role permission model.',
-    Icon: BookOpen,
-  },
-  'PLATFORM GUIDE': {
-    title: 'Platform Guide',
-    description: 'Dashboard, notifications, reports, CyfroCode code security workspace, and the interactive asset topology diagram.',
-    Icon: LayoutDashboard,
-  },
-  'CYFROAGENT': {
-    title: 'CyfroAgent',
-    description: 'Lightweight daemon for asset inventory, telemetry, and scan execution. Covers single-host and multi-container Docker deployments.',
-    Icon: TerminalSquare,
-  },
-  'SCANS': {
-    title: 'Scans',
-    description: 'Create recurring tests targeting a host or subnet. Covers Network Discovery, Asset Discovery, and Service Fingerprinting scan types.',
-    Icon: Network,
-  },
-  'CYFROAI ENGINE': {
-    title: 'CyfroAI Engine',
-    description: 'CyfroAI Engine generates executive summaries and prioritized risk lists after each scan. CyfroAssistant lets you query your infrastructure in natural language.',
-    Icon: Brain,
-  },
-  'SECURITY & COMPLIANCE': {
-    title: 'Security & Compliance',
-    description: 'Automated GDPR compliance scoring by article category with trend tracking, plus a full searchable audit trail for governance.',
-    Icon: ShieldCheck,
-  },
-  'ADMIN PANEL': {
-    title: 'Admin Panel',
-    description: 'Organization records, account groups, user management, subscription status, and usage statistics — restricted to admin roles.',
-    Icon: UsersRound,
-  },
-}
-
-const CATEGORY_CARDS: CategoryCard[] = DOCS_NAV_SECTIONS
-  .filter((section) => section.title in CATEGORY_META)
-  .map((section) => ({
-    ...CATEGORY_META[section.title],
-    href: section.items[0]?.href ?? '',
-    items: section.items,
-  }))
-
-function SectionHeading({
-  eyebrow,
-  title,
-  description,
-}: {
-  eyebrow: string
-  title: string
-  description: string
-}) {
-  return (
-    <div className="mb-6 sm:mb-8 3xl:mb-10">
-      <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] cy-text-brand 3xl:text-[13px]">{eyebrow}</p>
-      <h2
-        className="text-2xl font-bold tracking-tight cy-text-primary sm:text-3xl lg:text-4xl 3xl:text-[3rem]"
-        style={{ fontFamily: DOCS_HEADING_FONT }}
-      >
-        {title}
-      </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-relaxed cy-text-secondary sm:text-base 3xl:max-w-3xl 3xl:text-[18px] 3xl:leading-8">
-        {description}
-      </p>
-    </div>
-  )
-}
-
 function buildPopularArticle(href: string): PopularArticle | null {
   const normalizedHref = normalizeDocsHref(href)
   const docsItem = DOCS_SEARCH_INDEX.find((item) => item.href === normalizedHref)
-
-  if (!docsItem) {
-    return null
-  }
-
+  if (!docsItem) return null
   return {
     label: docsItem.label,
     href: docsItem.href,
-    description: DOCS_ARTICLE_SUMMARIES[docsItem.href] ?? `Open the ${docsItem.label} guide in the ${docsItem.section.toLowerCase()} documentation set.`,
+    description: DOCS_ARTICLE_SUMMARIES[docsItem.href] ?? `Open the ${docsItem.label} guide.`,
   }
 }
 
@@ -199,16 +105,17 @@ function getPopularArticlesFromCounts() {
   const seen = new Set<string>()
 
   return mergedArticles.filter((article) => {
-    if (seen.has(article.href)) {
-      return false
-    }
-
+    if (seen.has(article.href)) return false
     seen.add(article.href)
     return true
   }).slice(0, 6)
 }
 
 export default function DocsLandingGateway() {
+  const { t, lang } = useTranslation()
+  const isAr = lang === 'ar'
+  const dl = t.pages.documentsLanding
+
   const [query, setQuery] = useState('')
   const [focused, setFocused] = useState(false)
   const [popularArticles, setPopularArticles] = useState<PopularArticle[]>(() => getDefaultPopularArticles())
@@ -234,7 +141,6 @@ export default function DocsLandingGateway() {
         setFocused(false)
       }
     }
-
     document.addEventListener('mousedown', handleOutsideClick)
     return () => document.removeEventListener('mousedown', handleOutsideClick)
   }, [])
@@ -243,16 +149,40 @@ export default function DocsLandingGateway() {
     function syncPopularArticles() {
       setPopularArticles(getPopularArticlesFromCounts())
     }
-
     syncPopularArticles()
     window.addEventListener(DOCS_POPULARITY_EVENT, syncPopularArticles as EventListener)
     window.addEventListener('storage', syncPopularArticles)
-
     return () => {
       window.removeEventListener(DOCS_POPULARITY_EVENT, syncPopularArticles as EventListener)
       window.removeEventListener('storage', syncPopularArticles)
     }
   }, [])
+
+  const quickChipLabels = [
+    dl.tags.gettingStarted,
+    dl.tags.cyfroAgentSetup,
+    dl.tags.cyfroAiInsights,
+    dl.tags.cyfroAssistant,
+  ]
+
+  const categoryMetaMap: Record<string, { title: string; description: string }> = {
+    'GETTING STARTED': dl.categoryMeta.gettingStarted,
+    'PLATFORM GUIDE': dl.categoryMeta.platformGuide,
+    'CYFROAGENT': dl.categoryMeta.cyfroagent,
+    'SCANS': dl.categoryMeta.scans,
+    'CYFROAI ENGINE': dl.categoryMeta.cyfroaiEngine,
+    'SECURITY & COMPLIANCE': dl.categoryMeta.securityCompliance,
+    'ADMIN PANEL': dl.categoryMeta.adminPanel,
+  }
+
+  const categoryCards: CategoryCard[] = DOCS_NAV_SECTIONS
+    .filter((section) => section.title in categoryMetaMap)
+    .map((section) => ({
+      ...categoryMetaMap[section.title],
+      href: section.items[0]?.href ?? '',
+      items: section.items,
+      Icon: CATEGORY_ICONS[section.title] ?? BookOpen,
+    }))
 
   return (
     <div className="w-full">
@@ -271,18 +201,24 @@ export default function DocsLandingGateway() {
             <div className="relative max-w-4xl 3xl:max-w-5xl">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary-500/20 bg-primary-500/8 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary-700 dark:text-primary-300 3xl:px-4 3xl:py-2 3xl:text-[13px]">
                 <BookOpen className="h-3.5 w-3.5 3xl:h-4 3xl:w-4" />
-                Documentation
+                <span lang={isAr ? 'ar' : 'en'}>{dl.badge}</span>
               </div>
 
               <h1
+                lang={isAr ? 'ar' : 'en'}
+                dir={isAr ? 'rtl' : 'ltr'}
                 className="max-w-3xl text-4xl font-bold tracking-tight cy-text-primary sm:text-5xl lg:text-6xl 3xl:max-w-4xl 3xl:text-[4.15rem] 3xl:leading-[1.02]"
                 style={{ fontFamily: DOCS_HEADING_FONT }}
               >
-                Everything you need to operate CyfroSec with confidence.
+                {dl.title}
               </h1>
 
-              <p className="mt-4 max-w-2xl text-base leading-relaxed cy-text-secondary sm:text-lg 3xl:max-w-3xl 3xl:text-[19px] 3xl:leading-8">
-                CyfroSec continuously discovers assets, analyzes vulnerabilities, misconfigurations, secrets and provides AI-driven remediation guidance across your infrastructure. Browse by topic or search below to find the guide you need.
+              <p
+                lang={isAr ? 'ar' : 'en'}
+                dir={isAr ? 'rtl' : 'ltr'}
+                className="mt-4 max-w-2xl text-base leading-relaxed cy-text-secondary sm:text-lg 3xl:max-w-3xl 3xl:text-[19px] 3xl:leading-8"
+              >
+                {dl.description}
               </p>
 
               <div className="relative mt-7 max-w-2xl 3xl:mt-8 3xl:max-w-3xl">
@@ -294,7 +230,8 @@ export default function DocsLandingGateway() {
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
                     onFocus={() => setFocused(true)}
-                    placeholder="Search the docs by topic, product area, or workflow"
+                    placeholder={dl.searchPlaceholder}
+                    dir={isAr ? 'rtl' : 'ltr'}
                     className="h-14 w-full bg-transparent pl-11 pr-4 text-sm cy-text-primary placeholder:cy-text-muted focus:outline-none 3xl:h-16 3xl:pl-14 3xl:pr-5 3xl:text-[16px]"
                   />
                 </div>
@@ -336,14 +273,14 @@ export default function DocsLandingGateway() {
               </div>
 
               <div className="mt-5 flex flex-wrap gap-2.5 3xl:mt-6 3xl:gap-3">
-                {QUICK_CHIPS.map((chip) => (
+                {quickChipLabels.map((label, i) => (
                   <Link
-                    key={chip.href}
-                    href={chip.href}
-                    onClick={() => recordDocsInteraction(chip.href)}
+                    key={QUICK_CHIP_HREFS[i]}
+                    href={QUICK_CHIP_HREFS[i]}
+                    onClick={() => recordDocsInteraction(QUICK_CHIP_HREFS[i])}
                     className="inline-flex items-center rounded-full border cy-border-default bg-white/75 px-3.5 py-2 text-xs font-medium cy-text-secondary transition-colors hover:border-primary-500/35 hover:bg-primary-500/6 hover:cy-text-primary dark:bg-surface-900/75 3xl:px-4 3xl:py-2.5 3xl:text-[13px]"
                   >
-                    {chip.label}
+                    <span lang={isAr ? 'ar' : 'en'}>{label}</span>
                   </Link>
                 ))}
               </div>
@@ -352,15 +289,27 @@ export default function DocsLandingGateway() {
             <div className="mt-8 w-full rounded-[1.75rem] border cy-border-default bg-white/85 px-6 py-6 shadow-[0_18px_50px_rgba(15,23,42,0.05)] backdrop-blur-xl dark:bg-surface-900/85 sm:px-8 3xl:mt-10 3xl:px-10 3xl:py-8">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] cy-text-brand 3xl:text-[13px]">Full Documentation</p>
+                  <p
+                    lang={isAr ? 'ar' : 'en'}
+                    dir={isAr ? 'rtl' : 'ltr'}
+                    className="text-[11px] font-semibold uppercase tracking-[0.18em] cy-text-brand 3xl:text-[13px]"
+                  >
+                    {dl.fullDocumentation.label}
+                  </p>
                   <h3
+                    lang={isAr ? 'ar' : 'en'}
+                    dir={isAr ? 'rtl' : 'ltr'}
                     className="mt-2 text-xl font-bold tracking-tight cy-text-primary 3xl:text-[1.8rem]"
                     style={{ fontFamily: DOCS_HEADING_FONT }}
                   >
-                    Read the complete Platform Overview
+                    {dl.fullDocumentation.title}
                   </h3>
-                  <p className="mt-2 max-w-2xl text-sm leading-relaxed cy-text-secondary 3xl:max-w-3xl 3xl:text-[16px] 3xl:leading-7">
-                    The Platform Overview article covers core capabilities, getting started in five steps, RBAC, dashboard metric semantics, and the full sidebar-driven documentation flow.
+                  <p
+                    lang={isAr ? 'ar' : 'en'}
+                    dir={isAr ? 'rtl' : 'ltr'}
+                    className="mt-2 max-w-2xl text-sm leading-relaxed cy-text-secondary 3xl:max-w-3xl 3xl:text-[16px] 3xl:leading-7"
+                  >
+                    {dl.fullDocumentation.description}
                   </p>
                 </div>
 
@@ -370,7 +319,7 @@ export default function DocsLandingGateway() {
                     onClick={() => recordDocsInteraction('/documents/full')}
                     className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary-500 px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-600 sm:w-auto sm:min-w-[220px] 3xl:min-w-[240px] 3xl:px-8 3xl:py-3.5 3xl:text-[15px]"
                   >
-                    <span>Open full docs</span>
+                    <span lang={isAr ? 'ar' : 'en'}>{dl.fullDocumentation.button}</span>
                     <ArrowRight className="h-4 w-4 3xl:h-[18px] 3xl:w-[18px]" />
                   </Link>
                 </div>
@@ -382,47 +331,100 @@ export default function DocsLandingGateway() {
 
       <section className="bg-surface-50/70 dark:bg-surface-950/40">
         <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14 3xl:max-w-[1700px] 3xl:px-8 3xl:py-16 4xl:max-w-[2000px]">
-          <SectionHeading
-            eyebrow="Start Here"
-            title="Follow these steps to get up and running in minutes."
-            description="Most teams start with organization setup, deploy CyfroAgent on a host, then create their first scan. This is that path."
-          />
+          <div className="mb-6 sm:mb-8 3xl:mb-10">
+            <p
+              lang={isAr ? 'ar' : 'en'}
+              dir={isAr ? 'rtl' : 'ltr'}
+              className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] cy-text-brand 3xl:text-[13px]"
+            >
+              {dl.startHere.eyebrow}
+            </p>
+            <h2
+              lang={isAr ? 'ar' : 'en'}
+              dir={isAr ? 'rtl' : 'ltr'}
+              className="text-2xl font-bold tracking-tight cy-text-primary sm:text-3xl lg:text-4xl 3xl:text-[3rem]"
+              style={{ fontFamily: DOCS_HEADING_FONT }}
+            >
+              {dl.startHere.title}
+            </h2>
+            <p
+              lang={isAr ? 'ar' : 'en'}
+              dir={isAr ? 'rtl' : 'ltr'}
+              className="mt-3 max-w-2xl text-sm leading-relaxed cy-text-secondary sm:text-base 3xl:max-w-3xl 3xl:text-[18px] 3xl:leading-8"
+            >
+              {dl.startHere.description}
+            </p>
+          </div>
 
           <div className="grid gap-4 lg:grid-cols-3 3xl:gap-5">
-            {START_HERE_CARDS.map(({ eyebrow, label, href, description, Icon }) => (
-              <Link
-                key={href}
-                href={href}
-                onClick={() => recordDocsInteraction(href)}
-                className="group relative overflow-hidden rounded-3xl border border-[color-mix(in_srgb,var(--border-default)_88%,rgba(3,155,224,0.18))] bg-white/98 px-5 py-5 shadow-[0_18px_44px_rgba(15,23,42,0.08)] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary-500/35 hover:shadow-[0_20px_50px_rgba(3,155,224,0.10)] dark:bg-[rgba(31,51,72,0.98)] 3xl:px-6 3xl:py-6"
-              >
-                <div className="mb-4 flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-primary-500/8 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary-700 dark:text-primary-300 3xl:px-3 3xl:py-1.5 3xl:text-[11px]">
-                    {eyebrow}
+            {dl.startCards.map((card, i) => {
+              const Icon = START_CARD_ICONS[i]
+              return (
+                <Link
+                  key={START_CARD_HREFS[i]}
+                  href={START_CARD_HREFS[i]}
+                  onClick={() => recordDocsInteraction(START_CARD_HREFS[i])}
+                  className="group relative overflow-hidden rounded-3xl border border-[color-mix(in_srgb,var(--border-default)_88%,rgba(3,155,224,0.18))] bg-white/98 px-5 py-5 shadow-[0_18px_44px_rgba(15,23,42,0.08)] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary-500/35 hover:shadow-[0_20px_50px_rgba(3,155,224,0.10)] dark:bg-[rgba(31,51,72,0.98)] 3xl:px-6 3xl:py-6"
+                >
+                  <div className="mb-4 flex items-center justify-between">
+                    <div className="inline-flex items-center gap-2 rounded-full bg-primary-500/8 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary-700 dark:text-primary-300 3xl:px-3 3xl:py-1.5 3xl:text-[11px]">
+                      <span lang={isAr ? 'ar' : 'en'}>{card.eyebrow}</span>
+                    </div>
+                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-primary-500/18 bg-primary-500/8 text-primary-600 dark:text-primary-300 3xl:h-12 3xl:w-12">
+                      <Icon className="h-5 w-5 3xl:h-6 3xl:w-6" />
+                    </div>
                   </div>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-primary-500/18 bg-primary-500/8 text-primary-600 dark:text-primary-300 3xl:h-12 3xl:w-12">
-                    <Icon className="h-5 w-5 3xl:h-6 3xl:w-6" />
+                  <h3
+                    lang={isAr ? 'ar' : 'en'}
+                    dir={isAr ? 'rtl' : 'ltr'}
+                    className="text-lg font-semibold tracking-tight cy-text-primary 3xl:text-[1.25rem]"
+                  >
+                    {card.label}
+                  </h3>
+                  <p
+                    lang={isAr ? 'ar' : 'en'}
+                    dir={isAr ? 'rtl' : 'ltr'}
+                    className="mt-2 text-sm leading-relaxed cy-text-secondary 3xl:text-[15px] 3xl:leading-7"
+                  >
+                    {card.description}
+                  </p>
+                  <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-primary-600 dark:text-primary-300 3xl:text-[15px]">
+                    <span lang={isAr ? 'ar' : 'en'}>{dl.openArticle}</span>
+                    <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 3xl:h-[18px] 3xl:w-[18px]" />
                   </div>
-                </div>
-                <h3 className="text-lg font-semibold tracking-tight cy-text-primary 3xl:text-[1.25rem]">{label}</h3>
-                <p className="mt-2 text-sm leading-relaxed cy-text-secondary 3xl:text-[15px] 3xl:leading-7">{description}</p>
-                <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-primary-600 dark:text-primary-300 3xl:text-[15px]">
-                  Open article
-                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 3xl:h-[18px] 3xl:w-[18px]" />
-                </div>
-              </Link>
-            ))}
+                </Link>
+              )
+            })}
           </div>
         </div>
       </section>
 
       <section className="bg-surface-50/70 dark:bg-surface-950/40">
         <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14 3xl:max-w-[1700px] 3xl:px-8 3xl:py-16 4xl:max-w-[2000px]">
-          <SectionHeading
-            eyebrow="Popular Articles"
-            title="Frequently referenced guides."
-            description="Reference guides across the platform — from scan workflows and agent setup to AI insights and compliance tooling."
-          />
+          <div className="mb-6 sm:mb-8 3xl:mb-10">
+            <p
+              lang={isAr ? 'ar' : 'en'}
+              dir={isAr ? 'rtl' : 'ltr'}
+              className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] cy-text-brand 3xl:text-[13px]"
+            >
+              {dl.popularArticles.eyebrow}
+            </p>
+            <h2
+              lang={isAr ? 'ar' : 'en'}
+              dir={isAr ? 'rtl' : 'ltr'}
+              className="text-2xl font-bold tracking-tight cy-text-primary sm:text-3xl lg:text-4xl 3xl:text-[3rem]"
+              style={{ fontFamily: DOCS_HEADING_FONT }}
+            >
+              {dl.popularArticles.title}
+            </h2>
+            <p
+              lang={isAr ? 'ar' : 'en'}
+              dir={isAr ? 'rtl' : 'ltr'}
+              className="mt-3 max-w-2xl text-sm leading-relaxed cy-text-secondary sm:text-base 3xl:max-w-3xl 3xl:text-[18px] 3xl:leading-8"
+            >
+              {dl.popularArticles.description}
+            </p>
+          </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 3xl:gap-5">
             {popularArticles.map((article) => (
@@ -435,7 +437,7 @@ export default function DocsLandingGateway() {
                 <h3 className="text-base font-semibold cy-text-primary 3xl:text-[18px]">{article.label}</h3>
                 <p className="mt-2 text-sm leading-relaxed cy-text-secondary 3xl:text-[15px] 3xl:leading-7">{article.description}</p>
                 <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary-600 dark:text-primary-300 3xl:text-[15px]">
-                  Read article
+                  <span lang={isAr ? 'ar' : 'en'}>{dl.readArticle}</span>
                   <ChevronRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 3xl:h-[18px] 3xl:w-[18px]" />
                 </div>
               </Link>
@@ -445,14 +447,33 @@ export default function DocsLandingGateway() {
       </section>
 
       <section className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14 3xl:max-w-[1700px] 3xl:px-8 3xl:py-16 4xl:max-w-[2000px]">
-        <SectionHeading
-          eyebrow="Browse By Category"
-          title="Browse the full documentation by product area."
-          description="Every section maps directly to the sidebar structure. Select a category to explore its guides, or use the search above to find a specific topic."
-        />
+        <div className="mb-6 sm:mb-8 3xl:mb-10">
+          <p
+            lang={isAr ? 'ar' : 'en'}
+            dir={isAr ? 'rtl' : 'ltr'}
+            className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] cy-text-brand 3xl:text-[13px]"
+          >
+            {dl.browseCategory.eyebrow}
+          </p>
+          <h2
+            lang={isAr ? 'ar' : 'en'}
+            dir={isAr ? 'rtl' : 'ltr'}
+            className="text-2xl font-bold tracking-tight cy-text-primary sm:text-3xl lg:text-4xl 3xl:text-[3rem]"
+            style={{ fontFamily: DOCS_HEADING_FONT }}
+          >
+            {dl.browseCategory.title}
+          </h2>
+          <p
+            lang={isAr ? 'ar' : 'en'}
+            dir={isAr ? 'rtl' : 'ltr'}
+            className="mt-3 max-w-2xl text-sm leading-relaxed cy-text-secondary sm:text-base 3xl:max-w-3xl 3xl:text-[18px] 3xl:leading-8"
+          >
+            {dl.browseCategory.description}
+          </p>
+        </div>
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 3xl:gap-5">
-          {CATEGORY_CARDS.map((category) => (
+          {categoryCards.map((category) => (
             <div
               key={category.title}
               className="group rounded-[1.5rem] border cy-border-default bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary-500/30 hover:shadow-[0_18px_42px_rgba(15,23,42,0.06)] dark:bg-surface-900 3xl:p-6"
@@ -461,9 +482,21 @@ export default function DocsLandingGateway() {
                 <category.Icon className="h-5 w-5 3xl:h-6 3xl:w-6" />
               </div>
               <Link href={category.href} onClick={() => recordDocsInteraction(category.href)} className="inline-block">
-                <h3 className="text-base font-semibold tracking-tight cy-text-primary transition-colors hover:cy-text-brand 3xl:text-[18px]">{category.title}</h3>
+                <h3
+                  lang={isAr ? 'ar' : 'en'}
+                  dir={isAr ? 'rtl' : 'ltr'}
+                  className="text-base font-semibold tracking-tight cy-text-primary transition-colors hover:cy-text-brand 3xl:text-[18px]"
+                >
+                  {category.title}
+                </h3>
               </Link>
-              <p className="mt-2 text-sm leading-relaxed cy-text-secondary 3xl:text-[15px] 3xl:leading-7">{category.description}</p>
+              <p
+                lang={isAr ? 'ar' : 'en'}
+                dir={isAr ? 'rtl' : 'ltr'}
+                className="mt-2 text-sm leading-relaxed cy-text-secondary 3xl:text-[15px] 3xl:leading-7"
+              >
+                {category.description}
+              </p>
               <ul className="mt-4 space-y-2">
                 {category.items.map((item) => (
                   <li key={item.href}>
@@ -483,13 +516,12 @@ export default function DocsLandingGateway() {
                 onClick={() => recordDocsInteraction(category.href)}
                 className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-300 dark:hover:text-primary-200 3xl:text-[15px]"
               >
-                Browse section
+                <span lang={isAr ? 'ar' : 'en'}>{dl.browseSection}</span>
                 <ChevronRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 3xl:h-[18px] 3xl:w-[18px]" />
               </Link>
             </div>
           ))}
         </div>
-
       </section>
 
       <section className="border-t cy-border-default">
@@ -497,15 +529,27 @@ export default function DocsLandingGateway() {
           <div className="rounded-[1.5rem] border cy-border-default bg-white/85 px-6 py-6 dark:bg-surface-900/85 sm:px-8 sm:py-8 3xl:px-10 3xl:py-10">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] cy-text-brand 3xl:text-[13px]">Support</p>
+                <p
+                  lang={isAr ? 'ar' : 'en'}
+                  dir={isAr ? 'rtl' : 'ltr'}
+                  className="text-[11px] font-semibold uppercase tracking-[0.18em] cy-text-brand 3xl:text-[13px]"
+                >
+                  {dl.support.eyebrow}
+                </p>
                 <h3
+                  lang={isAr ? 'ar' : 'en'}
+                  dir={isAr ? 'rtl' : 'ltr'}
                   className="mt-2 text-xl font-bold tracking-tight cy-text-primary 3xl:text-[1.6rem]"
                   style={{ fontFamily: DOCS_HEADING_FONT }}
                 >
-                  Need help? We&rsquo;re here.
+                  {dl.support.title}
                 </h3>
-                <p className="mt-2 max-w-xl text-sm leading-relaxed cy-text-secondary 3xl:max-w-2xl 3xl:text-[16px] 3xl:leading-7">
-                  Use the support form in the CyfroSec portal to submit issues, attach logs or screenshots, and receive help from the support team.
+                <p
+                  lang={isAr ? 'ar' : 'en'}
+                  dir={isAr ? 'rtl' : 'ltr'}
+                  className="mt-2 max-w-xl text-sm leading-relaxed cy-text-secondary 3xl:max-w-2xl 3xl:text-[16px] 3xl:leading-7"
+                >
+                  {dl.support.description}
                 </p>
               </div>
               <div className="shrink-0">
@@ -513,7 +557,7 @@ export default function DocsLandingGateway() {
                   href="mailto:support@cyfrosec.com"
                   className="inline-flex items-center gap-2 rounded-xl border cy-border-default bg-white px-6 py-2.5 text-sm font-semibold cy-text-primary transition-colors hover:border-primary-500/40 hover:cy-text-brand dark:bg-surface-900 3xl:px-7 3xl:py-3 3xl:text-[15px]"
                 >
-                  Contact support
+                  <span lang={isAr ? 'ar' : 'en'}>{dl.support.button}</span>
                 </a>
               </div>
             </div>

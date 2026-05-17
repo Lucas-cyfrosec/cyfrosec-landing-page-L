@@ -3,6 +3,40 @@
 
 html, body { overflow-x: hidden; }
 
+/* ── Arabic font: applied to any element that carries dir="rtl" directly,
+      and inherited by all its descendants. Layout containers are never
+      given dir="rtl", so flex/grid layout is never affected. ── */
+[dir="rtl"] {
+  font-family: var(--font-arabic), 'Segoe UI', 'Tahoma', 'Arial', sans-serif;
+}
+
+/* ── Arabic sizing: Noto Sans Arabic has a larger optical weight than the
+      Latin typeface at the same px size. The element+attribute selector
+      (0,1,1) beats any Tailwind utility class (0,1,0), so these rules win
+      at every breakpoint without !important. Only elements we explicitly
+      tag dir="rtl" are affected — layout containers never are. ── */
+
+/* Section h2 headings — ~10% reduction per breakpoint */
+h2[dir="rtl"] {
+  font-size: 1.35rem;   /* text-2xl = 1.5rem */
+  line-height: 1.25;
+}
+@media (min-width: 640px)  { h2[dir="rtl"] { font-size: 1.7rem; } }   /* text-3xl = 1.875rem */
+@media (min-width: 768px)  { h2[dir="rtl"] { font-size: 2rem; } }     /* text-4xl = 2.25rem */
+@media (min-width: 1024px) { h2[dir="rtl"] { font-size: 2.7rem; } }   /* text-5xl = 3rem */
+@media (min-width: 1920px) { h2[dir="rtl"] { font-size: 3.375rem; } } /* text-6xl = 3.75rem */
+
+/* h3 sub-headings — ~8% reduction for the responsive sizes used in
+   Highlights (text-xl/2xl/3xl), Personas, and PlatformArchitecture */
+h3[dir="rtl"] {
+  font-size: 1.04rem;   /* text-lg = 1.125rem */
+  line-height: 1.3;
+}
+@media (min-width: 640px)  { h3[dir="rtl"] { font-size: 1.15rem; } }  /* text-xl = 1.25rem */
+@media (min-width: 768px)  { h3[dir="rtl"] { font-size: 1.38rem; } }  /* text-2xl = 1.5rem */
+@media (min-width: 1024px) { h3[dir="rtl"] { font-size: 1.73rem; } }  /* text-3xl = 1.875rem */
+@media (min-width: 1920px) { h3[dir="rtl"] { font-size: 2.07rem; } }  /* text-4xl = 2.25rem */
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ── Extra breakpoints for large monitors & TVs ── */

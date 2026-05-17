@@ -1,52 +1,35 @@
+'use client';
+
 import { Wrench, BarChart3, Shield, Building2 } from 'lucide-react';
 import type { ComponentType } from 'react';
 import { GlowingEffect } from '../ui/grid-glow-effect';
 import { cn } from '@/lib/utils';
+import { useTranslation } from '@/src/i18n';
 
-interface Persona {
-  icon: ComponentType<{ className?: string }>;
-  title: string;
-  description: string;
-  highlight: string;
-}
+const PERSONA_ICONS: ComponentType<{ className?: string }>[] = [Wrench, BarChart3, Shield, Building2];
 
-const personas: Persona[] = [
-  {
-    icon: Wrench,
-    title: 'Network & IT Engineers',
-    description: 'Simple, actionable exposure insights without needing deep cybersecurity expertise. Fix issues with clear, step-by-step guidance.',
-    highlight: 'Actionable and easily understandable guidance'
-  },
-  {
-    icon: BarChart3,
-    title: 'IT Managers',
-    description: 'Executive summaries, compliance reports, and dynamic dashboards. Get visibility into your security posture at a glance.',
-    highlight: 'Correlation and summaries'
-  },
-  {
-    icon: Shield,
-    title: 'Security Teams',
-    description: 'Robust agent scanning, Infrastructure and Network coverage along with powerful CyfroAI Engine.',
-    highlight: 'Robust agent, CyfroAI Insights'
-  },
-  {
-    icon: Building2,
-    title: 'Decision Makers',
-    description: 'Cost-effective security ecosystem that scales with your business. Flexible licensing, easy deployment, and no vendor lock-in.',
-    highlight: 'Affordable, flexible deployment modes'
-  }
+const PERSONA_AREAS = [
+  'lg:col-[4/6] lg:row-[1/3]',
+  'lg:col-[1/3] lg:row-[1/3]',
+  'lg:col-[1/3] lg:row-[4/6]',
+  'lg:col-[4/6] lg:row-[4/6]',
 ];
 
 export default function Personas() {
+  const { t, lang } = useTranslation();
+  const isAr = lang === 'ar';
+
   return (
     <section id="personas" className="py-12 sm:py-16 lg:py-24 3xl:py-32 bg-surface-50 dark:bg-surface-950 min-h-screen flex flex-col justify-center">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl 3xl:max-w-screen-2xl">
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold text-surface-900 dark:text-surface-50 mb-3 sm:mb-4">
-            Who <span className="text-primary-500">CyfroSec</span> is for
+          <h2 dir={isAr ? 'rtl' : undefined} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold text-surface-900 dark:text-surface-50 mb-3 sm:mb-4">
+            {t.personas.titlePre}{' '}
+            <span className="text-primary-500">{t.personas.titleHighlight}</span>
+            {t.personas.titlePost ? ` ${t.personas.titlePost}` : ''}
           </h2>
-          <p className="text-base sm:text-lg 3xl:text-xl text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
-            Built for the people who actually manage infrastructure not just the security team.
+          <p dir={isAr ? 'rtl' : undefined} className="text-base sm:text-lg 3xl:text-xl text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
+            {t.personas.subtitle}
           </p>
         </div>
 
@@ -58,16 +41,10 @@ export default function Personas() {
               'grid-rows-auto lg:grid-rows-[1fr_1fr_0.16fr_1fr_1fr]'
             )}
           >
-            {personas.map((persona, idx) => {
-              const areas = [
-                'lg:col-[4/6] lg:row-[1/3]',
-                'lg:col-[1/3] lg:row-[1/3]',
-                'lg:col-[1/3] lg:row-[4/6]',
-                'lg:col-[4/6] lg:row-[4/6]'
-              ];
-              const Icon = persona.icon;
+            {t.personas.items.map((persona, idx) => {
+              const Icon = PERSONA_ICONS[idx];
               return (
-                <li key={persona.title} className={cn('list-none min-h-[12rem] sm:min-h-[15rem]', areas[idx])}>
+                <li key={persona.title} className={cn('list-none min-h-[12rem] sm:min-h-[15rem]', PERSONA_AREAS[idx])}>
                   <div className="relative h-full rounded-[1.25rem] border border-surface-200 dark:border-surface-700 p-3 md:rounded-[1.5rem] md:p-4 bg-surface-50/70 dark:bg-surface-800/70 backdrop-blur-sm shadow-lg">
                     <GlowingEffect
                       spread={45}
@@ -85,8 +62,8 @@ export default function Personas() {
                         <Icon className="h-5 w-5 text-primary-600 dark:text-primary-400" />
                       </div>
                       <div className="space-y-3">
-                        <h3 className="text-lg md:text-xl font-semibold text-surface-900 dark:text-surface-50">{persona.title}</h3>
-                        <p className="text-sm md:text-[15px] text-surface-600 dark:text-surface-400 leading-relaxed">{persona.description}</p>
+                        <h3 dir={isAr ? 'rtl' : undefined} className="text-lg md:text-xl font-semibold text-surface-900 dark:text-surface-50">{persona.title}</h3>
+                        <p dir={isAr ? 'rtl' : undefined} className="text-sm md:text-[15px] text-surface-600 dark:text-surface-400 leading-relaxed">{persona.description}</p>
                         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary-200 dark:border-primary-800/50 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-xs md:text-sm font-medium">
                           {persona.highlight}
                         </div>

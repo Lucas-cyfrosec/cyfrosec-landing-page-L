@@ -7,10 +7,10 @@ export default function ProductsLayout({ children }: { children: React.ReactNode
   return (
     <div className="scroll-smooth">
       <LandingHeader />
-      <main>{children}</main>
+      <main dir="ltr">{children}</main>
 
       {/* Related products strip */}
-      <section className="border-t cy-border-default cy-bg-muted py-10">
+      <section className="border-t cy-border-default cy-bg-muted py-10" dir="ltr">
         <div className="mx-auto max-w-7xl px-4 lg:px-6">
           <p className="mb-5 text-xs font-semibold uppercase tracking-[0.16em] cy-text-muted">Related Products</p>
           <div className="flex flex-wrap gap-3">

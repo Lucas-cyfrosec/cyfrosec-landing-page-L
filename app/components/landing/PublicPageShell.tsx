@@ -14,6 +14,7 @@ export function PublicPageShell({ children }: PublicPageShellProps) {
       <LandingHeader />
       {/* paddingTop compensates for the fixed announcement banner height */}
       <main
+        dir="ltr"
         className="bg-white dark:bg-surface-900 min-h-screen"
         style={{ paddingTop: 'var(--banner-h, 0px)' }}
       >
