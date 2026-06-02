@@ -2,16 +2,14 @@
 
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
-import { useTranslation } from '@/src/i18n'
-
 const HEADING_FONT = '"Sora", "Avenir Next", "Segoe UI", sans-serif'
 
 const CONTENT = {
   en: {
     category: 'Code Security',
     title: 'CyfroCode',
-    overview1: 'CyfroCode provides a comprehensive code security workspace embedded directly within CyfroSec. Designed for developers and security teams alike, it allows you to connect your code repositories, automatically run security scans, and generate actionable remediation patches, all without leaving the platform.',
-    overview2: 'CyfroCode supports 6 programming languages for code security scanning, plus 5 infrastructure/configuration surfaces.',
+    overview1: 'CyfroCode provides a comprehensive SAST code-security workspace embedded directly within CyfroSec. Designed for developers and security teams alike, it allows you to connect your code repositories, automatically run security scans, and generate actionable remediation patches, all without leaving the platform.',
+    overview2: 'CyfroCode supports 6 programming languages for SAST code-security scanning, plus 5 infrastructure/configuration surfaces, dead-code detection, and Logic Map / Mind Map views for understanding architecture faster.',
     languagesTitle: 'Programming Languages',
     languagesHeaders: ['Language', 'Extensions'],
     languages: [
@@ -72,6 +70,20 @@ const CONTENT = {
       ['AI Explanation', 'CyfroAssistant automatically summarizes the vulnerability, explaining why it is an issue in plain, contextual language.'],
       ['Remediation Guidance', 'Expand the guidance section to learn how to mitigate the risk manually.'],
     ] as [string, string][],
+    deadCodeTitle: 'Dead-Code Detection',
+    deadCodeIntro: 'CyfroCode also highlights code-health blind spots that often sit outside classic SAST results. Dead-code detection helps teams find unused files, functions, and code paths that increase maintenance overhead and can hide stale risk.',
+    deadCodeItems: [
+      'Flags unused or unreachable code paths during repository analysis.',
+      'Helps teams reduce attack surface and remove stale logic safely.',
+      'Complements vulnerability findings with broader code-health context.',
+    ],
+    mapsTitle: 'Logic Map & Mind Map',
+    mapsIntro: 'CyfroCode includes architecture-aware views so teams can understand how a repository is connected before making changes.',
+    mapsItems: [
+      'Logic Map shows relationships across files, functions, classes, endpoints, workflows, and application layers.',
+      'Mind Map layers AI-authored endpoint explanations on top of deterministic endpoint signatures.',
+      'Both views help developers review architecture, trace impact, and understand where fixes belong.',
+    ],
     patchTitle: 'Automated Patch Proposals',
     patchIntro: 'For supported vulnerabilities, CyfroCode goes beyond reporting by offering automated, AI-driven patches:',
     patchSteps: [
@@ -90,103 +102,16 @@ const CONTENT = {
       { id: 'managing-repos',     label: 'Managing Synced Repositories' },
       { id: 'running-scans',      label: 'Running Scans' },
       { id: 'reviewing-findings', label: 'Reviewing Findings & AI Explanations' },
+      { id: 'dead-code',          label: 'Dead-Code Detection' },
+      { id: 'logic-maps',         label: 'Logic Map & Mind Map' },
       { id: 'patch-proposals',    label: 'Automated Patch Proposals' },
     ],
     contactSupport: 'Contact support',
   },
-  ar: {
-    category: 'أمان الكود',
-    title: 'CyfroCode',
-    overview1: 'يوفر CyfroCode مساحة عمل شاملة لأمان الكود مدمجة مباشرة في CyfroSec. صُمِّم للمطورين وفرق الأمان على حد سواء، ويتيح لك توصيل مستودعات الكود وتشغيل فحوصات أمنية تلقائية وإنشاء تصحيحات قابلة للتنفيذ، كل ذلك دون مغادرة المنصة.',
-    overview2: 'يدعم CyfroCode 6 لغات برمجة لفحص أمان الكود، بالإضافة إلى 5 سطوح للبنية التحتية والإعدادات.',
-    languagesTitle: 'لغات البرمجة',
-    languagesHeaders: ['اللغة', 'الامتدادات'],
-    languages: [
-      ['Python', '.py'],
-      ['JavaScript', '.js'],
-      ['TypeScript', '.ts'],
-      ['Java', '.java'],
-      ['Go', '.go'],
-      ['C#', '.cs'],
-    ] as [string, string][],
-    infraTitle: 'سطوح البنية التحتية / الإعدادات',
-    infraItems: [
-      'حاوية (Dockerfile)',
-      'Terraform (IaC)',
-      'Kubernetes (البيانات المعمارية)',
-      'YAML (إعداد عام)',
-      'CI (سير عمل GitHub Actions)',
-    ],
-    githubTitle: 'توصيل GitHub',
-    githubIntro: 'للبدء مع CyfroCode، تحتاج إلى توصيل حساب GitHub الخاص بمؤسستك:',
-    githubSteps: [
-      'انتقل إلى CyfroCode عبر قائمة التنقل الرئيسية.',
-      'انقر على زر توصيل تطبيق GitHub.',
-      'ستتم إعادة توجيهك إلى GitHub للتصريح وتثبيت تطبيق CyfroSec على GitHub.',
-      'بعد التثبيت، ستزامن CyfroSec مستودعاتك تلقائياً وتعرضها في لوحة تحكم CyfroCode.',
-    ],
-    githubNoteLabel: 'ملاحظة:',
-    githubNote: 'يجب أن تكون مسؤولاً في كل من GitHub وCyfroSec لإتمام هذا الإعداد.',
-    reposTitle: 'إدارة المستودعات المتزامنة',
-    reposIntro: 'في لوحة تحكم CyfroCode، تُدرج مستودعاتك المتزامنة مع بيانات وصفية مفيدة:',
-    reposHeaders: ['الحقل', 'الوصف'],
-    reposRows: [
-      ['الفرع الافتراضي', 'الفرع الأساسي الذي تتم مراقبته للتغييرات.'],
-      ['اللغات والأطر', 'التقنيات المكتشفة تلقائياً في قاعدة الكود.'],
-      ['مؤشرات التقنية', 'شارات تشير إلى استخدام المستودع لـ Docker أو Terraform أو GitHub Actions.'],
-      ['حالة المزامنة', 'حالة الاتصال مع GitHub في الوقت الفعلي.'],
-    ] as [string, string][],
-    scansTitle: 'تشغيل الفحوصات',
-    scansIntro: 'لتحليل مستودع بحثاً عن ثغرات أمنية:',
-    scansSteps: [
-      'حدد المستودع في قائمة المستودعات المتزامنة.',
-      'انقر على زر وضع الفحص في الطابور.',
-      'سيتم وضع الفحص في طابور للفرع الافتراضي وسيمر بحالات مختلفة (في الطابور، قيد التشغيل، مكتمل، أو فشل).',
-    ],
-    scansNote: 'يمكنك مراقبة الفحوصات النشطة والتاريخية في قسم الفحوصات الأخيرة في لوحة تحكم CyfroCode الرئيسية.',
-    scansNoteStrong: 'الفحوصات الأخيرة',
-    findingsTitle: 'مراجعة النتائج وتفسيرات الذكاء الاصطناعي',
-    findingsIntro: 'بعد اكتمال الفحص، يمكنك النقر عليه لعرض تفصيل مفصّل للنتائج. تقدم صفحة تفاصيل الفحص:',
-    findingsItems: [
-      'نظرة عامة على المقاييس: لقطة من إجمالي النتائج ودرجات المخاطر ومدة الفحص.',
-      'المشكلات المجمّعة مقابل المطابقات الخام: تبديل بين المشكلات المجمّعة (مزالة التكرار حسب نوع الثغرة) أو المطابقات الخام (كل سطر كود محدد متأثر).',
-      'مرشحات الخطورة: تصفية النتائج بسرعة من الحرجة إلى المنخفضة.',
-    ],
-    findingsCardIntro: 'توفر كل بطاقة نتيجة سياقاً عميقاً:',
-    findingsHeaders: ['القسم', 'التفاصيل'],
-    findingsRows: [
-      ['معلومات المصدر', 'تتضمن مسار الملف الرئيسي وأسطر الكود المحددة.'],
-      ['تفسير الذكاء الاصطناعي', 'يلخص CyfroAssistant تلقائياً الثغرة موضحاً سبب كونها مشكلة بلغة سياقية واضحة.'],
-      ['إرشادات العلاج', 'وسّع قسم الإرشادات لتعلم كيفية التخفيف من المخاطر يدوياً.'],
-    ] as [string, string][],
-    patchTitle: 'مقترحات التصحيح التلقائي',
-    patchIntro: 'للثغرات المدعومة، يتجاوز CyfroCode مجرد الإبلاغ بتقديم تصحيحات آلية مدفوعة بالذكاء الاصطناعي:',
-    patchSteps: [
-      'انقر على توليد تصحيح لنتيجة محددة.',
-      'ستحلل نماذج الذكاء الاصطناعي في CyfroSec سياق الثغرة وتولّد تغييراً آمناً وفعّالاً في الكود.',
-      'راجع الفرق المقترح مباشرة داخل واجهة المستخدم.',
-      'إذا كان صحيحاً، انقر على موافقة لتصدير تصحيح العلاج مباشرة إلى فرع جديد في مستودع GitHub، جاهزاً لمراجعة طلب السحب.',
-      'إذا اتضح أن النتيجة إيجابية كاذبة أو مخاطرة مقبولة، يمكنك استخدام خيار إخفاء لإخفائها من الفحوصات المستقبلية.',
-    ],
-    tocTitle: 'في هذه الصفحة',
-    tocItems: [
-      { id: 'overview',           label: 'نظرة عامة' },
-      { id: 'languages',          label: 'اللغات المدعومة' },
-      { id: 'infra-surfaces',     label: 'سطوح البنية التحتية' },
-      { id: 'connecting-github',  label: 'توصيل GitHub' },
-      { id: 'managing-repos',     label: 'إدارة المستودعات المتزامنة' },
-      { id: 'running-scans',      label: 'تشغيل الفحوصات' },
-      { id: 'reviewing-findings', label: 'مراجعة النتائج وتفسيرات الذكاء الاصطناعي' },
-      { id: 'patch-proposals',    label: 'مقترحات التصحيح التلقائي' },
-    ],
-    contactSupport: 'تواصل مع الدعم',
-  },
 }
 
 export default function CyfroCodePage() {
-  const { lang } = useTranslation()
-  const isAr = lang === 'ar'
-  const c = CONTENT[lang as keyof typeof CONTENT] ?? CONTENT.en
+  const c = CONTENT.en
 
   return (
     <div className="flex gap-0 w-full max-w-[1600px] mx-auto">
@@ -194,7 +119,7 @@ export default function CyfroCodePage() {
       {/* ── Article ──────────────────────────────────────────────────── */}
       <article className="flex-1 min-w-0 px-4 sm:px-6 md:px-8 lg:px-12 py-6 sm:py-8 lg:py-10 w-full max-w-5xl mx-auto">
 
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] cy-text-brand mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] cy-text-brand mb-4">
           {c.category}
         </p>
 
@@ -207,10 +132,10 @@ export default function CyfroCodePage() {
           {c.title}
         </h1>
 
-        <p className="cy-text-secondary leading-relaxed mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+        <p className="cy-text-secondary leading-relaxed mb-4">
           {c.overview1}
         </p>
-        <p className="cy-text-secondary leading-relaxed mb-10" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+        <p className="cy-text-secondary leading-relaxed mb-10">
           {c.overview2}
         </p>
 
@@ -221,7 +146,7 @@ export default function CyfroCodePage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.languagesTitle}
           </h2>
@@ -230,7 +155,7 @@ export default function CyfroCodePage() {
               <thead>
                 <tr className="border-b cy-border-default">
                   {c.languagesHeaders.map((h) => (
-                    <th key={h} className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{h}</th>
+                    <th key={h} className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted">{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -251,7 +176,7 @@ export default function CyfroCodePage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.infraTitle}
           </h2>
@@ -259,7 +184,7 @@ export default function CyfroCodePage() {
             {c.infraItems.map((text, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">{i + 1}</span>
-                <span className="mt-0.5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{text}</span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
           </ol>
@@ -272,22 +197,22 @@ export default function CyfroCodePage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.githubTitle}
           </h2>
-          <p className="cy-text-secondary leading-relaxed mb-5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.githubIntro}</p>
+          <p className="cy-text-secondary leading-relaxed mb-5">{c.githubIntro}</p>
           <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {c.githubSteps.map((text, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">{i + 1}</span>
-                <span className="mt-0.5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{text}</span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
           </ol>
           <div className="rounded-xl border border-primary-500/20 bg-primary-500/5 p-4 text-sm cy-text-secondary">
-            <strong className="cy-text-primary" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.githubNoteLabel}</strong>{' '}
-            <span dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.githubNote}</span>
+            <strong className="cy-text-primary">{c.githubNoteLabel}</strong>{' '}
+            <span>{c.githubNote}</span>
           </div>
         </section>
 
@@ -296,25 +221,25 @@ export default function CyfroCodePage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.reposTitle}
           </h2>
-          <p className="cy-text-secondary leading-relaxed mb-5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.reposIntro}</p>
+          <p className="cy-text-secondary leading-relaxed mb-5">{c.reposIntro}</p>
           <div className="overflow-x-auto mb-6">
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="border-b cy-border-default">
                   {c.reposHeaders.map((h) => (
-                    <th key={h} className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{h}</th>
+                    <th key={h} className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {c.reposRows.map(([field, desc]) => (
                   <tr key={field} className="border-b cy-border-default">
-                    <td className="py-2.5 pr-4 cy-text-secondary font-semibold" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{field}</td>
-                    <td className="py-2.5 pr-4 cy-text-secondary" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{desc}</td>
+                    <td className="py-2.5 pr-4 cy-text-secondary font-semibold">{field}</td>
+                    <td className="py-2.5 pr-4 cy-text-secondary">{desc}</td>
                   </tr>
                 ))}
               </tbody>
@@ -327,24 +252,21 @@ export default function CyfroCodePage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.scansTitle}
           </h2>
-          <p className="cy-text-secondary leading-relaxed mb-5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.scansIntro}</p>
+          <p className="cy-text-secondary leading-relaxed mb-5">{c.scansIntro}</p>
           <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {c.scansSteps.map((text, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">{i + 1}</span>
-                <span className="mt-0.5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{text}</span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
           </ol>
-          <p className="cy-text-secondary text-sm" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
-            {isAr
-              ? <>يمكنك مراقبة الفحوصات النشطة والتاريخية في قسم <strong className="cy-text-primary">الفحوصات الأخيرة</strong> في لوحة تحكم CyfroCode الرئيسية.</>
-              : <>You can monitor actively queued and historical scans in the <strong className="cy-text-primary">Recent Scans</strong> section on the main CyfroCode dashboard.</>
-            }
+          <p className="cy-text-secondary text-sm">
+            <>You can monitor actively queued and historical scans in the <strong className="cy-text-primary">Recent Scans</strong> section on the main CyfroCode dashboard.</>
           </p>
         </section>
 
@@ -353,34 +275,34 @@ export default function CyfroCodePage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.findingsTitle}
           </h2>
-          <p className="cy-text-secondary leading-relaxed mb-5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.findingsIntro}</p>
+          <p className="cy-text-secondary leading-relaxed mb-5">{c.findingsIntro}</p>
           <ol className="space-y-4 cy-text-secondary text-sm mb-6">
             {c.findingsItems.map((text, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">{i + 1}</span>
-                <span className="mt-0.5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{text}</span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
           </ol>
-          <p className="cy-text-secondary text-sm mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.findingsCardIntro}</p>
+          <p className="cy-text-secondary text-sm mb-4">{c.findingsCardIntro}</p>
           <div className="overflow-x-auto mb-6">
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="border-b cy-border-default">
                   {c.findingsHeaders.map((h) => (
-                    <th key={h} className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{h}</th>
+                    <th key={h} className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {c.findingsRows.map(([section, details]) => (
                   <tr key={section} className="border-b cy-border-default">
-                    <td className="py-2.5 pr-4 cy-text-secondary font-semibold" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{section}</td>
-                    <td className="py-2.5 pr-4 cy-text-secondary" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{details}</td>
+                    <td className="py-2.5 pr-4 cy-text-secondary font-semibold">{section}</td>
+                    <td className="py-2.5 pr-4 cy-text-secondary">{details}</td>
                   </tr>
                 ))}
               </tbody>
@@ -388,21 +310,59 @@ export default function CyfroCodePage() {
           </div>
         </section>
 
+        {/* Dead-Code Detection */}
+        <section id="dead-code" className="mb-10 scroll-mt-20">
+          <h2
+            className="text-xl font-bold cy-text-primary mb-4"
+            style={{ fontFamily: HEADING_FONT }}
+          >
+            {c.deadCodeTitle}
+          </h2>
+          <p className="cy-text-secondary leading-relaxed mb-5">{c.deadCodeIntro}</p>
+          <ol className="space-y-4 cy-text-secondary text-sm">
+            {c.deadCodeItems.map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">{i + 1}</span>
+                <span className="mt-0.5">{text}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* Logic Map & Mind Map */}
+        <section id="logic-maps" className="mb-10 scroll-mt-20">
+          <h2
+            className="text-xl font-bold cy-text-primary mb-4"
+            style={{ fontFamily: HEADING_FONT }}
+          >
+            {c.mapsTitle}
+          </h2>
+          <p className="cy-text-secondary leading-relaxed mb-5">{c.mapsIntro}</p>
+          <ol className="space-y-4 cy-text-secondary text-sm">
+            {c.mapsItems.map((text, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">{i + 1}</span>
+                <span className="mt-0.5">{text}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+
         {/* Automated Patch Proposals */}
         <section id="patch-proposals" className="mb-10 scroll-mt-20">
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.patchTitle}
           </h2>
-          <p className="cy-text-secondary leading-relaxed mb-5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.patchIntro}</p>
+          <p className="cy-text-secondary leading-relaxed mb-5">{c.patchIntro}</p>
           <ol className="space-y-4 cy-text-secondary text-sm">
             {c.patchSteps.map((text, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">{i + 1}</span>
-                <span className="mt-0.5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{text}</span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
           </ol>
@@ -413,7 +373,7 @@ export default function CyfroCodePage() {
       {/* ── Right TOC ─────────────────────────────────────────────────── */}
       <aside className="hidden 2xl:block w-56 shrink-0 px-6 pt-10 pb-10">
         <div className="sticky top-10">
-          <p className="text-[10px] font-bold uppercase tracking-widest cy-text-muted mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <p className="text-[10px] font-bold uppercase tracking-widest cy-text-muted mb-3">
             {c.tocTitle}
           </p>
           <ul className="space-y-2">
@@ -422,7 +382,7 @@ export default function CyfroCodePage() {
                 <a
                   href={`#${id}`}
                   className="text-sm cy-text-secondary hover:cy-text-brand transition-colors block"
-                  dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+                 
                 >
                   {label}
                 </a>
@@ -435,7 +395,7 @@ export default function CyfroCodePage() {
               className="flex items-center gap-1.5 text-xs cy-text-muted hover:cy-text-brand transition-colors"
             >
               <ExternalLink className="h-3.5 w-3.5" />
-              <span dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.contactSupport}</span>
+              <span>{c.contactSupport}</span>
             </Link>
           </div>
         </div>

@@ -6,8 +6,7 @@ import InteractiveGlobe from '../InteractiveGlobe';
 import { useTranslation } from '@/src/i18n';
 
 export default function Hero() {
-  const { t, lang } = useTranslation();
-  const isAr = lang === 'ar';
+  const { t } = useTranslation();
   const [titleNumber, setTitleNumber] = useState(0);
   const titles = t.hero.titles;
 
@@ -33,12 +32,8 @@ export default function Hero() {
           <div className="flex-1 flex flex-col justify-center text-center lg:text-start">
 
             {/* Headline with Animated Text */}
-            <h1 className={
-              isAr
-                ? "text-[1.63rem] sm:text-[1.95rem] md:text-[2.6rem] lg:text-[3.25rem] xl:text-[3.9rem] 3xl:text-[5.2rem] font-bold tracking-tighter leading-[1.15] mb-4 sm:mb-6"
-                : "text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 3xl:text-8xl font-bold tracking-tighter leading-[1.1] mb-4 sm:mb-6"
-            }>
-              <span dir={isAr ? 'rtl' : undefined} className="text-surface-900 dark:text-surface-50">{t.hero.aiThat}</span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 3xl:text-8xl font-bold tracking-tighter leading-[1.1] mb-4 sm:mb-6">
+              <span className="text-surface-900 dark:text-surface-50">{t.hero.aiThat}</span>
               <span className="relative flex w-full lg:w-[150%] justify-center lg:justify-start overflow-hidden md:pb-4 md:pt-1">
                 &nbsp;
                 {titles.map((title, index) => (
@@ -54,14 +49,10 @@ export default function Hero() {
               </span>
             </h1>
 
-            <p dir={isAr ? 'rtl' : undefined} className={
-              isAr
-                ? "text-sm sm:text-base md:text-lg 3xl:text-[1.35rem] leading-relaxed text-surface-600 dark:text-surface-400 max-w-xl 3xl:max-w-2xl mb-4 mx-auto lg:mx-0"
-                : "text-base sm:text-lg md:text-xl 3xl:text-2xl leading-relaxed text-surface-600 dark:text-surface-400 max-w-xl 3xl:max-w-2xl mb-4 mx-auto lg:mx-0"
-            }>
+            <p className="text-base sm:text-lg md:text-xl 3xl:text-2xl leading-relaxed text-surface-600 dark:text-surface-400 max-w-xl 3xl:max-w-2xl mb-4 mx-auto lg:mx-0">
               {t.hero.tagline}
             </p>
-            <p dir={isAr ? 'rtl' : undefined} className="text-sm sm:text-base md:text-lg 3xl:text-xl leading-relaxed text-surface-500 dark:text-surface-500 max-w-xl 3xl:max-w-2xl mb-8 sm:mb-10 mx-auto lg:mx-0">
+            <p className="text-sm sm:text-base md:text-lg 3xl:text-xl leading-relaxed text-surface-500 dark:text-surface-500 max-w-xl 3xl:max-w-2xl mb-8 sm:mb-10 mx-auto lg:mx-0">
               {t.hero.description}
             </p>
 
@@ -77,19 +68,19 @@ export default function Hero() {
 
             {/* Stats row */}
             <div className="flex flex-wrap items-center gap-4 sm:gap-6 justify-center lg:justify-start text-surface-600 dark:text-surface-400">
-              <div dir={isAr ? 'rtl' : undefined}>
-                <p className={isAr ? "text-base sm:text-xl 3xl:text-2xl font-bold text-surface-900 dark:text-surface-50" : "text-lg sm:text-2xl 3xl:text-3xl font-bold text-surface-900 dark:text-surface-50"}>{t.hero.stats.deployment.value}</p>
-                <p className={isAr ? "text-[10px] sm:text-[11px] 3xl:text-xs text-surface-500" : "text-[11px] sm:text-xs 3xl:text-sm text-surface-500"}>{t.hero.stats.deployment.label}</p>
+              <div>
+                <p className="text-lg sm:text-2xl 3xl:text-3xl font-bold text-surface-900 dark:text-surface-50">{t.hero.stats.deployment.value}</p>
+                <p className="text-[11px] sm:text-xs 3xl:text-sm text-surface-500">{t.hero.stats.deployment.label}</p>
               </div>
               <div className="w-px h-6 sm:h-8 bg-surface-200 dark:bg-surface-700"></div>
-              <div dir={isAr ? 'rtl' : undefined}>
-                <p className={isAr ? "text-base sm:text-xl 3xl:text-2xl font-bold text-surface-900 dark:text-surface-50" : "text-lg sm:text-2xl 3xl:text-3xl font-bold text-surface-900 dark:text-surface-50"}>{t.hero.stats.aiPowered.value}</p>
-                <p className={isAr ? "text-[10px] sm:text-[11px] 3xl:text-xs text-surface-500" : "text-[11px] sm:text-xs 3xl:text-sm text-surface-500"}>{t.hero.stats.aiPowered.label}</p>
+              <div>
+                <p className="text-lg sm:text-2xl 3xl:text-3xl font-bold text-surface-900 dark:text-surface-50">{t.hero.stats.aiPowered.value}</p>
+                <p className="text-[11px] sm:text-xs 3xl:text-sm text-surface-500">{t.hero.stats.aiPowered.label}</p>
               </div>
               <div className="w-px h-6 sm:h-8 bg-surface-200 dark:bg-surface-700 hidden sm:block"></div>
-              <div dir={isAr ? 'rtl' : undefined} className="hidden sm:block">
-                <p className={isAr ? "text-base sm:text-xl 3xl:text-2xl font-bold text-surface-900 dark:text-surface-50" : "text-lg sm:text-2xl 3xl:text-3xl font-bold text-surface-900 dark:text-surface-50"}>{t.hero.stats.agenticAI.value}</p>
-                <p className={isAr ? "text-[10px] sm:text-[11px] 3xl:text-xs text-surface-500" : "text-[11px] sm:text-xs 3xl:text-sm text-surface-500"}>{t.hero.stats.agenticAI.label}</p>
+              <div className="hidden sm:block">
+                <p className="text-lg sm:text-2xl 3xl:text-3xl font-bold text-surface-900 dark:text-surface-50">{t.hero.stats.agenticAI.value}</p>
+                <p className="text-[11px] sm:text-xs 3xl:text-sm text-surface-500">{t.hero.stats.agenticAI.label}</p>
               </div>
             </div>
           </div>

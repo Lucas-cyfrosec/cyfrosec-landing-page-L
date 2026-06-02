@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
-import { useTranslation } from '@/src/i18n'
 import DocsCodeBlock from '../_components/DocsCodeBlock'
 
 const HEADING_FONT = '"Sora", "Avenir Next", "Segoe UI", sans-serif'
@@ -37,6 +36,8 @@ const CONTENT = {
     volumeComposeLabel: 'If using docker-compose:',
     deployTitle: 'Deploying CyfroAgent',
     deployIntro: 'Run CyfroAgent with network access to application containers and read-only access to the shared volume.',
+    deployNoteLabel: 'Note:',
+    deployNote: 'Please specify the file path to the shared volume in the Scan Setups page to perform scans.',
     verifyTitle: 'Verification',
     verifyVolumeLabel: 'Verify Volume Mount',
     verifyCompareLabel: 'Compare with:',
@@ -58,62 +59,10 @@ const CONTENT = {
     ],
     contactSupport: 'Contact support',
   },
-  ar: {
-    category: 'CyfroAgent',
-    title: 'فحص متعدد الحاويات (التطبيقات، الخدمات)',
-    overview: 'يمكن لـ CyfroAgent إجراء فحوصات على تطبيقات الويب والخدمات المحتواة إذا كانت في نفس شبكة Docker ولديها وحدة تخزين مشتركة لفحص الملفات وأخذ البصمات.',
-    prereqTitle: 'المتطلبات الأساسية',
-    prereqItems: [
-      'حاوية تطبيق واحدة أو أكثر تعمل بالفعل',
-      'Docker مثبت ومتاح',
-      'لديك رمز CyfroAgent صالح',
-    ],
-    archTitle: 'البنية المعمارية',
-    networkTitle: 'إعداد الشبكة',
-    networkIntro: 'يجب أن يعمل CyfroAgent على نفس شبكة Docker مع حاويات التطبيق.',
-    networkIdentifyLabel: 'تحديد الشبكة الحالية',
-    networkExampleLabel: 'مثال على المخرجات:',
-    networkCreateLabel: 'إنشاء الشبكة (إذا لزم)',
-    networkCreateIntro: 'إذا لم تكن حاوياتك على شبكة مشتركة بعد:',
-    networkAttachLabel: 'توصيل الحاويات:',
-    networkNoteLabel: 'ملاحظة:',
-    networkNote: 'يجب أن يكون CyfroAgent جزءاً من الشبكة التي تريد فحصها. الرجاء توصيله بالشبكة (الشبكات) التي توجد فيها الحاويات المطلوبة بالفعل.',
-    volumeTitle: 'إعداد وحدة التخزين المشتركة',
-    volumeIntro: 'يتطلب فحص نظام الملفات وحدة تخزين مشتركة يمكن لحاوية التطبيق الوصول إليها بالكتابة ولـ CyfroAgent الوصول إليها للقراءة فقط.',
-    volumeCreateLabel: 'إنشاء وحدة التخزين',
-    volumePlaceLabel: 'ضع الملفات الضرورية في وحدة التخزين المشتركة.',
-    volumeMountLabel: 'تركيب وحدة التخزين في حاوية التطبيق',
-    volumeRunLabel: 'في حالة استخدام docker run:',
-    volumeComposeLabel: 'في حالة استخدام docker-compose:',
-    deployTitle: 'نشر CyfroAgent',
-    deployIntro: 'شغّل CyfroAgent مع صلاحية الوصول إلى شبكة حاويات التطبيق والوصول للقراءة فقط إلى وحدة التخزين المشتركة.',
-    verifyTitle: 'التحقق',
-    verifyVolumeLabel: 'التحقق من تركيب وحدة التخزين',
-    verifyCompareLabel: 'مقارنة مع:',
-    verifyNetworkLabel: 'التحقق من اتصال الشبكة',
-    verifyThenLabel: 'ثم:',
-    targetsTitle: 'تحديد أهداف الفحص',
-    targetsIntro: 'حدد الشبكة الفرعية التي يمكن توفيرها عند إعداد الفحوصات في صفحة إعداد الفحوصات.',
-    targetsExampleLabel: 'مثال:',
-    tocTitle: 'في هذه الصفحة',
-    tocItems: [
-      { id: 'overview',       label: 'نظرة عامة' },
-      { id: 'prerequisites',  label: 'المتطلبات الأساسية' },
-      { id: 'architecture',   label: 'البنية المعمارية' },
-      { id: 'network-config', label: 'إعداد الشبكة' },
-      { id: 'shared-volume',  label: 'إعداد وحدة التخزين المشتركة' },
-      { id: 'deploying',      label: 'نشر CyfroAgent' },
-      { id: 'verification',   label: 'التحقق' },
-      { id: 'scan-targets',   label: 'تحديد أهداف الفحص' },
-    ],
-    contactSupport: 'تواصل مع الدعم',
-  },
 }
 
 export default function DockerScanningPage() {
-  const { lang } = useTranslation()
-  const isAr = lang === 'ar'
-  const c = CONTENT[lang as keyof typeof CONTENT] ?? CONTENT.en
+  const c = CONTENT.en
 
   return (
     <div className="flex gap-0 w-full max-w-[1600px] mx-auto">
@@ -128,12 +77,12 @@ export default function DockerScanningPage() {
         <h1
           className="text-2xl sm:text-3xl lg:text-4xl font-bold cy-text-primary mb-4 sm:mb-6 leading-tight"
           style={{ fontFamily: HEADING_FONT }}
-          dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+         
         >
           {c.title}
         </h1>
 
-        <p className="cy-text-secondary leading-relaxed mb-4" id="overview" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+        <p className="cy-text-secondary leading-relaxed mb-4" id="overview">
           {c.overview}
         </p>
 
@@ -144,7 +93,7 @@ export default function DockerScanningPage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.prereqTitle}
           </h2>
@@ -152,7 +101,7 @@ export default function DockerScanningPage() {
             {c.prereqItems.map((text, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">{i + 1}</span>
-                <span className="mt-0.5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{text}</span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
           </ol>
@@ -163,7 +112,7 @@ export default function DockerScanningPage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.archTitle}
           </h2>
@@ -188,27 +137,27 @@ export default function DockerScanningPage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.networkTitle}
           </h2>
-          <p className="cy-text-secondary text-sm mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkIntro}</p>
+          <p className="cy-text-secondary text-sm mb-4">{c.networkIntro}</p>
 
-          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkIdentifyLabel}</p>
+          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2">{c.networkIdentifyLabel}</p>
           <DocsCodeBlock className="mb-4" code={`docker inspect <container_name> --format '{{json .NetworkSettings.Networks}}'`} />
-          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkExampleLabel}</p>
+          <p className="cy-text-secondary text-sm mb-2">{c.networkExampleLabel}</p>
           <DocsCodeBlock className="mb-6" code={`{
   "sample-webapp_default": {}
 }`} />
 
-          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkCreateLabel}</p>
-          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkCreateIntro}</p>
+          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2">{c.networkCreateLabel}</p>
+          <p className="cy-text-secondary text-sm mb-2">{c.networkCreateIntro}</p>
           <DocsCodeBlock className="mb-4" code={`docker network create cyfro-network`} />
-          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkAttachLabel}</p>
+          <p className="cy-text-secondary text-sm mb-2">{c.networkAttachLabel}</p>
           <DocsCodeBlock className="mb-4" code={`docker network connect cyfro-network <container_name>`} />
           <div className="rounded-xl border border-primary-500/20 bg-primary-500/5 p-4 text-sm cy-text-secondary">
-            <strong className="cy-text-primary" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkNoteLabel}</strong>{' '}
-            <span dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.networkNote}</span>
+            <strong className="cy-text-primary">{c.networkNoteLabel}</strong>{' '}
+            <span>{c.networkNote}</span>
           </div>
         </section>
 
@@ -217,18 +166,18 @@ export default function DockerScanningPage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.volumeTitle}
           </h2>
-          <p className="cy-text-secondary text-sm mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.volumeIntro}</p>
+          <p className="cy-text-secondary text-sm mb-4">{c.volumeIntro}</p>
 
-          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.volumeCreateLabel}</p>
+          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2">{c.volumeCreateLabel}</p>
           <DocsCodeBlock className="mb-4" code={`docker volume create webapp_scan_export`} />
-          <p className="cy-text-secondary text-sm mb-5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.volumePlaceLabel}</p>
+          <p className="cy-text-secondary text-sm mb-5">{c.volumePlaceLabel}</p>
 
-          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.volumeMountLabel}</p>
-          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.volumeRunLabel}</p>
+          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2">{c.volumeMountLabel}</p>
+          <p className="cy-text-secondary text-sm mb-2">{c.volumeRunLabel}</p>
           <DocsCodeBlock
             className="mb-4"
             code={`docker run -d \\
@@ -237,7 +186,7 @@ export default function DockerScanningPage() {
   -v webapp_scan_export:/opt/demo-data \\
   <image>`}
           />
-          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.volumeComposeLabel}</p>
+          <p className="cy-text-secondary text-sm mb-2">{c.volumeComposeLabel}</p>
           <DocsCodeBlock
             code={`services:
   app:
@@ -255,23 +204,30 @@ volumes:
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.deployTitle}
           </h2>
-          <p className="cy-text-secondary text-sm mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.deployIntro}</p>
+          <p className="cy-text-secondary text-sm mb-4">{c.deployIntro}</p>
           <DocsCodeBlock
             code={`docker run -d \\
   --name cyfro-agent \\
   --network <network_name> \\
   --cap-add NET_RAW \\
+  --cap-add=NET_ADMIN \\
   -v cyfro-agent-data:/data/agent \\
+  -v /:/host:ro \\
   -v webapp_scan_export:/scan-target:ro \\
   cyfrosec/cyfro-agent:latest \\
   --agentName "Agent1" \\
   --token "<TOKEN>" \\
-  --location "Docker"`}
+  --fernet-key "your-fernet-key" \\
+  --location "MyLocation"`}
           />
+          <div className="mt-4 rounded-xl border border-primary-500/20 bg-primary-500/5 p-4 text-sm cy-text-secondary">
+            <strong className="cy-text-primary">{c.deployNoteLabel}</strong>{' '}
+            <span>{c.deployNote}</span>
+          </div>
         </section>
 
         {/* Verification */}
@@ -279,20 +235,16 @@ volumes:
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.verifyTitle}
           </h2>
 
-          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.verifyVolumeLabel}</p>
+          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2">{c.verifyVolumeLabel}</p>
           <DocsCodeBlock className="mb-3" code={`docker exec -it cyfro-agent ls /scan-target`} />
-          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.verifyCompareLabel}</p>
+          <p className="cy-text-secondary text-sm mb-2">{c.verifyCompareLabel}</p>
           <DocsCodeBlock className="mb-6" code={`docker exec -it <app_container> ls /opt/demo-data`} />
 
-          <p className="cy-text-secondary text-sm font-semibold cy-text-primary mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.verifyNetworkLabel}</p>
-          <DocsCodeBlock className="mb-3" code={`docker exec -it cyfro-agent sh`} />
-          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.verifyThenLabel}</p>
-          <DocsCodeBlock code={`ping <app_container_name>`} />
         </section>
 
         {/* Determining Scan Targets */}
@@ -300,13 +252,13 @@ volumes:
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.targetsTitle}
           </h2>
-          <p className="cy-text-secondary text-sm mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.targetsIntro}</p>
+          <p className="cy-text-secondary text-sm mb-3">{c.targetsIntro}</p>
           <DocsCodeBlock className="mb-4" code={`docker network inspect <network_name>`} />
-          <p className="cy-text-secondary text-sm mb-2" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.targetsExampleLabel}</p>
+          <p className="cy-text-secondary text-sm mb-2">{c.targetsExampleLabel}</p>
           <DocsCodeBlock code={`"Subnet": "172.22.0.0/16"`} />
         </section>
 
@@ -315,7 +267,7 @@ volumes:
       {/* ── Right TOC ─────────────────────────────────────────────────── */}
       <aside className="hidden 2xl:block w-56 shrink-0 px-6 pt-10 pb-10">
         <div className="sticky top-10">
-          <p className="text-[10px] font-bold uppercase tracking-widest cy-text-muted mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <p className="text-[10px] font-bold uppercase tracking-widest cy-text-muted mb-3">
             {c.tocTitle}
           </p>
           <ul className="space-y-2">
@@ -324,7 +276,7 @@ volumes:
                 <a
                   href={`#${id}`}
                   className="text-sm cy-text-secondary hover:cy-text-brand transition-colors block"
-                  dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+                 
                 >
                   {label}
                 </a>
@@ -337,7 +289,7 @@ volumes:
               className="flex items-center gap-1.5 text-xs cy-text-muted hover:cy-text-brand transition-colors"
             >
               <ExternalLink className="h-3.5 w-3.5" />
-              <span dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.contactSupport}</span>
+              <span>{c.contactSupport}</span>
             </Link>
           </div>
         </div>

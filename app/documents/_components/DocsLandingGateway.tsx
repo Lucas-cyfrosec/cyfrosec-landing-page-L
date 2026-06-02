@@ -112,8 +112,7 @@ function getPopularArticlesFromCounts() {
 }
 
 export default function DocsLandingGateway() {
-  const { t, lang } = useTranslation()
-  const isAr = lang === 'ar'
+  const { t } = useTranslation()
   const dl = t.pages.documentsLanding
 
   const [query, setQuery] = useState('')
@@ -201,12 +200,12 @@ export default function DocsLandingGateway() {
             <div className="relative max-w-4xl 3xl:max-w-5xl">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary-500/20 bg-primary-500/8 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary-700 dark:text-primary-300 3xl:px-4 3xl:py-2 3xl:text-[13px]">
                 <BookOpen className="h-3.5 w-3.5 3xl:h-4 3xl:w-4" />
-                <span lang={isAr ? 'ar' : 'en'}>{dl.badge}</span>
+                <span>{dl.badge}</span>
               </div>
 
               <h1
-                lang={isAr ? 'ar' : 'en'}
-                dir={isAr ? 'rtl' : 'ltr'}
+               
+               
                 className="max-w-3xl text-4xl font-bold tracking-tight cy-text-primary sm:text-5xl lg:text-6xl 3xl:max-w-4xl 3xl:text-[4.15rem] 3xl:leading-[1.02]"
                 style={{ fontFamily: DOCS_HEADING_FONT }}
               >
@@ -214,8 +213,8 @@ export default function DocsLandingGateway() {
               </h1>
 
               <p
-                lang={isAr ? 'ar' : 'en'}
-                dir={isAr ? 'rtl' : 'ltr'}
+               
+               
                 className="mt-4 max-w-2xl text-base leading-relaxed cy-text-secondary sm:text-lg 3xl:max-w-3xl 3xl:text-[19px] 3xl:leading-8"
               >
                 {dl.description}
@@ -231,7 +230,7 @@ export default function DocsLandingGateway() {
                     onChange={(event) => setQuery(event.target.value)}
                     onFocus={() => setFocused(true)}
                     placeholder={dl.searchPlaceholder}
-                    dir={isAr ? 'rtl' : 'ltr'}
+                   
                     className="h-14 w-full bg-transparent pl-11 pr-4 text-sm cy-text-primary placeholder:cy-text-muted focus:outline-none 3xl:h-16 3xl:pl-14 3xl:pr-5 3xl:text-[16px]"
                   />
                 </div>
@@ -280,7 +279,7 @@ export default function DocsLandingGateway() {
                     onClick={() => recordDocsInteraction(QUICK_CHIP_HREFS[i])}
                     className="inline-flex items-center rounded-full border cy-border-default bg-white/75 px-3.5 py-2 text-xs font-medium cy-text-secondary transition-colors hover:border-primary-500/35 hover:bg-primary-500/6 hover:cy-text-primary dark:bg-surface-900/75 3xl:px-4 3xl:py-2.5 3xl:text-[13px]"
                   >
-                    <span lang={isAr ? 'ar' : 'en'}>{label}</span>
+                    <span>{label}</span>
                   </Link>
                 ))}
               </div>
@@ -290,23 +289,23 @@ export default function DocsLandingGateway() {
               <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
                 <div>
                   <p
-                    lang={isAr ? 'ar' : 'en'}
-                    dir={isAr ? 'rtl' : 'ltr'}
+                   
+                   
                     className="text-[11px] font-semibold uppercase tracking-[0.18em] cy-text-brand 3xl:text-[13px]"
                   >
                     {dl.fullDocumentation.label}
                   </p>
                   <h3
-                    lang={isAr ? 'ar' : 'en'}
-                    dir={isAr ? 'rtl' : 'ltr'}
+                   
+                   
                     className="mt-2 text-xl font-bold tracking-tight cy-text-primary 3xl:text-[1.8rem]"
                     style={{ fontFamily: DOCS_HEADING_FONT }}
                   >
                     {dl.fullDocumentation.title}
                   </h3>
                   <p
-                    lang={isAr ? 'ar' : 'en'}
-                    dir={isAr ? 'rtl' : 'ltr'}
+                   
+                   
                     className="mt-2 max-w-2xl text-sm leading-relaxed cy-text-secondary 3xl:max-w-3xl 3xl:text-[16px] 3xl:leading-7"
                   >
                     {dl.fullDocumentation.description}
@@ -319,7 +318,7 @@ export default function DocsLandingGateway() {
                     onClick={() => recordDocsInteraction('/documents/full')}
                     className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary-500 px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-600 sm:w-auto sm:min-w-[220px] 3xl:min-w-[240px] 3xl:px-8 3xl:py-3.5 3xl:text-[15px]"
                   >
-                    <span lang={isAr ? 'ar' : 'en'}>{dl.fullDocumentation.button}</span>
+                    <span>{dl.fullDocumentation.button}</span>
                     <ArrowRight className="h-4 w-4 3xl:h-[18px] 3xl:w-[18px]" />
                   </Link>
                 </div>
@@ -333,23 +332,23 @@ export default function DocsLandingGateway() {
         <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14 3xl:max-w-[1700px] 3xl:px-8 3xl:py-16 4xl:max-w-[2000px]">
           <div className="mb-6 sm:mb-8 3xl:mb-10">
             <p
-              lang={isAr ? 'ar' : 'en'}
-              dir={isAr ? 'rtl' : 'ltr'}
+             
+             
               className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] cy-text-brand 3xl:text-[13px]"
             >
               {dl.startHere.eyebrow}
             </p>
             <h2
-              lang={isAr ? 'ar' : 'en'}
-              dir={isAr ? 'rtl' : 'ltr'}
+             
+             
               className="text-2xl font-bold tracking-tight cy-text-primary sm:text-3xl lg:text-4xl 3xl:text-[3rem]"
               style={{ fontFamily: DOCS_HEADING_FONT }}
             >
               {dl.startHere.title}
             </h2>
             <p
-              lang={isAr ? 'ar' : 'en'}
-              dir={isAr ? 'rtl' : 'ltr'}
+             
+             
               className="mt-3 max-w-2xl text-sm leading-relaxed cy-text-secondary sm:text-base 3xl:max-w-3xl 3xl:text-[18px] 3xl:leading-8"
             >
               {dl.startHere.description}
@@ -368,28 +367,28 @@ export default function DocsLandingGateway() {
                 >
                   <div className="mb-4 flex items-center justify-between">
                     <div className="inline-flex items-center gap-2 rounded-full bg-primary-500/8 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary-700 dark:text-primary-300 3xl:px-3 3xl:py-1.5 3xl:text-[11px]">
-                      <span lang={isAr ? 'ar' : 'en'}>{card.eyebrow}</span>
+                      <span>{card.eyebrow}</span>
                     </div>
                     <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-primary-500/18 bg-primary-500/8 text-primary-600 dark:text-primary-300 3xl:h-12 3xl:w-12">
                       <Icon className="h-5 w-5 3xl:h-6 3xl:w-6" />
                     </div>
                   </div>
                   <h3
-                    lang={isAr ? 'ar' : 'en'}
-                    dir={isAr ? 'rtl' : 'ltr'}
+                   
+                   
                     className="text-lg font-semibold tracking-tight cy-text-primary 3xl:text-[1.25rem]"
                   >
                     {card.label}
                   </h3>
                   <p
-                    lang={isAr ? 'ar' : 'en'}
-                    dir={isAr ? 'rtl' : 'ltr'}
+                   
+                   
                     className="mt-2 text-sm leading-relaxed cy-text-secondary 3xl:text-[15px] 3xl:leading-7"
                   >
                     {card.description}
                   </p>
                   <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-primary-600 dark:text-primary-300 3xl:text-[15px]">
-                    <span lang={isAr ? 'ar' : 'en'}>{dl.openArticle}</span>
+                    <span>{dl.openArticle}</span>
                     <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 3xl:h-[18px] 3xl:w-[18px]" />
                   </div>
                 </Link>
@@ -403,23 +402,23 @@ export default function DocsLandingGateway() {
         <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14 3xl:max-w-[1700px] 3xl:px-8 3xl:py-16 4xl:max-w-[2000px]">
           <div className="mb-6 sm:mb-8 3xl:mb-10">
             <p
-              lang={isAr ? 'ar' : 'en'}
-              dir={isAr ? 'rtl' : 'ltr'}
+             
+             
               className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] cy-text-brand 3xl:text-[13px]"
             >
               {dl.popularArticles.eyebrow}
             </p>
             <h2
-              lang={isAr ? 'ar' : 'en'}
-              dir={isAr ? 'rtl' : 'ltr'}
+             
+             
               className="text-2xl font-bold tracking-tight cy-text-primary sm:text-3xl lg:text-4xl 3xl:text-[3rem]"
               style={{ fontFamily: DOCS_HEADING_FONT }}
             >
               {dl.popularArticles.title}
             </h2>
             <p
-              lang={isAr ? 'ar' : 'en'}
-              dir={isAr ? 'rtl' : 'ltr'}
+             
+             
               className="mt-3 max-w-2xl text-sm leading-relaxed cy-text-secondary sm:text-base 3xl:max-w-3xl 3xl:text-[18px] 3xl:leading-8"
             >
               {dl.popularArticles.description}
@@ -437,7 +436,7 @@ export default function DocsLandingGateway() {
                 <h3 className="text-base font-semibold cy-text-primary 3xl:text-[18px]">{article.label}</h3>
                 <p className="mt-2 text-sm leading-relaxed cy-text-secondary 3xl:text-[15px] 3xl:leading-7">{article.description}</p>
                 <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary-600 dark:text-primary-300 3xl:text-[15px]">
-                  <span lang={isAr ? 'ar' : 'en'}>{dl.readArticle}</span>
+                  <span>{dl.readArticle}</span>
                   <ChevronRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 3xl:h-[18px] 3xl:w-[18px]" />
                 </div>
               </Link>
@@ -449,23 +448,23 @@ export default function DocsLandingGateway() {
       <section className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14 3xl:max-w-[1700px] 3xl:px-8 3xl:py-16 4xl:max-w-[2000px]">
         <div className="mb-6 sm:mb-8 3xl:mb-10">
           <p
-            lang={isAr ? 'ar' : 'en'}
-            dir={isAr ? 'rtl' : 'ltr'}
+           
+           
             className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] cy-text-brand 3xl:text-[13px]"
           >
             {dl.browseCategory.eyebrow}
           </p>
           <h2
-            lang={isAr ? 'ar' : 'en'}
-            dir={isAr ? 'rtl' : 'ltr'}
+           
+           
             className="text-2xl font-bold tracking-tight cy-text-primary sm:text-3xl lg:text-4xl 3xl:text-[3rem]"
             style={{ fontFamily: DOCS_HEADING_FONT }}
           >
             {dl.browseCategory.title}
           </h2>
           <p
-            lang={isAr ? 'ar' : 'en'}
-            dir={isAr ? 'rtl' : 'ltr'}
+           
+           
             className="mt-3 max-w-2xl text-sm leading-relaxed cy-text-secondary sm:text-base 3xl:max-w-3xl 3xl:text-[18px] 3xl:leading-8"
           >
             {dl.browseCategory.description}
@@ -483,16 +482,16 @@ export default function DocsLandingGateway() {
               </div>
               <Link href={category.href} onClick={() => recordDocsInteraction(category.href)} className="inline-block">
                 <h3
-                  lang={isAr ? 'ar' : 'en'}
-                  dir={isAr ? 'rtl' : 'ltr'}
+                 
+                 
                   className="text-base font-semibold tracking-tight cy-text-primary transition-colors hover:cy-text-brand 3xl:text-[18px]"
                 >
                   {category.title}
                 </h3>
               </Link>
               <p
-                lang={isAr ? 'ar' : 'en'}
-                dir={isAr ? 'rtl' : 'ltr'}
+               
+               
                 className="mt-2 text-sm leading-relaxed cy-text-secondary 3xl:text-[15px] 3xl:leading-7"
               >
                 {category.description}
@@ -516,7 +515,7 @@ export default function DocsLandingGateway() {
                 onClick={() => recordDocsInteraction(category.href)}
                 className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-300 dark:hover:text-primary-200 3xl:text-[15px]"
               >
-                <span lang={isAr ? 'ar' : 'en'}>{dl.browseSection}</span>
+                <span>{dl.browseSection}</span>
                 <ChevronRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 3xl:h-[18px] 3xl:w-[18px]" />
               </Link>
             </div>
@@ -530,23 +529,23 @@ export default function DocsLandingGateway() {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
               <div>
                 <p
-                  lang={isAr ? 'ar' : 'en'}
-                  dir={isAr ? 'rtl' : 'ltr'}
+                 
+                 
                   className="text-[11px] font-semibold uppercase tracking-[0.18em] cy-text-brand 3xl:text-[13px]"
                 >
                   {dl.support.eyebrow}
                 </p>
                 <h3
-                  lang={isAr ? 'ar' : 'en'}
-                  dir={isAr ? 'rtl' : 'ltr'}
+                 
+                 
                   className="mt-2 text-xl font-bold tracking-tight cy-text-primary 3xl:text-[1.6rem]"
                   style={{ fontFamily: DOCS_HEADING_FONT }}
                 >
                   {dl.support.title}
                 </h3>
                 <p
-                  lang={isAr ? 'ar' : 'en'}
-                  dir={isAr ? 'rtl' : 'ltr'}
+                 
+                 
                   className="mt-2 max-w-xl text-sm leading-relaxed cy-text-secondary 3xl:max-w-2xl 3xl:text-[16px] 3xl:leading-7"
                 >
                   {dl.support.description}
@@ -557,7 +556,7 @@ export default function DocsLandingGateway() {
                   href="mailto:support@cyfrosec.com"
                   className="inline-flex items-center gap-2 rounded-xl border cy-border-default bg-white px-6 py-2.5 text-sm font-semibold cy-text-primary transition-colors hover:border-primary-500/40 hover:cy-text-brand dark:bg-surface-900 3xl:px-7 3xl:py-3 3xl:text-[15px]"
                 >
-                  <span lang={isAr ? 'ar' : 'en'}>{dl.support.button}</span>
+                  <span>{dl.support.button}</span>
                 </a>
               </div>
             </div>

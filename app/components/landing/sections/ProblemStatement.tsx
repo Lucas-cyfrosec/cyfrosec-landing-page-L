@@ -11,17 +11,16 @@ const ICON_MAP: Record<IconName, ComponentType<{ className?: string }>> = {
 };
 
 const CARD_META = [
-  { icon: 'EyeOff' as IconName, accent: '3 155 224', href: '#solutions', className: 'lg:col-start-3 lg:col-end-4 lg:row-start-1 lg:row-end-2' },
-  { icon: 'ShieldAlert' as IconName, accent: '254 144 77', href: '#solutions', className: 'lg:col-start-1 lg:col-end-3 lg:row-start-1 lg:row-end-2' },
-  { icon: 'DollarSign' as IconName, accent: '20 184 166', href: '#solutions', className: 'lg:col-start-2 lg:col-end-4 lg:row-start-2 lg:row-end-3' },
-  { icon: 'Lock' as IconName, accent: '139 92 246', href: '#solutions', className: 'lg:col-start-1 lg:col-end-2 lg:row-start-2 lg:row-end-3' },
+  { icon: 'EyeOff' as IconName, accent: '3 155 224', className: 'lg:col-start-3 lg:col-end-4 lg:row-start-1 lg:row-end-2' },
+  { icon: 'ShieldAlert' as IconName, accent: '254 144 77', className: 'lg:col-start-1 lg:col-end-3 lg:row-start-1 lg:row-end-2' },
+  { icon: 'DollarSign' as IconName, accent: '20 184 166', className: 'lg:col-start-2 lg:col-end-4 lg:row-start-2 lg:row-end-3' },
+  { icon: 'Lock' as IconName, accent: '139 92 246', className: 'lg:col-start-1 lg:col-end-2 lg:row-start-2 lg:row-end-3' },
 ];
 
 const BRINGS_ICONS = [Network, ScanSearch, Fingerprint, Code2];
 
 export default function ProblemStatement() {
-  const { t, lang } = useTranslation();
-  const isAr = lang === 'ar';
+  const { t } = useTranslation();
 
   return (
     <section
@@ -30,12 +29,12 @@ export default function ProblemStatement() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl 3xl:max-w-screen-2xl">
         <div className="mb-8 text-center sm:mb-10">
-          <h2 dir={isAr ? 'rtl' : undefined} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold text-surface-900 dark:text-surface-50 mb-3 sm:mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold text-surface-900 dark:text-surface-50 mb-3 sm:mb-4">
             {t.problem.heading.pre}{' '}
             <span className="text-primary-500">{t.problem.heading.highlight}</span>
             {t.problem.heading.post}
           </h2>
-          <p dir={isAr ? 'rtl' : undefined} className="text-base sm:text-lg 3xl:text-xl text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg 3xl:text-xl text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
             {t.problem.subtitle}
           </p>
         </div>
@@ -50,7 +49,7 @@ export default function ProblemStatement() {
                 name={card.name}
                 description={card.description}
                 impact={card.impact}
-                href={meta.href}
+                href={card.href}
                 cta={card.cta}
                 eyebrow={card.eyebrow}
                 metricLabel={card.metricLabel}
@@ -66,7 +65,7 @@ export default function ProblemStatement() {
         {/* CyfroSec Brings Together */}
         <div className="mt-12 sm:mt-16 max-w-6xl mx-auto">
           <div className="text-center mb-8">
-            <h3 dir={isAr ? 'rtl' : undefined} className="text-xl sm:text-2xl lg:text-3xl font-bold">
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold">
               {t.problem.brings.titlePre}
               <span className="text-primary-400">{t.problem.brings.titleBrand}</span>
               {t.problem.brings.titleMid}
@@ -84,8 +83,8 @@ export default function ProblemStatement() {
                   <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary-500/20 text-primary-400">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h4 dir={isAr ? 'rtl' : undefined} className="font-semibold text-surface-900 dark:text-white text-base">{item.title}</h4>
-                  <p dir={isAr ? 'rtl' : undefined} className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed">{item.description}</p>
+                  <h4 className="font-semibold text-surface-900 dark:text-white text-base">{item.title}</h4>
+                  <p className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed">{item.description}</p>
                 </div>
               );
             })}

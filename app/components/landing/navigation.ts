@@ -102,7 +102,7 @@ export const LANDING_NAV_ITEMS: NavItem[] = [
             icon: Brain,
           },
           {
-            label: 'Cyfro Assistant',
+            label: 'CyfroAssistant',
             href: '/solutions/cyfro-assistant',
             description: 'Conversational security guidance',
             isNav: true,
@@ -120,7 +120,7 @@ export const LANDING_NAV_ITEMS: NavItem[] = [
     ],
   },
   { id: 4, label: 'Documentation', link: '/documents', isNav: true },
-  { id: 5, label: 'About', link: '#learning' },
+  { id: 5, label: 'About', link: '/#learning', isNav: true },
 ];
 
 export const LANDING_FOOTER_LINKS: Record<string, FooterLink[]> = {
@@ -136,9 +136,13 @@ export const LANDING_FOOTER_LINKS: Record<string, FooterLink[]> = {
     { label: 'Asset Discovery', href: '/solutions/asset-discovery', isNav: true },
     { label: 'Service Fingerprinting', href: '/solutions/service-fingerprinting', isNav: true },
     { label: 'CyfroAI Insights', href: '/solutions/cyfro-ai-insights', isNav: true },
-    { label: 'Cyfro Assistant', href: '/solutions/cyfro-assistant', isNav: true },
+    { label: 'CyfroAssistant', href: '/solutions/cyfro-assistant', isNav: true },
+    { label: 'CyfroCode', href: '/solutions/cyfrocode', isNav: true },
   ],
-  resources: [{ label: 'Documentation', href: '/documents', isNav: true }],
+  resources: [
+    { label: 'Documentation', href: '/documents', isNav: true },
+    { label: 'Subscription tiers', href: '/subscriptions', isNav: true },
+  ],
   company: [
     { label: 'About Us', href: '#learning' },
     { label: 'Contact', href: '/contact', isNav: true },

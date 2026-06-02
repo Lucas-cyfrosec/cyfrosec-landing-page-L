@@ -6,14 +6,14 @@ export const NAV_PRODUCTS = [
   { label: 'CyfroAssistant', href: '/products/ai-assistant', description: 'Human-friendly remediation guidance' },
   { label: 'Asset Discovery', href: '/products/asset-discovery', description: 'Continuous cloud & endpoint inventory' },
   { label: 'Network Discovery', href: '/products/network-discovery', description: 'Internal network surface mapping' },
-  { label: 'CyfroCode', href: '/solutions/cyfrocode', description: 'Code security scanning and AI-driven patches' },
+  { label: 'CyfroCode', href: '/solutions/cyfrocode', description: 'SAST code security scanning and AI-driven patches' },
 ] as const
 
 export const NAV_ITEMS = [
   { label: 'Products', href: '/products/cyfroagent', hasDropdown: true },
   { label: 'Platform', href: '/platform', hasDropdown: false },
   { label: 'Solutions', href: '/solutions', hasDropdown: false },
-  { label: 'Pricing', href: '/pricing', hasDropdown: false },
+  { label: 'Subscriptions', href: '/subscriptions', hasDropdown: false },
   { label: 'Resources', href: '/resources', hasDropdown: false },
 ] as const
 
@@ -214,7 +214,7 @@ export const PRODUCTS = [
     name: 'CyfroCode',
     tagline: 'Scan, explain, and patch your code — without leaving CyfroSec.',
     description:
-      'A code security workspace embedded in CyfroSec. Connect GitHub repositories, run automated vulnerability scans, and generate AI-driven remediation patches ready for a Pull Request.',
+      'A SAST code-security workspace embedded in CyfroSec. Connect GitHub repositories, run automated vulnerability scans, and generate AI-driven remediation patches ready for a Pull Request.',
     icon: 'Code2',
     href: '/solutions/cyfrocode',
     capabilities: [
@@ -348,7 +348,7 @@ export const FOOTER_LINKS = {
   platform: [
     { label: 'Platform Overview', href: '/platform' },
     { label: 'Solutions', href: '/solutions' },
-    { label: 'Pricing', href: '/pricing' },
+    { label: 'Subscriptions', href: '/subscriptions' },
   ],
   resources: [
     { label: 'Resources', href: '/resources' },

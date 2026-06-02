@@ -2,8 +2,6 @@
 
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
-import { useTranslation } from '@/src/i18n'
-
 const HEADING_FONT = '"Sora", "Avenir Next", "Segoe UI", sans-serif'
 
 const CONTENT = {
@@ -164,178 +162,19 @@ const CONTENT = {
     ],
     contactSupport: 'Contact support',
   },
-  ar: {
-    category: 'الأمان والامتثال',
-    title: 'أداة الامتثال للائحة GDPR',
-    overview1: 'توفر صفحة الامتثال للائحة GDPR تقييماً آلياً قائماً على الأدلة لوضعك الأمني مقابل فئات الضوابط الموجهة للائحة GDPR.',
-    overview2: 'وهي تجمع بين أدلة الفحص ودرجات الفئات وخطورة النتائج ومصدر كتالوج الضوابط وبيانات التغطية حتى تتمكن الفرق من تتبع المخاطر وجاهزية المعالجة.',
-    accessingTitle: 'الوصول إلى الامتثال للائحة GDPR',
-    accessingItems: [
-      'استخدم أداة GDPR في لوحة التحكم للحصول على ملخص سريع.',
-      'افتح صفحة الامتثال الكاملة للحصول على نتائج على مستوى الفئات وتفاصيل الكتالوج.',
-    ],
-    scopeTitle: 'نطاق البيانات ومصدرها',
-    scopeIntro: 'يتم إنشاء تقرير GDPR من عمليات إرسال الفحص الحديثة لمجموعة الحسابات، بما في ذلك:',
-    scopeItems: [
-      'بيانات اكتشاف الشبكة',
-      'بيانات البصمة وفحص الثغرات',
-      'بيانات اكتشاف الأصول',
-    ],
-    scopeNote1: 'تعرض الصفحة افتراضياً وضع الامتثال المجمع على مستوى مجموعة الحسابات.',
-    scopeNote2: 'إذا لم يتم تحديد مجموعة حسابات، فستطلب الصفحة منك اختيار واحدة.',
-    pageTitle: 'نظرة عامة على الصفحة',
-    pageIntro: 'تتضمن الصفحة الكاملة:',
-    pageItems: [
-      'الرأس وعناصر التحكم',
-      'الدرجة الإجمالية',
-      'بيانات الفحص وبيانات الكتالوج الوصفية',
-      'تفصيل الفئات مع النتائج القابلة للتوسيع',
-    ],
-    headerTitle: 'الرأس وعناصر التحكم',
-    headerIntro: 'الإجراءات العلوية:',
-    headerItems: [
-      'تحديث: يعيد حساب التقرير لمجموعة الحسابات المحددة ويعيد تحميل بيانات الصفحة.',
-      'تحديث الكتالوج: يشغّل تحديثاً للكتالوج ويعيد تحميل حالة التقرير والكتالوج.',
-    ],
-    headerNote: 'كما يعرض الرأس الطابع الزمني للتقرير وسياق مجموعة الحسابات.',
-    scoreTitle: 'الدرجة الإجمالية',
-    scoreIntro: 'تعرض اللوحة العلوية:',
-    scoreItems: [
-      'الدرجة الإجمالية (0-100)',
-      'تصنيف الدرجة (مثل: ممتاز، جيد، يحتاج إلى تحسين، ضعيف، حرج)',
-      'فرق الاتجاه عند توفر نقاط تاريخية',
-      'أعداد النتائج الحرجة والعالية والإجمالية',
-      'نسبة تغطية الأدلة',
-      'عدد الضوابط غير القابلة للتقييم',
-    ],
-    windowTitle: 'نافذة بيانات الفحص',
-    windowIntro: 'عند توفرها، تعرض الصفحة نافذة بيانات الفحص الخاصة بالتقرير:',
-    windowItems: ['الطابع الزمني لبداية النافذة', 'الطابع الزمني لنهاية النافذة'],
-    windowNote: 'يساعد ذلك على تأكيد فترة الأدلة المستخدمة في التقييم.',
-    categoryTitle: 'تفصيل الفئات',
-    categoryIntro: 'تعرض كل بطاقة فئة:',
-    categoryItems: [
-      'اسم الفئة وإشارة مادة GDPR',
-      'درجة الفئة',
-      'عدد النتائج',
-      'شرائح توزيع الخطورة',
-      'إمكانية التوسيع والطي',
-    ],
-    categoryNote: 'يتم ترتيب الفئات حسب الدرجة (الأقل أولاً) في الصفحة الكاملة لإبراز الفجوات الأعلى أولوية.',
-    severityTitle: 'مرشح الخطورة',
-    severityIntro: 'يمكنك تصفية النتائج الظاهرة حسب الخطورة:',
-    severityItems: ['الكل', 'حرجة', 'عالية', 'متوسطة', 'منخفضة', 'معلوماتية'],
-    severityNote: 'يؤدي اختيار مستوى خطورة إلى توسيع الفئات التي تحتوي على نتائج مطابقة تلقائياً.',
-    detailsTitle: 'تفاصيل النتائج',
-    detailsIntro: 'تتضمن النتائج الموسعة:',
-    detailsItems: [
-      'العنوان والأصل/المورد المتأثر',
-      'الخطورة',
-      'إشارة مادة GDPR',
-      'الوصف',
-      'إرشادات المعالجة',
-    ],
-    catalogWrapTitle: 'مصدر الكتالوج وصحته',
-    catalogWrapIntro: 'تتضمن الصفحة قسماً خاصاً بالكتالوج لإظهار كيفية تقييم الضوابط.',
-    provenanceTitle: 'مصدر الكتالوج',
-    provenanceIntro: 'يعرض:',
-    provenanceItems: [
-      'إصدار الكتالوج',
-      'الطابع الزمني لإنشاء الكتالوج',
-      'بطاقات ملخص المصادر (اسم العرض، الجهة/النوع، الحالة)',
-      'شارة بديلة اختيارية وسببها عند تفعيل النسخة الاحتياطية الأولية',
-    ],
-    healthTitle: 'صحة الكتالوج',
-    healthIntro: 'يعرض:',
-    healthItems: [
-      'عدد الضوابط',
-      'عدد المصادر',
-      'وضع التقييم (رسمي فقط أو هجين)',
-      'حالة المزامنة',
-    ],
-    healthNote: 'تدعم هذه البيانات الوصفية قابلية التدقيق والثقة في ربط الضوابط.',
-    widgetTitle: 'الأداة مقابل الصفحة الكاملة',
-    widgetSubTitle: 'أداة لوحة التحكم',
-    widgetIntro: 'توفر بطاقة GDPR في لوحة التحكم لقطة سريعة مدمجة:',
-    widgetItems: [
-      'درجة دائرية',
-      'فرق الاتجاه',
-      'عدادات سريعة للحرج/العالي/الإجمالي',
-      'أشرطة مصغرة لدرجات الفئات',
-      'زر تحديث يدوي',
-    ],
-    fullSubTitle: 'صفحة الامتثال الكاملة لـ GDPR',
-    fullIntro: 'استخدم الصفحة الكاملة من أجل:',
-    fullItems: [
-      'تصفية الخطورة',
-      'تفصيل النتائج حسب كل فئة',
-      'مصدر الكتالوج وصحته',
-      'تغطية الأدلة والضوابط غير القابلة للتقييم',
-      'مراجعة نافذة بيانات الفحص',
-    ],
-    statesTitle: 'الحالات الفارغة وحالات الانتظار والخطأ',
-    statesNoGroup: 'عدم تحديد مجموعة حسابات',
-    statesNoGroupBody: 'تُعرض مطالبة لاختيار مجموعة حسابات أولاً.',
-    statesNoReport: 'لا يوجد تقرير بعد',
-    statesNoReportBody: 'إذا لم يوجد تقرير بعد، تعرض الصفحة حالة فارغة وتتيح الإنشاء اليدوي عبر التحديث.',
-    statesPending: 'حالات الانتظار/انتهاء المهلة',
-    statesPendingBody: 'إذا كانت المعالجة ما تزال جارية أو انتهت مهلتها، فقد تعرض الواجهة رسالة انتظار تشير إلى أن إنشاء التقرير قيد التقدم.',
-    statesError: 'حالة الخطأ',
-    statesErrorBody: 'إذا فشل التحميل، تظهر لوحة خطأ مع إمكانية إعادة المحاولة.',
-    faqTitle: 'الأسئلة الشائعة',
-    faqs: [
-      {
-        q: 'ماذا تعني تغطية الأدلة؟',
-        a: 'تشير إلى مقدار مجموعة الضوابط التي كان لها أدلة فحص كافية للتقييم.',
-      },
-      {
-        q: 'ما هي الضوابط غير القابلة للتقييم؟',
-        a: 'هي الضوابط التي لم يكن من الممكن تقييمها بشكل موثوق من نافذة الأدلة المتاحة.',
-      },
-      {
-        q: 'لماذا تنخفض الدرجة أحياناً بعد فحوصات جديدة؟',
-        a: 'قد تكشف الأدلة الجديدة عن نتائج إضافية أو تغيّر مخرجات تقييم الضوابط.',
-      },
-      {
-        q: 'لماذا يظهر كتالوج احتياطي؟',
-        a: 'إذا كانت مزامنة الكتالوج الأساسية غير متاحة مؤقتاً، يمكن لـ CyfroSec استخدام لقطة احتياطية أولية للحفاظ على توفر التقارير.',
-      },
-    ],
-    tocTitle: 'في هذه الصفحة',
-    tocItems: [
-      { id: 'overview', label: 'نظرة عامة' },
-      { id: 'accessing', label: 'الوصول إلى الامتثال للائحة GDPR' },
-      { id: 'data-scope', label: 'نطاق البيانات ومصدرها' },
-      { id: 'page-overview', label: 'نظرة عامة على الصفحة' },
-      { id: 'header-controls', label: 'الرأس وعناصر التحكم' },
-      { id: 'overall-score', label: 'الدرجة الإجمالية' },
-      { id: 'scan-data-window', label: 'نافذة بيانات الفحص' },
-      { id: 'category-breakdown', label: 'تفصيل الفئات' },
-      { id: 'severity-filter', label: 'مرشح الخطورة' },
-      { id: 'finding-details', label: 'تفاصيل النتائج' },
-      { id: 'catalog-provenance', label: 'مصدر الكتالوج' },
-      { id: 'catalog-health', label: 'صحة الكتالوج' },
-      { id: 'widget-vs-page', label: 'الأداة مقابل الصفحة' },
-      { id: 'empty-states', label: 'الحالات الفارغة وحالات الانتظار والخطأ' },
-      { id: 'faq', label: 'الأسئلة الشائعة' },
-    ],
-    contactSupport: 'تواصل مع الدعم',
-  },
 }
 
 function NumberedList({
   items,
-  isAr,
 }: {
   items: string[]
-  isAr: boolean
 }) {
   return (
     <ol className="space-y-4 cy-text-secondary text-sm">
       {items.map((text, i) => (
         <li key={i} className="flex items-start gap-3">
           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">{i + 1}</span>
-          <span className="mt-0.5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{text}</span>
+          <span className="mt-0.5">{text}</span>
         </li>
       ))}
     </ol>
@@ -343,119 +182,117 @@ function NumberedList({
 }
 
 export default function GdprPage() {
-  const { lang } = useTranslation()
-  const isAr = lang === 'ar'
-  const c = CONTENT[lang as keyof typeof CONTENT] ?? CONTENT.en
+  const c = CONTENT.en
 
   return (
     <div className="flex gap-0 w-full max-w-[1600px] mx-auto">
       <article className="flex-1 min-w-0 px-4 sm:px-6 md:px-8 lg:px-12 py-6 sm:py-8 lg:py-10 w-full max-w-5xl mx-auto">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] cy-text-brand mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.category}</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] cy-text-brand mb-4">{c.category}</p>
 
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold cy-text-primary mb-4 sm:mb-6 leading-tight" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold cy-text-primary mb-4 sm:mb-6 leading-tight" style={{ fontFamily: HEADING_FONT }}>
           {c.title}
         </h1>
 
-        <p className="cy-text-secondary leading-relaxed mb-4" id="overview" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.overview1}</p>
-        <p className="cy-text-secondary leading-relaxed mb-10" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.overview2}</p>
+        <p className="cy-text-secondary leading-relaxed mb-4" id="overview">{c.overview1}</p>
+        <p className="cy-text-secondary leading-relaxed mb-10">{c.overview2}</p>
 
         <hr className="cy-border-default mb-10" />
 
         <section id="accessing" className="mb-10 scroll-mt-20">
-          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.accessingTitle}</h2>
-          <NumberedList items={c.accessingItems} isAr={isAr} />
+          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }}>{c.accessingTitle}</h2>
+          <NumberedList items={c.accessingItems} />
         </section>
 
         <section id="data-scope" className="mb-10 scroll-mt-20">
-          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.scopeTitle}</h2>
-          <p className="cy-text-secondary leading-relaxed mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.scopeIntro}</p>
-          <NumberedList items={c.scopeItems} isAr={isAr} />
-          <p className="cy-text-secondary text-sm mb-2 mt-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.scopeNote1}</p>
-          <p className="cy-text-secondary text-sm" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.scopeNote2}</p>
+          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }}>{c.scopeTitle}</h2>
+          <p className="cy-text-secondary leading-relaxed mb-3">{c.scopeIntro}</p>
+          <NumberedList items={c.scopeItems} />
+          <p className="cy-text-secondary text-sm mb-2 mt-4">{c.scopeNote1}</p>
+          <p className="cy-text-secondary text-sm">{c.scopeNote2}</p>
         </section>
 
         <section id="page-overview" className="mb-10 scroll-mt-20">
-          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.pageTitle}</h2>
-          <p className="cy-text-secondary leading-relaxed mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.pageIntro}</p>
-          <NumberedList items={c.pageItems} isAr={isAr} />
+          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }}>{c.pageTitle}</h2>
+          <p className="cy-text-secondary leading-relaxed mb-3">{c.pageIntro}</p>
+          <NumberedList items={c.pageItems} />
 
-          <h3 id="header-controls" className="text-base font-semibold cy-text-primary mb-2 mt-8 scroll-mt-20" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.headerTitle}</h3>
-          <p className="cy-text-secondary text-sm mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.headerIntro}</p>
-          <NumberedList items={c.headerItems} isAr={isAr} />
-          <p className="cy-text-secondary text-sm mt-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.headerNote}</p>
+          <h3 id="header-controls" className="text-base font-semibold cy-text-primary mb-2 mt-8 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>{c.headerTitle}</h3>
+          <p className="cy-text-secondary text-sm mb-3">{c.headerIntro}</p>
+          <NumberedList items={c.headerItems} />
+          <p className="cy-text-secondary text-sm mt-4">{c.headerNote}</p>
         </section>
 
         <section id="overall-score" className="mb-10 scroll-mt-20">
-          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.scoreTitle}</h2>
-          <p className="cy-text-secondary leading-relaxed mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.scoreIntro}</p>
-          <NumberedList items={c.scoreItems} isAr={isAr} />
+          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }}>{c.scoreTitle}</h2>
+          <p className="cy-text-secondary leading-relaxed mb-3">{c.scoreIntro}</p>
+          <NumberedList items={c.scoreItems} />
 
-          <h3 id="scan-data-window" className="text-base font-semibold cy-text-primary mb-2 mt-8 scroll-mt-20" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.windowTitle}</h3>
-          <p className="cy-text-secondary text-sm mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.windowIntro}</p>
-          <NumberedList items={c.windowItems} isAr={isAr} />
-          <p className="cy-text-secondary text-sm mt-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.windowNote}</p>
+          <h3 id="scan-data-window" className="text-base font-semibold cy-text-primary mb-2 mt-8 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>{c.windowTitle}</h3>
+          <p className="cy-text-secondary text-sm mb-3">{c.windowIntro}</p>
+          <NumberedList items={c.windowItems} />
+          <p className="cy-text-secondary text-sm mt-3">{c.windowNote}</p>
         </section>
 
         <section id="category-breakdown" className="mb-10 scroll-mt-20">
-          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.categoryTitle}</h2>
-          <p className="cy-text-secondary leading-relaxed mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.categoryIntro}</p>
-          <NumberedList items={c.categoryItems} isAr={isAr} />
-          <p className="cy-text-secondary text-sm mb-6 mt-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.categoryNote}</p>
+          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }}>{c.categoryTitle}</h2>
+          <p className="cy-text-secondary leading-relaxed mb-3">{c.categoryIntro}</p>
+          <NumberedList items={c.categoryItems} />
+          <p className="cy-text-secondary text-sm mb-6 mt-4">{c.categoryNote}</p>
 
-          <h3 id="severity-filter" className="text-base font-semibold cy-text-primary mb-2 scroll-mt-20" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.severityTitle}</h3>
-          <p className="cy-text-secondary text-sm mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.severityIntro}</p>
-          <NumberedList items={c.severityItems} isAr={isAr} />
-          <p className="cy-text-secondary text-sm mb-5 mt-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.severityNote}</p>
+          <h3 id="severity-filter" className="text-base font-semibold cy-text-primary mb-2 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>{c.severityTitle}</h3>
+          <p className="cy-text-secondary text-sm mb-3">{c.severityIntro}</p>
+          <NumberedList items={c.severityItems} />
+          <p className="cy-text-secondary text-sm mb-5 mt-4">{c.severityNote}</p>
 
-          <h3 id="finding-details" className="text-base font-semibold cy-text-primary mb-2 scroll-mt-20" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.detailsTitle}</h3>
-          <p className="cy-text-secondary text-sm mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.detailsIntro}</p>
-          <NumberedList items={c.detailsItems} isAr={isAr} />
+          <h3 id="finding-details" className="text-base font-semibold cy-text-primary mb-2 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>{c.detailsTitle}</h3>
+          <p className="cy-text-secondary text-sm mb-3">{c.detailsIntro}</p>
+          <NumberedList items={c.detailsItems} />
         </section>
 
         <section className="mb-10">
-          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.catalogWrapTitle}</h2>
-          <p className="cy-text-secondary text-sm mb-6" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.catalogWrapIntro}</p>
+          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }}>{c.catalogWrapTitle}</h2>
+          <p className="cy-text-secondary text-sm mb-6">{c.catalogWrapIntro}</p>
 
-          <h3 id="catalog-provenance" className="text-base font-semibold cy-text-primary mb-3 scroll-mt-20" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.provenanceTitle}</h3>
-          <p className="cy-text-secondary text-sm mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.provenanceIntro}</p>
-          <NumberedList items={c.provenanceItems} isAr={isAr} />
+          <h3 id="catalog-provenance" className="text-base font-semibold cy-text-primary mb-3 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>{c.provenanceTitle}</h3>
+          <p className="cy-text-secondary text-sm mb-3">{c.provenanceIntro}</p>
+          <NumberedList items={c.provenanceItems} />
 
-          <h3 id="catalog-health" className="text-base font-semibold cy-text-primary mb-3 mt-8 scroll-mt-20" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.healthTitle}</h3>
-          <p className="cy-text-secondary text-sm mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.healthIntro}</p>
-          <NumberedList items={c.healthItems} isAr={isAr} />
-          <p className="cy-text-secondary text-sm mt-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.healthNote}</p>
+          <h3 id="catalog-health" className="text-base font-semibold cy-text-primary mb-3 mt-8 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>{c.healthTitle}</h3>
+          <p className="cy-text-secondary text-sm mb-3">{c.healthIntro}</p>
+          <NumberedList items={c.healthItems} />
+          <p className="cy-text-secondary text-sm mt-4">{c.healthNote}</p>
         </section>
 
         <section id="widget-vs-page" className="mb-10 scroll-mt-20">
-          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.widgetTitle}</h2>
-          <h3 className="text-base font-semibold cy-text-primary mb-2" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.widgetSubTitle}</h3>
-          <p className="cy-text-secondary text-sm mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.widgetIntro}</p>
-          <NumberedList items={c.widgetItems} isAr={isAr} />
+          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }}>{c.widgetTitle}</h2>
+          <h3 className="text-base font-semibold cy-text-primary mb-2" style={{ fontFamily: HEADING_FONT }}>{c.widgetSubTitle}</h3>
+          <p className="cy-text-secondary text-sm mb-3">{c.widgetIntro}</p>
+          <NumberedList items={c.widgetItems} />
 
-          <h3 className="text-base font-semibold cy-text-primary mb-2 mt-8" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.fullSubTitle}</h3>
-          <p className="cy-text-secondary text-sm mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.fullIntro}</p>
-          <NumberedList items={c.fullItems} isAr={isAr} />
+          <h3 className="text-base font-semibold cy-text-primary mb-2 mt-8" style={{ fontFamily: HEADING_FONT }}>{c.fullSubTitle}</h3>
+          <p className="cy-text-secondary text-sm mb-3">{c.fullIntro}</p>
+          <NumberedList items={c.fullItems} />
         </section>
 
         <section id="empty-states" className="mb-10 scroll-mt-20">
-          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.statesTitle}</h2>
-          <h3 className="text-base font-semibold cy-text-primary mb-2" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.statesNoGroup}</h3>
-          <p className="cy-text-secondary text-sm mb-5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.statesNoGroupBody}</p>
-          <h3 className="text-base font-semibold cy-text-primary mb-2" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.statesNoReport}</h3>
-          <p className="cy-text-secondary text-sm mb-5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.statesNoReportBody}</p>
-          <h3 className="text-base font-semibold cy-text-primary mb-2" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.statesPending}</h3>
-          <p className="cy-text-secondary text-sm mb-5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.statesPendingBody}</p>
-          <h3 className="text-base font-semibold cy-text-primary mb-2" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.statesError}</h3>
-          <p className="cy-text-secondary text-sm" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.statesErrorBody}</p>
+          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }}>{c.statesTitle}</h2>
+          <h3 className="text-base font-semibold cy-text-primary mb-2" style={{ fontFamily: HEADING_FONT }}>{c.statesNoGroup}</h3>
+          <p className="cy-text-secondary text-sm mb-5">{c.statesNoGroupBody}</p>
+          <h3 className="text-base font-semibold cy-text-primary mb-2" style={{ fontFamily: HEADING_FONT }}>{c.statesNoReport}</h3>
+          <p className="cy-text-secondary text-sm mb-5">{c.statesNoReportBody}</p>
+          <h3 className="text-base font-semibold cy-text-primary mb-2" style={{ fontFamily: HEADING_FONT }}>{c.statesPending}</h3>
+          <p className="cy-text-secondary text-sm mb-5">{c.statesPendingBody}</p>
+          <h3 className="text-base font-semibold cy-text-primary mb-2" style={{ fontFamily: HEADING_FONT }}>{c.statesError}</h3>
+          <p className="cy-text-secondary text-sm">{c.statesErrorBody}</p>
         </section>
 
         <section id="faq" className="mb-10 scroll-mt-20">
-          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.faqTitle}</h2>
+          <h2 className="text-xl font-bold cy-text-primary mb-4" style={{ fontFamily: HEADING_FONT }}>{c.faqTitle}</h2>
           <div className="space-y-5">
             {c.faqs.map(({ q, a }) => (
               <div key={q}>
-                <p className="text-sm font-semibold cy-text-primary mb-1" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{q}</p>
-                <p className="text-sm cy-text-secondary" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{a}</p>
+                <p className="text-sm font-semibold cy-text-primary mb-1">{q}</p>
+                <p className="text-sm cy-text-secondary">{a}</p>
               </div>
             ))}
           </div>
@@ -464,11 +301,11 @@ export default function GdprPage() {
 
       <aside className="hidden 2xl:block w-56 shrink-0 px-6 pt-10 pb-10">
         <div className="sticky top-10">
-          <p className="text-[10px] font-bold uppercase tracking-widest cy-text-muted mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.tocTitle}</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest cy-text-muted mb-3">{c.tocTitle}</p>
           <ul className="space-y-2">
             {c.tocItems.map(({ id, label }) => (
               <li key={id}>
-                <a href={`#${id}`} className="text-sm cy-text-secondary hover:cy-text-brand transition-colors block" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+                <a href={`#${id}`} className="text-sm cy-text-secondary hover:cy-text-brand transition-colors block">
                   {label}
                 </a>
               </li>
@@ -477,7 +314,7 @@ export default function GdprPage() {
           <div className="mt-8 pt-6 border-t cy-border-default">
             <Link href="/contact" className="flex items-center gap-1.5 text-xs cy-text-muted hover:cy-text-brand transition-colors">
               <ExternalLink className="h-3.5 w-3.5" />
-              <span dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.contactSupport}</span>
+              <span>{c.contactSupport}</span>
             </Link>
           </div>
         </div>

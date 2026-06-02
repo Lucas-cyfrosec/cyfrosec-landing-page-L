@@ -5,8 +5,7 @@ import Link from 'next/link';
 import { useTranslation } from '@/src/i18n';
 
 export default function FinalCTA() {
-  const { t, lang } = useTranslation();
-  const isAr = lang === 'ar';
+  const { t } = useTranslation();
 
   return (
     <section id="cta" className="relative overflow-hidden flex-1 flex flex-col justify-center border-t cy-border-strong">
@@ -24,12 +23,12 @@ export default function FinalCTA() {
           className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(15,31,47,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(15,31,47,0.08)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.78)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.78)_1px,transparent_1px)] bg-[size:40px_40px] opacity-[0.45] dark:opacity-[0.055]"
         />
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl 3xl:max-w-screen-2xl text-center">
-          <h2 dir={isAr ? 'rtl' : undefined} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold leading-tight mb-4 sm:mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold leading-tight mb-4 sm:mb-6">
             <span className="block text-surface-900 dark:text-white">{t.finalCta.titlePre}</span>
             <span className="block text-primary-500 dark:text-primary-400">{t.finalCta.titleHighlight}</span>
           </h2>
 
-          <p dir={isAr ? 'rtl' : undefined} className="text-base sm:text-lg lg:text-xl 3xl:text-2xl text-surface-600 dark:text-white/90 max-w-2xl mx-auto mb-8 sm:mb-10">
+          <p className="text-base sm:text-lg lg:text-xl 3xl:text-2xl text-surface-600 dark:text-white/90 max-w-2xl mx-auto mb-8 sm:mb-10">
             {t.finalCta.description}
           </p>
 

@@ -40,7 +40,7 @@ const plans: Plan[] = [
     features: [
       'Up to 5 users',
       'Up to 3 agents',
-      '100 active tests',
+      '100 active scans',
       'Vulnerability scanning',
       'Email reports',
       'Community support'
@@ -60,7 +60,7 @@ const plans: Plan[] = [
     features: [
       'Up to 25 users',
       'Up to 10 agents',
-      '500 active tests',
+      '500 active scans',
       'AI-powered insights',
       'AI chat assistant',
       'Priority support',
@@ -84,7 +84,7 @@ const plans: Plan[] = [
     features: [
       'Unlimited users',
       'Up to 50 agents',
-      'Unlimited tests',
+      'Unlimited scans',
       'Advanced AI models',
       'SSO / SAML',
       'Compliance reports',

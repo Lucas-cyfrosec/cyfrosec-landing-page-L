@@ -40,7 +40,7 @@ const categories = [
     icon: HelpCircle,
     color: '#a78bfa',
     queries: [
-      'How do I create a new test?',
+      'How do I create a new scan?',
       'What does an Account Group Admin have access to?',
       'How do I register a new agent?',
     ],
@@ -53,8 +53,6 @@ function TypingQuery({ text, delay }: { text: string; delay: number }) {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    setDisplayed('')
-    setDone(false)
     let i = 0
 
     const start = setTimeout(() => {

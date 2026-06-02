@@ -4,8 +4,6 @@ import { useMemo, useRef, useState } from 'react'
 import { submitBookDemoApiV1SupportBookDemoPost } from '@/src/client'
 import type { DemoDeploymentModel, DemoPrimaryUseCase } from '@/src/client'
 import { ThankYouDocLinks } from '@/app/components/landing/ThankYouDocLinks'
-import { useTranslation } from '@/src/i18n'
-
 type BookDemoFormState = {
   fullName: string
   workEmail: string
@@ -53,52 +51,13 @@ function getErrorMessage(errorPayload: unknown, fallback: string): string {
 }
 
 export function BookDemoForm() {
-  const { lang } = useTranslation()
-  const isAr = lang === 'ar'
   const [form, setForm] = useState<BookDemoFormState>(INITIAL_STATE)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const formStartedAt = useRef(new Date().toISOString())
 
-  const copy = isAr ? {
-    submitError: 'تعذر إرسال طلب حجز العرض',
-    successTitle: 'تم استلام الطلب!',
-    successBody: 'شكراً لاهتمامك! سيتواصل معك أحد مختصي الأمن في CyfroSec قريباً لتحديد موعد العرض.',
-    fullName: 'الاسم الكامل',
-    workEmail: 'البريد الإلكتروني للعمل',
-    company: 'الشركة',
-    role: 'المسمى الوظيفي',
-    country: 'الدولة / المنطقة',
-    companySize: 'حجم الشركة',
-    selectSize: 'اختر الحجم',
-    sizeOptions: ['1-10 موظفين', '11-50 موظفاً', '51-200 موظف', '201-1,000 موظف', '1,000+ موظف'],
-    deployment: 'نموذج النشر',
-    selectDeployment: 'اختر نموذج النشر',
-    deploymentOptions: ['برمجية كخدمة', 'محلي On-Prem', 'هجين', 'غير متأكد'],
-    useCase: 'حالة الاستخدام الأساسية',
-    selectUseCase: 'اختر حالة الاستخدام الأساسية',
-    useCaseOptions: [
-      'إدارة سطح الهجوم',
-      'إدارة الثغرات',
-      'الفحص المعتمد على الوكيل',
-      'الامتثال والتقارير',
-      'المعالجة الموجّهة بالذكاء الاصطناعي',
-      'نظرة عامة على المنصة',
-      'غير متأكد',
-    ],
-    environment: 'ملخص البيئة',
-    environmentPlaceholder: 'وصف موجز لبيئتك أو للمخاطر التي تريد أن يغطيها العرض (20 حرفاً كحد أدنى)',
-    minChars: 'الحد الأدنى 20 حرفاً — يرجى إضافة مزيد من التفاصيل',
-    contactWindow: 'الوقت المفضل للتواصل (اختياري)',
-    contactWindowPlaceholder: 'مثال: أيام الأسبوع بعد 14:00 بتوقيت السعودية',
-    notes: 'هل هناك أي شيء آخر تود أن نعرفه؟ (اختياري)',
-    submitting: 'جارٍ الإرسال…',
-    submit: 'احجز العرض',
-    footer: 'بإرسال هذا النموذج فإنك توافق على أن تتواصل معك CyfroSec بخصوص طلب العرض الخاص بك.',
-    countryPrefix: 'الدولة/المنطقة',
-    notesPrefix: 'ملاحظات',
-  } : {
+  const copy = {
     submitError: 'Failed to submit book demo request',
     successTitle: 'Request received!',
     successBody: 'Thank you for your interest! A CyfroSec security specialist will contact you shortly to schedule your demo.',
@@ -213,8 +172,8 @@ export function BookDemoForm() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <p className="text-base font-semibold text-white" dir={isAr ? 'rtl' : undefined}>{copy.successTitle}</p>
-          <p className="mt-2 text-sm text-white/70" dir={isAr ? 'rtl' : undefined}>
+          <p className="text-base font-semibold text-white">{copy.successTitle}</p>
+          <p className="mt-2 text-sm text-white/70">
             {copy.successBody}
           </p>
         </div>
@@ -227,33 +186,33 @@ export function BookDemoForm() {
     <form className="space-y-4" onSubmit={onSubmit}>
       <div className="grid gap-4 md:grid-cols-2">
         <div>
-          <label htmlFor="fullName" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.fullName}</label>
+          <label htmlFor="fullName" className={labelClass}>{copy.fullName}</label>
           <input id="fullName" name="fullName" autoComplete="name" className={inputClass} value={form.fullName} onChange={(e) => setForm((prev) => ({ ...prev, fullName: e.target.value }))} required />
         </div>
 
         <div>
-          <label htmlFor="workEmail" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.workEmail}</label>
+          <label htmlFor="workEmail" className={labelClass}>{copy.workEmail}</label>
           <input id="workEmail" name="workEmail" autoComplete="email" className={inputClass} type="email" value={form.workEmail} onChange={(e) => setForm((prev) => ({ ...prev, workEmail: e.target.value }))} required />
         </div>
 
         <div>
-          <label htmlFor="companyName" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.company}</label>
+          <label htmlFor="companyName" className={labelClass}>{copy.company}</label>
           <input id="companyName" name="companyName" autoComplete="organization" className={inputClass} value={form.companyName} onChange={(e) => setForm((prev) => ({ ...prev, companyName: e.target.value }))} required />
         </div>
 
         <div>
-          <label htmlFor="roleTitle" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.role}</label>
+          <label htmlFor="roleTitle" className={labelClass}>{copy.role}</label>
           <input id="roleTitle" name="roleTitle" autoComplete="organization-title" className={inputClass} value={form.roleTitle} onChange={(e) => setForm((prev) => ({ ...prev, roleTitle: e.target.value }))} required />
         </div>
       </div>
 
       <div>
-        <label htmlFor="country" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.country}</label>
+        <label htmlFor="country" className={labelClass}>{copy.country}</label>
         <input id="country" name="country" autoComplete="country-name" className={inputClass} value={form.country} onChange={(e) => setForm((prev) => ({ ...prev, country: e.target.value }))} required />
       </div>
 
       <div>
-        <label htmlFor="companySize" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.companySize}</label>
+        <label htmlFor="companySize" className={labelClass}>{copy.companySize}</label>
         <select id="companySize" name="companySize" autoComplete="off" className={inputClass} value={form.companySize} onChange={(e) => setForm((prev) => ({ ...prev, companySize: e.target.value }))}>
           <option value="">{copy.selectSize}</option>
           <option value="1-10">{copy.sizeOptions[0]}</option>
@@ -265,7 +224,7 @@ export function BookDemoForm() {
       </div>
 
       <div>
-        <label htmlFor="deploymentModel" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.deployment}</label>
+        <label htmlFor="deploymentModel" className={labelClass}>{copy.deployment}</label>
         <select id="deploymentModel" name="deploymentModel" autoComplete="off" className={inputClass} value={form.deploymentModel} onChange={(e) => setForm((prev) => ({ ...prev, deploymentModel: e.target.value as DemoDeploymentModel | '' }))} required>
           <option value="">{copy.selectDeployment}</option>
           <option value="SaaS">{copy.deploymentOptions[0]}</option>
@@ -276,7 +235,7 @@ export function BookDemoForm() {
       </div>
 
       <div>
-        <label htmlFor="primaryUseCase" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.useCase}</label>
+        <label htmlFor="primaryUseCase" className={labelClass}>{copy.useCase}</label>
         <select id="primaryUseCase" name="primaryUseCase" autoComplete="off" className={inputClass} value={form.primaryUseCase} onChange={(e) => setForm((prev) => ({ ...prev, primaryUseCase: e.target.value as DemoPrimaryUseCase | '' }))} required>
           <option value="">{copy.selectUseCase}</option>
           <option value="Attack Surface Management">{copy.useCaseOptions[0]}</option>
@@ -290,33 +249,33 @@ export function BookDemoForm() {
       </div>
 
       <div>
-        <label htmlFor="environmentSummary" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.environment}</label>
+        <label htmlFor="environmentSummary" className={labelClass}>{copy.environment}</label>
         <textarea
           id="environmentSummary"
           name="environmentSummary"
           autoComplete="off"
           className={`${inputClass} min-h-24 ${form.environmentSummary.length > 0 && form.environmentSummary.trim().length < 20 ? 'border-amber-500/60 focus:ring-amber-500/30' : ''}`}
           placeholder={copy.environmentPlaceholder}
-          dir={isAr ? 'rtl' : undefined}
+         
           value={form.environmentSummary}
           onChange={(e) => setForm((prev) => ({ ...prev, environmentSummary: e.target.value }))}
           required
         />
         {form.environmentSummary.length > 0 && form.environmentSummary.trim().length < 20 && (
-          <p className="mt-1 text-xs text-amber-400 font-medium" dir={isAr ? 'rtl' : undefined}>
+          <p className="mt-1 text-xs text-amber-400 font-medium">
             {form.environmentSummary.trim().length}/20 {copy.minChars}
           </p>
         )}
       </div>
 
       <div>
-        <label htmlFor="preferredContactWindow" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.contactWindow}</label>
-        <input id="preferredContactWindow" name="preferredContactWindow" autoComplete="off" className={inputClass} placeholder={copy.contactWindowPlaceholder} dir={isAr ? 'rtl' : undefined} value={form.preferredContactWindow} onChange={(e) => setForm((prev) => ({ ...prev, preferredContactWindow: e.target.value }))} />
+        <label htmlFor="preferredContactWindow" className={labelClass}>{copy.contactWindow}</label>
+        <input id="preferredContactWindow" name="preferredContactWindow" autoComplete="off" className={inputClass} placeholder={copy.contactWindowPlaceholder} value={form.preferredContactWindow} onChange={(e) => setForm((prev) => ({ ...prev, preferredContactWindow: e.target.value }))} />
       </div>
 
       <div>
-        <label htmlFor="message" dir={isAr ? 'rtl' : undefined} className={labelClass}>{copy.notes}</label>
-        <textarea id="message" name="message" autoComplete="off" dir={isAr ? 'rtl' : undefined} className={`${inputClass} min-h-24`} value={form.message} onChange={(e) => setForm((prev) => ({ ...prev, message: e.target.value }))} />
+        <label htmlFor="message" className={labelClass}>{copy.notes}</label>
+        <textarea id="message" name="message" autoComplete="off" className={`${inputClass} min-h-24`} value={form.message} onChange={(e) => setForm((prev) => ({ ...prev, message: e.target.value }))} />
       </div>
 
       {/* Honeypot */}
@@ -337,7 +296,7 @@ export function BookDemoForm() {
         {loading ? copy.submitting : copy.submit}
       </button>
 
-      <p className="text-center text-xs cy-text-muted" dir={isAr ? 'rtl' : undefined}>
+      <p className="text-center text-xs cy-text-muted">
         {copy.footer}
       </p>
 

@@ -35,7 +35,7 @@ export function ScreenshotShowcase() {
     <>
       <div className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
         {/* Header */}
-        <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10">
+        <div className="flex items-center gap-3 px-6 py-4 border-b border-white/10">
           <span className="size-3 rounded-full bg-red-500/70" />
           <span className="size-3 rounded-full bg-yellow-400/70" />
           <span className="size-3 rounded-full bg-green-400/70" />
@@ -43,13 +43,13 @@ export function ScreenshotShowcase() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 px-5 pt-4">
+        <div className="flex flex-wrap gap-2 px-6 pt-5">
           {TABS.map((t) => (
             <button
               key={t.id}
               onClick={() => setActive(t.id)}
               className={[
-                'px-4 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200',
+                'px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200',
                 active === t.id
                   ? 'bg-primary-500/20 text-primary-300 border border-primary-500/40'
                   : 'text-white/40 hover:text-white/70 border border-transparent',
@@ -61,19 +61,19 @@ export function ScreenshotShowcase() {
         </div>
 
         {/* Description */}
-        <p className="px-5 pt-2 pb-3 text-xs text-white/40">{tab.description}</p>
+        <p className="px-6 pt-2 pb-4 text-sm text-white/45">{tab.description}</p>
 
         {/* Screenshot */}
         <div
-          className="group relative mx-5 mb-5 rounded-xl overflow-hidden border border-white/10 shadow-2xl cursor-zoom-in"
+          className="group relative mx-3 mb-3 rounded-xl overflow-hidden border border-white/10 shadow-2xl cursor-zoom-in lg:mx-4 lg:mb-4"
           onClick={() => setLightbox(true)}
         >
           <Image
             key={tab.id}
             src={tab.src}
             alt={tab.label}
-            width={1400}
-            height={900}
+            width={1680}
+            height={1050}
             className="w-full h-auto object-cover object-top transition-opacity duration-300"
             priority
           />
@@ -102,7 +102,7 @@ export function ScreenshotShowcase() {
             <X className="size-5 text-white" />
           </button>
           <div
-            className="relative max-w-6xl w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
+            className="relative max-w-[88rem] w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <Image

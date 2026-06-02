@@ -26,7 +26,7 @@ const DOCS = [
   },
   {
     icon: Radar,
-    label: 'Creating Tests',
+    label: 'Creating Scans',
     href: '/documents/first-scan',
     description: 'Set up and schedule your first security scan',
     color: 'from-violet-500/20 to-purple-500/10',

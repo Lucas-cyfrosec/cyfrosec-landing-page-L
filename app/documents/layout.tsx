@@ -65,8 +65,7 @@ function SidebarSection({
 }
 
 function DocsSidebar() {
-  const { t, lang } = useTranslation()
-  const isAr = lang === 'ar'
+  const { t } = useTranslation()
   const sb = t.pages.documentsFull.sidebar
 
   const [query, setQuery] = useState('')
@@ -138,7 +137,7 @@ function DocsSidebar() {
           className="inline-flex items-center gap-1.5 text-xs cy-text-muted transition-colors hover:cy-text-brand 3xl:text-[13px]"
         >
           <ArrowLeft className="h-3.5 w-3.5 3xl:h-4 3xl:w-4" />
-          <span lang={isAr ? 'ar' : 'en'}>{sb.backToSite}</span>
+          <span>{sb.backToSite}</span>
         </Link>
 
         <Link
@@ -146,7 +145,7 @@ function DocsSidebar() {
           className="block text-sm font-semibold cy-text-primary transition-colors hover:cy-text-brand 3xl:text-[16px]"
           style={{ fontFamily: DOCS_HEADING_FONT }}
         >
-          <span lang={isAr ? 'ar' : 'en'}>{sb.title}</span>
+          <span>{sb.title}</span>
         </Link>
 
         {/* Search */}
@@ -159,7 +158,7 @@ function DocsSidebar() {
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setFocused(true)}
             placeholder={sb.searchPlaceholder}
-            dir={isAr ? 'rtl' : 'ltr'}
+           
             className="w-full rounded-lg border cy-border-default cy-bg-canvas pl-8 pr-3 py-2 text-xs cy-text-primary placeholder:cy-text-muted transition focus:outline-none focus:ring-2 focus:ring-primary-500/30 3xl:pl-10 3xl:pr-4 3xl:py-2.5 3xl:text-[13px]"
           />
 

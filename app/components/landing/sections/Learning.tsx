@@ -5,8 +5,7 @@ import ShaderBackground from '../ShaderBackground';
 import { useTranslation } from '@/src/i18n';
 
 export default function Learning() {
-  const { t, lang } = useTranslation();
-  const isAr = lang === 'ar';
+  const { t } = useTranslation();
 
   return (
     <section
@@ -17,11 +16,11 @@ export default function Learning() {
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl 3xl:max-w-screen-2xl">
         <div className="text-center mb-8 sm:mb-12">
-          <h2 dir={isAr ? 'rtl' : undefined} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold text-surface-900 dark:text-white mb-3 sm:mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold text-surface-900 dark:text-white mb-3 sm:mb-4">
             {t.learning.title}{' '}
             <span className="text-primary-400">CyfroSec</span>
           </h2>
-          <p dir={isAr ? 'rtl' : undefined} className="text-base sm:text-lg 3xl:text-xl text-surface-600 dark:text-surface-300 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg 3xl:text-xl text-surface-600 dark:text-surface-300 max-w-2xl mx-auto">
             {t.learning.subtitle}
           </p>
         </div>
@@ -29,7 +28,7 @@ export default function Learning() {
         <div className="max-w-4xl 3xl:max-w-5xl mx-auto">
           {/* CEO Message */}
           <div className="rounded-xl sm:rounded-2xl border border-surface-200 dark:border-white/10 shadow-2xl shadow-primary-500/10 backdrop-blur-xl bg-white dark:bg-surface-900/85 p-6 sm:p-8 lg:p-10">
-            <pre dir={isAr ? 'rtl' : undefined} className="whitespace-pre-wrap font-sans text-sm sm:text-base lg:text-lg text-surface-800 dark:text-white leading-relaxed">
+            <pre className="whitespace-pre-wrap font-sans text-sm sm:text-base lg:text-lg text-surface-800 dark:text-white leading-relaxed">
               {t.learning.ceoMessage}
             </pre>
           </div>
@@ -40,8 +39,8 @@ export default function Learning() {
               <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg mb-3 bg-primary-500/20 text-primary-400">
                 <Shield className="w-5 h-5" />
               </div>
-              <h3 dir={isAr ? 'rtl' : undefined} className="font-semibold text-surface-900 dark:text-white mb-1">{t.learning.mission.title}</h3>
-              <p dir={isAr ? 'rtl' : undefined} className="text-sm text-surface-600 dark:text-surface-400">
+              <h3 className="font-semibold text-surface-900 dark:text-white mb-1">{t.learning.mission.title}</h3>
+              <p className="text-sm text-surface-600 dark:text-surface-400">
                 {t.learning.mission.description}
               </p>
             </div>
@@ -49,8 +48,8 @@ export default function Learning() {
               <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg mb-3 bg-primary-500/20 text-primary-400">
                 <Users className="w-5 h-5" />
               </div>
-              <h3 dir={isAr ? 'rtl' : undefined} className="font-semibold text-surface-900 dark:text-white mb-1">{t.learning.team.title}</h3>
-              <p dir={isAr ? 'rtl' : undefined} className="text-sm text-surface-600 dark:text-surface-400">
+              <h3 className="font-semibold text-surface-900 dark:text-white mb-1">{t.learning.team.title}</h3>
+              <p className="text-sm text-surface-600 dark:text-surface-400">
                 {t.learning.team.description}
               </p>
             </div>
@@ -58,8 +57,8 @@ export default function Learning() {
               <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg mb-3 bg-primary-500/20 text-primary-400">
                 <Globe className="w-5 h-5" />
               </div>
-              <h3 dir={isAr ? 'rtl' : undefined} className="font-semibold text-surface-900 dark:text-white mb-1">{t.learning.approach.title}</h3>
-              <p dir={isAr ? 'rtl' : undefined} className="text-sm text-surface-600 dark:text-surface-400">
+              <h3 className="font-semibold text-surface-900 dark:text-white mb-1">{t.learning.approach.title}</h3>
+              <p className="text-sm text-surface-600 dark:text-surface-400">
                 {t.learning.approach.description}
               </p>
             </div>

@@ -7,23 +7,15 @@ import { useTranslation } from '@/src/i18n';
 const currentYear = new Date().getFullYear();
 
 function FooterLinkItem({ link, label }: { link: FooterLink; label: string }) {
+  const cls = "text-sm cy-text-sidebar-muted hover:cy-text-sidebar-strong transition-colors block";
   if (link.isNav) {
-    return (
-      <Link href={link.href} className="text-sm cy-text-sidebar-muted hover:cy-text-sidebar-strong transition-colors">
-        {label}
-      </Link>
-    );
+    return <Link href={link.href} className={cls}>{label}</Link>;
   }
-  return (
-    <a href={link.href} className="text-sm cy-text-sidebar-muted hover:cy-text-sidebar-strong transition-colors">
-      {label}
-    </a>
-  );
+  return <a href={link.href} className={cls}>{label}</a>;
 }
 
 export default function MegaFooter() {
-  const { t, lang } = useTranslation();
-  const isAr = lang === 'ar';
+  const { t } = useTranslation();
   const { categories, links } = t.footer;
 
   return (
@@ -34,10 +26,10 @@ export default function MegaFooter() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/" className="text-2xl font-bold cy-text-sidebar-strong">CyfroSec</Link>
-            <p dir={isAr ? 'rtl' : undefined} className="mt-3 text-sm cy-text-sidebar-muted max-w-sm">
+            <p className="mt-3 text-sm cy-text-sidebar-muted max-w-sm">
               {t.footer.tagline}
             </p>
-            <p dir={isAr ? 'rtl' : undefined} className="mt-2 text-sm cy-text-sidebar-muted max-w-sm">
+            <p className="mt-2 text-sm cy-text-sidebar-muted max-w-sm">
               {t.footer.description}
             </p>
           </div>
@@ -46,7 +38,7 @@ export default function MegaFooter() {
           <div className="grid grid-cols-2 gap-6 lg:col-span-3 lg:grid-cols-3">
 
             <div>
-              <h4 dir={isAr ? 'rtl' : undefined} className="text-xs font-semibold cy-text-sidebar-strong uppercase tracking-wider mb-3">{categories.product}</h4>
+              <h4 className="text-xs font-semibold cy-text-sidebar-strong uppercase tracking-wider mb-3">{categories.product}</h4>
               <ul className="space-y-2.5">
                 {LANDING_FOOTER_LINKS.product.map((link, i) => (
                   <li key={link.href}>
@@ -57,7 +49,7 @@ export default function MegaFooter() {
             </div>
 
             <div>
-              <h4 dir={isAr ? 'rtl' : undefined} className="text-xs font-semibold cy-text-sidebar-strong uppercase tracking-wider mb-3">{categories.solutions}</h4>
+              <h4 className="text-xs font-semibold cy-text-sidebar-strong uppercase tracking-wider mb-3">{categories.solutions}</h4>
               <ul className="space-y-2.5">
                 {LANDING_FOOTER_LINKS.solutions.map((link, i) => (
                   <li key={link.href}>
@@ -70,7 +62,7 @@ export default function MegaFooter() {
             {/* Resources + Company share one cell on desktop */}
             <div className="col-span-2 grid grid-cols-2 gap-6 lg:col-span-1 lg:flex lg:flex-col lg:gap-8">
               <div>
-                <h4 dir={isAr ? 'rtl' : undefined} className="text-xs font-semibold cy-text-sidebar-strong uppercase tracking-wider mb-3">{categories.resources}</h4>
+                <h4 className="text-xs font-semibold cy-text-sidebar-strong uppercase tracking-wider mb-3">{categories.resources}</h4>
                 <ul className="space-y-2.5">
                   {LANDING_FOOTER_LINKS.resources.map((link, i) => (
                     <li key={link.href}>
@@ -80,7 +72,7 @@ export default function MegaFooter() {
                 </ul>
               </div>
               <div>
-                <h4 dir={isAr ? 'rtl' : undefined} className="text-xs font-semibold cy-text-sidebar-strong uppercase tracking-wider mb-3">{categories.company}</h4>
+                <h4 className="text-xs font-semibold cy-text-sidebar-strong uppercase tracking-wider mb-3">{categories.company}</h4>
                 <ul className="space-y-2.5">
                   {LANDING_FOOTER_LINKS.company.map((link, i) => (
                     <li key={link.href}>
@@ -99,10 +91,10 @@ export default function MegaFooter() {
       <div className="border-t cy-border-sidebar">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 max-w-screen-xl 3xl:max-w-screen-2xl">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
-            <p dir={isAr ? 'rtl' : undefined} className="cy-text-sidebar-muted text-xs text-center sm:text-start">
+            <p className="cy-text-sidebar-muted text-xs text-center sm:text-start">
               &copy; {currentYear} CyfroSec. {t.footer.allRightsReserved}
             </p>
-            <span dir={isAr ? 'rtl' : undefined} className="cy-text-sidebar-muted text-xs">{t.footer.madeIn}</span>
+            <span className="cy-text-sidebar-muted text-xs">{t.footer.madeIn}</span>
           </div>
         </div>
       </div>

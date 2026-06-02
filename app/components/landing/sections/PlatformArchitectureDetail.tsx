@@ -61,8 +61,7 @@ function MobileConnector() {
 }
 
 export default function PlatformArchitectureDetail() {
-  const { t, lang } = useTranslation();
-  const isAr = lang === 'ar';
+  const { t } = useTranslation();
   const arch = t.archDetail;
 
   function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -80,11 +79,11 @@ export default function PlatformArchitectureDetail() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl 3xl:max-w-screen-2xl">
         <div className="text-center mb-8 sm:mb-12">
-          <h2 dir={isAr ? 'rtl' : undefined} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold text-surface-900 dark:text-surface-50 mb-3 sm:mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold text-surface-900 dark:text-surface-50 mb-3 sm:mb-4">
             {arch.titlePre}{' '}
             <span className="text-primary-500">{arch.titleHighlight}</span>
           </h2>
-          <p dir={isAr ? 'rtl' : undefined} className="text-base sm:text-lg 3xl:text-xl text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg 3xl:text-xl text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
             {arch.subtitle}
           </p>
         </div>

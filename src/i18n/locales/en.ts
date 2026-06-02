@@ -20,8 +20,8 @@ export const en = {
       { label: 'Asset Discovery', description: 'Find every asset in your environment' },
       { label: 'Service Fingerprinting', description: 'Identify exposed services & versions' },
       { label: 'CyfroAI Insights', description: 'AI-powered risk prioritization' },
-      { label: 'Cyfro Assistant', description: 'Conversational security guidance' },
-      { label: 'CyfroCode', description: 'Code scanning & AI-driven patches' },
+      { label: 'CyfroAssistant', description: 'Conversational security guidance' },
+      { label: 'CyfroCode', description: 'SAST code security scanning & AI-driven patches' },
     ],
     signIn: 'Sign In',
     getStarted: 'Get Started',
@@ -30,20 +30,15 @@ export const en = {
 
   hero: {
     aiThat: 'AI That',
-    titles: [
-      'Finds Vulnerabilities.',
-      'Stops Threats.',
-      'Simplifies Fixes.',
-      'Explains Risks.',
-    ],
-    tagline: 'See your network the way attackers do.',
+    titles: ['Stops Threats.'],
+    tagline: 'Understand your environment better than an attacker ever could.',
     description:
-      'Continuous network discovery, service fingerprinting, compliance and AI driven remediation guidance which could be understood from executives to cybersecurity engineers.',
+      'CyfroSec delivers code-security SAST, continuous asset and network discovery, deep service fingerprinting, compliance checks and AI-powered risk prioritization and remediation, so leaders get high-level insights and security teams have the technical detail they need to act.',
     bookDemo: 'Book a Demo',
     stats: {
-      deployment: { value: 'SaaS + On-Prem', label: 'Deployment Options' },
-      aiPowered: { value: 'AI-Powered', label: 'Prioritization' },
-      agenticAI: { value: 'Agentic AI', label: 'Remediation' },
+      deployment: { value: 'SaaS & On-Prem', label: 'Deploy Anywhere' },
+      aiPowered: { value: 'AI-Powered', label: 'Exposure Prioritization' },
+      agenticAI: { value: 'Agentic AI', label: 'Automated Remediation' },
     },
   },
 
@@ -76,56 +71,60 @@ Our vision is to build a unified code-to-cloud security platform that protects t
 
   problem: {
     heading: {
-      pre: 'Why Traditional Security Tools',
-      highlight: 'Fail',
+      pre: 'Why Traditional Security Platforms',
+      highlight: 'Fall Behind',
       post: '',
     },
     subtitle:
-      "Legacy tools weren't built for today's attack surface. Here's what teams are struggling with.",
+      "Built for Yesterday's Infrastructure. Not Today's AI-Driven Threats. Here's what teams are struggling with:",
     cards: [
       {
-        eyebrow: 'Confusion & lack of focus',
-        name: 'No Contextual Prioritization',
+        eyebrow: 'Business Context',
+        name: 'Security Data Without Business Context',
         description:
-          'Team spends time sorting alerts instead of reducing real exposure. Prioritized findings and remediation steps get overlooked.',
+          'Teams chase CVSS scores, not exploitability, and routine decisions get escalated to multiple experts, causing delays.',
         impact:
-          "Critical fixes get lost in the noise and tools don't understand your infrastructure's context to prioritize accordingly.",
-        metricLabel: 'Critical Vulnerabilities',
-        metricValue: '50+',
-        cta: 'See how we fix this',
-      },
-      {
-        eyebrow: 'Usability Bottleneck',
-        name: 'Built for Security Experts Only',
-        description:
-          'Teams get massive CVE, misconfigurations and insecure packages lists with no exploitability context, remediation steps or guidance which could be understood by all stakeholders.',
-        impact:
-          'Routine analysis and remediation decisions get escalated to multiple experts who are on a time crunch thus causing delayed analysis, fixes and avoidable queues.',
-        metricLabel: 'Report Dump',
-        metricValue: '500+ CVEs, 150+ exposed secrets and 300+ insecure packages',
-        cta: 'See how we fix this',
-      },
-      {
-        eyebrow: 'Pricing Friction',
-        name: 'Rigid, Expensive Pricing',
-        description:
-          'Add few more servers and dependencies for a new project and the bills for security tools jump faster than the infrastructure spend.',
-        impact:
-          'Essential security coverage becomes a budgeting problem, so teams delay rollout or leave assets out of scope to avoid overages.',
-        metricLabel: 'Overage Trigger',
-        metricValue: '4+ servers and 30+ dependencies',
-        cta: 'See how we fix this',
+          "Security findings arrive without the business and exposure context teams need, so critical fixes get delayed while experts re-interpret what matters.",
+        metricLabel: 'Decision Drag',
+        metricValue: 'Experts pulled into routine triage',
+        cta: "See how CyfroSec's AI-driven context filters exposures",
+        href: '/products/ai-insights',
       },
       {
         eyebrow: 'Alert Fatigue',
-        name: 'Visibility Gap',
+        name: 'Alert Fatigue Without Risk Intelligence',
         description:
-          'Frequent scans flood teams with thousands of low-value alerts which are hard to analyse.',
+          'Teams drown in thousands of low-value alerts, burying the critical fixes. There were 23667 CVEs in H1-2025, with only 161 exploited, yet most were treated equally.',
         impact:
-          'Impacting issues that actually need immediate action get buried in the long list of alerts.',
-        metricLabel: 'Alert Volume',
-        metricValue: '10000+ alerts and 500+ reports',
-        cta: 'See how we fix this',
+          'Without risk intelligence, teams spend time sorting noise instead of acting on the narrow set of exposures attackers can realistically exploit.',
+        metricLabel: 'H1 2025 Signal',
+        metricValue: '23,667 CVEs, 161 exploited',
+        cta: 'See how CyfroSec prioritizes what attackers can exploit',
+        href: '/products/ai-insights',
+      },
+      {
+        eyebrow: 'Visibility Gaps',
+        name: 'Fragmented Visibility Across Code and Infrastructure',
+        description:
+          'Legacy tools focus on either web apps, infrastructure or code - never all three - creating blind spots.',
+        impact:
+          'Security teams lose time pivoting between disconnected tools, which makes it harder to see how code-level issues turn into real infrastructure risk.',
+        metricLabel: 'Coverage Split',
+        metricValue: 'Code, apps, and infra in separate tools',
+        cta: 'See how CyfroSec unifies code-to-cloud visibility',
+        href: '/solutions',
+      },
+      {
+        eyebrow: 'AI Code Risk',
+        name: 'AI-Generated Code Introduces New Attack Surfaces',
+        description:
+          'Traditional scanners cannot detect or understand AI-generated vulnerabilities.',
+        impact:
+          'Teams adopting AI-assisted development introduce new classes of flaws that older scanners miss or fail to explain in a way developers can remediate quickly.',
+        metricLabel: 'New Surface',
+        metricValue: 'AI-generated code and model risk',
+        cta: 'See how CyfroSec secures AI-generated code and models.',
+        href: '/solutions/cyfrocode',
       },
     ],
     brings: {
@@ -135,20 +134,20 @@ Our vision is to build a unified code-to-cloud security platform that protects t
       titlePost: 'Together',
       items: [
         {
-          title: 'Network Visibility',
-          description: 'Understand everything connected to your environment in real time',
+          title: 'Unified code-to-cloud intelligence',
+          description: 'Continuous visibility from development to deployment in production.',
         },
         {
-          title: 'Asset Discovery',
-          description: "Know what exists, what matters, and what's exposed",
+          title: 'AI-native prioritization and remediation',
+          description: 'Context-aware triage, PR-ready patches and one-click fixes.',
         },
         {
-          title: 'Deep Fingerprinting',
-          description: 'Identify technologies, services, and hidden risks with precision',
+          title: 'AI-assistant and AI-insights for all users',
+          description: 'Plain-language explanations and executive summaries.',
         },
         {
-          title: 'Code Security',
-          description: 'Secure applications from development to deployment',
+          title: 'Sovereign deployment',
+          description: ' SaaS, on-prem or hybrid, with built-in GDPR and NIS2 compliance checks.',
         },
       ],
     },
@@ -287,7 +286,7 @@ Our vision is to build a unified code-to-cloud security platform that protects t
         capabilities: [
           'Open port scanning in quick or full modes',
           'Service identification and TLS metadata collection',
-          'Scheduled execution with support for multiple agents per test',
+          'Scheduled execution with support for multiple agents per scan',
           'Feeds service and exposure data into fingerprinting and AI insight pipelines',
         ],
         keyBenefits: [
@@ -370,7 +369,7 @@ Our vision is to build a unified code-to-cloud security platform that protects t
         title: 'CyfroCode',
         date: 'Code Security',
         content:
-          'Embedded code security workspace that connects your GitHub repositories, runs automated vulnerability scans, and generates AI-driven remediation patches ready for pull request review.',
+          'Embedded SAST code-security workspace that connects your GitHub repositories, runs automated vulnerability scans, and generates AI-driven remediation patches ready for pull request review.',
         capabilities: [
           'GitHub App integration to sync repositories with auto-detected languages, frameworks, and tech indicators',
           'Queued scans per default branch with real-time status tracking from queued through completed',
@@ -403,12 +402,12 @@ Our vision is to build a unified code-to-cloud security platform that protects t
     titlePre: 'One platform.',
     titleHighlight: 'Every layer.',
     description:
-      'Stop stitching together fragmented tools. CyfroSec ingests data from your entire environment, analyzes it with our CyfroAI engine, and outputs autonomous remediation and suggestions through CyfroAI Insight.',
+      'Stop stitching together fragmented tools. CyfroSec ingests data from your entire environment and CyfroCode adds SAST code-security coverage, then analyzes it with our CyfroAI engine and outputs autonomous remediation and suggestions through CyfroAI Insight.',
     steps: [
       {
         title: 'Continuous Discovery',
         description:
-          'Cyfro Agent scans across AI servers, Network and Infrastructure assets in real time.',
+          'CyfroAgent scans across AI servers, network, and infrastructure assets in real time, while CyfroCode covers SAST code security in connected repositories.',
       },
       {
         title: 'CyfroAI Engine',
@@ -509,7 +508,7 @@ Our vision is to build a unified code-to-cloud security platform that protects t
       {
         title: 'See Everything',
         description:
-          'Get complete visibility across your attack surface. Discover assets, vulnerabilities, misconfigurations, secrets across AI servers network and infrastructure assets.',
+          'Get complete visibility across your attack surface. Discover code-security risks, assets, vulnerabilities, misconfigurations, and secrets across AI servers, network, and infrastructure assets.',
       },
       {
         title: 'Prioritize What Matters',
@@ -597,6 +596,7 @@ Our vision is to build a unified code-to-cloud security platform that protects t
     dataSources: [
       { label: 'AI Infrastructure', sub: 'Servers, Workstations, Containers' },
       { label: 'Network', sub: 'Assets, Subnets, Services' },
+      { label: 'CyfroCode', sub: 'SAST code security for connected repositories' },
     ],
     processingSteps: [
       { title: 'CyfroAgent', subtitle: 'Lightweight Robust Agent' },
@@ -609,6 +609,7 @@ Our vision is to build a unified code-to-cloud security platform that protects t
         label: 'CyfroAssistant',
         sub: 'Convenient conversational AI bot with function calling',
       },
+      { label: 'CyfroCode', sub: 'SAST scanning, AI explanations, and approval-gated patches' },
       { label: 'GDPR Compliance', sub: 'Run GDPR compliance on your infrastructure' },
       {
         label: 'Dashboards, Topology diagram & Reports',
@@ -618,8 +619,8 @@ Our vision is to build a unified code-to-cloud security platform that protects t
   },
 
   finalCta: {
-    titlePre: 'Ready to secure.',
-    titleHighlight: 'Defeat every exposure.',
+    titlePre: 'Secure everything from Code to Cloud.',
+    titleHighlight: 'From Exposure Discovery to Remediation.',
     description:
       'See CyfroSec in action with a live demo, or talk to our team about your specific needs.',
     cta: 'Contact Sales',
@@ -642,9 +643,9 @@ Our vision is to build a unified code-to-cloud security platform that protects t
         'Asset Discovery',
         'Service Fingerprinting',
         'CyfroAI Insights',
-        'Cyfro Assistant',
+        'CyfroAssistant',
       ],
-      resources: ['Documentation'],
+      resources: ['Documentation', 'Subscription tiers'],
       company: ['About Us', 'Contact'],
     },
     madeIn: 'Made in the EU',
@@ -691,7 +692,7 @@ Our vision is to build a unified code-to-cloud security platform that protects t
       pipeline: [
         { step: '01', title: 'Scan Trigger', body: 'The scan fires on its configured schedule. One or more CyfroAgents can run the scan.' },
         { step: '02', title: 'Port Sweep', body: 'Agents sweep the target host or CIDR range across the selected port range. Full mode scans all common ports; Quick mode targets a specific protocol for faster results.' },
-        { step: '03', title: 'Service Detection', body: 'Open ports are matched to known services. Protocol probing provide additional service context.' },
+        { step: '03', title: 'Service Detection', body: 'Open ports are matched to known services. Protocol probing provides additional service context.' },
         { step: '04', title: 'Pipeline Feed', body: 'Enriched findings are passed automatically to the Service Fingerprinting and vulnerability analysis pipelines for deeper assessment.' },
         { step: '05', title: 'AI Insights', body: 'Cyfro AI Insights generates a prioritized risk summary from the scan results, highlighting the most impactful exposed services.' },
       ],
@@ -844,9 +845,9 @@ Our vision is to build a unified code-to-cloud security platform that protects t
     },
 
     cyfroAssistant: {
-      heroTitle: 'Cyfro Assistant',
+      heroTitle: 'CyfroAssistant',
       heroSubtitle: 'Your AI-powered security analyst, available 24/7 inside the CyfroSec Portal. Understands your specific infrastructure: agents, scan results, vulnerabilities, topology and lets you query it all in natural language.',
-      betaBadge: 'Beta : Core functionality stable, actively expanding',
+      betaBadge: 'Beta ',
       problemTitle: 'Security data exists. Getting answers is hard.',
       problemP1: "Your scan results, agent telemetry, and vulnerability findings are all there but getting a specific answer means navigating dashboards, applying filters, and cross-referencing reports. That takes time which most teams don't have.",
       problemP2: 'CyfroAssistant turns your security data into a conversational interface. Ask any question in plain English and get an answer grounded in your actual infrastructure instantly.',
@@ -868,19 +869,21 @@ Our vision is to build a unified code-to-cloud security platform that protects t
         { title: 'Real-time Streaming', description: 'Responses stream token-by-token as the assistant thinks, works, and generates. Live status badges: Thinking, Working, Generating show exactly what is happening.' },
         { title: 'Human-in-the-Loop Approvals', description: 'For higher-risk or write operations, the assistant pauses and presents an approval card with risk level, what will happen, and Approve / Deny controls before proceeding.' },
         { title: 'Workspace Panel', description: 'A collapsible side panel shows live task progress, generated artifacts, and raw tool outputs. Full auditability of every action the assistant took in your conversation.' },
+        { title: 'Multi-language Support', description: 'Ask questions and receive guidance in the language your team uses while keeping the same infrastructure context, scan awareness, and approval flow.' },
+        { title: 'Plan Mode', description: 'For multi-step requests, CyfroAssistant can break the work into an ordered plan, explain what it will do next, and execute each task only after user approval.' },
       ],
-      useCasesTitle: 'When teams rely on Cyfro Assistant',
+      useCasesTitle: 'When teams rely on CyfroAssistant',
       useCases: [
         { title: 'Fleet-Wide Queries in Seconds', body: 'Ask "Show me all servers with open SSH ports" and get a result across your entire agent fleet no dashboards to navigate, no filters to configure.' },
         { title: 'Instant Executive Summaries', body: 'Ask for a security posture summary and get a plain-language report suitable for stakeholders which are generated from your actual scan data, not a template.' },
         { title: 'Guided Triage', body: 'Walk through your highest-risk findings interactively. Ask follow-up questions, drill into specific hosts, and get remediation steps without leaving the conversation.' },
-        { title: 'On-Demand How-To', body: 'Ask questions like how to create a test, what permissions a role has, how to register an agent and get accurate answers from the product instantly.' },
+        { title: 'On-Demand How-To', body: 'Ask questions like how to create a scan, what permissions a role has, how to register an agent and get accurate answers from the product instantly.' },
       ],
     },
 
     cyfroCode: {
       heroTitle: 'CyfroCode',
-      heroSubtitle: 'A comprehensive code security workspace embedded directly within CyfroSec. Connect your GitHub repositories, run automated security scans, and generate AI-driven remediation patches — all without leaving the platform.',
+      heroSubtitle: 'A comprehensive SAST code-security workspace embedded directly within CyfroSec. Connect your GitHub repositories, run automated security scans, and generate AI-driven remediation patches — all without leaving the platform.',
       problemTitle: 'Code vulnerabilities found late cost the most to fix',
       problemP1: 'Most teams scan code in separate, disconnected tools — or not at all. Findings are emailed in reports, triaged in spreadsheets, and patched weeks after introduction. By then, the code is in production.',
       problemP2: 'CyfroCode brings repository scanning, AI-powered analysis, and patch generation into the same platform you already use for infrastructure and endpoint security. One platform, one workflow, zero context-switching.',
@@ -888,23 +891,26 @@ Our vision is to build a unified code-to-cloud security platform that protects t
       problemScenarios: [
         { label: 'Vulnerability introduced in a dependency update', impact: 'Detected on next queued scan' },
         { label: 'Critical finding buried in a long report', impact: 'Surfaced with AI context and severity filter' },
-        { label: 'Dev needs a fix but lacks security expertise', impact: 'AI patch generated and pushed to GitHub branch' },
+        { label: 'Development code needs a fix but the team lacks security expertise', impact: 'Patch generated by CyfroAI Engine, ready for human review before GitHub push' },
       ],
       capabilitiesTitle: 'Everything from repository to remediation',
       capabilities: [
         { title: 'GitHub App Integration', description: "Connect your organisation's GitHub account in a single authorisation flow. CyfroSec installs as a GitHub App and automatically syncs every repository you grant access to." },
+        { title: 'Programming Languages Support', description: 'Python, JavaScript, TypeScript, Java, Go, and C# are supported for CyfroCode SAST security scanning.' },
         { title: 'Rich Repository Metadata', description: 'Each synced repository surfaces its default branch, auto-detected languages and frameworks, and tech indicators for Docker, Terraform, and GitHub Actions — no manual tagging required.' },
         { title: 'One-Click Security Scans', description: "Queue a scan against any repository's default branch with a single click. Scans progress through queued → running → completed states and are tracked in the Recent Scans panel." },
         { title: 'Grouped Issues & Raw Matches', description: 'View findings as deduplicated grouped issues by vulnerability type, or switch to raw matches to inspect every affected line of code individually — both views are available side by side.' },
         { title: 'AI Explanations & Remediation', description: 'CyfroAssistant automatically explains each vulnerability in plain language, providing contextual reasoning for why it is a risk and step-by-step remediation guidance on demand.' },
         { title: 'Automated Patch Proposals', description: 'For supported vulnerabilities, generate an AI-driven code patch, review the diff in-browser, and approve it to push a ready-to-merge branch directly back to GitHub.' },
+        { title: 'Dead-Code Detection', description: 'Surface unused code paths and code-health blind spots during repository analysis so teams can reduce maintenance risk alongside security remediation.' },
+        { title: 'Logic Map & Mind Map', description: 'Visualize how files, functions, classes, endpoints, and workflows connect, with AI-authored endpoint summaries layered on top for faster understanding.' },
       ],
       howItWorksTitle: 'From GitHub connection to merged fix',
       howItWorksBody: 'CyfroCode handles the entire lifecycle — connecting your repositories, running scans, surfacing AI-explained findings, and pushing approved patches back to GitHub — through a single, unified workflow inside CyfroSec.',
       pipeline: [
         { step: '01', title: 'Connect GitHub', body: 'Authorise the CyfroSec GitHub App from the CyfroCode dashboard. Repositories are synced automatically once the app is installed on your organisation.' },
         { step: '02', title: 'Sync Repositories', body: 'CyfroSec reads your repository list and enriches each entry with language detection, framework identification, and tech stack badges — Docker, Terraform, GitHub Actions.' },
-        { step: '03', title: 'Queue a Scan', body: 'Select any repository and click Queue Scan. The scan targets the default branch and is processed by the CyfroSec analysis engine, which checks for known vulnerability patterns.' },
+        { step: '03', title: 'Queue a Scan', body: 'Select any repository and click Queue Scan. The scan targets the default branch and is processed by the CyfroAI Engine, which checks for known vulnerability patterns.' },
         { step: '04', title: 'Review Findings', body: 'Once complete, open the scan detail page to explore metrics, apply severity filters, and drill into individual findings with source file, affected lines, and AI-generated context.' },
         { step: '05', title: 'Generate & Approve a Patch', body: 'Click Generate Patch on any supported finding. Review the proposed diff, approve to push a remediation branch to GitHub, or suppress false positives to keep your results clean.' },
       ],
@@ -935,7 +941,7 @@ Our vision is to build a unified code-to-cloud security platform that protects t
       heroSubtitle: 'CyfroSec continuously discovers assets, analyzes vulnerabilities, misconfigurations, and secrets — and provides AI-driven remediation guidance across your infrastructure.',
       capabilitiesLabel: 'Core Capabilities',
       capabilitiesTitle: 'Four pillars of the platform.',
-      capabilitiesSubtitle: 'Agents collect, Scans assess, and CyfroAssistant answers — each layer designed to work independently and better together.',
+      capabilitiesSubtitle: 'Agents collect, scans assess, CyfroCode secures repositories with SAST, and CyfroAssistant answers — each layer designed to work independently and better together.',
       pillars: [
         {
           num: '01 — Agents',
@@ -1021,7 +1027,7 @@ Our vision is to build a unified code-to-cloud security platform that protects t
         {
           eyebrow: 'Scan',
           label: 'Create your first scan',
-          description: 'Create a Network Discovery, Asset Discovery, or Service Fingerprinting test. Tests run automatically on a recurring schedule — hourly, every 6 hours, 12 hours, or daily.',
+          description: 'Create a Network Discovery, Asset Discovery, or Service Fingerprinting scan. Scans run automatically on a recurring schedule — hourly, every 6 hours, 12 hours, or daily.',
         },
       ],
       openArticle: 'Open article',
@@ -1050,7 +1056,7 @@ Our vision is to build a unified code-to-cloud security platform that protects t
         },
         platformGuide: {
           title: 'Platform Guide',
-          description: 'Dashboard, notifications, reports, CyfroCode code security workspace, and the interactive asset topology diagram.',
+          description: 'Dashboard, notifications, reports, the CyfroCode SAST code-security workspace, and the interactive asset topology diagram.',
         },
         cyfroagent: {
           title: 'CyfroAgent',
@@ -1058,7 +1064,7 @@ Our vision is to build a unified code-to-cloud security platform that protects t
         },
         scans: {
           title: 'Scans',
-          description: 'Create recurring tests targeting a host or subnet. Covers Network Discovery, Asset Discovery, and Service Fingerprinting scan types.',
+          description: 'Create recurring scans targeting a host or subnet. Covers Network Discovery, Asset Discovery, and Service Fingerprinting scan types.',
         },
         cyfroaiEngine: {
           title: 'CyfroAI Engine',
@@ -1101,7 +1107,7 @@ Our vision is to build a unified code-to-cloud security platform that protects t
           deployAgent: 'CyfroAgent and Setup',
           dockerScanning: 'Multi Container Scanning (Apps, Services)',
           deleteAgent: 'Deleting CyfroAgent',
-          firstScan: 'Creating Tests',
+          firstScan: 'Creating Scans',
           networkDiscovery: 'Network Discovery Scan',
           assetDiscovery: 'Asset Discovery Scan',
           serviceFingerprinting: 'Service Fingerprinting Scan',
@@ -1149,10 +1155,10 @@ Our vision is to build a unified code-to-cloud security platform that protects t
           meaning: 'Meaning',
         },
         metricRows: [
-          ['Completed Scans', 'Tests currently in completed state (not a historical event count).'],
-          ['Active Tests', 'Tests currently running or pending.'],
-          ['Failed Tests', 'Tests currently in failed state.'],
-          ['Scan Progress', 'Based on terminal states: (completed + failed) / total tests.'],
+          ['Completed Scans', 'Scans currently in completed state (not a historical event count).'],
+          ['Active Scans', 'Scans currently running or pending.'],
+          ['Failed Scans', 'Scans currently in failed state.'],
+          ['Scan Progress', 'Based on terminal states: (completed + failed) / total scans.'],
         ] as [string, string][],
         cyfroAssistantTitle: '3. CyfroAssistant',
         cyfroAssistantDescription: 'Your personal security analyst, available 24/7.',

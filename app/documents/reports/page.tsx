@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
-import { useTranslation } from '@/src/i18n'
 
 const HEADING_FONT = '"Sora", "Avenir Next", "Segoe UI", sans-serif'
 
@@ -52,57 +51,10 @@ const CONTENT = {
     ],
     contactSupport: 'Contact support',
   },
-  ar: {
-    category: 'دليل المنصة',
-    title: 'التقارير',
-    overview1: 'يستخدم المساعد بيانات الفحص الفعلية الخاصة بك وحالة الوكيل ونتائج الثغرات وسجلات رؤى الذكاء الاصطناعي للإجابة على الأسئلة الخاصة بالبنية التحتية، ويرجع إلى وثائق المنتج للاستفسارات الإرشادية. تم تصميمه لمساعدة الفرق على فهم بنيتهم التحتية بشكل كامل وتحديد مواقع المخاطر المحتملة.',
-    overview2: 'يمكن تصفية نتائج الفحص باستخدام نطاقات التاريخ والحقول البيانية المختلفة المتاحة لسهولة العرض. يمكن أيضاً تنزيل ملف CSV منظم للتحليل المعمق. سيحتوي ملف CSV على نتائج جميع الفحوصات في أوراق مختلفة. يحسّن جاهزية التدقيق بتقرير امتثال قابل للتصدير للفحوصات.',
-    filtersTitle: 'المرشحات والترتيب',
-    filtersDesc: 'تدعم علامات تبويب التقارير المُختارة البحث بالإضافة إلى مجموعات خاصة بكل علامة تبويب من الخطورة والحالة والفئة ومرشحات الوكيل. تُحفَظ المرشحات متعددة الاختيار في عنوان URL حتى يمكن وضع إشارة مرجعية على طرق العرض المفلترة أو مشاركتها.',
-    filtersItems: [
-      'الخطورة متاحة لبيانات الثغرات والإعدادات الخاطئة والأسرار واكتشاف الشبكة وبيانات بصمة الأصول الخام.',
-      'الحالة متاحة لاكتشاف الشبكة وبيانات فحص المنافذ الخام.',
-      'الوضع متاح لنتائج الثغرات.',
-      'تطابق مرشحات الوكيل أسماء العرض للوكيل حتى يمكن استخدام نفس التصنيف عبر علامات التبويب المُختارة والخام.',
-      'يُطبَّق الترتيب على الخادم لكل عمود قابل للترتيب مرئي في جداول التقارير.',
-    ],
-    rawTitle: 'التتبع الخام المتقدم',
-    rawP1: 'يكشف قسم "المتقدم" عن فحوصات المنافذ الخام ونتائج اكتشاف الأصول الخام وعمليات تشغيل البصمة الخام. تستخدم هذه الطرق نفس شريط المرشح كعلامات التبويب المُختارة، لكنها تعرض سجلات الفحص الأصلية بدلاً من نتائج التقارير المُسطَّحة.',
-    rawP2: 'تُظهَر خطورة البصمة الخام كأعلى خطورة موجودة داخل نتيجة بصمة حتى تبقى مرشحات الخطورة محددة عبر الثغرات والإعدادات الخاطئة والأسرار المرصودة في نفس التشغيل.',
-    exportTitle: 'التصدير والتدقيق',
-    exportP1: 'تحتفظ صادرات Excel بمرشحات مستوى الصفوف النشطة من صفحة التقارير. تبقى بطاقات الملخص محدودة النطاق بمجموعة الحسابات المحددة ونطاق التاريخ فقط، بينما تعكس صفوف ورقة العمل المرشحات الإضافية للتقارير.',
-    exportP2: 'لا يزال المصنف يتضمن أوراق التقارير المُختارة. إذا بدأ التصدير من علامة تبويب مُختارة، يُطبَّق الترتيب الحالي لتلك العلامة فقط على ورقة العمل المطابقة بينما تحتفظ بقية أوراق العمل بترتيبها الافتراضي. تحتفظ الصادرات المبدوءة من التتبع الخام المتقدم بالمصنف المُختار المُفلتَر لكنها لا تُمرر ترتيب علامة التبويب الخام إلى المصنف.',
-    exportP3: 'هذا يجعل البيانات المُصدَّرة أسهل للتسوية خلال التحقيقات وحالات الدعم ومراجعات التدقيق لأن أعداد الصفوف تطابق ما يراه المشغلون في واجهة المستخدم.',
-    scansCoveredTitle: 'الفحوصات المشمولة في التقارير:',
-    networkTitle: 'اكتشاف الشبكة',
-    networkDesc: 'يحدد المنافذ المفتوحة والخدمات لدفع عملية اكتشاف الثغرات والتحليل.',
-    sfTitle: 'بصمة الخدمات',
-    sfDesc: 'يقيّم وضع الأمان من خلال تحديد ثغرات CVE المعروفة في الحزم والخدمات المثبتة، واكتشاف الإعدادات الخاطئة الشائعة وفحص الأسرار المكشوفة. تُقسَّم نتائج فحص بصمة الخدمات إلى ثلاث أوراق لسهولة الرؤية والتحليل:',
-    sfItems: [
-      'نتائج الإعدادات الخاطئة',
-      'نتائج الثغرات',
-      'نتائج الأسرار',
-    ],
-    assetTitle: 'اكتشاف الأصول',
-    assetDesc: 'يقوم بعمليات مسح ARP وجرد العمليات المحلية والبحث عن بائع MAC.',
-    tocTitle: 'في هذه الصفحة',
-    tocItems: [
-      { id: 'overview',               label: 'نظرة عامة' },
-      { id: 'filters-and-sorting',    label: 'المرشحات والترتيب' },
-      { id: 'advanced-raw-telemetry', label: 'التتبع الخام المتقدم' },
-      { id: 'export-and-audit',       label: 'التصدير والتدقيق' },
-      { id: 'network-discovery',      label: 'اكتشاف الشبكة' },
-      { id: 'service-fingerprinting', label: 'بصمة الخدمات' },
-      { id: 'asset-discovery',        label: 'اكتشاف الأصول' },
-    ],
-    contactSupport: 'تواصل مع الدعم',
-  },
 }
 
 export default function ReportsPage() {
-  const { lang } = useTranslation()
-  const isAr = lang === 'ar'
-  const c = CONTENT[lang as keyof typeof CONTENT] ?? CONTENT.en
+  const c = CONTENT.en
 
   return (
     <div className="flex gap-0 w-full max-w-[1600px] mx-auto">
@@ -110,22 +62,22 @@ export default function ReportsPage() {
       {/* ── Article ──────────────────────────────────────────────────── */}
       <article className="flex-1 min-w-0 px-4 sm:px-6 md:px-8 lg:px-12 py-6 sm:py-8 lg:py-10 w-full max-w-5xl mx-auto">
 
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] cy-text-brand mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] cy-text-brand mb-4">
           {c.category}
         </p>
 
         <h1
           className="text-2xl sm:text-3xl lg:text-4xl font-bold cy-text-primary mb-4 sm:mb-6 leading-tight"
           style={{ fontFamily: HEADING_FONT }}
-          dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+         
         >
           {c.title}
         </h1>
 
-        <p className="cy-text-secondary leading-relaxed mb-4" id="overview" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+        <p className="cy-text-secondary leading-relaxed mb-4" id="overview">
           {c.overview1}
         </p>
-        <p className="cy-text-secondary leading-relaxed mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+        <p className="cy-text-secondary leading-relaxed mb-4">
           {c.overview2}
         </p>
 
@@ -135,11 +87,11 @@ export default function ReportsPage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.filtersTitle}
           </h2>
-          <p className="cy-text-secondary leading-relaxed mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <p className="cy-text-secondary leading-relaxed mb-4">
             {c.filtersDesc}
           </p>
           <ol className="space-y-4 cy-text-secondary text-sm">
@@ -148,7 +100,7 @@ export default function ReportsPage() {
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
                   {i + 1}
                 </span>
-                <span className="mt-0.5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{text}</span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
           </ol>
@@ -158,14 +110,14 @@ export default function ReportsPage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.rawTitle}
           </h2>
-          <p className="cy-text-secondary leading-relaxed mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <p className="cy-text-secondary leading-relaxed mb-4">
             {c.rawP1}
           </p>
-          <p className="cy-text-secondary leading-relaxed" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <p className="cy-text-secondary leading-relaxed">
             {c.rawP2}
           </p>
         </section>
@@ -174,17 +126,17 @@ export default function ReportsPage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.exportTitle}
           </h2>
-          <p className="cy-text-secondary leading-relaxed mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <p className="cy-text-secondary leading-relaxed mb-4">
             {c.exportP1}
           </p>
-          <p className="cy-text-secondary leading-relaxed mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <p className="cy-text-secondary leading-relaxed mb-4">
             {c.exportP2}
           </p>
-          <p className="cy-text-secondary leading-relaxed" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <p className="cy-text-secondary leading-relaxed">
             {c.exportP3}
           </p>
         </section>
@@ -194,7 +146,7 @@ export default function ReportsPage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.scansCoveredTitle}
           </h2>
@@ -204,11 +156,11 @@ export default function ReportsPage() {
             <h3
               className="text-base font-semibold cy-text-primary mb-3"
               style={{ fontFamily: HEADING_FONT }}
-              dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+             
             >
               {c.networkTitle}
             </h3>
-            <p className="cy-text-secondary leading-relaxed" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+            <p className="cy-text-secondary leading-relaxed">
               {c.networkDesc}
             </p>
           </section>
@@ -218,11 +170,11 @@ export default function ReportsPage() {
             <h3
               className="text-base font-semibold cy-text-primary mb-3"
               style={{ fontFamily: HEADING_FONT }}
-              dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+             
             >
               {c.sfTitle}
             </h3>
-            <p className="cy-text-secondary leading-relaxed mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+            <p className="cy-text-secondary leading-relaxed mb-4">
               {c.sfDesc}
             </p>
             <ol className="space-y-4 cy-text-secondary text-sm">
@@ -231,7 +183,7 @@ export default function ReportsPage() {
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
                     {i + 1}
                   </span>
-                  <span className="mt-0.5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{text}</span>
+                  <span className="mt-0.5">{text}</span>
                 </li>
               ))}
             </ol>
@@ -242,11 +194,11 @@ export default function ReportsPage() {
             <h3
               className="text-base font-semibold cy-text-primary mb-3"
               style={{ fontFamily: HEADING_FONT }}
-              dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+             
             >
               {c.assetTitle}
             </h3>
-            <p className="cy-text-secondary leading-relaxed" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+            <p className="cy-text-secondary leading-relaxed">
               {c.assetDesc}
             </p>
           </section>
@@ -256,7 +208,7 @@ export default function ReportsPage() {
       {/* ── Right TOC ─────────────────────────────────────────────────── */}
       <aside className="hidden 2xl:block w-56 shrink-0 px-6 pt-10 pb-10">
         <div className="sticky top-10">
-          <p className="text-[10px] font-bold uppercase tracking-widest cy-text-muted mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <p className="text-[10px] font-bold uppercase tracking-widest cy-text-muted mb-3">
             {c.tocTitle}
           </p>
           <ul className="space-y-2">
@@ -265,7 +217,7 @@ export default function ReportsPage() {
                 <a
                   href={`#${id}`}
                   className="text-sm cy-text-secondary hover:cy-text-brand transition-colors block"
-                  dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+                 
                 >
                   {label}
                 </a>
@@ -278,7 +230,7 @@ export default function ReportsPage() {
               className="flex items-center gap-1.5 text-xs cy-text-muted hover:cy-text-brand transition-colors"
             >
               <ExternalLink className="h-3.5 w-3.5" />
-              <span dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.contactSupport}</span>
+              <span>{c.contactSupport}</span>
             </Link>
           </div>
         </div>

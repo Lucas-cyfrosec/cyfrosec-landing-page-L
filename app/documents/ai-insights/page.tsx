@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
-import { useTranslation } from '@/src/i18n'
 
 const HEADING_FONT = '"Sora", "Avenir Next", "Segoe UI", sans-serif'
 
@@ -70,75 +69,10 @@ const CONTENT = {
     ],
     contactSupport: 'Contact support',
   },
-  ar: {
-    category: 'محرك CyfroAI',
-    title: 'CyfroAI Insights',
-    overview1: 'تُنشأ CyfroAI Insights تلقائياً بعد اكتمال فترة الفحص. لا تحتاج إلى النقر على أي شيء لتشغيل التحليل. طالما تعمل الفحوصات وتُكتشف ثغرات/إعدادات خاطئة/أسرار، ستظهر CyfroAI Insights.',
-    overview2: 'يستقبل محرك CyfroAI نتائج الفحص الخام (المنافذ المفتوحة، ثغرات CVE المكتشفة، الإعدادات الخاطئة، الأسرار المكشوفة) إلى جانب سياق طوبولوجيا الشبكة (أي المضيفين يمكن الوصول إليهم من أي مكان) وينتج:',
-    overviewItems: [
-      'ملخص تنفيذي: نظرة عامة سهلة الفهم على أهم نتائج الأمان من دورة الفحص تلك.',
-      'قائمة مخاطر مرتبة حسب الأولوية: ثغرات أُعيد ترتيبها باستخدام ارتباط التعرض، وليس درجة CVSS وحدها.',
-    ],
-    executiveSummaryTitle: 'الملخص التنفيذي',
-    executiveSummaryDesc: 'ملخص سهل الفهم عمّن يتأثر وما هو الأهم في لمحة سريعة. بطاقة متدرجة اللون (رأس أيقونة دماغ) تحتوي على فقرات مُنشأة بالذكاء الاصطناعي تصف:',
-    executiveSummaryItems: [
-      'الوضع الأمني العام من هذا الفحص.',
-      'أهم النتائج بلغة بسيطة.',
-      'أي أنماط أو ارتباطات عبر نتائج متعددة.',
-    ],
-    executiveSummaryNote: 'تُربط معرفات CVE المذكورة في الملخص تلقائياً بالإدخال المقابل في صفحة التقارير. انقر على أي معرف CVE للانتقال مباشرة إلى تفاصيله الكاملة.',
-    prioritizedRisksTitle: 'المخاطر المرتبة حسب الأولوية',
-    prioritizedRisksDesc: 'قائمة مرتبة بأهم الثغرات من هذا الفحص، مصنفة حسب المخاطر الفعلية المُقيَّمة بالذكاء الاصطناعي وليس درجة CVSS الخام وحدها. يمكن توسيع كل بطاقة مخاطر للحصول على التفاصيل الكاملة.',
-    collapsedTitle: 'عرض البطاقة المطوية:',
-    collapsedHeaders: ['العنصر', 'الوصف'],
-    collapsedRows: [
-      ['الترتيب', 'ترتيب الأولوية المُعيَّن بالذكاء الاصطناعي (1 = أعلى خطورة)'],
-      ['الخطورة الأساسية', 'خطورة الماسح الأصلية: حرجة / عالية / متوسطة / منخفضة'],
-      ['المخاطرة الفعلية', 'خطورة مُعدَّلة بالذكاء الاصطناعي بعد مراعاة التعرض وإمكانية الوصول'],
-      ['معرف CVE / النتيجة', 'معرف الثغرة (أحادي المسافة)'],
-      ['شارة إمكانية الوصول', 'شارة متحركة تظهر عند تأكيد إمكانية الوصول إلى النتيجة من خارج شبكتك المحلية'],
-      ['حالة التعرض', 'مكشوف (أحمر)، محلي فقط (كهرماني)، أو غير مؤكد (أزرق)'],
-      ['العنوان', 'وصف مختصر للثغرة'],
-      ['فتح في التقارير', 'رابط عميق لصفحة التقارير مُفلتَرة مسبقاً لهذه النتيجة المحددة'],
-    ],
-    expandedTitle: 'عرض البطاقة الموسّعة:',
-    expandedHeaders: ['القسم', 'الوصف'],
-    expandedRows: [
-      ['الهدف', 'المضيف أو عنوان IP المتأثر'],
-      ['الحزمة', 'حزمة البرنامج أو إصدار الخدمة حيث وُجدت الثغرة'],
-      ['درجة CVSS', 'درجة رقمية من قاعدة بيانات الثغرات'],
-      ['ثقة إمكانية الوصول', 'شريط 0-100% يُظهر مدى ثقة الذكاء الاصطناعي في إمكانية الوصول الشبكي لهذه النتيجة'],
-      ['التفسير والسياق', 'شرح الذكاء الاصطناعي لماذا أُعطيت هذه النتيجة الأولوية، بما في ذلك سياق البنية التحتية'],
-      ['الإجراء الموصى به', 'الخطوة الأهم الواحدة للمعالجة بلغة سهلة الفهم'],
-      ['أوامر معالجة نظام التشغيل', 'أوامر shell جاهزة للتنفيذ للتصحيح، مقسمة حسب نظام التشغيل (Linux، macOS، Windows) حيث متاح'],
-      ['أدلة الارتباط', 'ملاحظات تقنية حول كيفية تقييم التعرض (بيانات مسار الشبكة، ارتباط المنافذ المفتوحة، إلخ)'],
-    ],
-    expandCollapseNote: 'استخدم "توسيع الكل" / "طي الكل" في أعلى القسم لفتح أو إغلاق جميع البطاقات دفعة واحدة.',
-    sourceTypesTitle: 'أنواع المصادر',
-    sourceTypesDesc: 'يمكن إنشاء AI Insights من ثلاثة أنواع من الفحوصات:',
-    sourceHeaders: ['نوع المصدر', 'الوصف'],
-    sourceRows: [
-      ['اكتشاف الشبكة', 'رؤى مشتقة من نتائج فحص الشبكة. التركيز على الخدمات المكشوفة والمنافذ المفتوحة وثغرات CVE المرتبطة بإصدارات الخدمات المكتشفة.'],
-      ['اكتشاف الأصول', 'رؤى من فحوصات اكتشاف المضيفين والأجهزة. التركيز على الأجهزة غير المعروفة وشذوذات بائع MAC والمضيفين غير المتوقعين على الشبكة.'],
-      ['نتائج ثغرات النظام', 'رؤى من بصمة الخدمات وتقييم الثغرات. التركيز على إصدارات الحزم وثغرات CVE على مستوى المضيف والإعدادات الخاطئة ومشكلات TLS والأسرار المكتشفة.'],
-    ],
-    tocTitle: 'في هذه الصفحة',
-    tocItems: [
-      { id: 'overview',          label: 'نظرة عامة' },
-      { id: 'executive-summary', label: 'الملخص التنفيذي' },
-      { id: 'prioritized-risks', label: 'المخاطر المرتبة' },
-      { id: 'collapsed-view',    label: 'عرض البطاقة المطوية' },
-      { id: 'expanded-view',     label: 'عرض البطاقة الموسّعة' },
-      { id: 'source-types',      label: 'أنواع المصادر' },
-    ],
-    contactSupport: 'تواصل مع الدعم',
-  },
 }
 
 export default function AiInsightsPage() {
-  const { lang } = useTranslation()
-  const isAr = lang === 'ar'
-  const c = CONTENT[lang as keyof typeof CONTENT] ?? CONTENT.en
+  const c = CONTENT.en
 
   return (
     <div className="flex gap-0 w-full max-w-[1600px] mx-auto">
@@ -146,7 +80,7 @@ export default function AiInsightsPage() {
       {/* ── Article ──────────────────────────────────────────────────── */}
       <article className="flex-1 min-w-0 px-4 sm:px-6 md:px-8 lg:px-12 py-6 sm:py-8 lg:py-10 w-full max-w-5xl mx-auto">
 
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] cy-text-brand mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] cy-text-brand mb-4">
           {c.category}
         </p>
 
@@ -158,10 +92,10 @@ export default function AiInsightsPage() {
           {c.title}
         </h1>
 
-        <p className="cy-text-secondary leading-relaxed mb-4" id="overview" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+        <p className="cy-text-secondary leading-relaxed mb-4" id="overview">
           {c.overview1}
         </p>
-        <p className="cy-text-secondary leading-relaxed mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+        <p className="cy-text-secondary leading-relaxed mb-4">
           {c.overview2}
         </p>
         <ol className="space-y-4 cy-text-secondary text-sm mb-10">
@@ -170,7 +104,7 @@ export default function AiInsightsPage() {
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
                 {i + 1}
               </span>
-              <span className="mt-0.5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{text}</span>
+              <span className="mt-0.5">{text}</span>
             </li>
           ))}
         </ol>
@@ -182,11 +116,11 @@ export default function AiInsightsPage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.executiveSummaryTitle}
           </h2>
-          <p className="cy-text-secondary leading-relaxed mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <p className="cy-text-secondary leading-relaxed mb-4">
             {c.executiveSummaryDesc}
           </p>
           <ol className="space-y-4 cy-text-secondary text-sm mb-5">
@@ -195,11 +129,11 @@ export default function AiInsightsPage() {
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500/15 text-xs font-bold cy-text-brand">
                   {i + 1}
                 </span>
-                <span className="mt-0.5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{text}</span>
+                <span className="mt-0.5">{text}</span>
               </li>
             ))}
           </ol>
-          <p className="cy-text-secondary text-sm" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <p className="cy-text-secondary text-sm">
             {c.executiveSummaryNote}
           </p>
         </section>
@@ -209,15 +143,15 @@ export default function AiInsightsPage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.prioritizedRisksTitle}
           </h2>
-          <p className="cy-text-secondary leading-relaxed mb-5" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <p className="cy-text-secondary leading-relaxed mb-5">
             {c.prioritizedRisksDesc}
           </p>
 
-          <h3 id="collapsed-view" className="text-base font-semibold cy-text-primary mb-3 scroll-mt-20" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <h3 id="collapsed-view" className="text-base font-semibold cy-text-primary mb-3 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>
             {c.collapsedTitle}
           </h3>
           <div className="overflow-x-auto mb-6">
@@ -225,22 +159,22 @@ export default function AiInsightsPage() {
               <thead>
                 <tr className="border-b cy-border-default">
                   {c.collapsedHeaders.map((h) => (
-                    <th key={h} className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{h}</th>
+                    <th key={h} className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {c.collapsedRows.map(([el, desc]) => (
                   <tr key={el} className="border-b cy-border-default">
-                    <td className="py-2.5 pr-4 cy-text-secondary font-semibold" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{el}</td>
-                    <td className="py-2.5 pr-4 cy-text-secondary" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{desc}</td>
+                    <td className="py-2.5 pr-4 cy-text-secondary font-semibold">{el}</td>
+                    <td className="py-2.5 pr-4 cy-text-secondary">{desc}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <h3 id="expanded-view" className="text-base font-semibold cy-text-primary mb-3 scroll-mt-20" style={{ fontFamily: HEADING_FONT }} dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <h3 id="expanded-view" className="text-base font-semibold cy-text-primary mb-3 scroll-mt-20" style={{ fontFamily: HEADING_FONT }}>
             {c.expandedTitle}
           </h3>
           <div className="overflow-x-auto mb-5">
@@ -248,22 +182,22 @@ export default function AiInsightsPage() {
               <thead>
                 <tr className="border-b cy-border-default">
                   {c.expandedHeaders.map((h) => (
-                    <th key={h} className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{h}</th>
+                    <th key={h} className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {c.expandedRows.map(([section, desc]) => (
                   <tr key={section} className="border-b cy-border-default">
-                    <td className="py-2.5 pr-4 cy-text-secondary font-semibold" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{section}</td>
-                    <td className="py-2.5 pr-4 cy-text-secondary" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{desc}</td>
+                    <td className="py-2.5 pr-4 cy-text-secondary font-semibold">{section}</td>
+                    <td className="py-2.5 pr-4 cy-text-secondary">{desc}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <p className="cy-text-secondary text-sm" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <p className="cy-text-secondary text-sm">
             {c.expandCollapseNote}
           </p>
         </section>
@@ -273,11 +207,11 @@ export default function AiInsightsPage() {
           <h2
             className="text-xl font-bold cy-text-primary mb-4"
             style={{ fontFamily: HEADING_FONT }}
-            dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+           
           >
             {c.sourceTypesTitle}
           </h2>
-          <p className="cy-text-secondary leading-relaxed mb-4" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <p className="cy-text-secondary leading-relaxed mb-4">
             {c.sourceTypesDesc}
           </p>
           <div className="overflow-x-auto mb-6">
@@ -285,15 +219,15 @@ export default function AiInsightsPage() {
               <thead>
                 <tr className="border-b cy-border-default">
                   {c.sourceHeaders.map((h) => (
-                    <th key={h} className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{h}</th>
+                    <th key={h} className="text-left py-2 pr-4 text-xs font-bold uppercase tracking-wider cy-text-muted">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {c.sourceRows.map(([source, desc]) => (
                   <tr key={source} className="border-b cy-border-default">
-                    <td className="py-2.5 pr-4 cy-text-secondary font-semibold" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{source}</td>
-                    <td className="py-2.5 pr-4 cy-text-secondary" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{desc}</td>
+                    <td className="py-2.5 pr-4 cy-text-secondary font-semibold">{source}</td>
+                    <td className="py-2.5 pr-4 cy-text-secondary">{desc}</td>
                   </tr>
                 ))}
               </tbody>
@@ -305,7 +239,7 @@ export default function AiInsightsPage() {
       {/* ── Right TOC ─────────────────────────────────────────────────── */}
       <aside className="hidden 2xl:block w-56 shrink-0 px-6 pt-10 pb-10">
         <div className="sticky top-10">
-          <p className="text-[10px] font-bold uppercase tracking-widest cy-text-muted mb-3" dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>
+          <p className="text-[10px] font-bold uppercase tracking-widest cy-text-muted mb-3">
             {c.tocTitle}
           </p>
           <ul className="space-y-2">
@@ -314,7 +248,7 @@ export default function AiInsightsPage() {
                 <a
                   href={`#${id}`}
                   className="text-sm cy-text-secondary hover:cy-text-brand transition-colors block"
-                  dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}
+                 
                 >
                   {label}
                 </a>
@@ -327,7 +261,7 @@ export default function AiInsightsPage() {
               className="flex items-center gap-1.5 text-xs cy-text-muted hover:cy-text-brand transition-colors"
             >
               <ExternalLink className="h-3.5 w-3.5" />
-              <span dir={isAr ? 'rtl' : 'ltr'} lang={isAr ? 'ar' : 'en'}>{c.contactSupport}</span>
+              <span>{c.contactSupport}</span>
             </Link>
           </div>
         </div>

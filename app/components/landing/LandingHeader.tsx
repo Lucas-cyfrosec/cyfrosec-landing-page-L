@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { LANDING_NAV_ITEMS } from './navigation';
 import { useThemeMode } from '@/app/hooks/useThemeMode';
-import { useTranslation, type Lang } from '@/src/i18n';
+import { useTranslation } from '@/src/i18n';
 import type { NavItem } from './ui/dropdown-navigation';
 import type { Dictionary } from '@/src/i18n/locales/en';
 
@@ -65,31 +65,6 @@ function buildTranslatedNavItems(t: Dictionary): NavItem[] {
   });
 }
 
-// Language switcher pill: EN | AR
-function LangSwitcher() {
-  const { lang, setLang } = useTranslation();
-  return (
-    <div className="inline-flex items-center rounded-full border cy-border cy-bg-elevated overflow-hidden text-[11px] font-bold tracking-wide">
-      {(['en', 'ar'] as Lang[]).map((l, idx) => (
-        <button
-          key={l}
-          type="button"
-          onClick={() => setLang(l)}
-          aria-label={l === 'en' ? 'Switch to English' : 'Switch to Arabic'}
-          className={[
-            'px-2.5 py-1 transition-colors duration-150',
-            lang === l
-              ? 'bg-primary-500 text-white'
-              : 'cy-text-secondary hover:cy-text-primary',
-            idx === 0 ? '' : 'border-s cy-border',
-          ].join(' ')}
-        >
-          {l.toUpperCase()}
-        </button>
-      ))}
-    </div>
-  );
-}
 
 function AuthSegmentedPill({
   mobile = false,
@@ -257,9 +232,6 @@ export function LandingHeader() {
               {theme === 'dark' ? <Sun className="size-4 3xl:size-[18px]" /> : <Moon className="size-4 3xl:size-[18px]" />}
             </button>
 
-            {/* Language switcher */}
-            <LangSwitcher />
-
             <Link
               href="/contact"
               className="group relative inline-flex h-10 items-center justify-center rounded-full px-4 text-[13px] font-semibold transition-[background-color,box-shadow,color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/35 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent border border-transparent bg-transparent text-slate-700 hover:border-slate-200/80 hover:bg-white/80 hover:text-slate-900 dark:text-slate-200 dark:hover:border-white/8 dark:hover:bg-white/[0.04] dark:hover:text-white xl:text-sm 3xl:h-11 3xl:px-5 3xl:text-[15px]"
@@ -280,7 +252,6 @@ export function LandingHeader() {
             >
               {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
-            <LangSwitcher />
             <button
               type="button"
               className="cy-navbar-ghost rounded-full p-2 cy-text-secondary transition-all hover:bg-[color-mix(in_srgb,var(--text-primary)_6%,transparent)]"

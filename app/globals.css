@@ -320,6 +320,30 @@ h3[dir="rtl"] {
 @import '@skeletonlabs/skeleton/themes/cerberus';
 @import './theme-cyfrosec.css';
 
+/* ── shadcn color token bridge ──────────────────────────────────────────────
+   Maps shadcn/Tailwind utility classes (bg-muted, text-foreground, etc.)
+   to this project's runtime CSS variables so third-party shadcn components
+   pick up the correct theme colours automatically in light and dark mode.   */
+@theme inline {
+  --color-background:           var(--bg-canvas);
+  --color-foreground:           var(--text-primary);
+  --color-muted:                var(--bg-muted);
+  --color-muted-foreground:     var(--text-muted);
+  --color-border:               var(--border-default);
+  --color-input:                var(--border-default);
+  --color-ring:                 var(--color-primary-500);
+  --color-primary:              var(--color-primary-500);
+  --color-primary-foreground:   #ffffff;
+  --color-secondary:            var(--bg-muted);
+  --color-secondary-foreground: var(--text-secondary);
+  --color-accent:               var(--interactive-hover);
+  --color-accent-foreground:    var(--text-primary);
+  --color-popover:              var(--bg-elevated);
+  --color-popover-foreground:   var(--text-primary);
+  --color-card:                 var(--bg-elevated);
+  --color-card-foreground:      var(--text-primary);
+}
+
 /* ─── Base ─── */
 body {
   background-color: var(--bg-canvas);

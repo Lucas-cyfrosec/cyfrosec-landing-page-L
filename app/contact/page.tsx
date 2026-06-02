@@ -8,8 +8,7 @@ import { useTranslation } from '@/src/i18n'
 const HEADING_FONT = '"Sora", "Avenir Next", "Segoe UI", sans-serif'
 
 export default function ContactPage() {
-  const { t, lang } = useTranslation()
-  const isAr = lang === 'ar'
+  const { t } = useTranslation()
   const pg = t.pages.contact
 
   return (
@@ -21,15 +20,15 @@ export default function ContactPage() {
           className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[380px]
             bg-[radial-gradient(circle_at_20%_20%,rgba(3,155,224,0.16),transparent_40%)]"
         />
-        <p dir={isAr ? 'rtl' : undefined} className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] cy-text-brand 3xl:text-[13px]">{pg.contactLabel}</p>
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] cy-text-brand 3xl:text-[13px]">{pg.contactLabel}</p>
         <h1
-          dir={isAr ? 'rtl' : undefined}
+         
           className="text-4xl font-extrabold tracking-tight sm:text-5xl cy-text-primary 3xl:max-w-4xl 3xl:text-6xl 4xl:text-[4.5rem]"
           style={{ fontFamily: HEADING_FONT }}
         >
           {pg.heroTitle}
         </h1>
-        <p dir={isAr ? 'rtl' : undefined} className="mt-4 max-w-xl text-base leading-relaxed cy-text-secondary 3xl:max-w-2xl 3xl:text-lg 3xl:leading-8">
+        <p className="mt-4 max-w-xl text-base leading-relaxed cy-text-secondary 3xl:max-w-2xl 3xl:text-lg 3xl:leading-8">
           {pg.heroSubtitle}
         </p>
       </section>
@@ -49,7 +48,7 @@ export default function ContactPage() {
             <aside className="lg:col-span-4 lg:order-2 space-y-8 3xl:space-y-10">
               {/* Steps */}
               <div>
-                <p dir={isAr ? 'rtl' : undefined} className="mb-5 text-xs font-semibold uppercase tracking-[0.16em] cy-text-brand 3xl:text-[13px]">
+                <p className="mb-5 text-xs font-semibold uppercase tracking-[0.16em] cy-text-brand 3xl:text-[13px]">
                   {pg.whatHappensNext}
                 </p>
                 <ol className="relative space-y-0 list-none">
@@ -64,8 +63,8 @@ export default function ContactPage() {
                         )}
                       </div>
                       <div className="pb-6 3xl:pb-7">
-                        <p dir={isAr ? 'rtl' : undefined} className="text-sm font-semibold cy-text-primary 3xl:text-[15px]">{step.title}</p>
-                        <p dir={isAr ? 'rtl' : undefined} className="mt-0.5 text-sm leading-relaxed cy-text-secondary 3xl:text-[15px] 3xl:leading-7">{step.body}</p>
+                        <p className="text-sm font-semibold cy-text-primary 3xl:text-[15px]">{step.title}</p>
+                        <p className="mt-0.5 text-sm leading-relaxed cy-text-secondary 3xl:text-[15px] 3xl:leading-7">{step.body}</p>
                       </div>
                     </li>
                   ))}
@@ -74,13 +73,13 @@ export default function ContactPage() {
 
               {/* Contact methods */}
               <div className="space-y-3">
-                <p dir={isAr ? 'rtl' : undefined} className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] cy-text-muted 3xl:text-[13px]">{pg.otherWays}</p>
+                <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] cy-text-muted 3xl:text-[13px]">{pg.otherWays}</p>
                 <div className="flex items-center gap-3 rounded-xl border cy-border-default p-3 cy-bg-muted 3xl:gap-4 3xl:p-4">
                   <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary-500/10 3xl:size-10">
                     <Mail className="size-4 text-primary-400 3xl:size-[18px]" />
                   </div>
                   <div>
-                    <p dir={isAr ? 'rtl' : undefined} className="text-xs cy-text-muted 3xl:text-[13px]">{pg.emailLabel}</p>
+                    <p className="text-xs cy-text-muted 3xl:text-[13px]">{pg.emailLabel}</p>
                     <p className="text-sm font-medium cy-text-primary 3xl:text-[15px]">sales@cyfrosec.com</p>
                   </div>
                 </div>

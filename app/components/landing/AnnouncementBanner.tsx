@@ -6,7 +6,7 @@ import { useTranslation } from '@/src/i18n';
 
 // ─── Maintenance config ───────────────────────────────────────────────────────
 const ANNOUNCEMENT_CONFIG = {
-  enabled: true,
+  enabled: false,
   title: 'Scheduled Maintenance',
   message: 'CyfroSec will undergo scheduled maintenance.',
   sourceTimeZone: 'Europe/Warsaw',
@@ -244,6 +244,7 @@ export function AnnouncementBanner() {
     <div
       ref={bannerRef}
       role="banner"
+      style={{ colorScheme: 'dark', color: '#e2e8f0' }}
       className={[
         'fixed top-0 left-0 right-0 z-[60] border-b transition-colors duration-500',
         isUrgent
@@ -264,7 +265,7 @@ export function AnnouncementBanner() {
             w-max makes the element size to its content, so translateX(-50%)
             = exactly one copy's width → loop is perfectly seamless.
           */}
-          <div className="banner-ticker flex w-max whitespace-nowrap text-xs sm:text-sm leading-snug text-slate-300">
+          <div style={{ color: 'inherit' }} className="banner-ticker flex w-max whitespace-nowrap text-xs sm:text-sm leading-snug">
             {tickerCopy()}
             {tickerCopy(true, true)}
           </div>

@@ -18,8 +18,7 @@ const TIMELINE_META = [
 ] as const;
 
 export default function SolutionOverview() {
-  const { t, lang } = useTranslation();
-  const isAr = lang === 'ar';
+  const { t } = useTranslation();
 
   const timelineItems: TimelineItem[] = t.solution.items.map((item, i) => {
     const meta = TIMELINE_META[i];
@@ -45,18 +44,18 @@ export default function SolutionOverview() {
           <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
             {t.solution.badge}
           </div>
-          <h2 dir={isAr ? 'rtl' : undefined} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold text-surface-900 dark:text-surface-50 mb-3 sm:mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold text-surface-900 dark:text-surface-50 mb-3 sm:mb-4">
             {t.solution.titlePre}{' '}
             <span className="text-primary-500">{t.solution.titleBrand}</span>{' '}
             {t.solution.titlePost}
           </h2>
-          <p dir={isAr ? 'rtl' : undefined} className="text-base sm:text-lg 3xl:text-xl text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg 3xl:text-xl text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
             {t.solution.description}
           </p>
         </div>
 
         <RadialOrbitalTimeline items={timelineItems} />
-        <p dir={isAr ? 'rtl' : undefined} className="text-center text-sm text-surface-300 dark:text-surface-300 mt-4 mb-4">{t.solution.tapHint}</p>
+        <p className="text-center text-sm text-surface-300 dark:text-surface-300 mt-4 mb-4">{t.solution.tapHint}</p>
       </div>
     </section>
   );

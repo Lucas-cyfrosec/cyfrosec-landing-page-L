@@ -3,8 +3,6 @@
 import { useMemo, useRef, useState } from 'react'
 import { submitContactSalesApiV1SupportContactSalesPost } from '@/src/client'
 import { ThankYouDocLinks } from '@/app/components/landing/ThankYouDocLinks'
-import { useTranslation } from '@/src/i18n'
-
 type ContactSalesFormState = {
   fullName: string
   workEmail: string
@@ -54,30 +52,13 @@ function getErrorMessage(errorPayload: unknown, fallback: string): string {
 }
 
 export function ContactSalesForm() {
-  const { lang } = useTranslation()
-  const isAr = lang === 'ar'
   const [form, setForm] = useState<ContactSalesFormState>(INITIAL_STATE)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const formStartedAt = useRef(new Date().toISOString())
 
-  const copy = isAr ? {
-    successTitle: 'تم استلام الرسالة!',
-    successBody: 'شكراً لتواصلك معنا. سيتواصل فريق المبيعات معك قريباً.',
-    fullName: 'الاسم الكامل',
-    workEmail: 'البريد الإلكتروني للعمل',
-    company: 'الشركة',
-    role: 'المسمى الوظيفي',
-    companySize: 'حجم الشركة (اختياري)',
-    companySizePlaceholder: '1-10، 11-50، 51-200، 201-1000، 1000+',
-    help: 'كيف يمكننا المساعدة؟',
-    minChars: 'الحد الأدنى 20 حرفاً',
-    consent: 'أوافق على أن تتواصل معي CyfroSec.',
-    submitting: 'جارٍ الإرسال...',
-    submit: 'إرسال إلى المبيعات',
-    submitError: 'تعذر إرسال طلب التواصل',
-  } : {
+  const copy = {
     successTitle: 'Message received!',
     successBody: 'Thanks for reaching out. Our sales team will contact you shortly.',
     fullName: 'Full name',
@@ -159,8 +140,8 @@ export function ContactSalesForm() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <p className="text-base font-semibold text-white" dir={isAr ? 'rtl' : undefined}>{copy.successTitle}</p>
-          <p className="mt-2 text-sm text-white/70" dir={isAr ? 'rtl' : undefined}>
+          <p className="text-base font-semibold text-white">{copy.successTitle}</p>
+          <p className="mt-2 text-sm text-white/70">
             {copy.successBody}
           </p>
         </div>
@@ -173,7 +154,7 @@ export function ContactSalesForm() {
     <form className="space-y-4 3xl:space-y-5" onSubmit={onSubmit}>
       <div className="grid gap-4 md:grid-cols-2 3xl:gap-5">
         <div>
-          <label dir={isAr ? 'rtl' : undefined} className="mb-1.5 block text-xs font-semibold uppercase tracking-wide cy-text-muted 3xl:text-[13px]">{copy.fullName}</label>
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide cy-text-muted 3xl:text-[13px]">{copy.fullName}</label>
           <input
             className={inputClass}
             value={form.fullName}
@@ -183,7 +164,7 @@ export function ContactSalesForm() {
         </div>
 
         <div>
-          <label dir={isAr ? 'rtl' : undefined} className="mb-1.5 block text-xs font-semibold uppercase tracking-wide cy-text-muted 3xl:text-[13px]">{copy.workEmail}</label>
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide cy-text-muted 3xl:text-[13px]">{copy.workEmail}</label>
           <input
             className={inputClass}
             type="email"
@@ -194,7 +175,7 @@ export function ContactSalesForm() {
         </div>
 
         <div>
-          <label dir={isAr ? 'rtl' : undefined} className="mb-1.5 block text-xs font-semibold uppercase tracking-wide cy-text-muted 3xl:text-[13px]">{copy.company}</label>
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide cy-text-muted 3xl:text-[13px]">{copy.company}</label>
           <input
             className={inputClass}
             value={form.companyName}
@@ -204,7 +185,7 @@ export function ContactSalesForm() {
         </div>
 
         <div>
-          <label dir={isAr ? 'rtl' : undefined} className="mb-1.5 block text-xs font-semibold uppercase tracking-wide cy-text-muted 3xl:text-[13px]">{copy.role}</label>
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide cy-text-muted 3xl:text-[13px]">{copy.role}</label>
           <input
             className={inputClass}
             value={form.roleTitle}
@@ -215,27 +196,27 @@ export function ContactSalesForm() {
       </div>
 
       <div>
-        <label dir={isAr ? 'rtl' : undefined} className="mb-1.5 block text-xs font-semibold uppercase tracking-wide cy-text-muted 3xl:text-[13px]">{copy.companySize}</label>
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide cy-text-muted 3xl:text-[13px]">{copy.companySize}</label>
         <input
           className={inputClass}
           placeholder={copy.companySizePlaceholder}
-          dir={isAr ? 'rtl' : undefined}
+         
           value={form.companySize}
           onChange={(event) => setForm((prev) => ({ ...prev, companySize: event.target.value }))}
         />
       </div>
 
       <div>
-        <label dir={isAr ? 'rtl' : undefined} className="mb-1.5 block text-xs font-semibold uppercase tracking-wide cy-text-muted 3xl:text-[13px]">{copy.help}</label>
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide cy-text-muted 3xl:text-[13px]">{copy.help}</label>
         <textarea
           className={`${inputClass} min-h-32 3xl:min-h-40`}
-          dir={isAr ? 'rtl' : undefined}
+         
           value={form.message}
           onChange={(event) => setForm((prev) => ({ ...prev, message: event.target.value }))}
           minLength={20}
           required
         />
-        <p dir={isAr ? 'rtl' : undefined} className={`mt-1 text-xs 3xl:text-[13px] ${form.message.trim().length > 0 && form.message.trim().length < 20 ? 'text-error-500' : 'cy-text-muted'}`}>
+        <p className={`mt-1 text-xs 3xl:text-[13px] ${form.message.trim().length > 0 && form.message.trim().length < 20 ? 'text-error-500' : 'cy-text-muted'}`}>
           {form.message.trim().length}/20 {copy.minChars}
         </p>
       </div>
@@ -258,7 +239,7 @@ export function ContactSalesForm() {
           onChange={(event) => setForm((prev) => ({ ...prev, consentToContact: event.target.checked }))}
           className="mt-0.5"
         />
-        <span dir={isAr ? 'rtl' : undefined}>
+        <span>
           {copy.consent}
         </span>
       </label>

@@ -7,8 +7,7 @@ import { useTranslation } from '@/src/i18n';
 const CAPABILITY_ICONS: ComponentType<{ className?: string }>[] = [Brain, Lightbulb, Wrench, MessageSquare];
 
 export default function CyfroAIEngine() {
-  const { t, lang } = useTranslation();
-  const isAr = lang === 'ar';
+  const { t } = useTranslation();
   const { chat } = t.aiEngine;
 
   return (
@@ -21,11 +20,11 @@ export default function CyfroAIEngine() {
               <Brain className="w-4 h-4" />
               {t.aiEngine.badge}
             </div>
-            <h2 dir={isAr ? 'rtl' : undefined} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold text-surface-900 dark:text-surface-50 mb-4 sm:mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 3xl:text-6xl font-bold text-surface-900 dark:text-surface-50 mb-4 sm:mb-6">
               {t.aiEngine.titlePre}
               <span className="block text-primary-500 whitespace-nowrap">{t.aiEngine.titleHighlight}</span>
             </h2>
-            <p dir={isAr ? 'rtl' : undefined} className="text-base sm:text-lg 3xl:text-xl text-surface-600 dark:text-surface-400 mb-6 sm:mb-8 leading-relaxed">
+            <p className="text-base sm:text-lg 3xl:text-xl text-surface-600 dark:text-surface-400 mb-6 sm:mb-8 leading-relaxed">
               {t.aiEngine.description}
             </p>
 
@@ -38,8 +37,8 @@ export default function CyfroAIEngine() {
                       <Icon className="w-5 h-5" />
                     </div>
                     <div>
-                      <h3 dir={isAr ? 'rtl' : undefined} className="font-semibold text-surface-900 dark:text-surface-50 mb-1">{cap.title}</h3>
-                      <p dir={isAr ? 'rtl' : undefined} className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed">{cap.description}</p>
+                      <h3 className="font-semibold text-surface-900 dark:text-surface-50 mb-1">{cap.title}</h3>
+                      <p className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed">{cap.description}</p>
                     </div>
                   </div>
                 );

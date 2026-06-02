@@ -49,7 +49,7 @@ export const DOCS_NAV_SECTIONS: DocsNavSection[] = [
   {
     title: 'SCANS',
     items: [
-      { label: 'Creating Tests', href: '/documents/first-scan' },
+      { label: 'Creating Scans', href: '/documents/first-scan' },
       { label: 'Network Discovery Scan', href: '/documents/network-discovery' },
       { label: 'Asset Discovery Scan', href: '/documents/asset-discovery' },
       { label: 'Service Fingerprinting Scan', href: '/documents/service-fingerprinting' },
@@ -85,7 +85,7 @@ export const DOCS_ARTICLE_SUMMARIES: Record<string, string> = {
   '/documents/topology': 'Interactive network diagram combining discovered assets, port evidence, fingerprint summaries, and AI risk highlights.',
   '/documents/deploy-agent': 'Register CyfroAgent with a one-time token, run via Docker, and verify registration — covering single hosts and multi-container environments.',
   '/documents/delete-agent': 'Fully remove CyfroAgent in three steps — stop and delete the container, remove the data volume, and optionally delete the image.',
-  '/documents/first-scan': 'Create a test with scan type, target host or subnet, agent selection, and a recurring interval (hourly to daily).',
+  '/documents/first-scan': 'Create a scan with scan type, target host or subnet, agent selection, and a recurring interval (hourly to daily).',
   '/documents/network-discovery': 'Identifies open ports and services using fast scanning to drive vulnerability detection and data correlation.',
   '/documents/asset-discovery': 'ARP sweeps, local process enumeration, MAC vendor lookup, and SMB/NetBIOS enumeration for full host inventory.',
   '/documents/service-fingerprinting': 'CVE mapping, misconfiguration detection, TLS checks, and secrets scanning with actionable remediation steps.',

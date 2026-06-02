@@ -17,8 +17,7 @@ const SCAN_HREFS = ['/solutions/network-discovery', '/solutions/service-fingerpr
 
 export default function ProductOverviewPage() {
   const [lightbox, setLightbox] = useState<string | null>(null)
-  const { t, lang } = useTranslation()
-  const isAr = lang === 'ar'
+  const { t } = useTranslation()
   const pg = t.pages.productsOverview
 
   return (
@@ -30,12 +29,12 @@ export default function ProductOverviewPage() {
 
         <div className="relative container mx-auto max-w-screen-xl sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <p dir={isAr ? 'rtl' : undefined} className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-500 mb-4">{pg.overviewLabel}</p>
-            <h1 dir={isAr ? 'rtl' : undefined} className="text-4xl font-bold tracking-tight text-surface-900 dark:text-surface-50 sm:text-5xl lg:text-6xl" style={{ fontFamily: HEADING_FONT }}>
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-500 mb-4">{pg.overviewLabel}</p>
+            <h1 className="text-4xl font-bold tracking-tight text-surface-900 dark:text-surface-50 sm:text-5xl lg:text-6xl" style={{ fontFamily: HEADING_FONT }}>
               {pg.heroTitle}<br />
               <span className="text-primary-500">{pg.heroTitleAccent}</span>
             </h1>
-            <p dir={isAr ? 'rtl' : undefined} className="mt-6 max-w-2xl text-lg leading-relaxed text-surface-600 dark:text-surface-400">
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-surface-600 dark:text-surface-400">
               {pg.heroSubtitle}
             </p>
           </div>
@@ -45,11 +44,11 @@ export default function ProductOverviewPage() {
       {/* Core Capabilities */}
       <section className="bg-white dark:bg-surface-900 py-16 sm:py-20 lg:py-24">
         <div className="container mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <p dir={isAr ? 'rtl' : undefined} className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-500 mb-4">{pg.capabilitiesLabel}</p>
-          <h2 dir={isAr ? 'rtl' : undefined} className="text-2xl font-bold tracking-tight text-surface-900 dark:text-surface-50 sm:text-3xl md:text-4xl mb-4" style={{ fontFamily: HEADING_FONT }}>
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-500 mb-4">{pg.capabilitiesLabel}</p>
+          <h2 className="text-2xl font-bold tracking-tight text-surface-900 dark:text-surface-50 sm:text-3xl md:text-4xl mb-4" style={{ fontFamily: HEADING_FONT }}>
             {pg.capabilitiesTitle}
           </h2>
-          <p dir={isAr ? 'rtl' : undefined} className="text-base text-surface-600 dark:text-surface-400 mb-12 max-w-2xl">
+          <p className="text-base text-surface-600 dark:text-surface-400 mb-12 max-w-2xl">
             {pg.capabilitiesSubtitle}
           </p>
 
@@ -63,11 +62,11 @@ export default function ProductOverviewPage() {
               <div className="flex size-12 items-center justify-center rounded-2xl bg-primary-100 dark:bg-primary-900/50 text-primary-500 mb-5">
                 <Bot className="size-6" />
               </div>
-              <p dir={isAr ? 'rtl' : undefined} className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-500 mb-2">{pg.pillars[0].num}</p>
-              <h3 dir={isAr ? 'rtl' : undefined} className="text-lg font-semibold text-surface-900 dark:text-surface-50 mb-3" style={{ fontFamily: HEADING_FONT }}>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-500 mb-2">{pg.pillars[0].num}</p>
+              <h3 className="text-lg font-semibold text-surface-900 dark:text-surface-50 mb-3" style={{ fontFamily: HEADING_FONT }}>
                 {pg.pillars[0].title}
               </h3>
-              <p dir={isAr ? 'rtl' : undefined} className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed mb-5">
+              <p className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed mb-5">
                 {pg.pillars[0].body}
               </p>
               <ul className="space-y-3">
@@ -75,8 +74,8 @@ export default function ProductOverviewPage() {
                   <li key={item.label} className="flex items-start gap-3 rounded-xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-3">
                     <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary-500" />
                     <div>
-                      <span dir={isAr ? 'rtl' : undefined} className="text-sm font-semibold text-surface-900 dark:text-surface-50">{item.label}: </span>
-                      <span dir={isAr ? 'rtl' : undefined} className="text-sm text-surface-600 dark:text-surface-400">{item.detail}</span>
+                      <span className="text-sm font-semibold text-surface-900 dark:text-surface-50">{item.label}: </span>
+                      <span className="text-sm text-surface-600 dark:text-surface-400">{item.detail}</span>
                     </div>
                   </li>
                 ))}
@@ -92,18 +91,18 @@ export default function ProductOverviewPage() {
               <div className="flex size-12 items-center justify-center rounded-2xl bg-[#fe904d]/10 dark:bg-[#fe904d]/20 text-[#fe701a] dark:text-[#feb080] mb-5">
                 <Network className="size-6" />
               </div>
-              <p dir={isAr ? 'rtl' : undefined} className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-500 mb-2">{pg.pillars[1].num}</p>
-              <h3 dir={isAr ? 'rtl' : undefined} className="text-lg font-semibold text-surface-900 dark:text-surface-50 mb-3" style={{ fontFamily: HEADING_FONT }}>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-500 mb-2">{pg.pillars[1].num}</p>
+              <h3 className="text-lg font-semibold text-surface-900 dark:text-surface-50 mb-3" style={{ fontFamily: HEADING_FONT }}>
                 {pg.pillars[1].title}
               </h3>
-              <p dir={isAr ? 'rtl' : undefined} className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed mb-5">
+              <p className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed mb-5">
                 {pg.pillars[1].body}
               </p>
               <ul className="space-y-2">
                 {pg.pillars[1].scanNames?.map((scan) => (
                   <li key={scan} className="flex items-center gap-2 text-sm text-surface-600 dark:text-surface-400">
                     <span className="size-1.5 rounded-full bg-primary-500 shrink-0" />
-                    <span dir={isAr ? 'rtl' : undefined}>{scan}</span>
+                    <span>{scan}</span>
                   </li>
                 ))}
               </ul>
@@ -118,18 +117,18 @@ export default function ProductOverviewPage() {
               <div className="flex size-12 items-center justify-center rounded-2xl bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 mb-5">
                 <BarChart2 className="size-6" />
               </div>
-              <p dir={isAr ? 'rtl' : undefined} className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-500 mb-2">{pg.pillars[2].num}</p>
-              <h3 dir={isAr ? 'rtl' : undefined} className="text-lg font-semibold text-surface-900 dark:text-surface-50 mb-3" style={{ fontFamily: HEADING_FONT }}>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-500 mb-2">{pg.pillars[2].num}</p>
+              <h3 className="text-lg font-semibold text-surface-900 dark:text-surface-50 mb-3" style={{ fontFamily: HEADING_FONT }}>
                 {pg.pillars[2].title}
               </h3>
-              <p dir={isAr ? 'rtl' : undefined} className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed mb-5">
+              <p className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed mb-5">
                 {pg.pillars[2].body}
               </p>
               <ul className="space-y-2">
                 {pg.pillars[2].items2?.map((item) => (
                   <li key={item} className="flex items-center gap-2 text-sm text-surface-600 dark:text-surface-400">
                     <span className="size-1.5 rounded-full bg-primary-500 shrink-0" />
-                    <span dir={isAr ? 'rtl' : undefined}>{item}</span>
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -144,17 +143,17 @@ export default function ProductOverviewPage() {
               <div className="flex size-12 items-center justify-center rounded-2xl bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 mb-5">
                 <MessageSquare className="size-6" />
               </div>
-              <p dir={isAr ? 'rtl' : undefined} className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-500 mb-2">{pg.pillars[3].num}</p>
-              <h3 dir={isAr ? 'rtl' : undefined} className="text-lg font-semibold text-surface-900 dark:text-surface-50 mb-3" style={{ fontFamily: HEADING_FONT }}>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-500 mb-2">{pg.pillars[3].num}</p>
+              <h3 className="text-lg font-semibold text-surface-900 dark:text-surface-50 mb-3" style={{ fontFamily: HEADING_FONT }}>
                 {pg.pillars[3].title}
               </h3>
-              <p dir={isAr ? 'rtl' : undefined} className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed mb-5">
+              <p className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed mb-5">
                 {pg.pillars[3].body}
               </p>
               <div className="rounded-xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-3">
-                <p dir={isAr ? 'rtl' : undefined} className="text-xs text-surface-500 mb-1">{pg.pillars[3].exampleQueryLabel}</p>
-                <p dir={isAr ? 'rtl' : undefined} className="text-sm italic text-surface-900 dark:text-surface-50">{pg.pillars[3].exampleQuery}</p>
-                <p dir={isAr ? 'rtl' : undefined} className="mt-1 text-xs text-primary-500">{pg.pillars[3].exampleResult}</p>
+                <p className="text-xs text-surface-500 mb-1">{pg.pillars[3].exampleQueryLabel}</p>
+                <p className="text-sm italic text-surface-900 dark:text-surface-50">{pg.pillars[3].exampleQuery}</p>
+                <p className="mt-1 text-xs text-primary-500">{pg.pillars[3].exampleResult}</p>
               </div>
             </motion.div>
           </div>
@@ -164,11 +163,11 @@ export default function ProductOverviewPage() {
       {/* Scan Types */}
       <section className="bg-surface-50 dark:bg-surface-950 py-16 sm:py-20 lg:py-24">
         <div className="container mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <p dir={isAr ? 'rtl' : undefined} className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-500 mb-4">{pg.scanTypesLabel}</p>
-          <h2 dir={isAr ? 'rtl' : undefined} className="text-2xl font-bold tracking-tight text-surface-900 dark:text-surface-50 sm:text-3xl md:text-4xl mb-4" style={{ fontFamily: HEADING_FONT }}>
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-500 mb-4">{pg.scanTypesLabel}</p>
+          <h2 className="text-2xl font-bold tracking-tight text-surface-900 dark:text-surface-50 sm:text-3xl md:text-4xl mb-4" style={{ fontFamily: HEADING_FONT }}>
             {pg.scanTypesTitle}
           </h2>
-          <p dir={isAr ? 'rtl' : undefined} className="text-base text-surface-600 dark:text-surface-400 mb-12 max-w-2xl">
+          <p className="text-base text-surface-600 dark:text-surface-400 mb-12 max-w-2xl">
             {pg.scanTypesSubtitle}
           </p>
 
@@ -185,8 +184,8 @@ export default function ProductOverviewPage() {
                   <div className="flex size-11 items-center justify-center rounded-xl bg-primary-100 dark:bg-primary-900/50 text-primary-500 mb-4">
                     <Icon className="size-5" />
                   </div>
-                  <h3 dir={isAr ? 'rtl' : undefined} className="text-base font-semibold text-surface-900 dark:text-surface-50 mb-2" style={{ fontFamily: HEADING_FONT }}>{scan.title}</h3>
-                  <p dir={isAr ? 'rtl' : undefined} className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed flex-1">{scan.description}</p>
+                  <h3 className="text-base font-semibold text-surface-900 dark:text-surface-50 mb-2" style={{ fontFamily: HEADING_FONT }}>{scan.title}</h3>
+                  <p className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed flex-1">{scan.description}</p>
                   <Link href={SCAN_HREFS[index]} className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary-500 hover:text-primary-400 transition-colors">
                     {t.pages.learnMore} <ArrowRight className="size-3.5" />
                   </Link>
@@ -223,11 +222,11 @@ export default function ProductOverviewPage() {
               </div>
             </div>
             <div>
-              <p dir={isAr ? 'rtl' : undefined} className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-500 mb-4">{pg.aiInsightsLabel}</p>
-              <h2 dir={isAr ? 'rtl' : undefined} className="text-2xl font-bold tracking-tight text-surface-900 dark:text-surface-50 sm:text-3xl md:text-4xl mb-4" style={{ fontFamily: HEADING_FONT }}>
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-500 mb-4">{pg.aiInsightsLabel}</p>
+              <h2 className="text-2xl font-bold tracking-tight text-surface-900 dark:text-surface-50 sm:text-3xl md:text-4xl mb-4" style={{ fontFamily: HEADING_FONT }}>
                 {pg.aiInsightsTitle}
               </h2>
-              <p dir={isAr ? 'rtl' : undefined} className="text-base text-surface-600 dark:text-surface-400 leading-relaxed mb-6">
+              <p className="text-base text-surface-600 dark:text-surface-400 leading-relaxed mb-6">
                 {pg.aiInsightsBody}
               </p>
             </div>
@@ -240,11 +239,11 @@ export default function ProductOverviewPage() {
         <div className="container mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-[2fr_4fr] lg:items-start">
             <div>
-              <p dir={isAr ? 'rtl' : undefined} className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-500 mb-4">{pg.dashboardLabel}</p>
-              <h2 dir={isAr ? 'rtl' : undefined} className="text-2xl font-bold tracking-tight text-surface-900 dark:text-surface-50 sm:text-3xl mb-4" style={{ fontFamily: HEADING_FONT }}>
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary-500 mb-4">{pg.dashboardLabel}</p>
+              <h2 className="text-2xl font-bold tracking-tight text-surface-900 dark:text-surface-50 sm:text-3xl mb-4" style={{ fontFamily: HEADING_FONT }}>
                 {pg.dashboardTitle}
               </h2>
-              <p dir={isAr ? 'rtl' : undefined} className="text-base text-surface-600 dark:text-surface-400 leading-relaxed">
+              <p className="text-base text-surface-600 dark:text-surface-400 leading-relaxed">
                 {pg.dashboardBody}
               </p>
             </div>

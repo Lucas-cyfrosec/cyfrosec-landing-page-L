@@ -6,8 +6,7 @@ import { useTranslation } from '@/src/i18n';
 const HEADING_FONT = '"Sora", "Avenir Next", "Segoe UI", sans-serif';
 
 export default function PlatformArchitecture() {
-  const { t, lang } = useTranslation();
-  const isAr = lang === 'ar';
+  const { t } = useTranslation();
   const steps = t.platformArch.steps;
 
   return (
@@ -20,14 +19,14 @@ export default function PlatformArchitecture() {
           <div className="mb-8 sm:mb-12 lg:mb-16 text-center">
             <p className="text-[11px] font-bold uppercase tracking-[0.2em] cy-text-brand mb-4">{t.platformArch.badge}</p>
             <h2
-              dir={isAr ? 'rtl' : undefined}
+             
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-surface-900 dark:text-surface-50 mb-4 sm:mb-6"
               style={{ fontFamily: HEADING_FONT }}
             >
               {t.platformArch.titlePre}{' '}
               <span className="text-primary-500">{t.platformArch.titleHighlight}</span>
             </h2>
-            <p dir={isAr ? 'rtl' : undefined} className="mx-auto max-w-2xl text-base sm:text-lg text-surface-600 dark:text-surface-300 font-medium">
+            <p className="mx-auto max-w-2xl text-base sm:text-lg text-surface-600 dark:text-surface-300 font-medium">
               {t.platformArch.description}
             </p>
           </div>
@@ -45,8 +44,8 @@ export default function PlatformArchitecture() {
                   <Server className="size-8 text-surface-700 dark:text-[#e6eef6]" />
                 </div>
                 <div>
-                  <h3 dir={isAr ? 'rtl' : undefined} className="text-lg font-bold text-surface-900 dark:text-[#e6eef6]">{steps[0].title}</h3>
-                  <p dir={isAr ? 'rtl' : undefined} className="text-sm text-surface-600 dark:text-[#87a0b5] mt-2">{steps[0].description}</p>
+                  <h3 className="text-lg font-bold text-surface-900 dark:text-[#e6eef6]">{steps[0].title}</h3>
+                  <p className="text-sm text-surface-600 dark:text-[#87a0b5] mt-2">{steps[0].description}</p>
                 </div>
               </div>
 
@@ -66,8 +65,8 @@ export default function PlatformArchitecture() {
                   </div>
                 </div>
                 <div>
-                  <h3 dir={isAr ? 'rtl' : undefined} className="text-lg font-bold text-surface-900 dark:text-[#e6eef6]">{steps[1].title}</h3>
-                  <p dir={isAr ? 'rtl' : undefined} className="text-sm text-surface-600 dark:text-[#87a0b5] mt-2">{steps[1].description}</p>
+                  <h3 className="text-lg font-bold text-surface-900 dark:text-[#e6eef6]">{steps[1].title}</h3>
+                  <p className="text-sm text-surface-600 dark:text-[#87a0b5] mt-2">{steps[1].description}</p>
                 </div>
               </div>
 
@@ -84,8 +83,8 @@ export default function PlatformArchitecture() {
                   <ShieldAlert className="size-8 text-[#10b981] group-hover:scale-110 transition-transform" />
                 </div>
                 <div>
-                  <h3 dir={isAr ? 'rtl' : undefined} className="text-lg font-bold text-surface-900 dark:text-[#e6eef6]">{steps[2].title}</h3>
-                  <p dir={isAr ? 'rtl' : undefined} className="text-sm text-surface-600 dark:text-[#87a0b5] mt-2">{steps[2].description}</p>
+                  <h3 className="text-lg font-bold text-surface-900 dark:text-[#e6eef6]">{steps[2].title}</h3>
+                  <p className="text-sm text-surface-600 dark:text-[#87a0b5] mt-2">{steps[2].description}</p>
                 </div>
               </div>
 

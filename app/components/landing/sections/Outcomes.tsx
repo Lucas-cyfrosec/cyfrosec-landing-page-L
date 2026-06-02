@@ -8,8 +8,7 @@ import { useTranslation } from '@/src/i18n';
 const OUTCOME_ICONS: ComponentType<{ className?: string }>[] = [Eye, Target, Zap];
 
 export default function Outcomes() {
-  const { t, lang } = useTranslation();
-  const isAr = lang === 'ar';
+  const { t } = useTranslation();
 
   const features = t.outcomes.items.map((item, i) => ({
     Icon: OUTCOME_ICONS[i],
@@ -22,7 +21,7 @@ export default function Outcomes() {
       id="outcomes"
       sectionTitle={t.outcomes.title}
       sectionDescription={
-        <span dir={isAr ? 'rtl' : undefined}>
+        <span>
           {t.outcomes.descriptionLine1}
           <br />
           {t.outcomes.descriptionLine2}
