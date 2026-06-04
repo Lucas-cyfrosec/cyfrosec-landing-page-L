@@ -6,7 +6,7 @@ import { useTranslation } from '@/src/i18n';
 
 // ─── Maintenance config ───────────────────────────────────────────────────────
 const ANNOUNCEMENT_CONFIG = {
-  enabled: false,
+  enabled: true,
   title: 'Scheduled Maintenance',
   message: 'CyfroSec will undergo scheduled maintenance.',
   sourceTimeZone: 'Europe/Warsaw',
