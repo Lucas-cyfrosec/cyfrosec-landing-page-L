@@ -1,6 +1,5 @@
 import { PublicPageShell } from './components/landing/PublicPageShell';
 import Hero from './components/landing/sections/Hero';
-import Learning from './components/landing/sections/Learning';
 import ProblemStatement from './components/landing/sections/ProblemStatement';
 import SolutionOverview from './components/landing/sections/SolutionOverview';
 import PlatformArchitecture from './components/landing/sections/PlatformArchitecture';
@@ -17,7 +16,6 @@ export default function LandingPage() {
   return (
     <PublicPageShell>
       <Hero />
-      <Learning />
       <ProblemStatement />
       <SolutionOverview />
       <PlatformArchitecture />

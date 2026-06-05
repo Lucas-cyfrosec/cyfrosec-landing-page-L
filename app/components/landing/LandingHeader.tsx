@@ -6,8 +6,9 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent, useReducedMoti
 import { DropdownNavigation } from './ui/dropdown-navigation';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
-import { LANDING_NAV_ITEMS } from './navigation';
+import { LANDING_NAV_ITEMS, LANDING_NAV_ITEMS_SCROLLED } from './navigation';
 import { useThemeMode } from '@/app/hooks/useThemeMode';
+import { useMaintenanceStatus } from '@/app/hooks/useMaintenanceStatus';
 import { useTranslation } from '@/src/i18n';
 import type { NavItem } from './ui/dropdown-navigation';
 import type { Dictionary } from '@/src/i18n/locales/en';
@@ -26,8 +27,8 @@ function scrollToHash(selector: string, attempts = 20) {
 }
 
 // Build translated nav items by overlaying labels/descriptions from the dict
-function buildTranslatedNavItems(t: Dictionary): NavItem[] {
-  return LANDING_NAV_ITEMS.map((item) => {
+function buildTranslatedNavItems(t: Dictionary, items: NavItem[]): NavItem[] {
+  return items.map((item) => {
     if (item.id === 0) return { ...item, label: t.nav.home };
     if (item.id === 1) {
       return {
@@ -60,7 +61,25 @@ function buildTranslatedNavItems(t: Dictionary): NavItem[] {
       };
     }
     if (item.id === 4) return { ...item, label: t.nav.documentation };
-    if (item.id === 5) return { ...item, label: t.nav.about };
+    if (item.id === 5) {
+      if (item.subMenus) {
+        return {
+          ...item,
+          label: t.nav.company,
+          subMenus: item.subMenus.map((menu) => ({
+            ...menu,
+            title: t.nav.company,
+            items: menu.items.map((subItem, i) => ({
+              ...subItem,
+              label: t.nav.aboutSubmenu[i]?.label ?? subItem.label,
+              description: t.nav.aboutSubmenu[i]?.description ?? subItem.description,
+            })),
+          })),
+        };
+      }
+      return { ...item, label: t.nav.about };
+    }
+    if (item.id === 6) return { ...item, label: t.nav.subscriptions };
     return item;
   });
 }
@@ -74,6 +93,7 @@ function AuthSegmentedPill({
   onNavigate?: () => void;
 }) {
   const { t } = useTranslation();
+  const maintenanceActive = useMaintenanceStatus();
   const [activeSegment, setActiveSegment] = useState<AuthSegment>(null);
 
   const wrapperClassName = mobile ? 'grid w-full grid-cols-2 gap-2' : 'inline-flex items-center gap-1.5';
@@ -102,7 +122,7 @@ function AuthSegmentedPill({
       onMouseLeave={() => setActiveSegment(null)}
     >
       <Link
-        href={`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.cyfrosec.com'}/dashboard`}
+        href={maintenanceActive ? '/maintenance' : `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.cyfrosec.com'}/dashboard`}
         onMouseEnter={() => setActiveSegment('signIn')}
         onFocus={() => setActiveSegment('signIn')}
         onBlur={() => setActiveSegment(null)}
@@ -162,7 +182,9 @@ export function LandingHeader() {
   });
 
   // Rebuild nav items with translated labels/descriptions
-  const translatedNavItems = useMemo(() => buildTranslatedNavItems(t), [t]);
+  const translatedNavItemsFull = useMemo(() => buildTranslatedNavItems(t, LANDING_NAV_ITEMS), [t]);
+  const translatedNavItemsScrolled = useMemo(() => buildTranslatedNavItems(t, LANDING_NAV_ITEMS_SCROLLED), [t]);
+  const translatedNavItems = isScrolled ? translatedNavItemsScrolled : translatedNavItemsFull;
 
   function handleDropdownToggle(label: string) {
     setActiveDropdown((prev) => (prev === label ? null : label));
@@ -280,7 +302,7 @@ export function LandingHeader() {
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="flex flex-col gap-1 px-4 py-5 max-h-[85vh] overflow-y-auto">
-                {translatedNavItems.map((item) => (
+                {translatedNavItemsFull.map((item) => (
                   item.subMenus ? (
                     <div key={item.label}>
                       <button

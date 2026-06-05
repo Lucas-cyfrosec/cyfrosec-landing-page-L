@@ -8,6 +8,8 @@ export const en = {
     solutions: 'Solutions',
     documentation: 'Documentation',
     about: 'About',
+    company: 'Company',
+    subscriptions: 'Subscriptions',
     productSubmenu: [
       { label: 'Overview', description: 'What CyfroSec is and how it works' },
       { label: 'Features', description: 'Discover, assess, prioritize, remediate' },
@@ -22,6 +24,10 @@ export const en = {
       { label: 'CyfroAI Insights', description: 'AI-powered risk prioritization' },
       { label: 'CyfroAssistant', description: 'Conversational security guidance' },
       { label: 'CyfroCode', description: 'SAST code security scanning & AI-driven patches' },
+    ],
+    aboutSubmenu: [
+      { label: 'About Us', description: 'Our mission, team, and values' },
+      { label: 'Subscription Tiers', description: 'Plans, pricing, and feature comparison' },
     ],
     signIn: 'Sign In',
     getStarted: 'Get Started',
@@ -627,9 +633,9 @@ Our vision is to build a unified code-to-cloud security platform that protects t
   },
 
   footer: {
-    tagline: 'See your network the way attackers do.',
+    tagline: 'Understand your environment better than an attacker ever could.',
     description:
-      'Continuous network discovery, service fingerprinting, compliance and AI driven remediation guidance which could be understood from executives to cybersecurity engineers.',
+      'CyfroSec delivers code-security SAST, continuous asset and network discovery, deep service fingerprinting, compliance checks and AI-powered risk prioritization and remediation, so leaders get high-level insights and security teams have the technical detail they need to act.',
     categories: {
       product: 'Product',
       solutions: 'Solutions',
@@ -1294,6 +1300,8 @@ Our vision is to build a unified code-to-cloud security platform that protects t
     windowLabel2: 'Window:',
     closeLabel: 'Close announcement',
     mobileShortWindow: 'Window:',
+    fullTimeTitle: 'Maintenance in Progress:',
+    fullTimeMessage: 'CyfroSec is currently under maintenance. Please check back later.',
   },
 };
 

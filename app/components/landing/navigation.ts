@@ -1,7 +1,9 @@
 import {
   Bot,
   Brain,
+  Building2,
   Code2,
+  CreditCard,
   LayoutDashboard,
   Layers,
   MessageSquare,
@@ -120,7 +122,27 @@ export const LANDING_NAV_ITEMS: NavItem[] = [
     ],
   },
   { id: 4, label: 'Documentation', link: '/documents', isNav: true },
-  { id: 5, label: 'About', link: '/#learning', isNav: true },
+  { id: 6, label: 'Subscriptions', link: '/subscriptions', isNav: true },
+  { id: 5, label: 'About', link: '/about', isNav: true },
+];
+
+// Scrolled (compact) navbar — collapses About + Subscriptions into a Company dropdown
+export const LANDING_NAV_ITEMS_SCROLLED: NavItem[] = [
+  ...LANDING_NAV_ITEMS.slice(0, 5).filter((item) => item.id !== 5 && item.id !== 6),
+  {
+    id: 5,
+    label: 'Company',
+    link: '#',
+    subMenus: [
+      {
+        title: 'Company',
+        items: [
+          { label: 'About Us', href: '/about', description: 'Our mission, team, and values', icon: Building2, isNav: true },
+          { label: 'Subscription Tiers', href: '/subscriptions', description: 'Plans, pricing, and feature comparison', icon: CreditCard, isNav: true },
+        ],
+      },
+    ],
+  },
 ];
 
 export const LANDING_FOOTER_LINKS: Record<string, FooterLink[]> = {
@@ -144,7 +166,7 @@ export const LANDING_FOOTER_LINKS: Record<string, FooterLink[]> = {
     { label: 'Subscription tiers', href: '/subscriptions', isNav: true },
   ],
   company: [
-    { label: 'About Us', href: '#learning' },
+    { label: 'About Us', href: '/about', isNav: true },
     { label: 'Contact', href: '/contact', isNav: true },
   ],
 };

@@ -3,17 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { X, Wrench, Clock, AlertTriangle } from 'lucide-react';
 import { useTranslation } from '@/src/i18n';
-
-// ─── Maintenance config ───────────────────────────────────────────────────────
-const ANNOUNCEMENT_CONFIG = {
-  enabled: true,
-  title: 'Scheduled Maintenance',
-  message: 'CyfroSec will undergo scheduled maintenance.',
-  sourceTimeZone: 'Europe/Warsaw',
-  startTime: '03:00', // wall-clock time in sourceTimeZone
-  endTime: '05:00',   // wall-clock time in sourceTimeZone
-  warningMinutes: 30, // minutes before start to switch to countdown banner
-} as const;
+import { MAINTENANCE_CONFIG } from '@/app/lib/maintenance-config';
 
 // ─── Timezone helpers (no external library needed) ────────────────────────────
 
@@ -61,12 +51,17 @@ function formatCountdown(totalSeconds: number): string {
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type BannerStatus = 'scheduled' | 'imminent' | 'in_progress';
+type BannerStatus = 'scheduled' | 'imminent' | 'in_progress' | 'full_time';
 
 interface BannerData {
   status: BannerStatus;
   timeRange: string;
   secondsLeft: number;
+}
+
+export function isMaintenanceActive(data: BannerData | null): boolean {
+  if (!data) return false;
+  return data.status === 'in_progress' || data.status === 'full_time';
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -80,10 +75,17 @@ export function AnnouncementBanner() {
 
   // ── Real state machine ──────────────────────────────────────────────────────
   useEffect(() => {
-    if (!ANNOUNCEMENT_CONFIG.enabled) return;
+    if (!MAINTENANCE_CONFIG.enabled) return;
+
+    if (MAINTENANCE_CONFIG.fullTimeMaintenance) {
+      const id = window.setTimeout(() => {
+        setBannerData({ status: 'full_time', timeRange: '', secondsLeft: 0 });
+      }, 0);
+      return () => window.clearTimeout(id);
+    }
 
     const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const { startTime, endTime, sourceTimeZone, warningMinutes } = ANNOUNCEMENT_CONFIG;
+    const { startTime, endTime, sourceTimeZone, warningMinutes } = MAINTENANCE_CONFIG;
 
     function getWindowUtc(offsetDays = 0) {
       const base = new Date(Date.now() + offsetDays * 86_400_000);
@@ -172,7 +174,7 @@ export function AnnouncementBanner() {
   // ── Render ─────────────────────────────────────────────────────────────────
 
   const { status, timeRange, secondsLeft } = bannerData ?? {};
-  const isUrgent = status === 'imminent' || status === 'in_progress';
+  const isUrgent = status === 'imminent' || status === 'in_progress' || status === 'full_time';
   const countdown = formatCountdown(secondsLeft ?? 0);
 
   // Text content rendered once for real and once aria-hidden for the ticker loop.
@@ -234,6 +236,13 @@ export function AnnouncementBanner() {
             </span>
           </>
         )}
+
+        {status === 'full_time' && (
+          <>
+            <span className="font-semibold text-amber-300 mr-1">{a.fullTimeTitle}</span>
+            <span>{a.fullTimeMessage}</span>
+          </>
+        )}
       </span>
     );
   }
@@ -258,6 +267,7 @@ export function AnnouncementBanner() {
         {status === 'scheduled'   && <Wrench       className="shrink-0 w-3.5 h-3.5 text-sky-400" aria-hidden="true" />}
         {status === 'imminent'    && <Clock         className="shrink-0 w-3.5 h-3.5 text-amber-400 animate-pulse" aria-hidden="true" />}
         {status === 'in_progress' && <AlertTriangle className="shrink-0 w-3.5 h-3.5 text-amber-400 animate-pulse" aria-hidden="true" />}
+        {status === 'full_time'   && <Wrench        className="shrink-0 w-3.5 h-3.5 text-amber-400" aria-hidden="true" />}
 
         {/* Scrolling text area */}
         <div className="flex-1 overflow-hidden min-w-0">
