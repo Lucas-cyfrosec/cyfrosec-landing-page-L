@@ -1,6 +1,6 @@
 export const MAINTENANCE_CONFIG = {
-  enabled: true,
-  fullTimeMaintenance: true,
+  enabled: false,
+  fullTimeMaintenance: false,
   title: 'Scheduled Maintenance',
   message: 'CyfroSec will undergo scheduled maintenance.',
   sourceTimeZone: 'Europe/Warsaw',
