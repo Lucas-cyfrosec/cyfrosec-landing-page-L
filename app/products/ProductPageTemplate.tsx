@@ -55,7 +55,7 @@ export function ProductPageTemplate({
             </p>
             <p className="mt-5 max-w-2xl text-base leading-relaxed cy-text-secondary">{description}</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/get-started" className="cy-btn cy-btn-primary cy-btn-lg gap-2">
+              <Link href={`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.cyfrosec.com'}/get-started`} className="cy-btn cy-btn-primary cy-btn-lg gap-2">
                 Get Started Free
                 <ArrowRight className="size-4" />
               </Link>
@@ -131,7 +131,7 @@ export function ProductPageTemplate({
                 View Platform
                 <ArrowRight className="size-4" />
               </Link>
-              <Link href="/get-started" className="cy-btn cy-btn-secondary">
+              <Link href={`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.cyfrosec.com'}/get-started`} className="cy-btn cy-btn-secondary">
                 Get Started
               </Link>
             </div>

@@ -2,97 +2,163 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 import InteractiveGlobe from '../InteractiveGlobe';
 import { useTranslation } from '@/src/i18n';
 
+const ROTATE_MS = 3600;
+const ease = [0.16, 1, 0.3, 1] as const;
+
+function reveal(delay: number) {
+  return {
+    initial: { opacity: 0, y: 18 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.7, delay, ease },
+  };
+}
+
+const scrollIn = {
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.5 as const },
+  transition: { duration: 0.6, ease },
+};
+
 export default function Hero() {
   const { t } = useTranslation();
-  const [titleNumber, setTitleNumber] = useState(0);
-  const titles = t.hero.titles;
+  const [idx, setIdx] = useState(0);
+  const phrases = t.hero.rotatingPhrases;
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const interval = setInterval(() => {
-      setTitleNumber((n) => (n + 1) % titles.length);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, [titles.length]);
+    const id = setInterval(() => setIdx((n) => (n + 1) % phrases.length), ROTATE_MS);
+    return () => clearInterval(id);
+  }, [phrases.length]);
 
   return (
     <section
       id="hero"
       className="relative overflow-hidden bg-surface-50 dark:bg-surface-950 min-h-[100svh] flex flex-col justify-start pt-20 sm:pt-24 lg:min-h-screen lg:justify-center lg:pt-0"
     >
-      <div aria-hidden="true" className="absolute inset-0 pointer-events-none bg-gradient-to-br from-primary-50/50 via-transparent to-[#fe904d]/10 dark:from-primary-950/30 dark:via-transparent dark:to-[#fe904d]/5"></div>
-      <div aria-hidden="true" className="absolute top-1/4 right-0 w-[300px] sm:w-[400px] lg:w-[500px] h-[300px] sm:h-[400px] lg:h-[500px] rounded-full bg-primary-500/5 blur-3xl pointer-events-none"></div>
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none bg-gradient-to-br from-primary-50/50 via-transparent to-[#fe904d]/10 dark:from-primary-950/30 dark:via-transparent dark:to-[#fe904d]/5"
+      />
+      <div
+        aria-hidden
+        className="absolute top-1/4 right-0 w-[300px] sm:w-[400px] lg:w-[500px] h-[300px] sm:h-[400px] lg:h-[500px] rounded-full bg-primary-500/5 blur-3xl pointer-events-none"
+      />
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl 3xl:max-w-screen-2xl 4xl:max-w-[2200px]">
         <div className="flex flex-col lg:flex-row min-h-[auto] sm:min-h-[600px] lg:min-h-[700px] 3xl:min-h-[800px] items-center gap-8 lg:gap-12 3xl:gap-16 pt-6 pb-12 sm:py-16 lg:py-28 3xl:py-36">
           {/* Left: Content */}
           <div className="flex-1 flex flex-col justify-center text-center lg:text-start">
+            {/* Phase 1: Static headline */}
+            <motion.h1
+              {...reveal(0.1)}
+              className="text-base sm:text-lg lg:text-xl 3xl:text-2xl font-semibold tracking-tight leading-[1.4] text-surface-800 dark:text-surface-200 max-w-xl 3xl:max-w-2xl mb-8 sm:mb-10 mx-auto lg:mx-0"
+              style={{ textWrap: 'pretty' } as React.CSSProperties}
+            >
+              {t.hero.headline}
+            </motion.h1>
 
-            {/* Headline with Animated Text */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 3xl:text-8xl font-bold tracking-tighter leading-[1.1] mb-4 sm:mb-6">
-              <span className="text-surface-900 dark:text-surface-50">{t.hero.aiThat}</span>
-              <span className="relative flex w-full lg:w-[150%] justify-center lg:justify-start overflow-hidden md:pb-4 md:pt-1">
-                &nbsp;
-                {titles.map((title, index) => (
-                  <span
-                    key={title}
-                    className={`animated-title absolute font-semibold text-primary-500 ${
-                      titleNumber === index ? 'active' : titleNumber > index ? 'above' : 'below'
-                    }`}
+            {/* Phase 2: Rotating subline */}
+            <motion.div
+              {...reveal(1.5)}
+              className="mb-4 sm:mb-5 mx-auto lg:mx-0 max-w-xl 3xl:max-w-2xl"
+            >
+              <p className="text-xs sm:text-sm text-primary-500 dark:text-primary-400 font-semibold tracking-wide mb-1.5">
+                {t.hero.rotatingPrefix}
+              </p>
+              <div className="relative min-h-[2.75rem] sm:min-h-[3.25rem] md:min-h-[3.75rem] overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={idx}
+                    initial={{ opacity: 0, y: 18, filter: 'blur(6px)' }}
+                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                    exit={{ opacity: 0, y: -12, filter: 'blur(6px)' }}
+                    transition={{ duration: 0.45, ease }}
+                    className="absolute inset-x-0 text-base sm:text-lg md:text-xl 3xl:text-2xl font-bold text-primary-600 dark:text-primary-300 leading-snug"
                   >
-                    {title}
-                  </span>
-                ))}
-              </span>
-            </h1>
+                    {phrases[idx]}
+                  </motion.p>
+                </AnimatePresence>
+              </div>
+            </motion.div>
 
-            <p className="text-base sm:text-lg md:text-xl 3xl:text-2xl leading-relaxed text-surface-600 dark:text-surface-400 max-w-xl 3xl:max-w-2xl mb-4 mx-auto lg:mx-0">
+            {/* Phase 3: Tagline */}
+            <motion.p
+              {...reveal(3)}
+              className="text-sm sm:text-base md:text-lg 3xl:text-xl leading-relaxed text-surface-600 dark:text-surface-400 max-w-lg 3xl:max-w-xl mb-8 sm:mb-10 mx-auto lg:mx-0"
+            >
               {t.hero.tagline}
-            </p>
-            <p className="text-sm sm:text-base md:text-lg 3xl:text-xl leading-relaxed text-surface-500 dark:text-surface-500 max-w-xl 3xl:max-w-2xl mb-8 sm:mb-10 mx-auto lg:mx-0">
-              {t.hero.description}
-            </p>
+            </motion.p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-8 sm:mb-10">
-              <Link
-                href="/book-demo"
-                className="inline-flex items-center justify-center gap-3 sm:gap-4 px-6 sm:px-8 py-3 sm:py-4 rounded-xl bg-primary-500 hover:bg-primary-600 text-white text-sm sm:text-base font-semibold transition-colors duration-200 shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/30"
+            {/* Scroll-triggered: Description + CTA */}
+            <motion.div
+              {...scrollIn}
+              className="max-w-lg 3xl:max-w-xl mb-8 sm:mb-10 mx-auto lg:mx-0"
+            >
+              <p
+                className="text-xs sm:text-sm 3xl:text-base leading-relaxed text-surface-500 dark:text-surface-400 mb-5 sm:mb-6"
+                style={{ textWrap: 'pretty' } as React.CSSProperties}
               >
-                {t.hero.bookDemo}
-              </Link>
-            </div>
+                {t.hero.description}
+              </p>
+              <div className="flex justify-center lg:justify-start">
+                <Link
+                  href="/book-demo"
+                  className="inline-flex items-center justify-center gap-3 sm:gap-4 px-6 sm:px-8 py-3 sm:py-4 rounded-xl bg-primary-500 hover:bg-primary-600 text-white text-sm sm:text-base font-semibold transition-colors duration-200 shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/30"
+                >
+                  {t.hero.bookDemo}
+                </Link>
+              </div>
+            </motion.div>
 
-            {/* Stats row */}
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 justify-center lg:justify-start text-surface-600 dark:text-surface-400">
-              <div>
-                <p className="text-lg sm:text-2xl 3xl:text-3xl font-bold text-surface-900 dark:text-surface-50">{t.hero.stats.deployment.value}</p>
-                <p className="text-[11px] sm:text-xs 3xl:text-sm text-surface-500">{t.hero.stats.deployment.label}</p>
+            {/* Scroll-triggered: Stats */}
+            <motion.div
+              {...scrollIn}
+              className="flex items-center gap-3 sm:gap-5 justify-center lg:justify-start"
+            >
+              <div className="shrink-0">
+                <p className="text-base sm:text-xl 3xl:text-2xl font-bold text-surface-900 dark:text-surface-50">
+                  {t.hero.stats.deployment.value}
+                </p>
+                <p className="text-[11px] sm:text-xs 3xl:text-sm text-surface-500 dark:text-surface-400">
+                  {t.hero.stats.deployment.label}
+                </p>
               </div>
-              <div className="w-px h-6 sm:h-8 bg-surface-200 dark:bg-surface-700"></div>
-              <div>
-                <p className="text-lg sm:text-2xl 3xl:text-3xl font-bold text-surface-900 dark:text-surface-50">{t.hero.stats.aiPowered.value}</p>
-                <p className="text-[11px] sm:text-xs 3xl:text-sm text-surface-500">{t.hero.stats.aiPowered.label}</p>
+              <div className="w-px h-6 sm:h-8 bg-surface-200 dark:bg-surface-700 shrink-0" />
+              <div className="shrink-0">
+                <p className="text-base sm:text-xl 3xl:text-2xl font-bold text-surface-900 dark:text-surface-50">
+                  {t.hero.stats.aiPowered.value}
+                </p>
+                <p className="text-[11px] sm:text-xs 3xl:text-sm text-surface-500 dark:text-surface-400">
+                  {t.hero.stats.aiPowered.label}
+                </p>
               </div>
-              <div className="w-px h-6 sm:h-8 bg-surface-200 dark:bg-surface-700 hidden sm:block"></div>
-              <div className="hidden sm:block">
-                <p className="text-lg sm:text-2xl 3xl:text-3xl font-bold text-surface-900 dark:text-surface-50">{t.hero.stats.agenticAI.value}</p>
-                <p className="text-[11px] sm:text-xs 3xl:text-sm text-surface-500">{t.hero.stats.agenticAI.label}</p>
+              <div className="w-px h-6 sm:h-8 bg-surface-200 dark:bg-surface-700 shrink-0" />
+              <div className="shrink-0">
+                <p className="text-base sm:text-xl 3xl:text-2xl font-bold text-surface-900 dark:text-surface-50">
+                  {t.hero.stats.agenticAI.value}
+                </p>
+                <p className="text-[11px] sm:text-xs 3xl:text-sm text-surface-500 dark:text-surface-400">
+                  {t.hero.stats.agenticAI.label}
+                </p>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right: Globe */}
-          <div className="flex-1 flex items-center justify-center w-full lg:w-auto">
+          <motion.div
+            {...reveal(2)}
+            className="flex-1 flex items-center justify-center w-full lg:w-auto"
+          >
             <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[480px] 3xl:max-w-[600px] 4xl:max-w-[700px] aspect-square">
               <InteractiveGlobe className="w-full h-full" />
             </div>
-          </div>
+          </motion.div>
         </div>
-
       </div>
     </section>
   );

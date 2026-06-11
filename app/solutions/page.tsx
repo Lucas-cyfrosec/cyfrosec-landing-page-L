@@ -47,7 +47,7 @@ export default function SolutionsPage() {
             team managing complex coverage — CyfroSec has the solution built for your workflow.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link href="/get-started" className="cy-btn cy-btn-primary cy-btn-lg">
+            <Link href={`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.cyfrosec.com'}/get-started`} className="cy-btn cy-btn-primary cy-btn-lg">
               Get started free
             </Link>
             <Link href="/contact" className="cy-btn cy-btn-secondary cy-btn-lg">

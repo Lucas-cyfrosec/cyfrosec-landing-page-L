@@ -52,45 +52,43 @@ export default function BookDemo() {
   return (
     <PublicPageShell>
       {/* Page header */}
-      <section className="relative bg-[#050d1a] pt-28 pb-14 text-center">
+      <section className="relative bg-surface-50 dark:bg-surface-950 pt-28 pb-14 text-center">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(3,155,224,0.18),transparent)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(3,155,224,0.10),transparent)] dark:bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(3,155,224,0.18),transparent)]"
         />
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary-400">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary-500 dark:text-primary-400">
           {copy.eyebrow}
         </p>
         <h1
-          className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl"
+          className="text-4xl font-extrabold tracking-tight text-surface-900 dark:text-white sm:text-5xl lg:text-6xl"
           style={{ fontFamily: HEADING_FONT }}
-         
         >
           {copy.heroTitle}
           <br className="hidden sm:block" />
-          <span className="text-primary-400"> {copy.heroAccent}</span>
+          <span className="text-primary-500 dark:text-primary-400"> {copy.heroAccent}</span>
         </h1>
       </section>
 
       {/* Two-column body */}
-      <section className="bg-[#050d1a] pb-24">
+      <section className="bg-surface-50 dark:bg-surface-950 pb-24">
         <div className="mx-auto max-w-[96rem] px-4 sm:px-6 lg:px-10 2xl:px-14">
 
           {/* Header text — above both columns */}
           <div className="mb-10">
             <h2
-              className="text-2xl font-bold text-white sm:text-3xl lg:text-4xl leading-tight"
+              className="text-2xl font-bold text-surface-900 dark:text-white sm:text-3xl lg:text-4xl leading-tight"
               style={{ fontFamily: HEADING_FONT }}
-             
             >
               {copy.headerTitle}
             </h2>
-            <p className="mt-3 text-sm font-semibold uppercase tracking-widest text-primary-400">
+            <p className="mt-3 text-sm font-semibold uppercase tracking-widest text-primary-500 dark:text-primary-400">
               {copy.tagline}
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-white/60 max-w-4xl">
+            <p className="mt-4 text-sm leading-relaxed text-surface-500 dark:text-white/60 max-w-4xl">
               {copy.p1}
             </p>
-            <p className="mt-2 text-sm leading-relaxed text-white/60 max-w-4xl">
+            <p className="mt-2 text-sm leading-relaxed text-surface-500 dark:text-white/60 max-w-4xl">
               {copy.p2}
             </p>
           </div>
@@ -99,11 +97,10 @@ export default function BookDemo() {
 
             {/* ── Left: Form + What happens next ── */}
             <div className="space-y-6 order-2 xl:order-1">
-              <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 xl:p-9 2xl:p-10">
+              <div className="rounded-2xl border border-surface-200 dark:border-white/10 bg-surface-100 dark:bg-white/5 backdrop-blur-sm p-8 xl:p-9 2xl:p-10">
                 <h2
-                  className="mb-6 text-2xl font-bold text-white"
+                  className="mb-6 text-2xl font-bold text-surface-900 dark:text-white"
                   style={{ fontFamily: HEADING_FONT }}
-                 
                 >
                   {copy.formTitle}
                 </h2>
@@ -124,7 +121,7 @@ export default function BookDemo() {
 
               {/* Screenshot showcase */}
               <div>
-                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary-400">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary-500 dark:text-primary-400">
                   {copy.screenshotLabel}
                 </p>
                 <ScreenshotShowcase />

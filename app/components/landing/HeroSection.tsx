@@ -57,7 +57,7 @@ export function HeroSection() {
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
-              <Link href="/get-started" className="cy-btn cy-btn-primary cy-btn-lg gap-2 rounded-xl group relative overflow-hidden bg-primary-600 hover:bg-primary-500 text-white border-primary-500 shadow-[0_0_20px_rgba(3,155,224,0.3)]">
+              <Link href={`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.cyfrosec.com'}/get-started`} className="cy-btn cy-btn-primary cy-btn-lg gap-2 rounded-xl group relative overflow-hidden bg-primary-600 hover:bg-primary-500 text-white border-primary-500 shadow-[0_0_20px_rgba(3,155,224,0.3)]">
                 <span className="relative z-10 flex items-center gap-2">
                   Start Free Trial
                   <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />

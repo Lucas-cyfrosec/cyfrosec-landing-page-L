@@ -31,7 +31,6 @@ const layoutIcons = {
 
 const SWIPE_THRESHOLD = 50
 
-// Per-card accent colours (top strip + dot)
 const ACCENT_COLORS = [
   { strip: "from-primary-400/80 to-primary-600/60", dot: "bg-primary-400" },
   { strip: "from-cyan-400/70 to-cyan-600/50",       dot: "bg-cyan-400"    },
@@ -95,7 +94,7 @@ export function MorphingCardStack({
   return (
     <div className={cn("space-y-4", className)}>
       {/* Layout toggle */}
-      <div className="flex items-center justify-end gap-1 rounded-xl border border-white/8 bg-white/4 p-1 w-fit ml-auto">
+      <div className="flex items-center justify-end gap-1 rounded-xl border border-surface-200 dark:border-white/8 bg-surface-100 dark:bg-white/4 p-1 w-fit ml-auto">
         {(Object.keys(layoutIcons) as LayoutMode[]).map((mode) => {
           const Icon = layoutIcons[mode]
           return (
@@ -106,7 +105,7 @@ export function MorphingCardStack({
                 "rounded-lg p-1.5 transition-all",
                 layout === mode
                   ? "bg-primary-500/20 text-primary-400 ring-1 ring-primary-500/30"
-                  : "text-white/30 hover:text-white/60 hover:bg-white/5",
+                  : "text-surface-400 dark:text-white/30 hover:text-surface-600 dark:hover:text-white/60 hover:bg-surface-200 dark:hover:bg-white/5",
               )}
               aria-label={`Switch to ${mode} layout`}
             >
@@ -146,29 +145,22 @@ export function MorphingCardStack({
                     onCardClick?.(card)
                   }}
                   className={cn(
-                    "overflow-hidden rounded-2xl border border-white/10 backdrop-blur-sm transition-colors",
-                    "hover:border-white/20",
+                    "morphing-card overflow-hidden rounded-2xl border border-surface-200 dark:border-white/10 backdrop-blur-sm transition-colors",
+                    "hover:border-surface-300 dark:hover:border-white/20",
                     layout === "stack" && "absolute w-[90%] h-56 cursor-grab active:cursor-grabbing",
                     layout === "list"  && "w-full",
                     isExpanded && "ring-1 ring-primary-500/40",
                   )}
-                  style={{
-                    background: "linear-gradient(160deg,#111f35 0%,#0c1628 60%,#080f1e 100%)",
-                    // Subtle ruled-line texture
-                    backgroundImage:
-                      "linear-gradient(160deg,#111f35 0%,#0c1628 60%,#080f1e 100%), repeating-linear-gradient(transparent,transparent 27px,rgba(255,255,255,0.03) 27px,rgba(255,255,255,0.03) 28px)",
-                    backgroundBlendMode: "normal",
-                  }}
                 >
                   {/* Coloured top strip */}
                   <div className={cn("h-1 w-full bg-gradient-to-r", accent.strip)} />
 
                   <div className="px-5 py-4 flex flex-col h-[calc(100%-4px)]">
                     {/* Header */}
-                    <div className="flex items-center gap-3 mb-3 pb-3 border-b border-white/6">
+                    <div className="flex items-center gap-3 mb-3 pb-3 border-b border-surface-200 dark:border-white/6">
                       {card.icon && (
                         <div className={cn(
-                          "flex shrink-0 items-center justify-center rounded-xl bg-white/5 ring-1 ring-white/10",
+                          "flex shrink-0 items-center justify-center rounded-xl bg-surface-100 dark:bg-white/5 ring-1 ring-surface-200 dark:ring-white/10",
                           layout === "stack" ? "size-10" : "size-8",
                         )}>
                           {card.icon}
@@ -176,14 +168,14 @@ export function MorphingCardStack({
                       )}
                       <div className="flex items-center gap-2 min-w-0">
                         <h3 className={cn(
-                          "font-bold text-white truncate",
+                          "font-bold text-surface-900 dark:text-white truncate",
                           layout === "stack" ? "text-base" : "text-sm",
                         )}>
                           {card.title}
                         </h3>
                         {card.badge && (
                           <span className={cn(
-                            "shrink-0 rounded-full border border-white/10 bg-white/5 font-semibold uppercase tracking-wider text-white/50",
+                            "shrink-0 rounded-full border border-surface-200 dark:border-white/10 bg-surface-100 dark:bg-white/5 font-semibold uppercase tracking-wider text-surface-500 dark:text-white/50",
                             layout === "stack" ? "px-2.5 py-0.5 text-[11px]" : "px-2 py-0.5 text-[10px]",
                           )}>
                             {card.badge}
@@ -197,7 +189,7 @@ export function MorphingCardStack({
                       <ul className="space-y-2.5 flex-1">
                         {card.points.map((point) => (
                           <li key={point} className={cn(
-                            "flex items-start gap-2.5 leading-relaxed text-white/60",
+                            "flex items-start gap-2.5 leading-relaxed text-surface-500 dark:text-white/60",
                             layout === "stack" ? "text-sm" : "text-xs",
                           )}>
                             <span className={cn("mt-1.5 size-1.5 shrink-0 rounded-full", accent.dot)} />
@@ -207,7 +199,7 @@ export function MorphingCardStack({
                       </ul>
                     ) : (
                       <p className={cn(
-                        "leading-relaxed text-white/60 flex-1",
+                        "leading-relaxed text-surface-500 dark:text-white/60 flex-1",
                         layout === "stack" ? "text-sm line-clamp-4" : "text-xs line-clamp-2",
                       )}>
                         {card.description}
@@ -233,13 +225,13 @@ export function MorphingCardStack({
                   "h-1 rounded-full transition-all duration-300",
                   index === activeIndex
                     ? "w-5 bg-primary-500"
-                    : "w-1 bg-white/20 hover:bg-white/40",
+                    : "w-1 bg-surface-300 dark:bg-white/20 hover:bg-surface-400 dark:hover:bg-white/40",
                 )}
                 aria-label={`Go to card ${index + 1}`}
               />
             ))}
           </div>
-          <p className="text-xs text-white/60 tracking-wide">Swipe card to view more</p>
+          <p className="text-xs text-surface-500 dark:text-white/60 tracking-wide">Swipe card to view more</p>
         </div>
       )}
     </div>

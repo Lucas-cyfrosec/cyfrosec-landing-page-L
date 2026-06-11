@@ -172,8 +172,8 @@ export function BookDemoForm() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <p className="text-base font-semibold text-white">{copy.successTitle}</p>
-          <p className="mt-2 text-sm text-white/70">
+          <p className="text-base font-semibold text-surface-900 dark:text-white">{copy.successTitle}</p>
+          <p className="mt-2 text-sm text-surface-500 dark:text-white/70">
             {copy.successBody}
           </p>
         </div>

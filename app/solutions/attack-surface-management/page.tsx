@@ -171,7 +171,7 @@ export default function AttackSurfaceManagementPage() {
 
               <div className="mt-10 flex flex-wrap gap-3">
                 <Link
-                  href="/get-started"
+                  href={`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.cyfrosec.com'}/get-started`}
                   className="inline-flex items-center gap-2 rounded-xl bg-primary-500 px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-primary-600 hover:-translate-y-0.5"
                 >
                   Get started free
@@ -368,7 +368,7 @@ export default function AttackSurfaceManagementPage() {
 
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
               <Link
-                href="/get-started"
+                href={`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.cyfrosec.com'}/get-started`}
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-primary-700 transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary-50 hover:shadow-[0_0_38px_rgba(3,155,224,0.3)] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
                 Get started free

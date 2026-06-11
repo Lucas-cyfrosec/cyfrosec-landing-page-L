@@ -122,7 +122,7 @@ function AuthSegmentedPill({
       onMouseLeave={() => setActiveSegment(null)}
     >
       <Link
-        href={maintenanceActive ? '/maintenance' : `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.cyfrosec.com'}/dashboard`}
+        href={`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.cyfrosec.com'}/dashboard`}
         onMouseEnter={() => setActiveSegment('signIn')}
         onFocus={() => setActiveSegment('signIn')}
         onBlur={() => setActiveSegment(null)}
@@ -139,7 +139,7 @@ function AuthSegmentedPill({
       </Link>
 
       <Link
-        href="/get-started"
+        href={`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.cyfrosec.com'}/get-started`}
         onMouseEnter={() => setActiveSegment('getStarted')}
         onFocus={() => setActiveSegment('getStarted')}
         onBlur={() => setActiveSegment(null)}

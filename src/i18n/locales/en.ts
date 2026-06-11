@@ -35,16 +35,23 @@ export const en = {
   },
 
   hero: {
-    aiThat: 'AI That',
-    titles: ['Stops Threats.'],
+    headline:
+      'CyfroSec is an enterprise cybersecurity platform that protects infrastructure, applications and AI systems from modern vulnerabilities and AI‑driven attacks, with built‑in safeguards against risks introduced by AI‑generated code.',
+    rotatingPrefix: 'AI-Powered Cybersecurity That',
+    rotatingPhrases: [
+      'Finds Vulnerabilities Before Attackers Exploit Them',
+      'Stops Threats Before They Disrupt Your Business',
+      'Simplifies Fixes Before Small Weaknesses Become Major Incidents',
+      'Explains Risks Before Critical Decisions Are Missed',
+    ],
     tagline: 'Understand your environment better than an attacker ever could.',
     description:
-      'CyfroSec delivers code-security SAST, continuous asset and network discovery, deep service fingerprinting, compliance checks and AI-powered risk prioritization and remediation, so leaders get high-level insights and security teams have the technical detail they need to act.',
+      'CyfroSec delivers code‑security SAST, continuous asset and network discovery, deep service fingerprinting, compliance checks and AI‑powered risk prioritization and remediation, so leaders get high‑level insights and security teams have the technical detail they need to act.',
     bookDemo: 'Book a Demo',
     stats: {
-      deployment: { value: 'SaaS & On-Prem', label: 'Deploy Anywhere' },
-      aiPowered: { value: 'AI-Powered', label: 'Exposure Prioritization' },
-      agenticAI: { value: 'Agentic AI', label: 'Automated Remediation' },
+      deployment: { value: 'SaaS & On-Prem', label: 'Deployment Options' },
+      aiPowered: { value: 'AI-Powered', label: 'Prioritization' },
+      agenticAI: { value: 'Agentic AI', label: 'Remediation' },
     },
   },
 

@@ -51,7 +51,7 @@ export function FinalCtaSection() {
 
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 w-full sm:w-auto">
             <Link
-              href="/get-started"
+              href={`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.cyfrosec.com'}/get-started`}
               className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-primary-500 px-8 py-4 text-sm font-bold text-white transition-all hover:bg-primary-400 w-full sm:w-auto"
             >
               <div className="absolute inset-0 rounded-full shadow-[0_0_30px_var(--color-primary-500)] opacity-50 group-hover:opacity-100 group-hover:shadow-[0_0_50px_var(--color-primary-500)] transition-all" />

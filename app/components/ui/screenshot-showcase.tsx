@@ -33,13 +33,13 @@ export function ScreenshotShowcase() {
 
   return (
     <>
-      <div className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center gap-3 px-6 py-4 border-b border-white/10">
+      <div className="rounded-2xl border border-surface-200 dark:border-white/10 bg-surface-100 dark:bg-white/5 overflow-hidden">
+        {/* Header — CLI dots */}
+        <div className="flex items-center gap-3 px-6 py-4 border-b border-surface-200 dark:border-white/10">
           <span className="size-3 rounded-full bg-red-500/70" />
           <span className="size-3 rounded-full bg-yellow-400/70" />
           <span className="size-3 rounded-full bg-green-400/70" />
-          <span className="ml-2 text-xs text-white/30 font-mono tracking-wide">cyfrosec ~ live-platform</span>
+          <span className="ml-2 text-xs text-surface-400 dark:text-white/30 font-mono tracking-wide">cyfrosec ~ live-platform</span>
         </div>
 
         {/* Tabs */}
@@ -51,8 +51,8 @@ export function ScreenshotShowcase() {
               className={[
                 'px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200',
                 active === t.id
-                  ? 'bg-primary-500/20 text-primary-300 border border-primary-500/40'
-                  : 'text-white/40 hover:text-white/70 border border-transparent',
+                  ? 'bg-primary-500/20 text-primary-500 dark:text-primary-300 border border-primary-500/40'
+                  : 'text-surface-400 dark:text-white/40 hover:text-surface-600 dark:hover:text-white/70 border border-transparent',
               ].join(' ')}
             >
               {t.label}
@@ -61,11 +61,11 @@ export function ScreenshotShowcase() {
         </div>
 
         {/* Description */}
-        <p className="px-6 pt-2 pb-4 text-sm text-white/45">{tab.description}</p>
+        <p className="px-6 pt-2 pb-4 text-sm text-surface-500 dark:text-white/45">{tab.description}</p>
 
         {/* Screenshot */}
         <div
-          className="group relative mx-3 mb-3 rounded-xl overflow-hidden border border-white/10 shadow-2xl cursor-zoom-in lg:mx-4 lg:mb-4"
+          className="group relative mx-3 mb-3 rounded-xl overflow-hidden border border-surface-200 dark:border-white/10 shadow-2xl cursor-zoom-in lg:mx-4 lg:mb-4"
           onClick={() => setLightbox(true)}
         >
           <Image
@@ -85,7 +85,7 @@ export function ScreenshotShowcase() {
             </div>
           </div>
           {/* Fade overlay at bottom */}
-          <div className="absolute bottom-0 inset-x-0 h-12 bg-gradient-to-t from-[#050d1a]/80 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 inset-x-0 h-12 bg-gradient-to-t from-surface-100/80 dark:from-[#050d1a]/80 to-transparent pointer-events-none" />
         </div>
       </div>
 

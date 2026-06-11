@@ -78,7 +78,7 @@ export default function PlatformPage() {
             code to cloud — designed for teams of every size and skill level.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/get-started" className="cy-btn cy-btn-primary cy-btn-lg">
+            <Link href={`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.cyfrosec.com'}/get-started`} className="cy-btn cy-btn-primary cy-btn-lg">
               Get started free
             </Link>
             <Link href="/contact" className="cy-btn cy-btn-secondary cy-btn-lg">
@@ -247,7 +247,7 @@ export default function PlatformPage() {
           <Link href="/contact" className="cy-btn cy-btn-primary cy-btn-lg inline-flex items-center gap-2">
             Talk to sales <ArrowRight className="h-4 w-4" />
           </Link>
-          <Link href="/get-started" className="cy-btn cy-btn-secondary cy-btn-lg">
+          <Link href={`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.cyfrosec.com'}/get-started`} className="cy-btn cy-btn-secondary cy-btn-lg">
             Get started free
           </Link>
         </div>
