@@ -115,10 +115,6 @@ export function ContactSalesForm() {
         throw new Error(getErrorMessage(response.error, copy.submitError))
       }
 
-      if (!response.data?.success) {
-        throw new Error(getErrorMessage(response.data, copy.submitError))
-      }
-
       setSuccess(true)
       setForm(INITIAL_STATE)
       formStartedAt.current = new Date().toISOString()

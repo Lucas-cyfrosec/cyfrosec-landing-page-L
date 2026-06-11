@@ -70,19 +70,30 @@ export default function Hero() {
               <p className="text-sm sm:text-base lg:text-lg text-primary-500 dark:text-primary-400 font-semibold tracking-wide mb-2">
                 {t.hero.rotatingPrefix}
               </p>
-              <div className="relative min-h-[4rem] sm:min-h-[5rem] md:min-h-[6rem] overflow-hidden">
-                <AnimatePresence mode="wait">
-                  <motion.p
-                    key={idx}
-                    initial={{ opacity: 0, y: 18, filter: 'blur(6px)' }}
-                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                    exit={{ opacity: 0, y: -12, filter: 'blur(6px)' }}
-                    transition={{ duration: 0.45, ease }}
-                    className="absolute inset-x-0 text-xl sm:text-2xl md:text-3xl 3xl:text-4xl font-bold text-primary-600 dark:text-primary-300 leading-snug"
+              <div className="grid overflow-hidden">
+                {phrases.map((phrase) => (
+                  <p
+                    key={phrase}
+                    className="col-start-1 row-start-1 invisible text-xl sm:text-2xl md:text-3xl 3xl:text-4xl font-bold leading-snug"
+                    aria-hidden="true"
                   >
-                    {phrases[idx]}
-                  </motion.p>
-                </AnimatePresence>
+                    {phrase}
+                  </p>
+                ))}
+                <div className="col-start-1 row-start-1 relative">
+                  <AnimatePresence mode="wait">
+                    <motion.p
+                      key={idx}
+                      initial={{ opacity: 0, y: 18, filter: 'blur(6px)' }}
+                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                      exit={{ opacity: 0, y: -12, filter: 'blur(6px)' }}
+                      transition={{ duration: 0.45, ease }}
+                      className="absolute inset-x-0 top-0 text-xl sm:text-2xl md:text-3xl 3xl:text-4xl font-bold text-primary-600 dark:text-primary-300 leading-snug"
+                    >
+                      {phrases[idx]}
+                    </motion.p>
+                  </AnimatePresence>
+                </div>
               </div>
             </motion.div>
 
