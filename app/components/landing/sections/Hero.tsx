@@ -50,27 +50,27 @@ export default function Hero() {
       />
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl 3xl:max-w-screen-2xl 4xl:max-w-[2200px]">
-        <div className="flex flex-col lg:flex-row min-h-[auto] sm:min-h-[600px] lg:min-h-[700px] 3xl:min-h-[800px] items-center gap-8 lg:gap-12 3xl:gap-16 pt-6 pb-12 sm:py-16 lg:py-28 3xl:py-36">
+        {/* Full-width headline above the grid */}
+        <motion.h1
+          {...reveal(0.1)}
+          className="text-center text-base sm:text-lg lg:text-xl 3xl:text-2xl font-semibold tracking-tight leading-[1.4] text-surface-800 dark:text-surface-200 max-w-5xl mx-auto pt-6 sm:pt-16 lg:pt-28 3xl:pt-36 mb-10 sm:mb-12 lg:mb-16"
+          style={{ textWrap: 'pretty' } as React.CSSProperties}
+        >
+          {t.hero.headline}
+        </motion.h1>
+
+        <div className="flex flex-col lg:flex-row min-h-[auto] sm:min-h-[500px] lg:min-h-[550px] 3xl:min-h-[650px] items-center gap-8 lg:gap-12 3xl:gap-16 pb-12 sm:pb-16 lg:pb-28 3xl:pb-36">
           {/* Left: Content */}
           <div className="flex-1 flex flex-col justify-center text-center lg:text-start">
-            {/* Phase 1: Static headline */}
-            <motion.h1
-              {...reveal(0.1)}
-              className="text-base sm:text-lg lg:text-xl 3xl:text-2xl font-semibold tracking-tight leading-[1.4] text-surface-800 dark:text-surface-200 max-w-xl 3xl:max-w-2xl mb-8 sm:mb-10 mx-auto lg:mx-0"
-              style={{ textWrap: 'pretty' } as React.CSSProperties}
-            >
-              {t.hero.headline}
-            </motion.h1>
-
             {/* Phase 2: Rotating subline */}
             <motion.div
               {...reveal(1.5)}
               className="mb-4 sm:mb-5 mx-auto lg:mx-0 max-w-xl 3xl:max-w-2xl"
             >
-              <p className="text-xs sm:text-sm text-primary-500 dark:text-primary-400 font-semibold tracking-wide mb-1.5">
+              <p className="text-sm sm:text-base lg:text-lg text-primary-500 dark:text-primary-400 font-semibold tracking-wide mb-2">
                 {t.hero.rotatingPrefix}
               </p>
-              <div className="relative min-h-[2.75rem] sm:min-h-[3.25rem] md:min-h-[3.75rem] overflow-hidden">
+              <div className="relative min-h-[4rem] sm:min-h-[5rem] md:min-h-[6rem] overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={idx}
@@ -78,7 +78,7 @@ export default function Hero() {
                     animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                     exit={{ opacity: 0, y: -12, filter: 'blur(6px)' }}
                     transition={{ duration: 0.45, ease }}
-                    className="absolute inset-x-0 text-base sm:text-lg md:text-xl 3xl:text-2xl font-bold text-primary-600 dark:text-primary-300 leading-snug"
+                    className="absolute inset-x-0 text-xl sm:text-2xl md:text-3xl 3xl:text-4xl font-bold text-primary-600 dark:text-primary-300 leading-snug"
                   >
                     {phrases[idx]}
                   </motion.p>
