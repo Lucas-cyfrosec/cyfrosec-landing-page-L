@@ -44,16 +44,16 @@ type CategoryCard = {
 }
 
 const QUICK_CHIP_HREFS = [
-  '/documents/full#getting-started',
-  '/documents/deploy-agent',
-  '/documents/ai-insights',
-  '/documents/ai-assistant',
+  'https://docs.cyfrosec.com/docs/getting-started/platform-overview',
+  'https://docs.cyfrosec.com/docs/cyfroagent/setup',
+  'https://docs.cyfrosec.com/docs/cyfroai-engine/cyfroai-insights',
+  'https://docs.cyfrosec.com/docs/cyfroai-engine/cyfroassistant',
 ]
 
 const START_CARD_HREFS = [
-  '/documents/full#step1',
-  '/documents/deploy-agent',
-  '/documents/first-scan',
+  'https://docs.cyfrosec.com/docs/getting-started/platform-overview',
+  'https://docs.cyfrosec.com/docs/cyfroagent/setup',
+  'https://docs.cyfrosec.com/docs/scans/creating-scans',
 ]
 
 const START_CARD_ICONS: ComponentType<{ className?: string }>[] = [Sparkles, TerminalSquare, ShieldCheck]
@@ -69,12 +69,12 @@ const CATEGORY_ICONS: Record<string, ComponentType<{ className?: string }>> = {
 }
 
 const DEFAULT_POPULAR_ARTICLE_HREFS = [
-  '/documents/full',
-  '/documents/dashboard',
-  '/documents/ai-insights',
-  '/documents/ai-assistant',
-  '/documents/deploy-agent',
-  '/documents/service-fingerprinting',
+  'https://docs.cyfrosec.com/docs/platform-guide/topology',
+  'https://docs.cyfrosec.com/docs/platform-guide/dashboard',
+  'https://docs.cyfrosec.com/docs/cyfroai-engine/cyfroai-insights',
+  'https://docs.cyfrosec.com/docs/cyfroai-engine/cyfroassistant',
+  'https://docs.cyfrosec.com/docs/cyfroagent/setup',
+  'https://docs.cyfrosec.com/docs/scans/service-fingerprinting',
 ]
 
 function buildPopularArticle(href: string): PopularArticle | null {
@@ -314,8 +314,8 @@ export default function DocsLandingGateway() {
 
                 <div className="flex w-full justify-end lg:w-auto lg:shrink-0">
                   <Link
-                    href="/documents/full"
-                    onClick={() => recordDocsInteraction('/documents/full')}
+                    href="https://docs.cyfrosec.com/docs/getting-started/platform-overview"
+                    onClick={() => recordDocsInteraction('https://docs.cyfrosec.com/docs/getting-started/platform-overview')}
                     className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary-500 px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-600 sm:w-auto sm:min-w-[220px] 3xl:min-w-[240px] 3xl:px-8 3xl:py-3.5 3xl:text-[15px]"
                   >
                     <span>{dl.fullDocumentation.button}</span>

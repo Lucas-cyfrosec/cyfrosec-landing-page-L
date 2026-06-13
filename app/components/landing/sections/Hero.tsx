@@ -50,16 +50,7 @@ export default function Hero() {
       />
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl 3xl:max-w-screen-2xl 4xl:max-w-[2200px]">
-        {/* Full-width headline above the grid */}
-        <motion.h1
-          {...reveal(0.1)}
-          className="text-center text-base sm:text-lg lg:text-xl 3xl:text-2xl font-semibold tracking-tight leading-[1.4] text-surface-800 dark:text-surface-200 max-w-5xl mx-auto pt-6 sm:pt-16 lg:pt-28 3xl:pt-36 mb-10 sm:mb-12 lg:mb-16"
-          style={{ textWrap: 'pretty' } as React.CSSProperties}
-        >
-          {t.hero.headline}
-        </motion.h1>
-
-        <div className="flex flex-col lg:flex-row min-h-[auto] sm:min-h-[500px] lg:min-h-[550px] 3xl:min-h-[650px] items-center gap-8 lg:gap-12 3xl:gap-16 pb-12 sm:pb-16 lg:pb-28 3xl:pb-36">
+        <div className="flex flex-col lg:flex-row min-h-[auto] sm:min-h-[500px] lg:min-h-[550px] 3xl:min-h-[650px] items-center gap-8 lg:gap-12 3xl:gap-16 pt-6 sm:pt-16 lg:pt-28 3xl:pt-36 pb-12 sm:pb-16 lg:pb-28 3xl:pb-36">
           {/* Left: Content */}
           <div className="flex-1 flex flex-col justify-center text-center lg:text-start">
             {/* Phase 2: Rotating subline */}

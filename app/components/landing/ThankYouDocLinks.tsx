@@ -7,7 +7,7 @@ const DOCS = [
   {
     icon: Layers,
     label: 'Platform Overview',
-    href: '/documents/full',
+    href: 'https://docs.cyfrosec.com/docs/getting-started/platform-overview',
     description: 'Understand what CyfroSec does and how to get started',
     color: 'from-sky-500/20 to-indigo-500/10',
     iconColor: 'text-sky-400',
@@ -17,7 +17,7 @@ const DOCS = [
   {
     icon: Bot,
     label: 'Deploy Agent',
-    href: '/documents/deploy-agent',
+    href: 'https://docs.cyfrosec.com/docs/cyfroagent/setup',
     description: 'Register and install your first CyfroAgent',
     color: 'from-primary-500/20 to-blue-500/10',
     iconColor: 'text-primary-400',
@@ -27,7 +27,7 @@ const DOCS = [
   {
     icon: Radar,
     label: 'Creating Scans',
-    href: '/documents/first-scan',
+    href: 'https://docs.cyfrosec.com/docs/scans/creating-scans',
     description: 'Set up and schedule your first security scan',
     color: 'from-violet-500/20 to-purple-500/10',
     iconColor: 'text-violet-400',
@@ -37,7 +37,7 @@ const DOCS = [
   {
     icon: LayoutDashboard,
     label: 'Dashboard Guide',
-    href: '/documents/dashboard',
+    href: 'https://docs.cyfrosec.com/docs/platform-guide/dashboard',
     description: 'Navigate widgets, metrics, and scan status',
     color: 'from-blue-500/20 to-cyan-500/10',
     iconColor: 'text-cyan-400',
@@ -47,7 +47,7 @@ const DOCS = [
   {
     icon: Sparkles,
     label: 'CyfroAI Insights',
-    href: '/documents/ai-insights',
+    href: 'https://docs.cyfrosec.com/docs/cyfroai-engine/cyfroai-insights',
     description: 'AI-generated risk summaries after every scan',
     color: 'from-emerald-500/20 to-teal-500/10',
     iconColor: 'text-emerald-400',
@@ -57,7 +57,7 @@ const DOCS = [
   {
     icon: MessageSquare,
     label: 'CyfroAssistant',
-    href: '/documents/ai-assistant',
+    href: 'https://docs.cyfrosec.com/docs/cyfroai-engine/cyfroassistant',
     description: 'Query your infrastructure in natural language',
     color: 'from-amber-500/20 to-orange-500/10',
     iconColor: 'text-amber-400',
@@ -67,7 +67,7 @@ const DOCS = [
   {
     icon: BookOpen,
     label: 'All Documentation',
-    href: '/documents',
+    href: 'https://docs.cyfrosec.com',
     description: 'Browse the full knowledge base',
     color: 'from-rose-500/20 to-pink-500/10',
     iconColor: 'text-rose-400',

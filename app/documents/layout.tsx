@@ -92,24 +92,25 @@ function DocsSidebar() {
   }
 
   // Map hrefs → translated link labels
+  const D = 'https://docs.cyfrosec.com/docs'
   const linkLabelMap: Record<string, string> = {
-    '/documents/full': sb.links.platformOverview,
-    '/documents/rbac': sb.links.roleBasedAccessControl,
-    '/documents/support': sb.links.support,
-    '/documents/dashboard': sb.links.dashboard,
-    '/documents/notifications': sb.links.notifications,
-    '/documents/reports': sb.links.report,
-    '/documents/topology': sb.links.topology,
-    '/documents/deploy-agent': sb.links.deployAgent,
-    '/documents/docker-scanning': sb.links.dockerScanning,
-    '/documents/delete-agent': sb.links.deleteAgent,
-    '/documents/first-scan': sb.links.firstScan,
-    '/documents/network-discovery': sb.links.networkDiscovery,
-    '/documents/asset-discovery': sb.links.assetDiscovery,
-    '/documents/service-fingerprinting': sb.links.serviceFingerprinting,
-    '/documents/gdpr': sb.links.gdpr,
-    '/documents/audit': sb.links.audit,
-    '/documents/admin': sb.links.admin,
+    [`${D}/getting-started/platform-overview`]: sb.links.platformOverview,
+    [`${D}/getting-started/role-based-access-control`]: sb.links.roleBasedAccessControl,
+    [`${D}/getting-started/support`]: sb.links.support,
+    [`${D}/platform-guide/dashboard`]: sb.links.dashboard,
+    [`${D}/platform-guide/notifications`]: sb.links.notifications,
+    [`${D}/platform-guide/reports`]: sb.links.report,
+    [`${D}/platform-guide/topology`]: sb.links.topology,
+    [`${D}/cyfroagent/setup`]: sb.links.deployAgent,
+    [`${D}/cyfroagent/multi-container-scanning`]: sb.links.dockerScanning,
+    [`${D}/cyfroagent/delete-agent`]: sb.links.deleteAgent,
+    [`${D}/scans/creating-scans`]: sb.links.firstScan,
+    [`${D}/scans/network-discovery`]: sb.links.networkDiscovery,
+    [`${D}/scans/asset-discovery`]: sb.links.assetDiscovery,
+    [`${D}/scans/service-fingerprinting`]: sb.links.serviceFingerprinting,
+    [`${D}/security-compliance/gdpr-compliance`]: sb.links.gdpr,
+    [`${D}/security-compliance/audit`]: sb.links.audit,
+    [`${D}/admin-panel/admin-panel`]: sb.links.admin,
   }
 
   // Close dropdown on outside click
