@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import InteractiveGlobe from '../InteractiveGlobe';
+import InteractiveLogo from '../InteractiveLogo';
 import { useTranslation } from '@/src/i18n';
 
 const ROTATE_MS = 3600;
@@ -151,13 +151,13 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right: Globe */}
+          {/* Right: Interactive 3D logo */}
           <motion.div
             {...reveal(2)}
             className="flex-1 flex items-center justify-center w-full lg:w-auto"
           >
             <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[480px] 3xl:max-w-[600px] 4xl:max-w-[700px] aspect-square">
-              <InteractiveGlobe className="w-full h-full" />
+              <InteractiveLogo className="w-full h-full" />
             </div>
           </motion.div>
         </div>
