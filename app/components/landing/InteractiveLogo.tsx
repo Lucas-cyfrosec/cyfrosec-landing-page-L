@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import AnimatedSecurityShield from './AnimatedSecurityShield';
 
 // ─── DESIGN TOKENS ────────────────────────────────────────────────────────────
 type RGB = [number, number, number];
@@ -108,6 +109,7 @@ export default function InteractiveLogo({ baseColor, accentColor, className = ''
   // Detected-threat log shown in the side notes panel.
   const [notes, setNotes] = useState<{ id: number; word: string; struck: boolean }[]>([]);
   const [secured, setSecured] = useState(false);   // hide the notes panel once secured
+  const [waveDone, setWaveDone] = useState(false);  // show the shield only after the green wave completes
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -171,6 +173,7 @@ export default function InteractiveLogo({ baseColor, accentColor, className = ''
       shieldStart = 0;
       setNotes([]);
       setSecured(false);
+      setWaveDone(false);
     }
 
     // Register a threat word in the notes panel (once per spider).
@@ -704,7 +707,7 @@ export default function InteractiveLogo({ baseColor, accentColor, className = ''
         }
         if (phase >= 1) {
           waveFrac = Math.min(1.12, ((time - waveStart) / WAVE_DUR) * 1.12);
-          if (phase === 1 && time - waveStart >= WAVE_DUR) { phase = 2; shieldStart = time; }
+          if (phase === 1 && time - waveStart >= WAVE_DUR) { phase = 2; shieldStart = time; setWaveDone(true); }
           if (phase === 2 && time - shieldStart >= SECURE_HOLD) resetCycle();
         }
       }
@@ -793,6 +796,9 @@ export default function InteractiveLogo({ baseColor, accentColor, className = ''
   return (
     <div className={`relative ${className}`}>
       <canvas ref={canvasRef} className="w-full h-full cursor-grab active:cursor-grabbing touch-none" />
+
+      {/* Sentinel Shield — green/secure state only; isolated decorative overlay (bottom-right) */}
+      {waveDone && <AnimatedSecurityShield />}
 
       {/* Detected-threat notes panel (right side) */}
       <div className={`cf-notes hidden lg:flex ${secured ? 'cf-hide' : ''}`} aria-hidden="true">
