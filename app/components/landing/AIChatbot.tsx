@@ -53,7 +53,7 @@ export default function AIChatbot() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 sm:gap-2.5">
                 <div className="w-8 h-8 sm:w-9 sm:h-9 bg-primary-100 dark:bg-white/10 rounded-full flex items-center justify-center">
-                  <img src="/favicon.ico" alt="" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
+                  <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/favicon.ico`} alt="" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-surface-900 dark:text-white text-sm sm:text-base">{cb.botName}</h3>
@@ -172,7 +172,7 @@ export default function AIChatbot() {
             <X className="w-5 h-5 sm:w-6 sm:h-6" />
           ) : (
             <>
-              <img src="/favicon.ico" alt="" className="w-7 h-7 sm:w-8 sm:h-8 object-contain group-hover:scale-110 transition-transform" />
+              <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/favicon.ico`} alt="" className="w-7 h-7 sm:w-8 sm:h-8 object-contain group-hover:scale-110 transition-transform" />
               <span className="absolute top-0 right-0 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#fe904d] rounded-full border-2 border-white dark:border-[#0a1628]"></span>
             </>
           )}

@@ -230,7 +230,7 @@ export function LandingHeader() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 shrink-0 z-10">
-            <img src="/logo.png" alt="CyfroSec" className="h-16 w-auto sm:h-18 lg:h-20 xl:h-22 3xl:h-24 4xl:h-26" />
+            <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/logo.png`} alt="CyfroSec" className="h-16 w-auto sm:h-18 lg:h-20 xl:h-22 3xl:h-24 4xl:h-26" />
           </Link>
 
           {/* Desktop nav - centered */}
